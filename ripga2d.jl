@@ -19,7 +19,7 @@ basis = [ # iField
  "e12" #  7
  "e012"] #  8 pseudoscalar
 
-# define the basis elements
+# define basis multivectors
 nField = 2^3 # 3 = 2D + 1 dimensions
 e0 =   zeros(Float32, nField); e0[2] = 1
 e1 =   zeros(Float32, nField); e1[3] = 1
@@ -29,6 +29,7 @@ e20 =  zeros(Float32, nField); e20[6] = 1
 e12 =  zeros(Float32, nField); e12[7] = 1
 e012 = zeros(Float32, nField); e012[8] = 1
 
+# geometric product
 function Base.:*(a::Vector{Float32},b::Vector{Float32})::Vector{Float32}
  res = similar(a)
  res[1]=a[1]*b[1]+a[3]*b[3]+a[4]*b[4]-a[7]*b[7]
@@ -40,8 +41,9 @@ function Base.:*(a::Vector{Float32},b::Vector{Float32})::Vector{Float32}
  res[7]=a[1]*b[7]+a[7]*b[1]+a[3]*b[4]-a[4]*b[3]
  res[8]=a[1]*b[8]+a[8]*b[1]+a[2]*b[7]+a[7]*b[2]+a[3]*b[6]+a[6]*b[3]+a[4]*b[5]+a[5]*b[4]
  return res
-end
+end # geometric product (*)
 
+# regressive product: vee operator (&, \vee)
 function Base.:&(a::Vector{Float32},b::Vector{Float32})::Vector{Float32}
  res = similar(a)
  res[1]=a[1]*b[8]+a[2]*b[7]+a[3]*b[6]+a[4]*b[5]+a[5]*b[4]+a[6]*b[3]+a[7]*b[2]+a[8]*b[1]
@@ -53,8 +55,9 @@ function Base.:&(a::Vector{Float32},b::Vector{Float32})::Vector{Float32}
  res[7]=a[7]*b[8]+a[8]*b[7]
  res[8]=a[8]*b[8]
  return res
-end
+end # regressive product; vee operator (&, \vee)
 
+# inner product (|)
 function Base.:|(a::Vector{Float32},b::Vector{Float32})::Vector{Float32}
  res = similar(a)
  res[1]=a[1]*b[1]+a[3]*b[3]+a[4]*b[4]-a[7]*b[7]
@@ -66,7 +69,7 @@ function Base.:|(a::Vector{Float32},b::Vector{Float32})::Vector{Float32}
  res[7]=a[1]*b[7]+a[7]*b[1]
  res[8]=a[1]*b[8]+a[8]*b[1]
  return res
-end
+end # inner product (|)
 
 function Base.:^(a::Vector{Float32},b::Vector{Float32})::Vector{Float32}
  res = similar(a)
@@ -79,14 +82,16 @@ function Base.:^(a::Vector{Float32},b::Vector{Float32})::Vector{Float32}
  res[7]=a[1]*b[7]+a[7]*b[1]+a[3]*b[4]-a[4]*b[3]
  res[8]=a[1]*b[8]+a[2]*b[7]+a[3]*b[6]+a[4]*b[5]+a[5]*b[4]+a[6]*b[3]+a[7]*b[2]+a[8]*b[1]
  return res
-end
+end # outer product; wedge operator (^)
 
+# reverse operator (~)
 function Base.:~(a::Vector{Float32}) # reverse operator
  res = copy(a)
  res[5:8] .*= -1
  return res
 end
 
+# conjugate
 function conjugate(a::Vector{Float32})::Vector{Float32}
  res = copy(a)
  res[2:7] .*= -1

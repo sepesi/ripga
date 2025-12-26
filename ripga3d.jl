@@ -237,15 +237,15 @@ function utest(nLoop=100, flgSimplify::Bool=false)
 #  tst2 = 1 - e0
  end
  
- # if (slow) output of unit test results wanted
+ # if verbose/slow output of unit test results wanted
  if nLoop == 1
   nError = 0
   if flgSimplify == false
    
    S = Matrix{String}(undef,11,3) # 3 columns:
-   S[1,1] = " point          : "  # 1) label
-   S[1,2] = toStr1(px)            # 2) toStr1()
-   S[1,3] = "1e032 + 1e123"       # 3) expected string
+   S[1,1] = " point          : "  #  1) label
+   S[1,2] = toStr1(px)            #  2) toStr1()
+   S[1,3] = "1e032 + 1e123"       #  3) expected string
    
    S[2,1] = " line           : "
    S[2,2] = toStr1(line)
@@ -302,9 +302,9 @@ function utest(nLoop=100, flgSimplify::Bool=false)
   
   else # flgSimplify == true
    S = Matrix{String}(undef,11,3) # 3 columns:
-   S[1,1] = " point          : "  # 1) label
-   S[1,2] = toStr(px)             # 2) toStr()
-   S[1,3] = "1e032 + 1e123"       # 3) expected string
+   S[1,1] = " point          : "  #  1) label
+   S[1,2] = toStr(px)             #  2) toStr()
+   S[1,3] = "1e032 + 1e123"       #  3) expected string
    
    S[2,1] = " line           : "
    S[2,2] = toStr(line)
