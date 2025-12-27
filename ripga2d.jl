@@ -71,6 +71,7 @@ function Base.:|(a::Vector{Float32},b::Vector{Float32})::Vector{Float32}
  return res
 end # inner product (|)
 
+# outer product; wedge operator (^)
 function Base.:^(a::Vector{Float32},b::Vector{Float32})::Vector{Float32}
  res = similar(a)
  res[1]=a[1]*b[1]
@@ -106,13 +107,15 @@ end
 # arguments:
 # - nLoop repeats a section of the PGA calculations for benchmarking
 # usage notes:
-# - @time utest(1) checks on whether the unit test output of ripga.jl
-# exactly matches the unit test output of pga3d.cpp. The comparison
+# - flgSimplify set to true diverges from the text output by pga2d.cpp
+# usage notes:
+# - @time utest(1) checks on whether the unit test output of ripga2d.jl
+# exactly matches the unit test output of pga2d.cpp. The comparison
 # ends with the printing of the number of tests in the unit test that
-# don't match. 0 indicates success.
+# don't match. 0 indicates success of the unit test.
 # - @time utest(1,true) outputs a slightly simplified version of the 
-# unit test output that does not match the unit test output by pga3d.cpp.
-# - @btime utest() is a test for execution speed of ripga.jl.
+# unit test output that does not match the unit test output by pga2d.cpp.
+# - @btime utest() is a test for execution speed of ripga2d.jl.
 #   (NOTE: requires using BenchmarkTools)
 function utest(nLoop=100, flgSimplify::Bool=false)
  nField = length(basis)
@@ -122,18 +125,17 @@ function utest(nLoop=100, flgSimplify::Bool=false)
  P3 = Vector{Float32}(undef,nField)
  line0 = Vector{Float32}(undef,nField)
  line1 = Vector{Float32}(undef,nField)
- x = Vector{Float32}(undef,nField)
  tst1 = Vector{Float32}(undef,nField)
  tst2 = Vector{Float32}(undef,nField)
+ x = Vector{Float32}(undef,nField)
 
  for iLoop = 1:nLoop
-  # define some points
+  # geometric objects in programming syntax
   P0 = point(0,0)
   P1 = point(1,0)
   P2 = point(0,1)
   P3 = point(1,1)
   
-  # calculate intersection of parallel lines
   line0 = P0 & P1
   line1 = P2 & P3
   x = line0 ^ line1
@@ -141,7 +143,7 @@ function utest(nLoop=100, flgSimplify::Bool=false)
   tst1 = e0 - 1f0
   tst2 = 1f0 - e0
  
-#  # geometric algebra equations in math syntax
+#  # geometric objects in math syntax
 #  ga"axis_z = e1 ∧ e2"
 #  ga"origin = axis_z ∧ e3"
 #  
@@ -155,59 +157,79 @@ function utest(nLoop=100, flgSimplify::Bool=false)
 #  
 #  tst1 = e0 - 1f0
 #  tst2 = 1f0 - e0
- end
+ end # iLoop
 
- # if (slow) output of unit test results wanted
+ # if verbose/slow output of unit test results wanted
  if nLoop == 1
   nError = 0
+  toStr2 = flgSimplify ? toStr : toStr1
 
-  S = Matrix{String}(undef,9,3)  # 3 columns:
-  S[1,1] = " P0             : "  # 1) label
-  S[1,2] = toStr(P0)             # 2) toStr()
-  S[1,3] = "e12"                 # 3) expected string
+  S = Matrix{String}(undef,9,3) # 3 columns:
+  S[1,1] = " P0           : "   #  1) label
+  S[1,2] = toStr2(P0)           #  2) toStr() or toStr1()
+  S[1,3] = flgSimplify ?        #  3) expected string
+   "e12" :
+   "1e12"
+
+  S[2,1] = " P1           : "
+  S[2,2] = toStr2(P1)
+  S[2,3] = flgSimplify ?
+   "e20 + e12" :
+   "1e20 + 1e12"
   
-  S[2,1] = " P1             : "
-  S[2,2] = toStr(P1)
-  S[2,3] = "e20 + e12"
+  S[3,1] = " P2           : "
+  S[3,2] = toStr2(P2)
+  S[3,3] = flgSimplify ?
+   "e01 + e12" :
+   "1e01 + 1e12"
   
-  S[3,1] = " P2             : "
-  S[3,2] = toStr(P2)
-  S[3,3] = "e01 + e12"
+  S[4,1] = " P3           : "
+  S[4,2] = toStr2(P3)
+  S[4,3] = flgSimplify ?
+   "e01 + e20 + e12" :
+   "1e01 + 1e20 + 1e12"
   
-  S[4,1] = " P3             : "
-  S[4,2] = toStr(P3)
-  S[4,3] = "e01 + e20 + e12"
+  S[5,1] = " line0        : "
+  S[5,2] = toStr2(line0)
+  S[5,3] = flgSimplify ?
+   "-e2" :
+   "-1e2"
   
-  S[5,1] = " line0          : "
-  S[5,2] = toStr(line0)
-  S[5,3] = "-e2"
+  S[6,1] = " line1        : "
+  S[6,2] = toStr2(line1)
+  S[6,3] = flgSimplify ?
+   "e0 - e2" :
+   "1e0 + -1e2"
   
-  S[6,1] = " line1          : "
-  S[6,2] = toStr(line1)
-  S[6,3] = "e0 - e2"
+  S[7,1] = " intersection : "
+  S[7,2] = toStr2(x)
+  S[7,3] = flgSimplify ?
+   "-e20" :
+   "-1e20"
   
-  S[7,1] = " intersection   : "
-  S[7,2] = toStr(x)
-  S[7,3] = "-e20"
+  S[8,1] = " toStr test 1 : "
+  S[8,2] = toStr2(tst1)
+  S[8,3] = flgSimplify ?
+   "-1 + e0" :
+   "-1 + 1e0"
   
-  S[8,1] = " toStr test 1   : "
-  S[8,2] = toStr(tst1)
-  S[8,3] = "-1 + e0"
-  
-  S[9,1] = " toStr test 2   : "
-  S[9,2] = toStr(tst2)
-  S[9,3] = "1 - e0"
-  
+  S[9,1] = " toStr test 2 : "
+  S[9,2] = toStr2(tst2)
+  S[9,3] = flgSimplify ?
+   "1 - e0" :
+   "1 + -1e0"
+
   # print unit test results;
+  # print 'x' in first column in tests with errors
   nTest = size(S,1)
   for iTest = 1:nTest
-   if S[iTest,2] == S[iTest,3]
-    mark = " "
-   else
-    mark = "x"
+   isError = S[iTest,2] != S[iTest,3]
+   xChar = isError ? 'x' : ' '
+   println(xChar * S[iTest,1] * S[iTest,2])
+   if isError
+    println(' ' * S[iTest,1] * S[iTest,3])
     nError += 1
    end
-   println("$mark" * S[iTest,1] * S[iTest,2])
   end
 
   return nError # return unit test results

@@ -147,6 +147,14 @@ function conjugate(a::Vector{Float32})::Vector{Float32}
  return res
 end
 
+function normIdeal(a::Vector{Float32},nd::Int64=2)
+ if nd == 2 # for area
+  return sqrt(a[6]^2 + a[7]^2 + a[8]^2)
+ else # for volume
+  return sqrt(a[2]^2)
+ end
+end
+
 function plane(a::Number, b::Number, c::Number, d::Number)::Vector{Float32}
  return a*e1 + b*e2 + c*e3 + d*e0
 end
@@ -160,14 +168,6 @@ function torus(s::Number, t::Number,
  r2::Number, l2::Vector{Float32})
  return circle(s,r2,l2) * circle(t,r1,l1)
 end
- 
-function normIdeal(a::Vector{Float32},nd::Int64=2)
- if nd == 2 # for area
-  return sqrt(a[6]^2 + a[7]^2 + a[8]^2)
- else # for volume
-  return sqrt(a[2]^2)
- end
-end
 
 # unit test
 # arguments:
@@ -177,7 +177,7 @@ end
 # - @time utest(1) checks on whether the unit test output of ripga.jl
 # exactly matches the unit test output of pga3d.cpp. The comparison
 # ends with the printing of the number of tests in the unit test that
-# don't match. 0 indicates success.
+# don't match. 0 indicates success of the unit test.
 # - @time utest(1,true) outputs a slightly simplified version of the 
 # unit test output that does not match the unit test output by pga3d.cpp.
 # - @btime utest() is a test for execution speed of ripga3d.jl.
@@ -200,7 +200,7 @@ function utest(nLoop=100, flgSimplify::Bool=false)
  tst2 = Vector{Float32}(undef,nField)
  
  for iLoop = 1:nLoop
-  # geometric algebra equations in programming syntax
+  # geometric objects in programming syntax
   axis_z = e1 ^ e2
   origin = axis_z ^ e3
   
@@ -218,7 +218,7 @@ function utest(nLoop=100, flgSimplify::Bool=false)
   tst1 = e0 - 1
   tst2 = 1 - e0
   
-#  # geometric algebra equations in math syntax
+#  # geometric objects in math syntax
 #  ga"axis_z = e1 ∧ e2"
 #  ga"origin = axis_z ∧ e3"
 #  
@@ -235,7 +235,7 @@ function utest(nLoop=100, flgSimplify::Bool=false)
 #  
 #  tst1 = e0 - 1
 #  tst2 = 1 - e0
- end
+ end # iLoop
  
  # if verbose/slow output of unit test results wanted
  if nLoop == 1
@@ -244,7 +244,7 @@ function utest(nLoop=100, flgSimplify::Bool=false)
   
   S = Matrix{String}(undef,11,3) # 3 columns:
   S[1,1] = " point          : "  #  1) label
-  S[1,2] = toStr2(px)            #  2) toStr1()
+  S[1,2] = toStr2(px)            #  2) toStr() or toStr1()
   S[1,3] = flgSimplify ?         #  3) expected string
    "e032 + e123" :
    "1e032 + 1e123"
@@ -324,4 +324,4 @@ function utest(nLoop=100, flgSimplify::Bool=false)
   
   return nError # return unit test results
  end
-end # rip3d utest()
+end # ripga3d utest()
