@@ -240,116 +240,85 @@ function utest(nLoop=100, flgSimplify::Bool=false)
  # if verbose/slow output of unit test results wanted
  if nLoop == 1
   nError = 0
-  if flgSimplify == false
-   
-   S = Matrix{String}(undef,11,3) # 3 columns:
-   S[1,1] = " point          : "  #  1) label
-   S[1,2] = toStr1(px)            #  2) toStr1()
-   S[1,3] = "1e032 + 1e123"       #  3) expected string
-   
-   S[2,1] = " line           : "
-   S[2,2] = toStr1(line)
-   S[2,3] = "-1e23"
-   
-   S[3,1] = " plane          : "
-   S[3,2] = toStr1(p)
-   S[3,3] = "-3e0 + 2e1 + 1e3"
-   
-   S[4,1] = " rotor          : "
-   S[4,2] = toStr1(rot)
-   S[4,3] = "0.7071068 + 0.7071068e12"
-   
-   S[5,1] = " rotated point  : "
-   S[5,2] = toStr1(rot_point)
-   S[5,3] = "-0.9999999e013 + 0.9999999e123"
-   
-   S[6,1] = " rotated line   : "
-   S[6,2] = toStr1(rot_line)
-   S[6,3] = "0.9999999e31"
-   
-   S[7,1] = " rotated plane  : "
-   S[7,2] = toStr1(rot_plane)
-   S[7,3] = "-3e0 + -2e2 + 0.9999999e3"
-   
-   S[8,1] = " point on plane : "
-   S[8,2] = toStr1(normalize(point_on_plane))
-   S[8,3] = "0.2e021 + 1.4e032 + 1e123"
-   
-   S[9,1] = " point on torus : "
-   S[9,2] = toStr1(point_on_torus)
-   S[9,3] = "0.85e032 + 1e123"
-   
-   S[10,1] = " toStr1 test 1  : "
-   S[10,2] = toStr1(tst1)
-   S[10,3] = "-1 + 1e0"
-   
-   S[11,1] = " toStr1 test 2  : "
-   S[11,2] = toStr1(tst2)
-   S[11,3] = "1 + -1e0"
-   
-   # print unit test results;
-   # 'x' in first column in tests with errors
-   nTest = size(S,1)
-   for iTest = 1:nTest
-    isError = S[iTest,2] != S[iTest,3]
-    xChar = isError ? 'x' : ' '
-    println(xChar * S[iTest,1] * S[iTest,2])
-    if (isError)
-     println(' ' * S[iTest,1] * S[iTest,3])
-     nError += 1
-    end
-   end
+  toStr2 = flgSimplify ? toStr : toStr1
   
-  else # flgSimplify == true
-   S = Matrix{String}(undef,11,3) # 3 columns:
-   S[1,1] = " point          : "  #  1) label
-   S[1,2] = toStr(px)             #  2) toStr()
-   S[1,3] = "1e032 + 1e123"       #  3) expected string
-   
-   S[2,1] = " line           : "
-   S[2,2] = toStr(line)
-   S[2,3] = "-1e23"
-   
-   S[3,1] = " plane          : "
-   S[3,2] = toStr(p)
-   S[3,3] = "-3e0 + 2e1 + 1e3"
-   
-   S[4,1] = " rotor          : "
-   S[4,2] = toStr(rot)
-   S[4,3] = "0.7071068 + 0.7071068e12"
-   
-   S[5,1] = " rotated point  : "
-   S[5,2] = toStr(rot_point)
-   S[5,3] = "-0.9999999e013 + 0.9999999e123"
-   
-   S[6,1] = " rotated line   : "
-   S[6,2] = toStr(rot_line)
-   S[6,3] = "0.9999999e31"
-   
-   S[7,1] = " rotated plane  : "
-   S[7,2] = toStr(rot_plane)
-   S[7,3] = "-3e0 + -2e2 + 0.9999999e3"
-   
-   S[8,1] = " point on plane : "
-   S[8,2] = toStr(normalize(point_on_plane))
-   S[8,3] = "0.2e021 + 1.4e032 + 1e123"
-   
-   S[9,1] = " point on torus : "
-   S[9,2] = toStr(point_on_torus)
-   S[9,3] = "0.85e032 + 1e123"
-   
-   S[10,1] = " toStr test 1   : "
-   S[10,2] = toStr(tst1)
-   S[10,3] = "-1 + 1e0"
-   
-   S[11,1] = " toStr test 2   : "
-   S[11,2] = toStr(tst2)
-   S[11,3] = "1 + -1e0"
-   
-   # print unit test results;
-   nTest = size(S,1)
-   for iTest = 1:nTest
-    println(S[iTest,1] * S[iTest,2])
+  S = Matrix{String}(undef,11,3) # 3 columns:
+  S[1,1] = " point          : "  #  1) label
+  S[1,2] = toStr2(px)            #  2) toStr1()
+  S[1,3] = flgSimplify ?         #  3) expected string
+   "e032 + e123" :
+   "1e032 + 1e123"
+
+  S[2,1] = " line           : "
+  S[2,2] = toStr2(line)
+  S[2,3] = flgSimplify ?
+   "-e23" :
+   "-1e23"
+  
+  S[3,1] = " plane          : "
+  S[3,2] = toStr2(p)
+  S[3,3] = flgSimplify ?
+   "-3e0 + 2e1 + e3" :
+   "-3e0 + 2e1 + 1e3"
+  
+  S[4,1] = " rotor          : "
+  S[4,2] = toStr2(rot)
+  S[4,3] = flgSimplify ?
+   "0.7071068 + 0.7071068e12" :
+   "0.7071068 + 0.7071068e12"
+  
+  S[5,1] = " rotated point  : "
+  S[5,2] = toStr2(rot_point)
+  S[5,3] = flgSimplify ?
+   "-0.9999999e013 + 0.9999999e123" :
+   "-0.9999999e013 + 0.9999999e123"
+  
+  S[6,1] = " rotated line   : "
+  S[6,2] = toStr2(rot_line)
+  S[6,3] = flgSimplify ?
+   "0.9999999e31" :
+   "0.9999999e31"
+  
+  S[7,1] = " rotated plane  : "
+  S[7,2] = toStr2(rot_plane)
+  S[7,3] = flgSimplify ?
+   "-3e0 - 2e2 + 0.9999999e3" :
+   "-3e0 + -2e2 + 0.9999999e3"
+  
+  S[8,1] = " point on plane : "
+  S[8,2] = toStr2(normalize(point_on_plane))
+  S[8,3] = flgSimplify ?
+   "0.2e021 + 1.4e032 + e123" :
+   "0.2e021 + 1.4e032 + 1e123"
+  
+  S[9,1] = " point on torus : "
+  S[9,2] = toStr2(point_on_torus)
+  S[9,3] = flgSimplify ?
+   "0.85e032 + e123" :
+   "0.85e032 + 1e123"
+  
+  S[10,1] = " toStr1 test 1  : "
+  S[10,2] = toStr2(tst1)
+  S[10,3] = flgSimplify ?
+   "-1 + e0" :
+   "-1 + 1e0"
+  
+  S[11,1] = " toStr1 test 2  : "
+  S[11,2] = toStr2(tst2)
+  S[11,3] = flgSimplify ?
+   "1 - e0" :
+   "1 + -1e0"
+  
+  # print unit test results;
+  # print 'x' in first column in tests with errors
+  nTest = size(S,1)
+  for iTest = 1:nTest
+   isError = S[iTest,2] != S[iTest,3]
+   xChar = isError ? 'x' : ' '
+   println(xChar * S[iTest,1] * S[iTest,2])
+   if isError
+    println(' ' * S[iTest,1] * S[iTest,3])
+    nError += 1
    end
   end
   
