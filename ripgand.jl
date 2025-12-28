@@ -1,5 +1,5 @@
 # ripgand.jl : reference implementation of
-# Projective Geometric Algebra common for nD
+# Projective Geometric Algebra common for nD (i.e., 2D,3D,4D)
 #
 # This is a Julia port of pga3d.cpp, bivector.net's C++
 # reference implementation of projective geometric algebra
@@ -341,7 +341,7 @@ macro ga_str(str)
  C = collect(str)
  n = length(C)
  for i = 1:n
-  if C[i] == ' '  # \thinspace for geometric product
+  if C[i] == ' '  # \thinspace for geometric product
    C[i] = '*'
   elseif C[i] == '∧' # \wedge for outer product
    C[i] = '^'

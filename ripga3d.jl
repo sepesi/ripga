@@ -201,40 +201,40 @@ function utest(nLoop=100, flgSimplify::Bool=false)
  
  for iLoop = 1:nLoop
   # geometric objects in programming syntax
-  axis_z = e1 ^ e2
-  origin = axis_z ^ e3
+  # axis_z = e1 ^ e2
+  # origin = axis_z ^ e3
+  
+  # px = point(1, 0, 0)
+  # line = origin & px
+  # p = plane(2,0,1,-3)
+  # rot = rotor(pi/2, e1*e2)
+  # rot_point = rot * px * ~rot
+  # rot_line = rot * line * ~rot
+  # rot_plane = rot * p * ~rot
+  # point_on_plane = (p | px) * p
+  # to = torus(0,0, 0.25,e1*e2, 0.6,e1*e3)
+  # point_on_torus = to * e123 * ~to
+  
+  # tst1 = e0 - 1
+  # tst2 = 1 - e0
+  
+  # geometric objects in math syntax
+  ga"axis_z = e1 ∧ e2"
+  ga"origin = axis_z ∧ e3"
   
   px = point(1, 0, 0)
-  line = origin & px
-  p = plane(2,0,1,-3)
-  rot = rotor(pi/2, e1*e2)
-  rot_point = rot * px * ~rot
-  rot_line = rot * line * ~rot
-  rot_plane = rot * p * ~rot
-  point_on_plane = (p | px) * p
-  to = torus(0,0, 0.25,e1*e2, 0.6,e1*e3)
-  point_on_torus = to * e123 * ~to
+  ga"line = origin ∨ px"
+  p = plane(2, 0, 1,-3)
+  ga"rot = rotor(pi/2, e1 2)"
+  ga"rot_point = rot px ~rot"
+  ga"rot_line = rot line ~rot"
+  ga"rot_plane = rot p ~rot"
+  ga"point_on_plane = (p·px) p"
+  ga"to = torus(0,0, 0.25,e1 e2, 0.6,e1 e3)"
+  ga"point_on_torus = to e123 ~to"
   
   tst1 = e0 - 1
   tst2 = 1 - e0
-  
-#  # geometric objects in math syntax
-#  ga"axis_z = e1 ∧ e2"
-#  ga"origin = axis_z ∧ e3"
-#  
-#  px = point(1, 0, 0)
-#  ga"line = origin ∨ px"
-#  p = plane(2, 0, 1,-3)
-#  ga"rot = rotor(pi/2, e1 e2)"
-#  ga"rot_point = rot px ~rot"
-#  ga"rot_line = rot line ~rot"
-#  ga"rot_plane = rot p ~rot"
-#  ga"point_on_plane = (p·px) p"
-#  ga"to = torus(0,0, 0.25,e1 e2, 0.6,e1 e3)"
-#  ga"point_on_torus = to e123 ~to"
-#  
-#  tst1 = e0 - 1
-#  tst2 = 1 - e0
  end # iLoop
  
  # if verbose/slow output of unit test results wanted
