@@ -57,7 +57,7 @@ function Base.:&(a::Vector{Float32},b::Vector{Float32})::Vector{Float32}
  return res
 end # regressive product; vee operator (&, \vee)
 
-# inner product (|)
+# inner product: dot operator (|)
 function Base.:|(a::Vector{Float32},b::Vector{Float32})::Vector{Float32}
  res = similar(a)
  res[1]=a[1]*b[1]+a[3]*b[3]+a[4]*b[4]-a[7]*b[7]
