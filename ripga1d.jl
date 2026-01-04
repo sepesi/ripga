@@ -117,9 +117,7 @@ end
 # unit test output that does not match the unit test output by pga2d.cpp.
 # - @btime utest() is a test for execution speed of ripga2d.jl.
 #   (NOTE: requires using BenchmarkTools)
-function utest(nLoop=100,
-  flgSimplify::Bool=false,
-  flgMathSyntax::Bool=false)
+function utest(nLoop=100, flgSimplify::Bool=false)
  nField = length(basis)
  P0 = Vector{Float32}(undef,nField)
  P1 = Vector{Float32}(undef,nField)
@@ -132,31 +130,33 @@ function utest(nLoop=100,
  x = Vector{Float32}(undef,nField)
 
  for iLoop = 1:nLoop
+  # geometric objects in programming syntax
   P0 = point(0,0)
   P1 = point(1,0)
   P2 = point(0,1)
   P3 = point(1,1)
-
-  if flgMathSyntax == false
-   # geometric objects in programming syntax
-   (nLoop == 1) && println("  # calculated with programming syntax")
-   line0 = P0 & P1
-   line1 = P2 & P3
-   x = line0 ^ line1
-   
-   tst1 = e0 - 1
-   tst2 = 1 - e0
+  
+  line0 = P0 & P1
+  line1 = P2 & P3
+  x = line0 ^ line1
+  
+  tst1 = e0 - 1f0
+  tst2 = 1f0 - e0
  
-  else # flgMathSyntax == true
-   # geometric objects in math syntax
-   (nLoop == 1) && println("  # calculated with math syntax")
-   line0 = ga"P0 ∨ P1"
-   line1 = ga"P2 ∨ P3"
-   x = ga"line0 ^ line1"
-   
-   tst1 = e0 - 1
-   tst2 = 1 - e0
-  end # flgMathSyntax
+#  # geometric objects in math syntax
+#  ga"axis_z = e1 ∧ e2"
+#  ga"origin = axis_z ∧ e3"
+#  
+#  px = point(1f0, 0f0, 0f0)
+#  ga"line = origin ∨ px"
+#  p = plane(2f0,0f0,1f0,-3f0)
+#  ga"rot = rotor(Float32(pi/2), e1 e2)"
+#  ga"rot_point = rot px ~rot"
+#  ga"rot_line = rot line ~rot"
+#  ga"rot_plane = rot p ~rot"
+#  
+#  tst1 = e0 - 1f0
+#  tst2 = 1f0 - e0
  end # iLoop
 
  # if verbose/slow output of unit test results wanted

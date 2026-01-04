@@ -184,9 +184,13 @@ end
 # don't match. 0 indicates success of the unit test.
 # - @time utest(1,true) outputs a slightly simplified version of the 
 # unit test output that does not match the unit test output by pga3d.cpp.
+# - @time utest(1,true,true) same as the above case except that 
+# the geometric objects are calculated with math syntax.
 # - @btime utest() is a test for execution speed of ripga3d.jl.
 #   (NOTE: requires using BenchmarkTools)
-function utest(nLoop=100, flgSimplify::Bool=false)
+function utest(nLoop=100, 
+  flgSimplify::Bool=false,
+  flgMathSyntax::Bool=false)
  nField = length(basis)
  axis_z = Vector{Float32}(undef,nField)
  origin = Vector{Float32}(undef,nField)
@@ -204,41 +208,47 @@ function utest(nLoop=100, flgSimplify::Bool=false)
  tst2 = Vector{Float32}(undef,nField)
  
  for iLoop = 1:nLoop
-  # geometric objects in programming syntax
-  axis_z = e1 ^ e2
-  origin = axis_z ^ e3
+  if flgMathSyntax == false
+   # geometric objects in programming syntax
+   (nLoop == 1) && println("  # calculated with programming syntax")
+   axis_z = e1 ^ e2
+   origin = axis_z ^ e3
   
-  px = point(1, 0, 0)
-  line = origin & px
-  p = plane(2,0,1,-3)
-  rot = rotor(pi/2, e1*e2)
-  rot_point = rot * px * ~rot
-  rot_line = rot * line * ~rot
-  rot_plane = rot * p * ~rot
-  point_on_plane = (p | px) * p
-  to = torus(0,0, 0.25,e1*e2, 0.6,e1*e3)
-  point_on_torus = to * e123 * ~to
+   px = point(1, 0, 0)
+   line = origin & px
+   p = plane(2,0,1,-3)
+   rot = rotor(pi/2, e1*e2)
+   rot_point = rot * px * ~rot
+   rot_line = rot * line * ~rot
+   rot_plane = rot * p * ~rot
+   point_on_plane = (p | px) * p
+   to = torus(0,0, 0.25,e1*e2, 0.6,e1*e3)
+   point_on_torus = to * e123 * ~to
   
-  tst1 = e0 - 1
-  tst2 = 1 - e0
+   tst1 = e0 - 1
+   tst2 = 1 - e0
   
-  # geometric objects in math syntax
-  # ga"axis_z = e1 ∧ e2"
-  # ga"origin = axis_z ∧ e3"
-  
-  # px = point(1, 0, 0)
-  # ga"line = origin ∨ px"
-  # p = plane(2, 0, 1,-3)
-  # ga"rot = rotor(pi/2, e1 e2)"
-  # ga"rot_point = rot px ~rot"
-  # ga"rot_line = rot line ~rot"
-  # ga"rot_plane = rot p ~rot"
-  # ga"point_on_plane = (p·px) p"
-  # ga"to = torus(0,0, 0.25,e1 e2, 0.6,e1 e3)"
-  # ga"point_on_torus = to e123 ~to"
-  
-  # tst1 = e0 - 1
-  # tst2 = 1 - e0
+  else # flgMathSyntax == true
+   # geometric objects in math syntax
+   (nLoop == 1) && println("  # calculated with math syntax")
+   axis_z = ga"e1 ∧ e2"
+   axis_z = ga"e1 ∧ e2"
+   origin = ga"axis_z ∧ e3"
+   
+   px = point(1, 0, 0)
+   line = ga"origin ∨ px"
+   p = plane(2, 0, 1,-3)
+   rot = ga"rotor(pi/2, e1 e2)"
+   rot_point = ga"rot px ~rot"
+   rot_line = ga"rot line ~rot"
+   rot_plane = ga"rot p ~rot"
+   point_on_plane = ga"(p·px) p"
+   to = ga"torus(0,0, 0.25,e1 e2, 0.6,e1 e3)"
+   point_on_torus = ga"to e123 ~to"
+   
+   tst1 = e0 - 1
+   tst2 = 1 - e0
+  end # flgMathSyntax
  end # iLoop
  
  # if verbose/slow output of unit test results wanted
@@ -313,8 +323,8 @@ function utest(nLoop=100, flgSimplify::Bool=false)
    "1 - e0" :
    "1 + -1e0"
   
-  # print unit test results;
-  # print 'x' in first column in tests with errors
+  # print unit test results
+  #  'x' in first column denotes tests with errors
   nTest = size(S,1)
   for iTest = 1:nTest
    isError = S[iTest,2] != S[iTest,3]
