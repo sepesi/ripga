@@ -191,6 +191,8 @@ end
 function utest(nLoop=100, 
   flgSimplify::Bool=false,
   flgMathSyntax::Bool=false)
+
+ # allocate some multivectors
  nField = length(basis)
  axis_z = Vector{Float32}(undef,nField)
  origin = Vector{Float32}(undef,nField)

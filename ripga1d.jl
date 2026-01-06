@@ -1,5 +1,5 @@
-# ripga2d.jl : reference implementation of 
-# Projective Geometric Algebra for 2D
+# ripga1d.jl : reference implementation of
+# Projective Geometric Algebra for 1D
 #
 # This is a Julia port of bivector.net's C++ reference
 # implementation of projective geometric algebra
@@ -10,64 +10,44 @@ using Printf
 # define multivector basis names
 # 0 denotes projective dimension (e.g., e0 * e0 = 0)
 basis = [ # iField
- "1"  #  1 scalar
+ "1"  #  1 scalar vector (i.e., vector with only nonzero scalar term)
  "e0" #  2 grade 1 vectors
  "e1" #  3
- "e2" #  4
- "e01" #  5 grade 2 vectors (bivectors)
- "e20" #  6
- "e12" #  7
- "e012"] #  8 pseudoscalar
+ "e01"]# 4 pseudoscalar
 
 # define basis multivectors
-nField = 2^3 # 3 = 2D + 1 dimensions
-e0 =   zeros(Float32, nField); e0[2] = 1
-e1 =   zeros(Float32, nField); e1[3] = 1
-e2 =   zeros(Float32, nField); e2[4] = 1
-e01 =  zeros(Float32, nField); e01[5] = 1
-e20 =  zeros(Float32, nField); e20[6] = 1
-e12 =  zeros(Float32, nField); e12[7] = 1
-e012 = zeros(Float32, nField); e012[8] = 1
+nField = 2^2 # 2 = 1D + 1 dimensions
+e0 =  zeros(Float32, nField); e0[2] = 1
+e1 =  zeros(Float32, nField); e1[3] = 1
+e01 = zeros(Float32, nField); e01[4] = 1
 
 # geometric product
 function Base.:*(a::Vector{Float32},b::Vector{Float32})::Vector{Float32}
  res = similar(a)
- res[1]=a[1]*b[1]+a[3]*b[3]+a[4]*b[4]-a[7]*b[7]
- res[2]=a[1]*b[2]+a[2]*b[1]+a[5]*b[3]-a[3]*b[5]+a[4]*b[6]-a[6]*b[4]-a[7]*b[8]-a[8]*b[7]
- res[3]=a[1]*b[3]+a[3]*b[1]-a[4]*b[7]+a[7]*b[4]
- res[4]=a[1]*b[4]+a[4]*b[1]+a[3]*b[7]-a[7]*b[3]
- res[5]=a[1]*b[5]+a[5]*b[1]+a[2]*b[3]-a[3]*b[2]+a[4]*b[8]+a[8]*b[4]+a[6]*b[7]-a[7]*b[6]
- res[6]=a[1]*b[6]+a[6]*b[1]-a[2]*b[4]+a[4]*b[2]+a[3]*b[8]+a[8]*b[3]-a[5]*b[7]+a[7]*b[5]
- res[7]=a[1]*b[7]+a[7]*b[1]+a[3]*b[4]-a[4]*b[3]
- res[8]=a[1]*b[8]+a[8]*b[1]+a[2]*b[7]+a[7]*b[2]+a[3]*b[6]+a[6]*b[3]+a[4]*b[5]+a[5]*b[4]
+ res[1]=a[1]*b[1]+a[3]*b[3]
+ res[2]=a[1]*b[2]+a[2]*b[1]-a[3]*b[4]+a[4]*b[3]
+ res[3]=a[1]*b[3]+a[3]*b[1]
+ res[4]=a[1]*b[4]+a[2]*b[3]-a[3]*b[2]+a[4]*b[1]
  return res
 end # geometric product (*)
 
 # regressive product: vee operator (&, \vee)
 function Base.:&(a::Vector{Float32},b::Vector{Float32})::Vector{Float32}
  res = similar(a)
- res[1]=a[1]*b[8]+a[2]*b[7]+a[3]*b[6]+a[4]*b[5]+a[5]*b[4]+a[6]*b[3]+a[7]*b[2]+a[8]*b[1]
- res[2]=a[2]*b[8]+a[8]*b[2]+a[5]*b[6]-a[6]*b[5]
- res[3]=a[3]*b[8]+a[8]*b[3]-a[5]*b[7]+a[7]*b[5]
- res[4]=a[4]*b[8]+a[8]*b[4]+a[6]*b[7]-a[7]*b[6]
- res[5]=a[5]*b[8]+a[8]*b[5]
- res[6]=a[6]*b[8]+a[8]*b[6]
- res[7]=a[7]*b[8]+a[8]*b[7]
- res[8]=a[8]*b[8]
+ res[1]=a[1]*b[4]-a[2]*b[3]+a[3]*b[2]+a[4]*b[1]
+ res[2]=a[2]*b[4]+a[4]*b[2]
+ res[3]=a[3]*b[4]+a[4]*b[3]
+ res[4]=a[4]*b[4]
  return res
 end # regressive product; vee operator (&, \vee)
 
 # inner product: dot operator (|)
 function Base.:|(a::Vector{Float32},b::Vector{Float32})::Vector{Float32}
  res = similar(a)
- res[1]=a[1]*b[1]+a[3]*b[3]+a[4]*b[4]-a[7]*b[7]
- res[2]=a[1]*b[2]+a[2]*b[1]+a[5]*b[3]-a[6]*b[4]-a[3]*b[5]+a[4]*b[6]-a[7]*b[8]-a[8]*b[7]
- res[3]=a[1]*b[3]+a[3]*b[1]-a[4]*b[7]+a[7]*b[4]
- res[4]=a[1]*b[4]+a[4]*b[1]+a[3]*b[7]-a[7]*b[3]
- res[5]=a[1]*b[5]+a[5]*b[1]+a[4]*b[8]+a[8]*b[4]
- res[6]=a[1]*b[6]+a[6]*b[1]+a[3]*b[8]+a[8]*b[3]
- res[7]=a[1]*b[7]+a[7]*b[1]
- res[8]=a[1]*b[8]+a[8]*b[1]
+ res[1]=a[1]*b[1]+a[3]*b[3]
+ res[2]=a[1]*b[2]+a[2]*b[1]-a[3]*b[4]+a[4]*b[3]
+ res[3]=a[1]*b[3]+a[3]*b[1]
+ res[4]=a[1]*b[4]+a[4]*b[1]
  return res
 end # inner product (|)
 
@@ -77,25 +57,21 @@ function Base.:^(a::Vector{Float32},b::Vector{Float32})::Vector{Float32}
  res[1]=a[1]*b[1]
  res[2]=a[1]*b[2]+a[2]*b[1]
  res[3]=a[1]*b[3]+a[3]*b[1]
- res[4]=a[1]*b[4]+a[4]*b[1]
- res[5]=a[1]*b[5]+a[5]*b[1]+a[2]*b[3]-a[3]*b[2]
- res[6]=a[1]*b[6]+a[6]*b[1]-a[2]*b[4]+a[4]*b[2]
- res[7]=a[1]*b[7]+a[7]*b[1]+a[3]*b[4]-a[4]*b[3]
- res[8]=a[1]*b[8]+a[2]*b[7]+a[3]*b[6]+a[4]*b[5]+a[5]*b[4]+a[6]*b[3]+a[7]*b[2]+a[8]*b[1]
+ res[4]=a[1]*b[4]+a[2]*b[3]-a[3]*b[2]+a[4]*b[1]
  return res
 end # outer product; wedge operator (^)
 
 # reverse operator (~)
 function Base.:~(a::Vector{Float32}) # reverse operator
  res = copy(a)
- res[5:8] .*= -1
+ res[4] .*= -1
  return res
 end
 
 # conjugate
 function conjugate(a::Vector{Float32})::Vector{Float32}
  res = copy(a)
- res[2:7] .*= -1
+ res[2:4] .*= -1
  return res
 end
 
@@ -115,48 +91,75 @@ end
 # don't match. 0 indicates success of the unit test.
 # - @time utest(1,true) outputs a slightly simplified version of the 
 # unit test output that does not match the unit test output by pga2d.cpp.
+# - @time utest(1,true,true) same as the above case except that 
+# the geometric objects are calculated with math syntax.
 # - @btime utest() is a test for execution speed of ripga2d.jl.
 #   (NOTE: requires using BenchmarkTools)
-function utest(nLoop=100, flgSimplify::Bool=false)
+function utest(nLoop=100,
+  flgSimplify::Bool=false,
+  flgMathSyntax::Bool=false)
+
+ # allocate some multivectors
  nField = length(basis)
- P0 = Vector{Float32}(undef,nField)
- P1 = Vector{Float32}(undef,nField)
- P2 = Vector{Float32}(undef,nField)
- P3 = Vector{Float32}(undef,nField)
- line0 = Vector{Float32}(undef,nField)
- line1 = Vector{Float32}(undef,nField)
+ a    = Vector{Float32}(undef,nField)
+ b    = Vector{Float32}(undef,nField)
+ res1 = Vector{Float32}(undef,nField)
+ res2 = Vector{Float32}(undef,nField)
+ res3 = Vector{Float32}(undef,nField)
+ res4 = Vector{Float32}(undef,nField)
+ res5 = Vector{Float32}(undef,nField)
+ res6 = Vector{Float32}(undef,nField)
+ res7 = Vector{Float32}(undef,nField)
+ res8 = Vector{Float32}(undef,nField)
+ res9 = Vector{Float32}(undef,nField)
+ res10= Vector{Float32}(undef,nField)
+ res11= Vector{Float32}(undef,nField)
+ res12= Vector{Float32}(undef,nField)
+ res13= Vector{Float32}(undef,nField)
+ res14= Vector{Float32}(undef,nField)
+
  tst1 = Vector{Float32}(undef,nField)
  tst2 = Vector{Float32}(undef,nField)
- x = Vector{Float32}(undef,nField)
 
  for iLoop = 1:nLoop
-  # geometric objects in programming syntax
-  P0 = point(0,0)
-  P1 = point(1,0)
-  P2 = point(0,1)
-  P3 = point(1,1)
-  
-  line0 = P0 & P1
-  line1 = P2 & P3
-  x = line0 ^ line1
-  
-  tst1 = e0 - 1f0
-  tst2 = 1f0 - e0
+  # note: multiplicationn operator needed to specify vectors
+  a = 1 + 2*e0 + 3*e1 + 4*e01 # not "1 + 2e0 + 3e1 + 4e01"
+  b = 2 + 4*e0 + 6*e1 + 8*e01 # not "2 + 4e0 + 6e1 + 8e01"
+
+  if flgMathSyntax == false
+   # geometric objects in programming syntax
+   (nLoop == 1) && println("  # calculated with programming syntax")
+   res1 =  (1*e0) * (1*e0) # = 0
+   res2 =  (1*e1) * (1*e1) # = 1
+   res3 =  (1*e0) ^ (1*e1) # = e01
+   res4 =  !(1*e01)        # = 1
+   res5 =  (1*e0) & (1*e1) # = -1
+   res6 =  (1*e0) | (1*e1) # = 0
+   res7 =  (1*e1) | (1*e1) # = 1
+   res8 =  a + b   # = 3 + 6*e0 + 9*e1 + 12*e01
+   res9 =  a - b   # = -1 - 2*e0 - 3*e1 - 4*e01
+   res10 = a * b   # = 20 + 8*e0 + 12*e1 + 16*e01
+   res11 = a ^ b   # = 2 + 8*e0 + 12*e1 + 16*e01
+   res12 = a & b   # = 16 + 32*e0 + 48*e1 + 32*e01
+   res13 = a | b   # = 20 + 8*e0 + 12*e1 + 16*e01
+     
+   tst1 = e0 - 1
+   tst2 = 1 - e0
  
-#  # geometric objects in math syntax
-#  ga"axis_z = e1 ∧ e2"
-#  ga"origin = axis_z ∧ e3"
-#  
-#  px = point(1f0, 0f0, 0f0)
-#  ga"line = origin ∨ px"
-#  p = plane(2f0,0f0,1f0,-3f0)
-#  ga"rot = rotor(Float32(pi/2), e1 e2)"
-#  ga"rot_point = rot px ~rot"
-#  ga"rot_line = rot line ~rot"
-#  ga"rot_plane = rot p ~rot"
-#  
-#  tst1 = e0 - 1f0
-#  tst2 = 1f0 - e0
+  else # flgMathSyntax == true
+   # geometric objects in math syntax
+   (nLoop == 1) && println("  # calculated with math syntax")
+   res1 = e0 * e0 # = 0
+   res2 = e1 * e1 # = 1
+   res3 = e0 ^ e1 # = e01
+   res4 = !e01    # = 1
+   res5 = e0 & e1 # = -1
+   res6 = e0 | e1 # = 0
+   res7 = e1 | e1 # = 1
+   
+   tst1 = e0 - 1
+   tst2 = 1 - e0
+  end # flgMathSyntax
  end # iLoop
 
  # if verbose/slow output of unit test results wanted
@@ -164,58 +167,94 @@ function utest(nLoop=100, flgSimplify::Bool=false)
   nError = 0
   toStr2 = flgSimplify ? toStr : toStr1
 
-  S = Matrix{String}(undef,9,3) # 3 columns:
-  S[1,1] = " P0           : "   #  1) label
-  S[1,2] = toStr2(P0)           #  2) toStr() or toStr1()
-  S[1,3] = flgSimplify ?        #  3) expected string
-   "e12" :
-   "1e12"
+  S = Matrix{String}(undef,15,3) # 3 columns:
+  S[1,1] = " res1         : "    #  1) label
+  S[1,2] = toStr2(res1)          #  2) toStr() or toStr1()
+  S[1,3] = flgSimplify ?         #  3) expected string
+   "0" :
+   "0"
 
-  S[2,1] = " P1           : "
-  S[2,2] = toStr2(P1)
+  S[2,1] = " res2         : "
+  S[2,2] = toStr2(res2)
   S[2,3] = flgSimplify ?
-   "e20 + e12" :
-   "1e20 + 1e12"
+   "1" :
+   "1"
   
-  S[3,1] = " P2           : "
-  S[3,2] = toStr2(P2)
+  S[3,1] = " res3         : "
+  S[3,2] = toStr2(res3)
   S[3,3] = flgSimplify ?
-   "e01 + e12" :
-   "1e01 + 1e12"
+   "e01" :
+   "1e01"
   
-  S[4,1] = " P3           : "
-  S[4,2] = toStr2(P3)
+  S[4,1] = " res4         : "
+  S[4,2] = toStr2(res4)
   S[4,3] = flgSimplify ?
-   "e01 + e20 + e12" :
-   "1e01 + 1e20 + 1e12"
+   "1" :
+   "1"
   
-  S[5,1] = " line0        : "
-  S[5,2] = toStr2(line0)
+  S[5,1] = " res5         : "
+  S[5,2] = toStr2(res5)
   S[5,3] = flgSimplify ?
-   "-e2" :
-   "-1e2"
+   "-1" :
+   "-1"
   
-  S[6,1] = " line1        : "
-  S[6,2] = toStr2(line1)
+  S[6,1] = " res6         : "
+  S[6,2] = toStr2(res6)
   S[6,3] = flgSimplify ?
-   "e0 - e2" :
-   "1e0 + -1e2"
+   "0" :
+   "0"
   
-  S[7,1] = " intersection : "
-  S[7,2] = toStr2(x)
+  S[7,1] = " res7         : "
+  S[7,2] = toStr2(res7)
   S[7,3] = flgSimplify ?
-   "-e20" :
-   "-1e20"
+   "1" :
+   "1"
   
-  S[8,1] = " toStr test 1 : "
-  S[8,2] = toStr2(tst1)
+  S[8,1] = " res8         : "
+  S[8,2] = toStr2(res8)
   S[8,3] = flgSimplify ?
+   "3 + 6e0 + 9e1 + 12e01" :
+   "3 + 6e0 + 9e1 + 12e01"
+  
+  S[9,1] = " res9         : "
+  S[9,2] = toStr2(res9)
+  S[9,3] = flgSimplify ?
+   "-1 - 2e0 - 3e1 - 4e01" :
+   "-1 + -2e0 + -3e1 + -4e01"
+  
+  S[10,1]= " res10        : "
+  S[10,2]= toStr2(res10)
+  S[10,3]= flgSimplify ?
+   "20 + 8e0 + 12e1 + 16e01" :
+   "20 + 8e0 + 12e1 + 16e01"
+  
+  S[11,1]= " res11        : "
+  S[11,2]= toStr2(res11)
+  S[11,3]= flgSimplify ?
+   "2 + 8e0 + 12e1 + 16e01" :
+   "2 + 8e0 + 12e1 + 16e01"
+  
+  S[12,1]= " res12        : "
+  S[12,2]= toStr2(res12)
+  S[12,3]= flgSimplify ?
+   "16 + 32e0 + 48e1 + 32e01" :
+   "16 + 32e0 + 48e1 + 32e01"
+  
+  S[13,1]= " res13        : "
+  S[13,2]= toStr2(res13)
+  S[13,3]= flgSimplify ?
+   "20 + 8e0 + 12e1 + 16e01" :
+   "20 + 8e0 + 12e1 + 16e01"
+  
+  S[14,1]= " toStr test 1 : "
+  S[14,2]= toStr2(tst1)
+  S[14,3]= flgSimplify ?
    "-1 + e0" :
    "-1 + 1e0"
   
-  S[9,1] = " toStr test 2 : "
-  S[9,2] = toStr2(tst2)
-  S[9,3] = flgSimplify ?
+  S[15,1]= " toStr test 2 : "
+  S[15,2]= toStr2(tst2)
+  S[15,3]= flgSimplify ?
    "1 - e0" :
    "1 + -1e0"
 
@@ -234,4 +273,4 @@ function utest(nLoop=100, flgSimplify::Bool=false)
 
   return nError # return unit test results
  end
-end # ripga2d utest()
+end # ripga1d utest()

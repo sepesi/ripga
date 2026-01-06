@@ -115,11 +115,15 @@ end
 # don't match. 0 indicates success of the unit test.
 # - @time utest(1,true) outputs a slightly simplified version of the 
 # unit test output that does not match the unit test output by pga2d.cpp.
+# - @time utest(1,true,true) same as the above case except that
+# the geometric objects are calculated with math syntax.
 # - @btime utest() is a test for execution speed of ripga2d.jl.
 #   (NOTE: requires using BenchmarkTools)
 function utest(nLoop=100,
   flgSimplify::Bool=false,
   flgMathSyntax::Bool=false)
+
+ # allocate some multivectors
  nField = length(basis)
  P0 = Vector{Float32}(undef,nField)
  P1 = Vector{Float32}(undef,nField)

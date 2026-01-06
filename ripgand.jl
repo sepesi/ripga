@@ -285,6 +285,7 @@ function toStr1(V::Vector{Float32})
    nNZField += 1
   end
  end
+ (length(S) == 0) && push!(S, "0")
  return string(S...)
 end
 
@@ -293,8 +294,11 @@ function toStr(V::Vector{Float32})
  nNZField = 0
  S = String[]
  for iField = 1:nField
+  # if field/component is not empty
   if V[iField] != 0
+   # if not the first nonzero field
    if nNZField != 0
+    # if nonzero field is negative
     if V[iField] < 0
      if V[iField] == -1
       push!(S, @sprintf(" - %s",
@@ -303,6 +307,7 @@ function toStr(V::Vector{Float32})
       push!(S, @sprintf(" - %0.7g%s",
        abs(V[iField]), basis[iField]))
      end
+    # else nonzero field is positive
     else
      if V[iField] == 1
       push!(S, @sprintf(" + %s",
@@ -312,6 +317,7 @@ function toStr(V::Vector{Float32})
        V[iField], basis[iField]))
      end
     end
+   # else the first nonzero field
    else
     if V[iField] == 1
      push!(S, @sprintf("%s",
@@ -330,9 +336,7 @@ function toStr(V::Vector{Float32})
    nNZField += 1
   end
  end
- if length(S) == 0
-  push!(S, "0")
- end
+ (length(S) == 0) && push!(S, "0")
  return string(S...)
 end # toStr()
 
