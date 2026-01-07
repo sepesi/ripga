@@ -351,7 +351,7 @@ macro ga_str(str)
    C[i] = '^'
   elseif C[i] == '∨' # \vee for regressive product
    C[i] = '&'
-  elseif C[i] == '·' # \cdotp for inner product
+  elseif C[i] == '⋅' # \cdot for inner product
    C[i] = '|'
   elseif C[i] == '∗' # \ast for dual (suffix)
    j = i-1

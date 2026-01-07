@@ -122,13 +122,16 @@ function utest(nLoop=100,
  tst2 = Vector{Float32}(undef,nField)
 
  for iLoop = 1:nLoop
-  # note: multiplicationn operator needed to specify vectors
-  a = 1 + 2*e0 + 3*e1 + 4*e01 # not "1 + 2e0 + 3e1 + 4e01"
-  b = 2 + 4*e0 + 6*e1 + 8*e01 # not "2 + 4e0 + 6e1 + 8e01"
 
   if flgMathSyntax == false
    # geometric objects in programming syntax
    (nLoop == 1) && println("  # calculated with programming syntax")
+
+   # note: multiplicationn operator needed to specify vectors
+   a = 1 + 2*e0 + 3*e1 + 4*e01 # not "1 + 2e0 + 3e1 + 4e01"
+   b = 2 + 4*e0 + 6*e1 + 8*e01 # not "2 + 4e0 + 6e1 + 8e01"
+
+   # calculate results to be tested
    res1 =  (1*e0) * (1*e0) # = 0
    res2 =  (1*e1) * (1*e1) # = 1
    res3 =  (1*e0) ^ (1*e1) # = e01
@@ -149,14 +152,26 @@ function utest(nLoop=100,
   else # flgMathSyntax == true
    # geometric objects in math syntax
    (nLoop == 1) && println("  # calculated with math syntax")
-   res1 = e0 * e0 # = 0
-   res2 = e1 * e1 # = 1
-   res3 = e0 ^ e1 # = e01
-   res4 = !e01    # = 1
-   res5 = e0 & e1 # = -1
-   res6 = e0 | e1 # = 0
-   res7 = e1 | e1 # = 1
-   
+
+   # note: multiplicationn operator needed to specify vectors
+   a = ga"1 + 2 e0 + 3 e1 + 4 e01" # not "1 + 2e0 + 3e1 + 4e01"
+   b = ga"2 + 4 e0 + 6 e1 + 8 e01" # not "2 + 4e0 + 6e1 + 8e01"
+
+   # calculate results to be tested
+   res1 =  ga"(1 e0)   (1 e0)" # = 0
+   res2 =  ga"(1 e1)   (1 e1)" # = 1
+   res3 =  ga"(1 e0) ^ (1 e1)" # = e01
+   res4 =  ga"(1 e01)∗"        # = 1
+   res5 =  ga"(1 e0) ∨ (1 e1)" # = -1
+   res6 =  ga"(1 e0) ⋅ (1 e1)" # = 0
+   res7 =  ga"(1 e1) ⋅ (1 e1)" # = 1
+   res8 =  ga"a + b"   # = 3 + 6*e0 + 9*e1 + 12*e01
+   res9 =  ga"a - b"   # = -1 - 2*e0 - 3*e1 - 4*e01
+   res10 = ga"a   b"   # = 20 + 8*e0 + 12*e1 + 16*e01
+   res11 = ga"a ^ b"   # = 2 + 8*e0 + 12*e1 + 16*e01
+   res12 = ga"a ∨ b"   # = 16 + 32*e0 + 48*e1 + 32*e01
+   res13 = ga"a ⋅ b"   # = 20 + 8*e0 + 12*e1 + 16*e01
+
    tst1 = e0 - 1
    tst2 = 1 - e0
   end # flgMathSyntax
