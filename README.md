@@ -138,21 +138,47 @@ reveals itself as I write the MWE to ask the community for help.
 
 ## 2.6 Developer Community
 In the conclusion of Julia: A Fresh Approach to Numerical Computing, the authors wrote
-"We built Julia to meet our needs for numerical computing, and it turns out that many others wanted exactly the same thing. At the time of writing, not a day goes by when we don't learn that someone new has picked up Julia at universities and companies around the world, in fields as diverse as engineering, mathematics, physical and social sciences, finance, biotech, and many others. More than just a language, Julia has become a place for programmers, physical scientists, social scientists, computational scientists, mathematicians, and others to pool their collective knowledge in the form of online discussions and code."
-The significant overlap of the many fields interested in Julia and the many fields interested in geometric algebras (e.g., projective geometric algebra, spacetime geometric algebra, conformal geometric algebra) suggests that the Julia community and the geometric algebra community would benefit from each other.
-3. Getting the Hang of PGA
-The phrase "three-view orthographic projection" is from the field of mechanical drawing and it is the standard approach to drawing a 3D object on a 2D surface showing three mutually perpendicular perspectives. I think there is an analogous multiple perspective approach to defining PGA so it can be fully appreciated. Specifically, the following perspectives (preferably done in the listed order) are helpful in getting the hang of PGA:
-Read a thorough description of the history of the major contributions to PGA by individual mathematicians. The history reveals the impressive math lineage behind today's PGA, which builds confidence in the underlying concepts. I particularly like Slehar's historical description of Clifford algebra at https://slehar.wordpress.com/2014/03/18/clifford-algebra-a-visual-introduction/ followed by Slehar's explanation of how Clifford algebra extends to Projective Geometry at https://slehar.wordpress.com/2014/06/26/geometric-algebra-projective-geometry/
-Review the PGA 2D and the PGA 3D cheat sheets by Charles Gunn and Steven De Keninck at https://bivector.net/2DPGA.pdf and https://bivector.net/3DPGA.pdf, respectively.
-Watch a series of PGA video tutorials. These tutorials are generally information dense and probably should be watched more than once. They give the motivation to keep learning. I particularly like the PGA tutorial given by Charles Gunn and Steven De Keninck during the SIGGRAPH2019 conference at https://www.youtube.com/watch?v=tX4H_ctggYo. However, there are a lot of other very good PGA video tutorials at https://bivector.net/doc.html.
-Read a variety of papers and essays to fill in the gaps in whatever you need to know to implement your own PGA applications. For example, if you are interested in using PGA to simulate the physics of interacting objects, read the Leo Dorst and Steven De Keninck essay May the Forque Be with You - Dynamics in PGA at https://bivector.net/PGAdyn.pdf. Or if you are interested in using Julia's REPL to examine the details of some of the PGA2D and PGA3D cheat sheet formulas, continue reading this essay.
+> "We built Julia to meet our needs for numerical computing, and it turns out that many others wanted exactly the same thing. 
+> At the time of writing, not a day goes by when we don't learn that someone new has picked up Julia at universities and
+> companies around the world, in fields as diverse as engineering, mathematics, physical and social sciences, finance, biotech,
+> and many others. More than just a language, Julia has become a place for programmers, physical scientists, social scientists,
+> computational scientists, mathematicians, and others to pool their collective knowledge in the form of online discussions and code."
 
-4. PGA Basis Multivectors
-PGA in a two dimensional Euclidean space requires a basis of eight hypercomplex numbers which can be initialized by including the following two files:
-the filename ripga2d.jl is an acronym for Reference Implementation of Projective Geometric Algebra in 2 Dimensions, and
-the filename ripgand.jl is an acronym for Reference Implementation of Projective Geometric Algebra in n Dimensions.
+The significant overlap of the many fields interested in Julia and the many fields interested in geometric algebras (e.g., Projective 
+Geometric Algebra, spacetime geometric algebra, conformal geometric algebra) suggests that the Julia community and the Projective
+Geometric Algebra community would benefit from each other.
 
-The notation of the basis is simple, where eij is short for eiej (i.e., the multiplication of ei and ej), where eijk is short for eiejek (i.e., the multiplication of ei, ej, and ek), where eij = -eji, where e1e1 = e2e2 = 1, and e0e0 = 0 (i.e., the degenerate case).
+# 3. Getting the Hang of PGA
+The phrase "three-view orthographic projection" is from the field of mechanical drawing and it is the standard approach to drawing 
+a 3D object on a 2D surface showing three mutually perpendicular perspectives. I think there is an analogous multiple perspective 
+approach to defining PGA so it can be fully appreciated. Specifically, the following perspectives (preferably done in the listed 
+order) are helpful in getting the hang of PGA:
+1. Read a thorough description of the history of the major contributions to PGA by individual mathematicians. The history reveal
+   the impressive math lineage behind today's PGA, which builds confidence in the underlying concepts. I particularly like Slehar's
+   historical description of Clifford algebra at https://slehar.wordpress.com/2014/03/18/clifford-algebra-a-visual-introduction/
+   followed by Slehar's explanation of how Clifford algebra extends to Projective Geometry at
+   https://slehar.wordpress.com/2014/06/26/geometric-algebra-projective-geometry/
+2. Review the PGA 2D and the PGA 3D cheat sheets by Charles Gunn and Steven De Keninck at https://bivector.net/2DPGA.pdf and
+   https://bivector.net/3DPGA.pdf, respectively.
+3. Watch a series of PGA video tutorials. These tutorials are generally information dense and probably should be watched
+   more than once. They give the motivation to keep learning. I particularly like the PGA tutorial given by Charles Gunn and
+   Steven De Keninck during the SIGGRAPH2019 conference at https://www.youtube.com/watch?v=tX4H_ctggYo. However, there are a
+   lot of other very good PGA video tutorials at https://bivector.net/doc.html.
+4. Read a variety of papers and essays to fill in the gaps in whatever you need to know to implement your own PGA applications.
+   For example, if you are interested in using PGA to simulate the physics of interacting objects, read the Leo Dorst and Steven
+   De Keninck essay May the Forque Be with You - Dynamics in PGA at https://bivector.net/PGAdyn.pdf. Or if you are interested in
+   using Julia's REPL to examine the details of some of the PGA2D and PGA3D cheat sheet formulas, continue reading this essay.
+
+# 4. PGA Basis Multivectors
+PGA in a two dimensional Euclidean space requires a basis of eight hypercomplex numbers which can be initialized by including the 
+following two files:
+* the filename ripga2d.jl is an acronym for Reference Implementation of Projective Geometric Algebra in 2 Dimensions, and
+* the filename ripgand.jl is an acronym for Reference Implementation of Projective Geometric Algebra in n Dimensions.
+
+The notation of the basis is simple, where eij is short for eiej (i.e., the multiplication of ei and ej), where eijk is short for 
+eiejek (i.e., the multiplication of ei, ej, and ek), where eij = -eji, where e1e1 = e2e2 = 1, and e0e0 = 0 (i.e., the degenerate case).
+
+```
 julia> include("ripgand.jl")
 julia> include("ripga2d.jl")
 julia> basis
@@ -165,12 +191,24 @@ julia> basis
  "e20"
  "e12"
  "e012"
-As mentioned in this essay's introduction, a compelling reason for using projective geometric algebra is the unification of the translation and rotation operations. However, that desired unification comes at the expense of an unintuitive geometric interpretation of the basis, where
-e0 is interpreted as a line at infinity,
-e1 and e2 are lines along the y axis and x axis, respectively (which can initially seem like a mislabeling), and
-the bivectors e01, e20, and e12 are interpreted as points (i.e., the meet of two lines). Points that are generated by the meeting of two lines, one of which is e0, are called ideal points and they are located at the intersection of parallel lines.
+```
 
-The order of this basis can be reversed, where element i becomes element 9-i. This reverse ordering of the basis results in a type of symmetry called the dual and it swaps the roles of points and lines. For example, the third element of the basis is e1, which is the line at x=0, but the third element of reverse(basis) is e20 is a point and is called the dual of e1 (i.e., the dual of basis[3] is reverse(basis[3]). In practice, duality is a gift of time because every derived PGA equation automatically offers a dual form of that PGA equation without any derivation necessary. Similarly, PGA software can be significantly reduced in size because the dual of an implemented PGA function is automatically available without any software implementation necessary.
+As mentioned in this essay's introduction, a compelling reason for using projective geometric algebra is the unification of 
+the translation and rotation operations. However, that desired unification comes at the expense of an unintuitive geometric 
+interpretation of the basis, where
+* e0 is interpreted as a line at infinity,
+* e1 and e2 are lines along the y axis and x axis, respectively (which can initially seem like a mislabeling), and
+* the bivectors e01, e20, and e12 are interpreted as points (i.e., the meet of two lines). Points that are generated by the
+  meeting of two lines, one of which is e0, are called ideal points and they are located at the intersection of parallel lines.
+
+The order of this basis can be reversed, where element i becomes element 9-i. This reverse ordering of the basis results in a 
+type of symmetry called the dual and it swaps the roles of points and lines. For example, the third element of the basis is e1, 
+which is the line at x=0, but the third element of reverse(basis) is e20 is a point and is called the dual of e1 (i.e., the dual 
+of basis[3] is reverse(basis[3]). In practice, duality is a gift of time because every derived PGA equation automatically offers 
+a dual form of that PGA equation without any derivation necessary. Similarly, PGA software can be significantly reduced in size 
+because the dual of an implemented PGA function is automatically available without any software implementation necessary.
+
+```
 julia> reverse(basis)
 8-element Vector{String}:
  "e012"
@@ -181,7 +219,14 @@ julia> reverse(basis)
  "e1"
  "e0"
  "1"
-Similar to PGA in two dimensional space, PGA in a three dimensional Euclidean space requires a basis of 16 hypercomplex numbers which can be initialized by including two files: ripgand.jl and ripga3d.jl. As before, the notation of the basis is simple, where e0123 is short for e0e1e2e3 (i.e., the multiplication of e0, e1, e2, and e3), where eij = -eji, where e1e1 = e2e2 = e3e3 = 1, and e0e0 = 0 (i.e., the degenerate case).
+```
+
+Similar to PGA in two dimensional Euclidean space, PGA in a three dimensional Euclidean space requires a basis of 16 hypercomplex 
+numbers which can be initialized by including two files: ripgand.jl and ripga3d.jl. As before, the notation of the basis is simple, 
+where e0123 is short for e0e1e2e3 (i.e., the multiplication of e0, e1, e2, and e3), where eij = -eji, where e1e1 = e2e2 = e3e3 = 1, 
+and e0e0 = 0 (i.e., the degenerate case).
+
+```
 julia> include("ripgand.jl")
 julia> include("ripga3d.jl")
 julia> basis
@@ -202,6 +247,8 @@ julia> basis
  "e032"
  "e123"
  "e0123"
+```
+
 Again, the desired unification of the translation and rotation operation comes at the expense of an unintuitive geometric interpretation of the basis, where
 e0 is interpreted as the plane at infinity,
 e1, e2, and e3 are planes at x=0, y=0, and z=0 respectively,
