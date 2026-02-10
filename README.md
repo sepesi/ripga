@@ -8,9 +8,9 @@
 
 # 0. TLDR
 Here's a showcase of animations demonstrating Julia and Projective Geometric Algebra. The intent of this 
-essay is to educate, to increase the familiarity with PGA so that more people can create impressive
-applications of geometry. The source code of the animations and the PGA library is in the
-github repository at https://github.com/sepesi/ripga
+essay is to educate, to increase the familiarity with PGA so that more people are able to create transformative
+designs solving intricate problems with geometry. The source code of the animations and the PGA library is in
+the github repository at https://github.com/sepesi/ripga
 
 Animation of inverse kinematics applicable to robotics, based upon Steven De Keninck's inverse kinematics 
 example application in JavaScript, and ported to Julia and Makie in ikv().
