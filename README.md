@@ -25,27 +25,19 @@ the github repository at https://github.com/sepesi/ripga
     <td>Based upon Steven De Keninck's inverse kinematics example application in JavaScript and ported to Julia and Makie.</td>
     <td>Based upon Steven De Keninck's pga3d_slicing example application in JavaScript and ported to Julia and Makie.</td>
   </tr>
+  <tr>
+    <td><img alt="Image" title="SAT animation" src="./res/polyx3.gif" /></td>
+    <td><img alt="Image" title="origami animation" src="./res/origami.gif" /></td>
+  </tr>
+  <tr>
+    <td><b>Figure 0.3. Separating Axis Theorem (SAT) animatio</b></td>
+    <td><b>Figure 0.4. origami animation</b></td>
+  </tr>
+  <tr>
+    <td>3D version of Separating Axis Theorem (SAT) implemented in Julia and Makie.</td>
+    <td>Based upon Steven De Keninck's oeigami example application in JavaScript and ported to Julia and Makie.</td>
+  </tr>
 </table>
-
-![image](./res/ikv.gif "animation")
-
-**Animation of inverse kinematics for robotics, based upon Steven De Keninck's inverse kinematics 
-example application in JavaScript, and ported to Julia and Makie in ikv().**
-
-![image](./res/sl.gif "animation")
-
-**Julia and GLMakie animation of a 3D object slicing for 3D printing, based upon Steven De Keninck's 
-pga3d_slicing JavaScript example application.**
-
-![image](./res/polyx3.gif "animation")
-
-**Julia and GLMakie animation of 3D version of Separating Axis Theorem (SAT). The moving cube turns 
-green only when a separating plane is detected between the two cubes, meaning the two cubes are not 
-intersecting.**
-
-![image](./res/origami.gif "animation")
-
-**Julia and GLMakie animation of origami, applicable to art and engineering projects.**
 
 # 1. Why Projective Geometric Algebra?
 There are several compelling reasons for using Projective Geometric Algebra instead of linear algebra:
