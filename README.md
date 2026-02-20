@@ -28,7 +28,8 @@ pga3d_slicing JavaScript example application.**
 green only when a separating plane is detected between the two cubes, meaning the two cubes are not 
 intersecting.**
 
-![image](./res/origami.gif 'animation")
+![image](./res/origami.gif "animation")
+
 **Julia and GLMakie animation of origami, applicable to art and engineering projects.**
 
 # 1. Why Projective Geometric Algebra?
