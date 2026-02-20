@@ -14,6 +14,10 @@ the github repository at https://github.com/sepesi/ripga
 
 <table>
   <tr>
+    <td><img alt="Image" title="inverse kinematics" src="./res/ikv.gif" /></td>
+    <td><img alt="Image" title="3D slicing" src="./res/sl.gif" /></td>
+  </tr>
+  <tr>
     <td><b>Figure 0.1. inverse kinematics animation</b></td>
     <td><b>Figure 0.2. 3D object slicing animation</b></td>
   </tr>
