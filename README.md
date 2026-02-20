@@ -17,16 +17,19 @@ the github repository at https://github.com/sepesi/ripga
 **Animation of inverse kinematics for robotics, based upon Steven De Keninck's inverse kinematics 
 example application in JavaScript, and ported to Julia and Makie in ikv().**
 
-![image][./res/sl.gif "animation")
+![image](./res/sl.gif "animation")
 
 **Julia and GLMakie animation of a 3D object slicing for 3D printing, based upon Steven De Keninck's 
 pga3d_slicing JavaScript example application.**
 
-Julia and GLMakie animation of 3D version of Separating Axis Theorem (SAT). The moving cube turns 
-green only when a separating plane is detected between the two cubes, meaning the two cubes are not 
-intersecting.
+![image](./res/polyx3.gif "animation")
 
-Julia and GLMakie animation of origami, applicable to art and engineering projects.
+**Julia and GLMakie animation of 3D version of Separating Axis Theorem (SAT). The moving cube turns 
+green only when a separating plane is detected between the two cubes, meaning the two cubes are not 
+intersecting.**
+
+![image](./res/origami.gif 'animation")
+**Julia and GLMakie animation of origami, applicable to art and engineering projects.**
 
 # 1. Why Projective Geometric Algebra?
 There are several compelling reasons for using Projective Geometric Algebra instead of linear algebra:
