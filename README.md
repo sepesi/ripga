@@ -40,11 +40,10 @@ the github repository at https://github.com/sepesi/ripga
 </table>
 
 # 1. Why Projective Geometric Algebra?
-There are several compelling reasons for using Projective Geometric Algebra instead of linear algebra:
-* PGA unifies many concepts and therefore makes them easier to implement,
+There are a couple compelling reasons for using Projective Geometric Algebra instead of linear algebra:
+* PGA unifies many concepts and therefore makes them easier to implement, and
 * PGA uses geometric objects (e.g., points, lines, planes) that hide the coordinates and are easier to
-  mentally manipulate than matrices of coordinates, and
-* PGA could improve AI.
+  mentally manipulate than matrices of coordinates.
 
 ## 1.1 Unify Concepts
 Projective Geometric Algebra is good at unifying concepts. For example, in Projective Geometric Algebra
@@ -63,11 +62,6 @@ In geometric algebra, the coordinates are embedded in geometric objects. That ab
 when dealing with very complex geometry problems. However, as you will see, most of the animation examples in 
 this essay are simple enough that being coordinate free is not a big advantage, similar to how being object 
 oriented is not a big advantage in a program that just prints "Hello, World!"
-
-## 1.3 Improve AI
-Linear perspective enabled more realistic paintings during the Renaissance. The hope is that it will also enable 
-AI to "see" a more realistic world model. More concretely, Projective Geometric Algebra defines a full vocabulary 
-of vector operations that can exploit nature's many symmetries in order to more efficiently represent common 3D objects.
 
 # 2. Why Julia?
 There are several compelling reasons for using Julia to implement Projective Geometric Algebra applications:
