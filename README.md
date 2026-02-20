@@ -13,11 +13,14 @@ designs solving intricate problems with geometry. The source code of the animati
 the github repository at https://github.com/sepesi/ripga
 
 ![image](./res/ikv.gif "animation")
+
 **Animation of inverse kinematics for robotics, based upon Steven De Keninck's inverse kinematics 
 example application in JavaScript, and ported to Julia and Makie in ikv().**
 
-Julia and GLMakie animation of a 3D object slicing for 3D printing, based upon Steven De Keninck's 
-pga3d_slicing JavaScript example application.
+![image][./res/sl.gif "animation")
+
+**Julia and GLMakie animation of a 3D object slicing for 3D printing, based upon Steven De Keninck's 
+pga3d_slicing JavaScript example application.**
 
 Julia and GLMakie animation of 3D version of Separating Axis Theorem (SAT). The moving cube turns 
 green only when a separating plane is detected between the two cubes, meaning the two cubes are not 
