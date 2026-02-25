@@ -46,7 +46,7 @@ There are a few compelling reasons for using Projective Geometric Algebra instea
   mentally manipulate than matrices of coordinates, and
 * PGA is a Clifford Algebra, meaning the algebra's metric signature (i.e., $\mathbb{R}\_{positive,negative,zero}$,
   where the three indexes denote how many of the basis vectors square to +1, -1, and 0, respectively) is easily changed
-  to enable the set of geometric capabilities best suited to the geometry problem at hand. For example,
+  to enable the set of geometry capabilities best suited to the geometry problem at hand. For example,
   the signatures $\mathbb{R}\_{2,0,1}$ and $\mathbb{R}\_{3,0,1}$ enable the Projective Geometric
   Algebra to solve many 2D and 3D Euclidean geometry problems. However, switching the signature to
   $\mathbb{R}\_{4,0,0}$ enables elliptic geometry capabililties and $\mathbb{R}\_{3,1,0}$ enables hyperbolic
