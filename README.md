@@ -319,6 +319,7 @@ At the risk of being too ee-sy (pun intended), the letter e is used in several w
 An exponential function can demonstrate PGA's unification of translation and rotation.
 
 (TODO)
+
 $$
 \mathbf{T} = \underbrace{ e^{\frac{\theta_1}{2}\mathbf{e}_{12}} e^{\frac{r_1}{2}\mathbf{e}_{01}} }_{\text{Circle 1}} \underbrace{ e^{\frac{\theta_2}{2}\mathbf{e}_{31}} e^{\frac{r_2}{2}\mathbf{e}_{03}} }_{\text{Circle 2}}
 $$
