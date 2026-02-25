@@ -44,13 +44,8 @@ There are a few compelling reasons for using Projective Geometric Algebra instea
 * PGA unifies many concepts and therefore makes them easier to implement,
 * PGA uses geometric objects (e.g., points, lines, planes) that hide the coordinates and are easier to
   mentally manipulate than matrices of coordinates, and
-* PGA is a Clifford Algebra, meaning the algebra's metric signature (i.e., $\mathbb{R}\_{positive,negative,zero}$,
-  where the three indexes denote how many of the basis vectors square to +1, -1, and 0, respectively) is easily changed
-  to enable the set of geometry capabilities best suited to the geometry problem at hand. For example,
-  the signatures $\mathbb{R}\_{2,0,1}$ and $\mathbb{R}\_{3,0,1}$ enable the Projective Geometric
-  Algebra to solve many 2D and 3D Euclidean geometry problems. However, switching the signature to
-  $\mathbb{R}\_{4,0,0}$ enables elliptic geometry capabililties and $\mathbb{R}\_{3,1,0}$ enables hyperbolic
-  geometry capabilities.
+* PGA belongs to the family of [Cayley-Klein](https://en.wikipedia.org/wiki/Cayley%E2%80%93Klein_metric)
+  geometries, unifying Euclidean geometry, elliptic geometry, and hyperbolic geometry.
 
 ## 1.1 Unify Concepts
 Projective Geometric Algebra is good at unifying concepts. For example, in Projective Geometric Algebra
@@ -69,6 +64,14 @@ In geometric algebra, the coordinates are embedded in geometric objects. That ab
 when dealing with very complex geometry problems. However, as you will see, most of the animation examples in 
 this essay are simple enough that being coordinate free is not a big advantage, similar to how being object 
 oriented is not a big advantage in a program that just prints "Hello, World!"
+
+## 1.3 Unify Geometries
+The metric signature (i.e., $\mathbb{R}\_{positive,negative,zero}$, where the three indexes denote how many
+basis vectors square to +1, -1, and 0, respectively) denotes the geometry's dimensions and spatial curvature.
+For example, the metric signatures $\mathbb{R}\_{2,0,1}$ and $\mathbb{R}\_{3,0,1}$ enable the Projective Geometric
+Algebra to solve many 2D and 3D Euclidean geometry problems. However, switching the signature to
+$\mathbb{R}\_{4,0,0}$ enables elliptic geometry capabililties and $\mathbb{R}\_{3,1,0}$ enables hyperbolic
+geometry capabilities.
 
 # 2. Why Julia?
 There are several compelling reasons for using Julia to implement Projective Geometric Algebra applications:
