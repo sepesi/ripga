@@ -167,25 +167,25 @@ Geometric Algebra, spacetime geometric algebra, conformal geometric algebra) sug
 Geometric Algebra community would benefit from each other.
 
 # 3. Getting the Hang of PGA
-The phrase "three-view orthographic projection" is from the field of mechanical drawing and it is the standard approach to drawing 
-a 3D object on a 2D surface showing three mutually perpendicular perspectives. I think there is an analogous multiple perspective 
-approach to defining PGA so it can be fully appreciated. Specifically, the following perspectives (preferably done in the listed 
-order) are helpful in getting the hang of PGA:
-1. Read a thorough description of the history of the major contributions to PGA by individual mathematicians. The history reveal
+The phrase "three-view orthographic projection" is from the field of mechanical drawing and it is the standard approach to
+understanding a 3D object drawn on a 2D surface showing three mutually perpendicular perspectives. An analogous multiple perspective
+approach helps with understanding PGA. Specifically, the following perspectives (preferably met in the listed order) are
+helpful in getting the hang of PGA:
+1. Read a thorough description of the history of the major contributions by individual mathematicians to PGA. The history reveals
    the impressive math lineage behind today's PGA, which builds confidence in the underlying concepts. I particularly like Slehar's
    historical description of Clifford algebra at https://slehar.wordpress.com/2014/03/18/clifford-algebra-a-visual-introduction/
    followed by Slehar's explanation of how Clifford algebra extends to Projective Geometry at
    https://slehar.wordpress.com/2014/06/26/geometric-algebra-projective-geometry/
-2. Review the PGA 2D and the PGA 3D cheat sheets by Charles Gunn and Steven De Keninck at https://bivector.net/2DPGA.pdf and
+2. Review the 2D and 3D PGA cheat sheets by Charles Gunn and Steven De Keninck at https://bivector.net/2DPGA.pdf and
    https://bivector.net/3DPGA.pdf, respectively.
 3. Watch a series of PGA video tutorials. These tutorials are generally information dense and probably should be watched
    more than once. They give the motivation to keep learning. I particularly like the PGA tutorial given by Charles Gunn and
-   Steven De Keninck during the SIGGRAPH2019 conference at https://www.youtube.com/watch?v=tX4H_ctggYo. However, there are a
+   Steven De Keninck during the 2019 SIGGRAPH conference at https://www.youtube.com/watch?v=tX4H_ctggYo. However, there are a
    lot of other very good PGA video tutorials at https://bivector.net/doc.html.
 4. Read a variety of papers and essays to fill in the gaps in whatever you need to know to implement your own PGA applications.
    For example, if you are interested in using PGA to simulate the physics of interacting objects, read the Leo Dorst and Steven
-   De Keninck essay May the Forque Be with You - Dynamics in PGA at https://bivector.net/PGAdyn.pdf. Or if you are interested in
-   using Julia's REPL to examine the details of some of the PGA2D and PGA3D cheat sheet formulas, continue reading this essay.
+   De Keninck essay _May the Forque Be with You - Dynamics in PGA_ at https://bivector.net/PGAdyn.pdf. Or if you are interested in
+   using Julia's REPL to examine the details of some of the 2D and 3D PGA cheat sheet formulas, continue reading this essay.
 
 # 4. PGA Basis Multivectors
 PGA in a two dimensional Euclidean space requires a basis of eight hypercomplex numbers which can be initialized by including the 
