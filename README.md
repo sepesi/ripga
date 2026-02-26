@@ -7,10 +7,10 @@
 >key to the greatest discoveries in all fields of mathematics." - Joseph-Louis Lagrange (1736–1813)
 
 # 0. TLDR
-Here's a showcase of animations demonstrating Julia and Projective Geometric Algebra. The intent of this 
+Here's a showcase of animations demonstrating Julia, Makie, and Projective Geometric Algebra. The intent of this 
 essay is to educate, to increase the familiarity with PGA so that more people are able to create transformative
-designs solving intricate problems with geometry. The source code of the animations and the PGA library is in
-the github repository at https://github.com/sepesi/ripga
+designs solving intricate geometry problems. The source code of the animations and the PGA library is in the
+github repository at https://github.com/sepesi/ripga
 
 <table>
   <tr>
