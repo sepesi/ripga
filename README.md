@@ -66,8 +66,8 @@ this essay are simple enough that being coordinate free is not a big advantage, 
 oriented is not a big advantage in a program that just prints "Hello, World!"
 
 ## 1.3 Unify Geometries
-The metric signature (i.e., $\mathbb{R}\_{positive,negative,zero}$, where the three indexes denote how many
-basis vectors square to +1, -1, and 0, respectively) denotes the geometry's dimensions and spatial curvature.
+The metric signature (i.e., $\mathbb{R}\_{negative,positive,zero}$, where the three indexes denote how many
+basis vectors square to -1, +1, and 0, respectively) denotes the geometry's dimensions and spatial curvature.
 For example, the metric signatures $\mathbb{R}\_{2,0,1}$ and $\mathbb{R}\_{3,0,1}$ enable the Projective Geometric
 Algebra to solve many 2D and 3D Euclidean geometry problems. However, switching the signature to
 $\mathbb{R}\_{4,0,0}$ enables elliptic geometry capabililties and $\mathbb{R}\_{3,1,0}$ enables hyperbolic
