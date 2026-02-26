@@ -61,9 +61,7 @@ algebra to being based instead upon Projective Geometric Algebra.
 
 ## 1.2 Hide Coordinates
 In geometric algebra, the coordinates are embedded in geometric objects. That abstraction can be very helpful 
-when dealing with very complex geometry problems. However, as you will see, most of the animation examples in 
-this essay are simple enough that being coordinate free is not a big advantage, similar to how being object 
-oriented is not a big advantage in a program that just prints "Hello, World!"
+when dealing with complex geometry problems.
 
 ## 1.3 Unify Geometries
 The metric signature (i.e., $\mathbb{R}\_{positive,negative,zero}$, where the three subscripts denote how many
