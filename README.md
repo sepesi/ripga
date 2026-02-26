@@ -2,9 +2,9 @@
 # Reference Implementation of Projective Geometric Algebra
 
 >"As long as Algebra and Geometry were separated, their progress was slow and their use limited;
->but once these sciences were united, they lent each other mutual support and advanced rapidly toge
->ther towards perfection. We owe to Descartes the application of Algebra to Geometry; this has become
->the key to the greatest discoveries in all fields of mathematics." - Joseph-Louis Lagrange (1736–1813)
+>but once these sciences were united, they lent each other mutual support and advanced rapidly toge>ther
+>towards perfection. We owe to Descartes the application of Algebra to Geometry; this has become the
+>key to the greatest discoveries in all fields of mathematics." - Joseph-Louis Lagrange (1736–1813)
 
 # 0. TLDR
 Here's a showcase of animations demonstrating Julia and Projective Geometric Algebra. The intent of this 
