@@ -60,8 +60,9 @@ the highly regulated Collins Aerospace design and development tool chain current
 algebra to being based instead upon Projective Geometric Algebra.
 
 ## 1.2 Hide Coordinates
-In geometric algebra, the coordinates are embedded in geometric objects. That abstraction can be very helpful 
-when dealing with complex geometry problems.
+In Projective Geometric Algebra, the coordinates are embedded in geometric objects, avoiding the difficulties
+of entering and debugging matrices of coordinates. That abstraction can be especially helpful when dealing with
+complex geometry problems.
 
 ## 1.3 Unify Geometries
 The metric signature (i.e., $\mathbb{R}\_{positive,negative,zero}$, where the three subscripts denote how many
