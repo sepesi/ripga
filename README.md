@@ -188,17 +188,19 @@ helpful in getting the hang of PGA:
    using Julia's REPL to examine the details of some of the 2D and 3D PGA cheat sheet formulas, continue reading this essay.
 
 # 4. PGA Basis Multivectors
-First, some terms. the metric signature for work in an n-dimensional Euclidean space is $\mathbb{R}\_{n,0,1}$, where n is the
+First, some vocabulary background. The metric signature for work in an n-dimensional Euclidean space is $\mathbb{R}\_{n,0,1}$, where n is the
 number of Euclidean basis vectors (also known as proper basis vectors). As specified in the signature, those n Euclidean basis
-vectors all square to +1. In addition to the n Euclidean basis vectors, there is an additional basis vector and it is called
+vectors all square to +1. In addition to the n Euclidean basis vectors, there is an additional basis vector for projection and it is called
 the ideal basis vector (also known as the null basis vector). As specified in the signature, the ideal basis vector squares to 0.
 The list of all $2^{n+1}$ possible combinations of basis vectors is called the basis. The number of basis vectors included in a
-particular combination of basis vectors is called its grade. For example, the scalar term includes no basis vectors and therefore
-has grade 0. The n+1 basis vectors (i.e., the n Euclidean basis vectors plus the 1 ideal vector) all include just one basis
-vector and therefore have grade 1. In general, the basis has $\binom{n+1}{grade}$ combinations of each possible grade. Summing
-over the [binomial coefficients](https://en.wikipedia.org/wiki/Binomial_coefficient), $\sum_{grade=0}^{n+1}\binom{n+1}{grade}$ = $2^{n+1}$.
+term with a particular combination of basis vectors is called its grade. For example, the scalar term includes no basis vectors and therefore
+has grade 0. Grade 0 terms are also called scalars. Similarly, the n+1 basis vectors (i.e., the n Euclidean basis vectors plus the 1 ideal vector)
+all include just one basis vector and therefore have grade 1. Grade 1 terms are also called vectors. Continuing, grade 2 terms are called bivectors,
+grade 3 terms are called trivectors, and so on. In general, the basis has $\binom{n+1}{grade}$ terms of each possible grade. Summing
+over those [binomial coefficients](https://en.wikipedia.org/wiki/Binomial_coefficient), $\sum_{grade=0}^{n+1}\binom{n+1}{grade}$ = $2^{n+1}$
+possible terms in the space defined by the metric signature $\mathbb{R}\_{n,0,1}$.
 
-(TODO)
+(TODO)  
 PGA in a two dimensional Euclidean space requires a basis of eight hypercomplex numbers which can be initialized by including the 
 following two files:
 * the filename ripga2d.jl is an acronym for Reference Implementation of Projective Geometric Algebra in 2 Dimensions, and
