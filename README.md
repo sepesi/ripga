@@ -192,11 +192,11 @@ First, some terms. the metric signature for work in an n-dimensional Euclidean s
 number of Euclidean basis vectors (also known as proper basis vectors). As specified in the signature, those n Euclidean basis
 vectors all square to +1. In addition to the n Euclidean basis vectors, there is an additional basis vector and it is called
 the ideal basis vector (also known as the null basis vector). As specified in the signature, the ideal basis vector squares to 0.
-The list of all 2^{n+1} possible combinations of basis vectors is called the basis. The number of basis vectors included in a
+The list of all $2^{n+1}$ possible combinations of basis vectors is called the basis. The number of basis vectors included in a
 particular combination of basis vectors is called its grade. For example, the scalar term includes no basis vectors and therefore
 has grade 0. The n+1 basis vectors (i.e., the n Euclidean basis vectors plus the 1 ideal vector) all include just one basis
 vector and therefore have grade 1. In general, the basis has $\binom{n+1}{grade}$ combinations of each possible grade. Summing
-over the [binomial coefficients](https://en.wikipedia.org/wiki/Binomial_coefficient), $\sum_{grade=0}^{n+1}\binom{n+1}{grade}$ = 1^{n+1}.
+over the [binomial coefficients](https://en.wikipedia.org/wiki/Binomial_coefficient), $\sum_{grade=0}^{n+1}\binom{n+1}{grade}$ = $2^{n+1}$.
 
 (TODO)
 PGA in a two dimensional Euclidean space requires a basis of eight hypercomplex numbers which can be initialized by including the 
