@@ -214,15 +214,24 @@ the basis vectors specified by the metric signature $\mathbb{R}\_{n,0,1}$ are no
 the set of orthogonal Euclidean axes, and the ideal basis vector represents the Euclidean origin but offset by one in the added projective
 dimension. That interpretation is called the direct (i.e., point-based) representation of PGA. Now for the twist: for a couple compelling reasons,
 the dual (i.e., plane-based) representation of PGA is preferred over the direct (i.e., point-based) representation of PGA. The metric signature
-for the dual (i.e., plane-based) representation of PGA is $\mathbb{R}^*\_{n,0,1}$, where again ei $\notin \mathbb{R}$ and eii $\in \mathbb{R}$.
-However, in the dual representation of PGA, the Euclidean basis vectors represent the planes orthogonal to the Euclidean axes. For example, 
-e1 represents the x=0 plane and e2 represents the y=0 plane. Even weirder, the ideal basis vector represents the plane at infinity (i.e., 
-the "boundary" of the Euclidean space).
+for the dual (i.e., plane-based) representation of PGA is $\mathbb{R}^*\_{n,0,1}$, where again e$i \notin \mathbb{R}$ and e$ii \in \mathbb{R} 
+\forall i \in \{0,\dots,n\}$. However, in the dual representation of PGA, the Euclidean basis vectors represent the planes orthogonal to the 
+Euclidean axes. For example, e1 represents the x=0 plane and e2 represents the y=0 plane. Even weirder, the ideal basis vector represents the 
+plane at infinity (i.e., the "boundary" of the Euclidean space).
+
+In addition to the interpretations of the PGA basis vectors, the interpretations of the PGA basis bivectors are also interesting. For n=2, as
+shown in the following two REPL sessions, bivectors specify rotation points, and if the bivector contains an ideal basis vector (i.e., the 
+bivector term contains a 0) then the rotation is about a point at infinity, which is a translation not a rotation.
 
 As for the compelling reasons for this weird interpretation of the PGA basis, there are two:
 1. Dual PGA unifies rotations and translations.
 2. Dual PGA unifies operations in 2D and 3D Euclidean spaces.
-(TODO)  
+
+In a sense, the underlyiong reason for the weird interpretation PGA basis is laziness, avoiding the work of writing unnecessary code that would do
+the multivector bookkeeping needed by multivector operations in direct PGA. However, that laziness has the benefits of reducing complexity and cost,
+in accordance with Elon Musk's frequently cited philosophy about product design: "The best part is no part. The best process is no process."
+
+(TODO)
 
 ## 4.1 2D PGA Basis
 
