@@ -204,7 +204,7 @@ basis vector and therefore have grade 1. Grade 1 terms are called vectors (e.g.,
 (e.g., 4 + 3e2 + 6e12). In general, the basis has $\binom{n+1}{grade}$ terms of each possible grade. Summing over those
 [binomial coefficients](https://en.wikipedia.org/wiki/Binomial_coefficient), $\sum_{grade=0}^{n+1}\binom{n+1}{grade}$ = $2^{n+1}$ possible
 terms in the space defined by the metric signature $\mathbb{R}\_{n,0,1}$ (e.g., for n=2, the $2^{n+1}$ possible terms are 1, e0, e1, e2,
-e01, e20, e12, e012).
+e01, e20, e12, e012. That basis has one grade 0 term, three grade 1 terms, three grade 2 terms, and one grade 3 term).
 
 (TODO)  
 PGA in a two dimensional Euclidean space requires a basis of eight hypercomplex numbers which can be initialized by including the 
