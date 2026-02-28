@@ -192,9 +192,10 @@ helpful in getting the hang of PGA:
 
 # 4. PGA Basis
 First, some vocabulary. The metric signature for work in an n-dimensional Euclidean space is $\mathbb{R}\_{n,0,1}$, where n is the
-number of Euclidean basis vectors (also known as proper basis vectors). As specified in the signature, those n Euclidean basis
-vectors all square to +1. In addition to the n Euclidean basis vectors, there is a basis vector for projection and it is called
-the ideal basis vector (also known as the null basis vector). As specified in the signature, the ideal basis vector squares to 0.
+number of Euclidean dimensions, which is also the number of Euclidean basis vectors (also known as proper basis vectors). As specified
+in the signature, those n Euclidean basis vectors all square to +1. In addition to the n Euclidean basis vectors, there is a basis
+vector for projection and it is called the ideal basis vector (also known as the null basis vector). As specified in the signature,
+the ideal basis vector squares to 0.
 
 The list of all $2^{n+1}$ possible combinations of basis vectors is called the basis. The number of basis vectors included in a
 term is called its grade. For example, the scalar term includes no basis vectors and therefore has grade 0. Grade 0 terms are also 
@@ -205,6 +206,11 @@ basis vector and therefore have grade 1. Grade 1 terms are called vectors (e.g.,
 [binomial coefficients](https://en.wikipedia.org/wiki/Binomial_coefficient), $\sum_{grade=0}^{n+1}\binom{n+1}{grade}$ = $2^{n+1}$ possible
 terms in the space defined by the metric signature $\mathbb{R}\_{n,0,1}$ (e.g., for n=2, the $2^{n+1}$ possible terms are 1, e0, e1, e2,
 e01, e20, e12, and e012, which is a basis with one grade 0 term, three grade 1 terms, three grade 2 terms, and one grade 3 term).
+
+Although the vocabulary about the PGA basis is relatively easy, the interpretation of the PGA basis requires a little more work. To begin,
+the basis vectors specified in the metric signature $\mathbb{R}\_{n,0,1}$ are not real numbers but they square to real numbers (i.e., for n=2,
+{e0,e1,e2} $\notin \mathbb{R}$, and {e00,e11,e22} $\in \mathbb{R}$).
+
 
 (TODO)  
 PGA in a two dimensional Euclidean space requires a basis of eight hypercomplex numbers which can be initialized by including the 
