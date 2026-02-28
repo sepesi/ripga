@@ -198,27 +198,30 @@ vector for projection and it is called the ideal basis vector (also known as the
 the ideal basis vector squares to 0.
 
 The list of all $2^{n+1}$ possible combinations of basis vectors is called the basis. The number of basis vectors included in a
-term is called its grade. For example, the scalar term includes no basis vectors and therefore has grade 0. Grade 0 terms are also 
-called scalars (e.g., 4). Similarly, the n+1 basis vectors (i.e., the n Euclidean basis vectors plus the 1 ideal vector) all include just one
-basis vector and therefore have grade 1. Grade 1 terms are called vectors (e.g., 3e2). Continuing, grade 2 terms are called bivectors 
-(e.g., 6e12), grade 3 terms are called trivectors (e.g., e012), and so on. The summation of different grade terms is called a multivector
-(e.g., 4 + 3e2 + 6e12). In general, the basis has $\binom{n+1}{grade}$ terms of each possible grade. Summing over those
-[binomial coefficients](https://en.wikipedia.org/wiki/Binomial_coefficient), $\sum_{grade=0}^{n+1}\binom{n+1}{grade}$ = $2^{n+1}$ possible
-terms in the space defined by the metric signature $\mathbb{R}\_{n,0,1}$ (e.g., for n=2, the $2^{n+1}$ possible terms are 1, e0, e1, e2,
-e01, e20, e12, and e012, which is a basis with one grade 0 term, three grade 1 terms, three grade 2 terms, and one grade 3 term).
+term is called its grade. For example, the scalar term (e.g., 4) includes no basis vectors and therefore has grade 0. Similarly, the
+n+1 basis vectors (i.e., the n Euclidean basis vectors and the ideal basis vector) all include just one basis vector and therefore have grade 1.
+Grade 1 terms are called vectors (e.g., 3e2). Continuing, grade 2 terms are called bivectors (e.g., 6e12, short for 6e1e2), grade 3 
+terms are called trivectors (e.g., e012, short for e0e1e2), and so on. The summation of different grade terms is called a multivector
+(e.g., 4 + 3e2 + 6e12). In general, the basis for the space defined by metric signature $\mathbb{R}\_{n,0,1}$ has $\binom{n+1}{grade}$ terms
+of each possible grade. Summing over those [binomial coefficients](https://en.wikipedia.org/wiki/Binomial_coefficient),
+$\sum_{grade=0}^{n+1}\binom{n+1}{grade}$ = $2^{n+1}$ possible terms (e.g., for n=2, the $2^{n+1}$ possible terms in the basis
+defined by metric signature $\mathbb{R}\_{n,0,1}$ are 1, e0, e1, e2, e01, e20, e12, and e012, which is a basis with one grade 0 term, three
+grade 1 terms, three grade 2 terms, and one grade 3 term).
 
 Although the vocabulary about the PGA basis is relatively easy, the interpretation of the PGA basis requires a little more work. To begin,
-the basis vectors specified in the metric signature $\mathbb{R}\_{n,0,1}$ are not real numbers but they square to real numbers (i.e., for n=2,
-{e0, e1, e2} $\notin \mathbb{R}$, but {e00, e11, e22} $\in \mathbb{R}$). The set of Euclidean basis vectors (i.e., for n=2, e1 and e2) 
-represent the set of orthogonal Euclidean axes, and the ideal basis vector represents the Euclidean origin but offset by one in the added
-projective dimension. That is called the direct (i.e., point-based) representation of PGA. Now for the twist: for a couple compelling reasons, 
+the basis vectors specified by the metric signature $\mathbb{R}\_{n,0,1}$ are not real numbers but they square to real numbers (i.e., for n=2,
+{e0, e1, e2} $\notin \mathbb{R}$, but {e00, e11, e22} $\in \mathbb{R}$). The set of Euclidean basis vectors (i.e., for n=2, e1 and e2) represent
+the set of orthogonal Euclidean axes, and the ideal basis vector represents the Euclidean origin but offset by one in the added projective
+dimension. That interpretation is called the direct (i.e., point-based) representation of PGA. Now for the twist: for a couple compelling reasons,
 the dual (i.e., plane-based) representation of PGA is preferred over the direct (i.e., point-based) representation of PGA. The metric signature
 for the dual (i.e., plane-based) representation of PGA is $\mathbb{R}^*\_{n,0,1}$, where again ei $\notin \mathbb{R}$ and eii $\in \mathbb{R}$.
 However, in the dual representation of PGA, the Euclidean basis vectors represent the planes orthogonal to the Euclidean axes. For example, 
 e1 represents the x=0 plane and e2 represents the y=0 plane. Even weirder, the ideal basis vector represents the plane at infinity (i.e., 
 the "boundary" of the Euclidean space).
 
-
+As for the compelling reasons for this weird interpretation of the PGA basis, there are two:
+1. Dual PGA unifies rotations and translations.
+2. Dual PGA unifies operations in 2D and 3D Euclidean spaces.
 (TODO)  
 
 ## 4.1 2D PGA Basis
