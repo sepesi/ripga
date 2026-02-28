@@ -218,11 +218,83 @@ However, in the dual representation of PGA, the Euclidean basis vectors represen
 e1 represents the x=0 plane and e2 represents the y=0 plane. Even weirder, the ideal basis vector represents the plane at infinity (i.e., 
 the "boundary" of the Euclidean space).
 
-## 4.1 2D PGA Basis
-
-## 4.2 3D PGA Basis
 
 (TODO)  
+
+## 4.1 2D PGA Basis
+
+```
+julia> include("ripgand.jl")
+julia> include("ripga2d.jl")
+julia> basis
+8-element Vector{String}:
+ "1"
+ "e0"
+ "e1"
+ "e2"
+ "e01"
+ "e20"
+ "e12"
+ "e012"
+```
+
+```
+julia> reverse(basis)
+8-element Vector{String}:
+ "e012"
+ "e12"
+ "e20"
+ "e01"
+ "e2"
+ "e1"
+ "e0"
+ "1"
+```
+
+## 4.2 3D PGA Basis
+julia> include("ripgand.jl")
+julia> include("ripga3d.jl")
+julia> basis
+16-element Vector{String}:
+ "1"
+ "e0"
+ "e1"
+ "e2"
+ "e3"
+ "e01"
+ "e02"
+ "e03"
+ "e12"
+ "e31"
+ "e23"
+ "e021"
+ "e013"
+ "e032"
+ "e123"
+ "e0123"
+```
+
+```
+julia> reverse(basis)
+16-element Vector{String}:
+ "e0123"
+ "e123"
+ "e032"
+ "e013"
+ "e021"
+ "e23"
+ "e31"
+ "e12"
+ "e03"
+ "e02"
+ "e01"
+ "e3"
+ "e2"
+ "e1"
+ "e0"
+ "1"
+```
+
 PGA in a two dimensional Euclidean space requires a basis of eight hypercomplex numbers which can be initialized by including the 
 following two files:
 * the filename ripga2d.jl is an acronym for Reference Implementation of Projective Geometric Algebra in 2 Dimensions, and
