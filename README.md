@@ -252,6 +252,8 @@ julia> reverse(basis)
 ```
 
 ## 4.2 3D PGA Basis
+
+```
 julia> include("ripgand.jl")
 julia> include("ripga3d.jl")
 julia> basis
