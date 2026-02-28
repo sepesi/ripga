@@ -45,7 +45,10 @@ There are a few compelling reasons for using Projective Geometric Algebra instea
 * PGA uses geometric objects (e.g., points, lines, planes) that hide the coordinates and are easier to
   mentally manipulate than matrices of coordinates, and
 * PGA belongs to the family of [Cayley-Klein](https://en.wikipedia.org/wiki/Cayley%E2%80%93Klein_metric)
-  geometries, unifying Euclidean geometry, elliptic geometry, and hyperbolic geometry.
+  geometries, unifying Euclidean geometry (with applications in computer graphics and simulating the
+  dynamic motion of objects), elliptic geometry (with applications in cosmology and cartography),
+  and hyperbolic geometry (with applications in spatial indexing data structures and relativistic spacetime
+  modeling).
 
 ## 1.1 Unify Concepts
 Projective Geometric Algebra is good at unifying concepts. For example, in Projective Geometric Algebra
@@ -187,18 +190,19 @@ helpful in getting the hang of PGA:
    De Keninck essay _May the Forque Be with You - Dynamics in PGA_ at https://bivector.net/PGAdyn.pdf. Or if you are interested in
    using Julia's REPL to examine the details of some of the 2D and 3D PGA cheat sheet formulas, continue reading this essay.
 
-# 4. PGA Basis Multivectors
-First, some vocabulary background. The metric signature for work in an n-dimensional Euclidean space is $\mathbb{R}\_{n,0,1}$, where n is the
+# 4. PGA Basis
+First, some vocabulary. The metric signature for work in an n-dimensional Euclidean space is $\mathbb{R}\_{n,0,1}$, where n is the
 number of Euclidean basis vectors (also known as proper basis vectors). As specified in the signature, those n Euclidean basis
 vectors all square to +1. In addition to the n Euclidean basis vectors, there is an additional basis vector for projection and it is called
 the ideal basis vector (also known as the null basis vector). As specified in the signature, the ideal basis vector squares to 0.
+
 The list of all $2^{n+1}$ possible combinations of basis vectors is called the basis. The number of basis vectors included in a
 term with a particular combination of basis vectors is called its grade. For example, the scalar term includes no basis vectors and therefore
 has grade 0. Grade 0 terms are also called scalars. Similarly, the n+1 basis vectors (i.e., the n Euclidean basis vectors plus the 1 ideal vector)
 all include just one basis vector and therefore have grade 1. Grade 1 terms are also called vectors. Continuing, grade 2 terms are called bivectors,
-grade 3 terms are called trivectors, and so on. In general, the basis has $\binom{n+1}{grade}$ terms of each possible grade. Summing
-over those [binomial coefficients](https://en.wikipedia.org/wiki/Binomial_coefficient), $\sum_{grade=0}^{n+1}\binom{n+1}{grade}$ = $2^{n+1}$
-possible terms in the space defined by the metric signature $\mathbb{R}\_{n,0,1}$.
+grade 3 terms are called trivectors, and so on. The summation of different grade terms is called a multivector. In general, the basis has 
+$\binom{n+1}{grade}$ terms of each possible grade. Summing over those [binomial coefficients](https://en.wikipedia.org/wiki/Binomial_coefficient),
+$\sum_{grade=0}^{n+1}\binom{n+1}{grade}$ = $2^{n+1}$ possible terms in the space defined by the metric signature $\mathbb{R}\_{n,0,1}$.
 
 (TODO)  
 PGA in a two dimensional Euclidean space requires a basis of eight hypercomplex numbers which can be initialized by including the 
