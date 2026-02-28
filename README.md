@@ -211,13 +211,16 @@ Although the vocabulary about the PGA basis is relatively easy, the interpretati
 the basis vectors specified in the metric signature $\mathbb{R}\_{n,0,1}$ are not real numbers but they square to real numbers (i.e., for n=2,
 {e0, e1, e2} $\notin \mathbb{R}$, but {e00, e11, e22} $\in \mathbb{R}$). The set of Euclidean basis vectors (i.e., for n=2, e1 and e2) 
 represent the set of orthogonal Euclidean axes, and the ideal basis vector represents the Euclidean origin but offset by one in the added
-projective dimension. That is called the direct (i.e., point-based) representation of PGA. Now for the twist: for a couple of compelling reasons, 
+projective dimension. That is called the direct (i.e., point-based) representation of PGA. Now for the twist: for a couple compelling reasons, 
 the dual (i.e., plane-based) representation of PGA is preferred over the direct (i.e., point-based) representation of PGA. The metric signature
-for the dual (i.e., plane-based) representation of PGA is $\mathbb{R}^*\_{n,0,1}$, where the n Euclidean basis vectors and the ideal basis vectors
-are still not real numbers and they still square to real numbers. However, in the dual representation of PGA, the Euclidean basis vectors
-represent the planes orthogonal to the Euclidean axes. For example, e1 represents the x=0 plane. Even weirder, the ideal basis vector represents
-the plane at infinity (i.e., the "boundary" of the Euclidean space).
+for the dual (i.e., plane-based) representation of PGA is $\mathbb{R}^*\_{n,0,1}$, where again ei $\notin \mathbb{R}$ and eii $\in \mathbb{R}$.
+However, in the dual representation of PGA, the Euclidean basis vectors represent the planes orthogonal to the Euclidean axes. For example, 
+e1 represents the x=0 plane and e2 represents the y=0 plane. Even weirder, the ideal basis vector represents the plane at infinity (i.e., 
+the "boundary" of the Euclidean space).
 
+## 4.1 2D PGA Basis
+
+## 4.2 3D PGA Basis
 
 (TODO)  
 PGA in a two dimensional Euclidean space requires a basis of eight hypercomplex numbers which can be initialized by including the 
