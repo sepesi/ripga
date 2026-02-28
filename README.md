@@ -213,7 +213,10 @@ the basis vectors specified in the metric signature $\mathbb{R}\_{n,0,1}$ are no
 represent the set of orthogonal Euclidean axes, and the ideal basis vector represents the Euclidean origin but offset by one in the added
 projective dimension. That is called the direct (i.e., point-based) representation of PGA. Now for the twist: for a couple of compelling reasons, 
 the dual (i.e., plane-based) representation of PGA is preferred over the direct (i.e., point-based) representation of PGA. The metric signature
-for the dual (i.e., plane-based) representation of PGA is $\mathbb{R}^*\_{n,0,1}$, 
+for the dual (i.e., plane-based) representation of PGA is $\mathbb{R}^*\_{n,0,1}$, where the n Euclidean basis vectors and the ideal basis vectors
+are still not real numbers and they still square to real numbers. However, in the dual representation of PGA, the Euclidean basis vectors
+represent the planes orthogonal to the Euclidean axes. For example, e1 represents the x=0 plane. Even weirder, the ideal basis vector represents
+the plane at infinity (i.e., the "boundary" of the Euclidean space).
 
 
 (TODO)  
