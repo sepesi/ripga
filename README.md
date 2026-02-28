@@ -209,7 +209,11 @@ e01, e20, e12, and e012, which is a basis with one grade 0 term, three grade 1 t
 
 Although the vocabulary about the PGA basis is relatively easy, the interpretation of the PGA basis requires a little more work. To begin,
 the basis vectors specified in the metric signature $\mathbb{R}\_{n,0,1}$ are not real numbers but they square to real numbers (i.e., for n=2,
-{e0,e1,e2} $\notin \mathbb{R}$, and {e00,e11,e22} $\in \mathbb{R}$).
+{e0, e1, e2} $\notin \mathbb{R}$, but {e00, e11, e22} $\in \mathbb{R}$). The set of Euclidean basis vectors (i.e., for n=2, e1 and e2) 
+represent the set of orthogonal Euclidean axes, and the ideal basis vector represents the Euclidean origin but offset by one in the added
+projective dimension. That is called the direct (i.e., point-based) representation of PGA. Now for the twist: for a couple of compelling reasons, 
+the dual (i.e., plane-based) representation of PGA is preferred over the direct (i.e., point-based) representation of PGA. The metric signature
+for the dual (i.e., plane-based) representation of PGA is $\mathbb{R}^*\_{n,0,1}$, 
 
 
 (TODO)  
