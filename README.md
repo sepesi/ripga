@@ -197,17 +197,20 @@ helpful in getting the hang of PGA:
 # 4. PGA Basis
 First, some vocabulary. The metric signature for work in an n-dimensional Euclidean space is $\mathbb{R}\_{n,0,1}$, where n is the
 number of Euclidean dimensions, which is also the number of Euclidean basis vectors (also known as proper basis vectors). As specified
-in the signature, those n Euclidean basis vectors all square to +1. In addition to the n Euclidean basis vectors, there is a basis
-vector for projection and it is called the ideal basis vector (also known as the null basis vector). As specified in the signature,
-the ideal basis vector squares to 0.
+in the signature, those n Euclidean basis vectors all square to +1. Those n Euclideanb basis vectors are named e1, e2, \dots, en.
+In addition to the n Euclidean basis vectors, there is a basis vector for projection and it is called the ideal basis vector (also
+known as the null basis vector). As specified in the signature, the ideal basis vector squares to 0. The one ideal basis vector is named e0. 
+Given that the metric signature $\mathbb{R}\_{n,0,1}$ is associated with n+1 independent basis vectors (i.e., n Euclidean basis vectors and
+one ideal basis vector), the number of possible combinations of those n+1 basis vectors is $2^{n+1}$ according to the
+[rule of product](https://wikipedia.org/wiki/Rule_of_product) in combinatorics.
 
-The list of all $2^{n+1}$ possible combinations of basis vectors is called the basis. The number of basis vectors included in a
+The list of all $2^{n+1}$ possible combinations of the n+1 basis vectors is called the basis. The number of basis vectors included in a
 term is called its grade. For example, the scalar term (e.g., 4) includes no basis vectors and therefore has grade 0. Similarly, the
 n+1 basis vectors (i.e., the n Euclidean basis vectors and the ideal basis vector) all include just one basis vector and therefore have grade 1.
 Grade 1 terms are called vectors (e.g., 3e2). Continuing, grade 2 terms are called bivectors (e.g., 6e12, short for 6e1e2), grade 3 
 terms are called trivectors (e.g., e012, short for e0e1e2), and so on. The summation of different grade terms is called a multivector
 (e.g., 4 + 3e2 + 6e12). In general, the basis for the space defined by metric signature $\mathbb{R}\_{n,0,1}$ has $\binom{n+1}{grade}$ terms
-of each possible grade. Summing over those [binomial coefficients](https://en.wikipedia.org/wiki/Binomial_coefficient),
+of each possible grade. As expected, summing over those [binomial coefficients](https://en.wikipedia.org/wiki/Binomial_coefficient),
 $\sum_{grade=0}^{n+1}\binom{n+1}{grade}$ = $2^{n+1}$ possible terms (e.g., for n=2, the $2^{n+1}$ possible terms in the basis
 defined by metric signature $\mathbb{R}\_{n,0,1}$ are 1, e0, e1, e2, e01, e20, e12, and e012, which is a basis with one grade 0 term, three
 grade 1 terms, three grade 2 terms, and one grade 3 term).
