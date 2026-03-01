@@ -153,7 +153,7 @@ including ripgand.jl and ripga1d.jl, ripga2d.jl, ripga3d.jl, or ripga4d.jl) can
 * call functions, and
 * display inline comments.
 
-All are helpful tools when learning or troubleshooting PGA expressions.
+All are helpful capabilities when learning or troubleshooting PGA expressions.
 
 REPL is particularly helpful when soliciting help from the Julia community. A common phrase throughout Julia's discourse 
 community is MWE (i.e., Minimal Working Example). Even though programmers often work on lengthy Julia programs, requests 
