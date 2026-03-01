@@ -215,7 +215,7 @@ the set of orthogonal Euclidean axes, and the ideal basis vector represents the 
 dimension. That interpretation is called the direct (i.e., point-based) representation of PGA. Now for the twist: for a couple compelling reasons,
 the dual (i.e., plane-based) representation of PGA is preferred over the direct (i.e., point-based) representation of PGA. The metric signature
 for the dual (i.e., plane-based) representation of PGA is $\mathbb{R}^*\_{n,0,1}$, where again ei $\notin \mathbb{R}$ and eii $\in \mathbb{R} 
-\forall i \in {0,\dots,n}$. However, in the dual representation of PGA, the Euclidean basis vectors represent the planes orthogonal to the 
+\forall i \in \lbrace 0,\dots,n \rbrace$. However, in the dual representation of PGA, the Euclidean basis vectors represent the planes orthogonal to the 
 Euclidean axes. For example, e1 represents the x=0 plane and e2 represents the y=0 plane. Even weirder, the ideal basis vector represents the 
 plane at infinity (i.e., the "boundary" of the Euclidean space).
 
