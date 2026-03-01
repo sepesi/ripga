@@ -148,14 +148,17 @@ surprisingly fast.
 ## 2.5 REPL (Read Execute Print Loop)
 In the tools section of bivector.net, there is a PGA expression evaluator that enables the exploration of PGA expressions 
 without writing a program. Julia's REPL does that and more: in addition to evaluating PGA expressions, Julia's REPL (after 
-including ripgand.jl and ripga1d.jl, ripga2d.jl, ripga3d.jl, or ripga4d.jl) can assign PGA expressions to variables and display
-inline comments, both very helpful when learning or troubleshooting PGA expressions.
+including ripgand.jl and ripga1d.jl, ripga2d.jl, ripga3d.jl, or ripga4d.jl) can 
+* assign PGA expressions to variables,
+* call functions, and
+* display inline comments.
+All are helpful tools when learning or troubleshooting PGA expressions.
 
 REPL is particularly helpful when soliciting help from the Julia community. A common phrase throughout Julia's discourse 
 community is MWE (i.e., Minimal Working Example). Even though programmers often work on lengthy Julia programs, requests 
 for help from the Julia community programmers are restricted to tiny snippets of code so that the problem can easily be 
 replicated by everyone in their own REPL. This is an extremely useful programming practice because the solution often 
-reveals itself as I write the MWE to ask the community for help.
+reveals itself while writing the MWE to ask the community for help.
 
 ## 2.6 Developer Community
 In the conclusion of Julia: A Fresh Approach to Numerical Computing, the authors wrote
