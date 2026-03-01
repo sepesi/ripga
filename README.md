@@ -215,7 +215,7 @@ the set of orthogonal Euclidean axes, and the ideal basis vector represents the 
 dimension. That interpretation is called the direct (i.e., point-based) representation of PGA. Now for the twist: for a couple compelling reasons,
 the dual (i.e., plane-based) representation of PGA is preferred over the direct (i.e., point-based) representation of PGA. The metric signature
 for the dual (i.e., plane-based) representation of PGA is $\mathbb{R}^*\_{n,0,1}$, where again ei $\notin \mathbb{R}$ and eii $\in \mathbb{R} 
-\forall i \in \{0,\dots,n\}$. However, in the dual representation of PGA, the Euclidean basis vectors represent the planes orthogonal to the 
+\forall i \in {0,\dots,n}$. However, in the dual representation of PGA, the Euclidean basis vectors represent the planes orthogonal to the 
 Euclidean axes. For example, e1 represents the x=0 plane and e2 represents the y=0 plane. Even weirder, the ideal basis vector represents the 
 plane at infinity (i.e., the "boundary" of the Euclidean space).
 
@@ -223,11 +223,22 @@ In addition to the interpretations of the PGA basis vectors, the interpretations
 shown in the following two REPL sessions, bivectors specify rotation points, and if the bivector contains an ideal basis vector (i.e., the 
 bivector term contains a 0) then the rotation is about a point at infinity, which is a translation not a rotation.
 
-As for the compelling reasons for this weird interpretation of the PGA basis, there are two:
+```
+julia> L1 = e1; # PGA Line 1 is x=0 "plane" which is y-axis
+
+julia> L2 = e1 - 5*e0; # PGA Line 2 is Euclidean line x-5=0; see 2D cheat sheet for conversion to PGA line
+
+julia> M = L2*L1; # calculate Motor of 2 parallel PGA lines
+
+julia> toStr(M) # check Motor
+"1 - 5e01"
+```
+
+As for the compelling reasons for the weird interpretations of the PGA basis, there are two:
 1. Dual PGA unifies rotations and translations.
 2. Dual PGA unifies operations in 2D and 3D Euclidean spaces.
 
-In a sense, the underlyiong reason for the weird interpretation of the PGA basis is laziness, avoiding the work of implementing unnecessary code
+In a sense, the underlyiong reason for the weird interpretations of the PGA basis is laziness, avoiding the work of implementing unnecessary code
 that would do the multivector bookkeeping needed by multivector operations in direct PGA. However, that laziness has the benefits of reducing complexity and cost,
 in accordance with Elon Musk's frequently cited philosophy about product design: "The best part is no part. The best process is no process."
 
