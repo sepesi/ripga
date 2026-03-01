@@ -197,12 +197,12 @@ helpful in getting the hang of PGA:
 # 4. PGA Basis
 First, some vocabulary. The metric signature for work in an n-dimensional Euclidean space is $\mathbb{R}\_{n,0,1}$, where n is the
 number of Euclidean dimensions, which is also the number of Euclidean basis vectors (also known as proper basis vectors). As specified
-in the signature, those n Euclidean basis vectors all square to +1. Those n Euclideanb basis vectors are named e1, e2, $\dots$, en.
-In addition to the n Euclidean basis vectors, there is a basis vector for projection and it is called the ideal basis vector (also
-known as the null basis vector). As specified in the signature, the ideal basis vector squares to 0. The one ideal basis vector is named e0. 
-Given that the metric signature $\mathbb{R}\_{n,0,1}$ is associated with n+1 independent basis vectors (i.e., n Euclidean basis vectors and
-one ideal basis vector), the number of possible combinations of those n+1 basis vectors is $2^{n+1}$ according to the
-[rule of product](https://wikipedia.org/wiki/Rule_of_product) in combinatorics.
+in the signature, those n Euclidean basis vectors all square to +1. They are named e1, e2, $\dots$, en. In addition to the n Euclidean
+basis vectors, there is a basis vector for projection and it is called the ideal basis vector (also known as the null basis vector).
+As specified in the signature, the ideal basis vector squares to 0. It is named e0. Given that the metric signature $\mathbb{R}\_{n,0,1}$
+is associated with a total of n+1 independent basis vectors (i.e., n Euclidean basis vectors and one ideal basis vector), the number
+of possible combinations of those n+1 basis vectors is $2^{n+1}$ according to the [rule of product](https://wikipedia.org/wiki/Rule_of_product) 
+in [combinatorics](https://en.wikipedia.org/wiki/Combinatorics).
 
 The list of all $2^{n+1}$ possible combinations of the n+1 basis vectors is called the basis. The number of basis vectors included in a
 term is called its grade. For example, the scalar term (e.g., 4) includes no basis vectors and therefore has grade 0. Similarly, the
@@ -211,60 +211,51 @@ Grade 1 terms are called vectors (e.g., 3e2). Continuing, grade 2 terms are call
 terms are called trivectors (e.g., e012, short for e0e1e2), and so on. The summation of different grade terms is called a multivector
 (e.g., 4 + 3e2 + 6e12). In general, the basis for the space defined by metric signature $\mathbb{R}\_{n,0,1}$ has $\binom{n+1}{grade}$ terms
 of each possible grade. As expected, summing over those [binomial coefficients](https://en.wikipedia.org/wiki/Binomial_coefficient),
-$\sum_{grade=0}^{n+1}\binom{n+1}{grade}$ = $2^{n+1}$ possible terms (e.g., for n=2, the $2^{n+1}$ possible terms in the basis
-defined by metric signature $\mathbb{R}\_{n,0,1}$ are 1, e0, e1, e2, e01, e20, e12, and e012, which is a basis with one grade 0 term, three
-grade 1 terms, three grade 2 terms, and one grade 3 term).
+$\sum_{grade=0}^{n+1}\binom{n+1}{grade}$ = $2^{n+1}$ possible terms (e.g., for n=2, the $2^{n+1}$ possible terms in the basis are
+1, e0, e1, e2, e01, e20, e12, and e012, which is a basis with one grade 0 term, three grade 1 terms, three grade 2 terms, and one grade 3 term).
 
 Although the vocabulary about the PGA basis is relatively easy, the interpretation of the PGA basis requires a little more work. To begin,
 the basis vectors specified by the metric signature $\mathbb{R}\_{n,0,1}$ are not real numbers but they square to real numbers (i.e., for n=2,
 {e0, e1, e2} $\notin \mathbb{R}$, but {e00, e11, e22} $\in \mathbb{R}$). The set of Euclidean basis vectors (i.e., for n=2, e1 and e2) represent
 the set of orthogonal Euclidean axes, and the ideal basis vector represents the Euclidean origin but offset by one in the added projective
 dimension. That interpretation is called the direct (i.e., point-based) representation of PGA. Now for the twist: for a couple compelling reasons,
-the dual (i.e., plane-based) representation of PGA is preferred over the direct (i.e., point-based) representation of PGA. The metric signature
-for the dual (i.e., plane-based) representation of PGA is $\mathbb{R}^*\_{n,0,1}$, where again ei $\notin \mathbb{R}$ and eii $\in \mathbb{R} 
-\forall i \in \lbrace 0,\dots,n \rbrace$. However, in the dual representation of PGA, the Euclidean basis vectors represent the planes orthogonal to the 
-Euclidean axes. For example, e1 represents the x=0 plane and e2 represents the y=0 plane. Even weirder, the ideal basis vector represents the 
-plane at infinity (i.e., the "boundary" of the Euclidean space).
+the dual (i.e., plane-based) interpretation of PGA is preferred over the direct (i.e., point-based) interpretation of PGA. The metric signature
+for the dual (i.e., plane-based) interpretation of PGA is $\mathbb{R}^*\_{n,0,1}$ (note the asterisk superscript), where again ei $\notin \mathbb{R}$
+and eii $\in \mathbb{R} \forall i \in \lbrace 0,\dots,n \rbrace$. However, in the dual interpretation of PGA, the Euclidean basis vectors represent
+the planes orthogonal to the Euclidean axes. For example, e1 represents the x=0 plane and e2 represents the y=0 plane. Even weirder, the ideal basis
+vector represents the plane at infinity (i.e., the "boundary" of the Euclidean space).
 
 In addition to the interpretations of the PGA basis vectors, the interpretations of the PGA basis bivectors are also interesting because,
-for the dual representation of PGA, bivectors specify rotation points, and if the bivector contains an ideal basis vector (i.e., the 
+for the dual interpretation of PGA, bivectors specify rotation points, and if the bivector contains an ideal basis vector (i.e., the 
 bivector term contains a 0) then the rotation is about a point at infinity, which is a translation not a rotation. As for the compelling
-reasons for using the dual representation of the PGA basis, there are two:
+reasons for using the dual interpretation of the PGA basis, there are two:
 1. Dual PGA unifies rotations and translations.
 2. Dual PGA unifies operations in 2D and 3D Euclidean spaces.
 
 Both reasons are closely examined in the REPL sessions in the following subsections about the 2D PGA basis and the 3D PGA basis.
 
 ## 4.1 2D PGA Basis
+To prepare Julia's REPL for 2D PGA, include the files ripgand.jl and ripga2d.jl. To confirm the initialization, print out the basis.
+Note that in the following REPL session, the basis is sorted by grade, which does not imply any interpretation of the PGA basis but
+can be interpreted as either direct PGA or dual PGA.
+
+```
+julia> include("ripgand.jl"); # utility functions for all available dimensions
+
+julia> include("ripga2d.jl"); # enable 2D PGA
+
+julia> [basis reverse(basis)] # col 1 basis in order of grade; col 2 basis in reverse order of grade
+8×2 Matrix{String}:
+ "1"     "e012"
+ "e0"    "e12"
+ "e1"    "e20"
+ "e2"    "e01"
+ "e01"   "e2"
+ "e20"   "e1"
+ "e12"   "e0"
+ "e012"  "1"```
+```
 (TODO)
-
-```
-julia> include("ripgand.jl")
-julia> include("ripga2d.jl")
-julia> basis
-8-element Vector{String}:
- "1"
- "e0"
- "e1"
- "e2"
- "e01"
- "e20"
- "e12"
- "e012"
-```
-
-```
-julia> reverse(basis)
-8-element Vector{String}:
- "e012"
- "e12"
- "e20"
- "e01"
- "e2"
- "e1"
- "e0"
- "1"
-```
 
 ## 4.2 3D PGA Basis
 
