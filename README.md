@@ -152,6 +152,7 @@ including ripgand.jl and ripga1d.jl, ripga2d.jl, ripga3d.jl, or ripga4d.jl) can
 * assign PGA expressions to variables,
 * call functions, and
 * display inline comments.
+
 All are helpful tools when learning or troubleshooting PGA expressions.
 
 REPL is particularly helpful when soliciting help from the Julia community. A common phrase throughout Julia's discourse 
