@@ -233,7 +233,7 @@ reasons for using the dual representation of the PGA basis, there are two:
 1. Dual PGA unifies rotations and translations.
 2. Dual PGA unifies operations in 2D and 3D Euclidean spaces.
 
-Both reasons are discussed in the following sections about the 2D PGA basis and the 3D PGA basis.
+Both reasons are closely examined in the REPL sessions in the following subsections about the 2D PGA basis and the 3D PGA basis.
 
 ## 4.1 2D PGA Basis
 (TODO)
