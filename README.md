@@ -197,7 +197,7 @@ helpful in getting the hang of PGA:
 # 4. PGA Basis
 First, some vocabulary. The metric signature for work in an n-dimensional Euclidean space is $\mathbb{R}\_{n,0,1}$, where n is the
 number of Euclidean dimensions, which is also the number of Euclidean basis vectors (also known as proper basis vectors). As specified
-in the signature, those n Euclidean basis vectors all square to +1. Those n Euclideanb basis vectors are named e1, e2, \dots, en.
+in the signature, those n Euclidean basis vectors all square to +1. Those n Euclideanb basis vectors are named e1, e2, $\dots$, en.
 In addition to the n Euclidean basis vectors, there is a basis vector for projection and it is called the ideal basis vector (also
 known as the null basis vector). As specified in the signature, the ideal basis vector squares to 0. The one ideal basis vector is named e0. 
 Given that the metric signature $\mathbb{R}\_{n,0,1}$ is associated with n+1 independent basis vectors (i.e., n Euclidean basis vectors and
