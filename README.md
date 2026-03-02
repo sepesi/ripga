@@ -236,7 +236,7 @@ Both reasons are closely examined in the REPL sessions in the following subsecti
 
 ## 4.1 2D PGA Basis
 To prepare Julia's REPL for 2D PGA, include the files ripgand.jl and ripga2d.jl. To confirm the initialization, print out the basis.
-Note that in the following REPL session, the basis is sorted by grade, which does not imply any interpretation of the PGA basis but
+Note that the basis is typically sorted by grade, which does not imply an interpretation of the PGA basis because the same basis
 can be interpreted as either direct PGA or dual PGA.
 
 ```
@@ -258,49 +258,30 @@ julia> [basis reverse(basis)] # col 1 basis in order of grade; col 2 basis in re
 (TODO)
 
 ## 4.2 3D PGA Basis
+To prepare Julia's REPL for 3D PGA, include the files ripgand.jl and ripga3d.jl. To confirm the initialization, print out the basis.
+```
+julia> include("ripgand.jl"); # utility functions for all available dimensions
 
-```
-julia> include("ripgand.jl")
-julia> include("ripga3d.jl")
-julia> basis
-16-element Vector{String}:
- "1"
- "e0"
- "e1"
- "e2"
- "e3"
- "e01"
- "e02"
- "e03"
- "e12"
- "e31"
- "e23"
- "e021"
- "e013"
- "e032"
- "e123"
- "e0123"
-```
+julia> include("ripga3d.jl"); # enable 3D PGA
 
-```
-julia> reverse(basis)
-16-element Vector{String}:
- "e0123"
- "e123"
- "e032"
- "e013"
- "e021"
- "e23"
- "e31"
- "e12"
- "e03"
- "e02"
- "e01"
- "e3"
- "e2"
- "e1"
- "e0"
- "1"
+julia> [basis reverse(basis)] # col 1 basis in order of grade; col 2 basis in reverse order of grade
+16×2 Matrix{String}:
+ "1"      "e0123"
+ "e0"     "e123"
+ "e1"     "e032"
+ "e2"     "e013"
+ "e3"     "e021"
+ "e01"    "e23"
+ "e02"    "e31"
+ "e03"    "e12"
+ "e12"    "e03"
+ "e31"    "e02"
+ "e23"    "e01"
+ "e021"   "e3"
+ "e013"   "e2"
+ "e032"   "e1"
+ "e123"   "e0"
+ "e0123"  "1"
 ```
 
 PGA in a two dimensional Euclidean space requires a basis of eight hypercomplex numbers which can be initialized by including the 
@@ -311,20 +292,6 @@ following two files:
 The notation of the basis is simple, where eij is short for eiej (i.e., the multiplication of ei and ej), where eijk is short for 
 eiejek (i.e., the multiplication of ei, ej, and ek), where eij = -eji, where e1e1 = e2e2 = 1, and e0e0 = 0 (i.e., the degenerate case).
 
-```
-julia> include("ripgand.jl")
-julia> include("ripga2d.jl")
-julia> basis
-8-element Vector{String}:
- "1"
- "e0"
- "e1"
- "e2"
- "e01"
- "e20"
- "e12"
- "e012"
-```
 
 As mentioned in this essay's introduction, a compelling reason for using projective geometric algebra is the unification of 
 the translation and rotation operations. However, that desired unification comes at the expense of an unintuitive geometric 
@@ -341,46 +308,12 @@ of basis[3] is reverse(basis[3]). In practice, duality is a gift of time because
 a dual form of that PGA equation without any derivation necessary. Similarly, PGA software can be significantly reduced in size 
 because the dual of an implemented PGA function is automatically available without any software implementation necessary.
 
-```
-julia> reverse(basis)
-8-element Vector{String}:
- "e012"
- "e12"
- "e20"
- "e01"
- "e2"
- "e1"
- "e0"
- "1"
-```
 
 Similar to PGA in two dimensional Euclidean space, PGA in a three dimensional Euclidean space requires a basis of 16 hypercomplex 
 numbers which can be initialized by including two files: ripgand.jl and ripga3d.jl. As before, the notation of the basis is simple, 
 where e0123 is short for e0e1e2e3 (i.e., the multiplication of e0, e1, e2, and e3), where eij = -eji, where e1e1 = e2e2 = e3e3 = 1, 
 and e0e0 = 0 (i.e., the degenerate case).
 
-```
-julia> include("ripgand.jl")
-julia> include("ripga3d.jl")
-julia> basis
-16-element Vector{String}:
- "1"
- "e0"
- "e1"
- "e2"
- "e3"
- "e01"
- "e02"
- "e03"
- "e12"
- "e31"
- "e23"
- "e021"
- "e013"
- "e032"
- "e123"
- "e0123"
-```
 
 Again, the desired unification of the translation and rotation operation comes at the expense of an unintuitive geometric 
 interpretation of the basis, where
@@ -399,26 +332,6 @@ results in a type of symmetry called the dual and, in the three dimension case, 
 example, the third element of the basis is e1, which is the x=0 plane, but the third element of reverse(basis) is e032 is a 
 point and it is called the dual of e1 (i.e., the dual of basis[3] is reverse(basis)[3]).
 
-```
-julia> reverse(basis)
-16-element Vector{String}:
- "e0123"
- "e123"
- "e032"
- "e013"
- "e021"
- "e23"
- "e31"
- "e12"
- "e03"
- "e02"
- "e01"
- "e3"
- "e2"
- "e1"
- "e0"
- "1"
-```
 
 In general, PGA in an nD dimensional space requires a basis of 2ᵐ hypercomplex numbers, where m = nD + 1. In general, the 
 interpretation of the basis starts with vectors being interpreted as (nD-1)-dimensional subspaces (e.g., 1D lines for nD = 2, 
