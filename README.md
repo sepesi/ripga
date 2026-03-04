@@ -255,6 +255,29 @@ julia> [basis reverse(basis)] # col 1 basis in order of grade; col 2 basis in re
  "e12"   "e0"
  "e012"  "1"```
 ```
+According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every rigid body
+transformation is composed of reflections across hyperplanes (lines in 2D, planes in 3D). In 2D, translation is composed of 
+reflecting across two parallel lines, and rotation is composed of reflecting across two intersecting lines. Here is an example of
+translation using dual PGA to specify reflections across two parallel lines L1 and L2.
+
+```
+julia> L1 = e1; # the x=0 hyperplane is the y-axis
+
+julia> L2 = e1-5*e0; # Euclidean eq. x-d=0 => PGA line eq. (ae1+be2+ce0); see cheat sheet
+
+julia> M = L2*L1; # compose the two reflection Motor as geometric product
+
+julia> toStr(M) # check Motor
+"1 - 5e01"
+
+julia> P = e12; # Euclidean origin => PGA point eq (xe20+ye01+e12); see cheat sheet
+
+julia> P2 = M*P*~M; # apply Motor to P at origin; shorter eq uses sandwich operator P2 = M>>>P
+
+julia> toStr(P2) # check translation of P at origin
+"10e20 + e12"
+```
+
 (TODO)
 
 ## 4.2 3D PGA Basis
