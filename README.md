@@ -258,7 +258,11 @@ julia> [basis reverse(basis)] # col 1 basis in order of grade; col 2 basis in re
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every rigid body
 transformation is composed of reflections across hyperplanes (lines in 2D, planes in 3D). In 2D, translation is composed of 
 reflecting across two parallel lines, and rotation is composed of reflecting across two intersecting lines. Here is an example of
-translation using dual PGA to specify reflections across two parallel lines L1 and L2.
+translation using dual PGA to specify reflections across two parallel lines L1 and L2 where
+* L1 is a vertical line, the y-axis,
+* L2 is another vertical line, 5 to the right of the y-axis, and
+* the motor composed of those two vertical lines separated by 5 translates a point to the right by 10 (i.e., twice the separation
+  distance between the parallel vertical lines).
 
 ```
 julia> L1 = e1; # the x=0 hyperplane is the y-axis
@@ -276,6 +280,27 @@ julia> P2 = M*P*~M; # apply Motor to P at origin; shorter eq uses sandwich opera
 
 julia> toStr(P2) # check translation of P at origin
 "10e20 + e12"
+```
+And here is an example of rotation using dual PGA to specify reflections across two intersecting lines L1 and L2 where
+* L1 is a vertical line, the y-axis,
+* L2 is L1 rotated by 45 degrees, and
+* the rotor composed of those two intersecting lines rotates a line by 90 degrees (i.e., twice the angle between
+  the two intersecting lines composing the rotor).
+
+```
+julia> L1 = e1; # the x=0 hyperplane is the y-axis
+
+julia> theta = pi/4; L2 = cos(theta)e1+sin(theta)e2; # L2 is L1 rotated by pi/4 = 45 degrees
+
+julia> R = L2*L1; # generate the rotation motor (also called a Rotor) as geometric product
+
+julia> toStr(R) # check Rotor
+"0.7071068 - 0.7071068e12"
+
+julia> L1R = R*L1*~R; # apply Rotor to rotate line L1
+
+julia> toStr(L1R) # check rotation of L1
+"0.9999999e2"
 ```
 
 (TODO)
