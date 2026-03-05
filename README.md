@@ -201,29 +201,17 @@ in the signature, those n Euclidean basis vectors all square to +1. They are nam
 basis vectors, there is a basis vector for projection and it is called the ideal basis vector (also known as the null basis vector).
 As specified in the signature, the ideal basis vector squares to 0. It is named e0. Given that the metric signature $\mathbb{R}\_{n,0,1}$
 is associated with a total of n+1 independent basis vectors (i.e., n Euclidean basis vectors and one ideal basis vector), the number
-of possible combinations of those n+1 basis vectors is $2^{n+1}$ according to the [rule of product](https://wikipedia.org/wiki/Rule_of_product) 
-in [combinatorics](https://en.wikipedia.org/wiki/Combinatorics).
+of possible combinations of those n+1 basis vectors is $2^{n+1}$ according to the [rule of product](https://wikipedia.org/wiki/Rule_of_product) in [combinatorics](https://en.wikipedia.org/wiki/Combinatorics).
 
 The list of all $2^{n+1}$ possible combinations of the n+1 basis vectors is called the basis. The number of basis vectors included in a
 term is called its grade. For example, the scalar term (e.g., 4) includes no basis vectors and therefore has grade 0. Similarly, the
-n+1 basis vectors (i.e., the n Euclidean basis vectors and the ideal basis vector) all include just one basis vector and therefore have grade 1.
-Grade 1 terms are called vectors (e.g., 3e2). Continuing, grade 2 terms are called bivectors (e.g., 6e12, short for 6e1e2), grade 3 
-terms are called trivectors (e.g., e012, short for e0e1e2), and so on. The summation of different grade terms is called a multivector
-(e.g., 4 + 3e2 + 6e12). In general, the basis for the space defined by metric signature $\mathbb{R}\_{n,0,1}$ has $\binom{n+1}{grade}$ terms
-of each possible grade. As expected, summing over those [binomial coefficients](https://en.wikipedia.org/wiki/Binomial_coefficient),
+n+1 basis vectors (i.e., the n Euclidean basis vectors and the ideal basis vector) all include just one basis vector and therefore have grade 1. Grade 1 terms are called vectors (e.g., 3e2). Continuing, grade 2 terms are called bivectors (e.g., 6e12, short for 6e1e2), grade 3 terms are called trivectors (e.g., e012, short for e0e1e2), and so on. The summation of different grade terms is called a multivector
+(e.g., 4 + 3e2 + 6e12). In general, the basis for the space defined by metric signature $\mathbb{R}\_{n,0,1}$ has $\binom{n+1}{grade}$ terms of each possible grade. As expected, summing over those [binomial coefficients](https://en.wikipedia.org/wiki/Binomial_coefficient),
 $\sum_{grade=0}^{n+1}\binom{n+1}{grade}$ = $2^{n+1}$ possible terms (e.g., for n=2, the $2^{n+1}$ possible terms in the basis are
 1, e0, e1, e2, e01, e20, e12, and e012, which is a basis with one grade 0 term, three grade 1 terms, three grade 2 terms, and one grade 3 term).
 
 Although the vocabulary about the PGA basis is relatively easy, the interpretation of the PGA basis requires a little more work. To begin,
-the basis vectors specified by the metric signature $\mathbb{R}\_{n,0,1}$ are not real numbers but they square to real numbers (i.e., for n=2,
-{e0, e1, e2} $\notin \mathbb{R}$, but {e00, e11, e22} $\in \mathbb{R}$). The set of Euclidean basis vectors (i.e., for n=2, e1 and e2) represent
-the set of orthogonal Euclidean axes, and the ideal basis vector represents the Euclidean origin but offset by one in the added projective
-dimension. That interpretation is called the direct (i.e., point-based) representation of PGA. Now for the twist: for a couple compelling reasons,
-the dual (i.e., plane-based) interpretation of PGA is preferred over the direct (i.e., point-based) interpretation of PGA. The metric signature
-for the dual (i.e., plane-based) interpretation of PGA is $\mathbb{R}^*\_{n,0,1}$ (note the asterisk superscript), where again ei $\notin \mathbb{R}$
-and eii $\in \mathbb{R} \forall i \in \lbrace 0,\dots,n \rbrace$. However, in the dual interpretation of PGA, the Euclidean basis vectors represent
-the planes orthogonal to the Euclidean axes. For example, e1 represents the x=0 plane and e2 represents the y=0 plane. Even weirder, the ideal basis
-vector represents the plane at infinity (i.e., the "boundary" of the Euclidean space).
+the basis vectors specified by the metric signature $\mathbb{R}\_{n,0,1}$ are not real numbers but they square to real numbers (i.e., for n=2, {e0, e1, e2} $\notin \mathbb{R}$, but {e00, e11, e22} $\in \mathbb{R}$). The set of Euclidean basis vectors (i.e., for n=2, e1 and e2) represent the set of orthogonal Euclidean axes, and the ideal basis vector represents the Euclidean origin but offset by one in the added projective dimension. That interpretation is called the direct (i.e., point-based) representation of PGA. Now for the twist: for a couple compelling reasons, the dual (i.e., plane-based) interpretation of PGA is preferred over the direct (i.e., point-based) interpretation of PGA. The metric signature for the dual (i.e., plane-based) interpretation of PGA is $\mathbb{R}^*\_{n,0,1}$ (note the asterisk superscript), where again ei $\notin \mathbb{R}$ and eii $\in \mathbb{R} \forall i \in \lbrace 0,\dots,n \rbrace$. However, in the dual interpretation of PGA, the Euclidean basis vectors represent the planes orthogonal to the Euclidean axes. For example, e1 represents the x=0 plane and e2 represents the y=0 plane. Even weirder, the ideal basis vector represents the plane at infinity (i.e., the "boundary" of the Euclidean space).
 
 In addition to the interpretations of the PGA basis vectors, the interpretations of the PGA basis bivectors are also interesting because,
 for the dual interpretation of PGA, bivectors specify rotation points, and if the bivector contains an ideal basis vector (i.e., the 
@@ -276,7 +264,7 @@ julia> toStr(T) # check Translation motor
 
 julia> P = e12; # Euclidean origin => PGA point eq (xe20+ye01+e12); see cheat sheet
 
-julia> P2 = T*P*~T; # apply Translation motor to P at origin; alternative eq uses sandwich operator P2 = T>>>P
+julia> P2 = T*P*~T; # apply Translation motor to P at origin; alternative eq is P2 = T>>>P
 
 julia> toStr(P2) # check translation of P at origin
 "10e20 + e12"
@@ -312,7 +300,7 @@ julia> toStr(T)
 julia> toStr(R)
 "0.7071068 - 0.7071068e12"
 
-julia> M = T*R; # general Motor applying rotation first then translation (order is right to left, like matrix multiply)
+julia> M = T*R; # general Motor applying rotation first (order is right to left, like matrix multiply)
 
 julia> toStr(M)
 "0.7071068 - 3.535534e01 - 3.535534e20 - 0.7071068e12"
