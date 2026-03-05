@@ -261,30 +261,30 @@ reflecting across two parallel lines, and rotation is composed of reflecting acr
 translation using dual PGA to specify reflections across two parallel lines L1 and L2 where
 * L1 is a vertical line, the y-axis,
 * L2 is another vertical line, 5 to the right of the y-axis, and
-* the motor composed of those two vertical lines separated by 5 translates a point to the right by 10 (i.e., twice the separation
-  distance between the parallel vertical lines).
+* the motor composed of those two vertical lines separated by a distance of 5 translates a point to the right by 10 (i.e., twice
+  the separation distance between the parallel vertical lines).
 
 ```
 julia> L1 = e1; # the x=0 hyperplane is the y-axis
 
 julia> L2 = e1-5*e0; # Euclidean eq. x-d=0 => PGA line eq. (ae1+be2+ce0); see cheat sheet
 
-julia> M = L2*L1; # compose the two reflection Motor as geometric product
+julia> T = L2*L1; # compose the two reflection Translation motor as geometric product
 
-julia> toStr(M) # check Motor
+julia> toStr(T) # check Translation motor
 "1 - 5e01"
 
 julia> P = e12; # Euclidean origin => PGA point eq (xe20+ye01+e12); see cheat sheet
 
-julia> P2 = M*P*~M; # apply Motor to P at origin; shorter eq uses sandwich operator P2 = M>>>P
+julia> P2 = T*P*~T; # apply Translation motor to P at origin; alternative eq uses sandwich operator P2 = T>>>P
 
 julia> toStr(P2) # check translation of P at origin
 "10e20 + e12"
 ```
-And here is an example of rotation using dual PGA to specify reflections across two intersecting lines L1 and L2 where
+Similarly, here is an example of rotation using dual PGA to specify reflections across two intersecting lines L1 and L2 where
 * L1 is a vertical line, the y-axis,
 * L2 is L1 rotated by 45 degrees, and
-* the rotor composed of those two intersecting lines rotates a line by 90 degrees (i.e., twice the angle between
+* the rotor composed of those two intersecting lines rotates any line by 90 degrees (i.e., twice the angle between
   the two intersecting lines composing the rotor).
 
 ```
@@ -294,15 +294,36 @@ julia> theta = pi/4; L2 = cos(theta)e1+sin(theta)e2; # L2 is L1 rotated by pi/4 
 
 julia> R = L2*L1; # generate the rotation motor (also called a Rotor) as geometric product
 
-julia> toStr(R) # check Rotor
+julia> toStr(R) # check Rotation motor
 "0.7071068 - 0.7071068e12"
 
-julia> L1R = R*L1*~R; # apply Rotor to rotate line L1
+julia> L1R = R*L1*~R; # apply Rotation motor to rotate line L1
 
 julia> toStr(L1R) # check rotation of L1
 "0.9999999e2"
 ```
+Combining the translation and the rotation operations into a single operation, here is an example of combining
+the previous two REPL sessions using dual PGA to specify the general motor composed of the translation motor
+and the rotation motor.
+```
+julia> toStr(T)
+"1 - 5e01"
 
+julia> toStr(R)
+"0.7071068 - 0.7071068e12"
+
+julia> M = T*R; # general Motor applying rotation first then translation (order is right to left, like matrix multiply)
+
+julia> toStr(M)
+"0.7071068 - 3.535534e01 - 3.535534e20 - 0.7071068e12"
+
+julia> P = e20 + e12; # Euclidean point (x,y) => PGA point (xe20+ye01+e12); see cheat sheet
+
+julia> P2 = M*P*~M; # apply general motor to PGA point P
+
+julia> toStr(P2)
+"e01 + 10e20 + 0.9999999e12"
+```
 (TODO)
 
 ## 4.2 3D PGA Basis
