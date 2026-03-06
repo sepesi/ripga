@@ -42,7 +42,7 @@ github repository at https://github.com/sepesi/ripga
 # 1. Why Projective Geometric Algebra?
 There are a few compelling reasons for using Projective Geometric Algebra instead of linear algebra:
 * PGA unifies many concepts and therefore makes them easier to implement,
-* PGA uses geometric objects (e.g., points, lines, planes) that hide the coordinates and are easier to
+* PGA has geometric objects (e.g., points, lines, planes) that hide the coordinates and are easier to
   mentally manipulate than matrices of coordinates, and
 * PGA belongs to the family of [Cayley-Klein](https://en.wikipedia.org/wiki/Cayley%E2%80%93Klein_metric)
   geometries, unifying Euclidean geometry (with applications in computer graphics and simulating the
