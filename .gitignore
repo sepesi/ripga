@@ -29,7 +29,7 @@
 *.lib
 *.sbr
 *.scc
-meetfood.txt
+meetfood.tsv
 [Dd]ebug*/
 bdd/
 obj/
