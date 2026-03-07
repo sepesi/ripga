@@ -287,7 +287,7 @@ julia> toStr(R) # check Rotation motor
 
 julia> L1R = R*L1*~R; # apply Rotation motor to rotate line L1
 
-julia> toStr(L1R) # resulting PGA line (ae1+be2+ce0) => Euclidean line (ax+by+c=0) = y; see cheat sheet
+julia> toStr(L1R) # resulting PGA line (ae1+be2+ce0) => Euclidean line (ax+by+c=0) => y=0; see cheat sheet
 "0.9999999e2"
 ```
 Combining the translation and the rotation operations into a single operation, here is an example of combining
