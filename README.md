@@ -266,7 +266,7 @@ julia> P = e12; # Euclidean origin => PGA point eq (xe20+ye01+e12); see cheat sh
 
 julia> P2 = T*P*~T; # apply Translation motor to P at origin; alternative eq is P2 = T>>>P
 
-julia> toStr(P2) # check translation of P at origin
+julia> toStr(P2) # resulting PGA point (xe20+ye01+e12) => Euclidean point (x,y) = (10,0); see cheat sheet
 "10e20 + e12"
 ```
 Similarly, here is an example of rotation using dual PGA to specify reflections across two intersecting lines L1 and L2 where
@@ -287,7 +287,7 @@ julia> toStr(R) # check Rotation motor
 
 julia> L1R = R*L1*~R; # apply Rotation motor to rotate line L1
 
-julia> toStr(L1R) # check rotation of L1
+julia> toStr(L1R) # resulting PGA line (ae1+be2+ce0) => Euclidean line (ax+by+c=0) = y; see cheat sheet
 "0.9999999e2"
 ```
 Combining the translation and the rotation operations into a single operation, here is an example of combining
@@ -309,7 +309,7 @@ julia> P = e20 + e12; # Euclidean point (x,y) => PGA point (xe20+ye01+e12); see 
 
 julia> P2 = M*P*~M; # apply general motor to PGA point P
 
-julia> toStr(P2)
+julia> toStr(P2) # resulting PGA point (xe20+ye01+e12) => Euclidean point (x,y) = (10,1); see cheat sheet
 "e01 + 10e20 + 0.9999999e12"
 ```
 (TODO)
