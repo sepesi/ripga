@@ -348,7 +348,11 @@ julia> toStr(PX) # 1st intermediate point 1/10th the way from P1 to P2 is at Euc
 "-e01 - 1.2e20 + e12"
 ```
 
-(TODO)
+In general, the multivector composition of all the 2D dual PGA motors is a scalar term and at least one bivector
+term. For translations, the bivectors are ideal (i.e., contain e0) and the multivector is in the exact algebraic
+form of a [dual number](https://en.wikipedia.org/wiki/Dual_number). In contrast, attempts at generating a
+2D direct PGA motor are all missing the scalar term (because e00 = 0), and therefore those direct PGA motors
+don't work.
 
 ## 4.2 3D PGA Basis
 To prepare Julia's REPL for 3D PGA, include the files ripgand.jl and ripga3d.jl. To confirm the initialization, print out the basis.
@@ -376,6 +380,8 @@ julia> [basis reverse(basis)] # col 1 basis in order of grade; col 2 basis in re
  "e123"   "e0"
  "e0123"  "1"
 ```
+
+(TODO)
 
 PGA in a two dimensional Euclidean space requires a basis of eight hypercomplex numbers which can be initialized by including the 
 following two files:
