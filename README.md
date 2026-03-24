@@ -220,9 +220,50 @@ reasons for using the dual interpretation of the PGA basis, there are two:
 1. Dual PGA unifies rotations and translations.
 2. Dual PGA unifies operations in 2D and 3D Euclidean spaces.
 
-Both reasons are closely examined in the REPL sessions in the following subsections about the 2D PGA basis and the 3D PGA basis.
+Both reasons are closely examined in the REPL sessions in the following subsections about motors in 1D PGA, 2D PGA, and 3D PGA.
 
-## 4.1 2D PGA Basis
+## 4.1 1D PGA Motor
+To prepare Julia's REPL for 1D PGA, include the files ripgand.jl and ripga1d.jl. To confirm the initialization, print out the basis.
+Note that the basis is typically sorted by grade, which does not imply an interpretation of the PGA basis because the same basis
+can be interpreted as either direct PGA or dual PGA.
+
+```
+julia> include("ripgand.jl"); # utility functions for all available dimensions
+
+julia> include("ripga1d.jl"); # enable 1D PGA
+
+julia> [basis reverse(basis)]
+4×2 Matrix{String}:
+ "1"    "e01"
+ "e0"   "e1"
+ "e1"   "e0"
+ "e01"  "1"
+```
+Every rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
+In 1D, translation is composed of reflecting across two points. Here is an example of translation using dual PGA to specify
+reflections across two points P1 and P2 where
+* P1 is a point at x=1,
+* P2 is another point, 5 to the right of P1, and
+* the motor composed of those two points separated by a distance of 5 translates a point to the right by 10 (i.e., twice
+  the separation distance between the two points).
+
+```
+julia> P1 = e1 + e0; # Euclidean point x=1 => PGA point eq. (xe0+e1); see cheat sheet
+
+julia> P2 = e1 + 6*e0; # Euclidean point x=6 => PGA point eq. (xe0+e1); see cheat sheet
+
+julia> T = P2*P1; # compose the two reflection Translation motor as geometric product
+
+julia> toStr(T) # check Translation motor (distance between reflection points is 5)
+"1 + 5e01"
+
+julia> P = e1; # Euclidean origin (x=0)
+
+julia> P2 = T*P*~T; # apply Translation motor to P at origin; alternative eq is P2 = T>>>P
+
+```
+
+## 4.2 2D PGA Motors
 To prepare Julia's REPL for 2D PGA, include the files ripgand.jl and ripga2d.jl. To confirm the initialization, print out the basis.
 Note that the basis is typically sorted by grade, which does not imply an interpretation of the PGA basis because the same basis
 can be interpreted as either direct PGA or dual PGA.
@@ -244,7 +285,7 @@ julia> [basis reverse(basis)] # col 1 basis in order of grade; col 2 basis in re
  "e012"  "1"```
 ```
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every rigid body
-transformation is composed of reflections across hyperplanes (lines in 2D, planes in 3D). In 2D, translation is composed of 
+transformation is composed of reflections across hyperplanes (i.e., lines in 2D, planes in 3D). In 2D, translation is composed of 
 reflecting across two parallel lines, and rotation is composed of reflecting across two intersecting lines. Here is an example of
 translation using dual PGA to specify reflections across two parallel lines L1 and L2 where
 * L1 is a vertical line, the y-axis,
@@ -354,7 +395,7 @@ form of a [dual number](https://en.wikipedia.org/wiki/Dual_number). In contrast,
 2D direct PGA motor are all missing the scalar term (because e00 = 0), and therefore those direct PGA motors
 don't work.
 
-## 4.2 3D PGA Basis
+## 4.3 3D PGA Motors
 To prepare Julia's REPL for 3D PGA, include the files ripgand.jl and ripga3d.jl. To confirm the initialization, print out the basis.
 ```
 julia> include("ripgand.jl"); # utility functions for all available dimensions
