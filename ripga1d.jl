@@ -64,7 +64,7 @@ end # outer product; wedge operator (^)
 # reverse operator (~)
 function Base.:~(a::Vector{Float32}) # reverse operator
  res = copy(a)
- res[4] .*= -1
+ res[4] *= -1
  return res
 end
 
