@@ -239,7 +239,8 @@ julia> [basis reverse(basis)]
  "e1"   "e0"
  "e01"  "1"
 ```
-Every rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
+According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
+rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
 In 1D, translation is composed of reflecting across two points. Here is an example of translation using dual PGA to specify
 reflections across two points P1 and P2 where
 * P1 is a point at x=1,
@@ -248,20 +249,20 @@ reflections across two points P1 and P2 where
   the separation distance between the two points).
 
 ```
-julia> P1 = e1 + e0; # Euclidean point x=1 => PGA point eq. (xe0+e1); see cheat sheet
+julia> P1 = e1 + e0; # Euclidean point x=1 => dual PGA point eq. (xe0+e1)
 
-julia> P2 = e1 + 6*e0; # Euclidean point x=6 => PGA point eq. (xe0+e1); see cheat sheet
+julia> P2 = e1 + 6*e0; # Euclidean point x=6 => dual PGA point eq. (xe0+e1)
 
 julia> T = P2*P1; # compose the two reflection Translation motor as geometric product
 
 julia> toStr(T) # check Translation motor (distance between reflection points is 5)
 "1 + 5e01"
 
-julia> P = e1; # Euclidean origin (x=0)
+julia> P = e1; # Euclidean origin (x=0 => dual PGA point eq. (xe0+e1)
 
 julia> P2 = T*P*~T; # apply Translation motor to P at origin; alternative eq is P2 = T>>>P
 
-julia> toStr(P2) # resulting PGA point (xe0+e1) => Euclidean point x=10; see cheat sheet
+julia> toStr(P2) # resulting dual PGA point (xe0+e1) => Euclidean point x=10
 "10e0 + e1"
 ```
 
@@ -298,18 +299,18 @@ translation using dual PGA to specify reflections across two parallel lines L1 a
 ```
 julia> L1 = e1; # the x=0 hyperplane is the y-axis
 
-julia> L2 = e1-5*e0; # Euclidean eq. x-d=0 => PGA line eq. (ae1+be2+ce0); see cheat sheet
+julia> L2 = e1-5*e0; # Euclidean eq. x-d=0 => dual PGA line eq. (ae1+be2+ce0); see cheat sheet
 
 julia> T = L2*L1; # compose the two reflection Translation motor as geometric product
 
 julia> toStr(T) # check Translation motor
 "1 - 5e01"
 
-julia> P = e12; # Euclidean origin => PGA point eq (xe20+ye01+e12); see cheat sheet
+julia> P = e12; # Euclidean origin => dual PGA point eq (xe20+ye01+e12); see cheat sheet
 
 julia> P2 = T*P*~T; # apply Translation motor to P at origin; alternative eq is P2 = T>>>P
 
-julia> toStr(P2) # resulting PGA point (xe20+ye01+e12) => Euclidean point (x,y) = (10,0); see cheat sheet
+julia> toStr(P2) # resulting dual PGA point (xe20+ye01+e12) => Euclidean point (x,y) = (10,0); see cheat sheet
 "10e20 + e12"
 ```
 Similarly, here is an example of rotation using dual PGA to specify reflections across two intersecting lines L1 and L2 where
@@ -330,7 +331,7 @@ julia> toStr(R) # check Rotation motor
 
 julia> L1R = R*L1*~R; # apply Rotation motor to rotate line L1
 
-julia> toStr(L1R) # resulting PGA line (ae1+be2+ce0) => Euclidean line (ax+by+c=0) => y=0; see cheat sheet
+julia> toStr(L1R) # resulting dual PGA line (ae1+be2+ce0) => Euclidean line (ax+by+c=0) => y=0; see cheat sheet
 "0.9999999e2"
 ```
 Combining the translation and the rotation operation from the previous two REPL sessions, here is an example of
@@ -348,11 +349,11 @@ julia> M = T*R; # general Motor applying rotation first (order is right to left,
 julia> toStr(M)
 "0.7071068 - 3.535534e01 - 3.535534e20 - 0.7071068e12"
 
-julia> P = e20 + e12; # Euclidean point (x,y) => PGA point (xe20+ye01+e12); see cheat sheet
+julia> P = e20 + e12; # Euclidean point (x,y) => dual PGA point (xe20+ye01+e12); see cheat sheet
 
 julia> P2 = M*P*~M; # apply general motor to PGA point P
 
-julia> toStr(P2) # resulting PGA point (xe20+ye01+e12) => Euclidean point (x,y) = (10,1); see cheat sheet
+julia> toStr(P2) # resulting dual PGA point (xe20+ye01+e12) => Euclidean point (x,y) = (10,1); see cheat sheet
 "e01 + 10e20 + 0.9999999e12"
 ```
 
@@ -374,9 +375,9 @@ Concretely, the following REPL session translates one tenth of the way from the 
 to Euclidean point (1.5,-1).
 
 ```
-julia> P1 = e12 - 1.5*e20 - e01; # 2D PGA point for Euclidean point (-1.5,-1); see 2D cheat sheet
+julia> P1 = e12 - 1.5*e20 - e01; # 2D dual PGA point for Euclidean point (-1.5,-1); see 2D cheat sheet
 
-julia> P2 = e12 + 1.5*e20 - e01; # 2D PGA point for Euclidean point (1.5,-1); see 2D cheat sheet
+julia> P2 = e12 + 1.5*e20 - e01; # 2D dual PGA point for Euclidean point (1.5,-1); see 2D cheat sheet
 
 julia> T = P2*P1; toStr(T) # translation motor with distance between P1 and P2
 "-1 + 3e01"
