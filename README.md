@@ -261,6 +261,8 @@ julia> P = e1; # Euclidean origin (x=0)
 
 julia> P2 = T*P*~T; # apply Translation motor to P at origin; alternative eq is P2 = T>>>P
 
+julia> toStr(P2) # resulting PGA point (xe0+e1) => Euclidean point x=10; see cheat sheet
+"10e0 + e1"
 ```
 
 ## 4.2 2D PGA Motors
