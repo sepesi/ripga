@@ -111,11 +111,11 @@ function Base.:>>>(a::Vector{Float32},b::Matrix{Float32})
 end
 
 function Base.:!(a::Vector{Float32})::Vector{Float32}
- return reverse(a)
+ [reverse(a[1:end-1]); a[end]]
 end
 
 function Base.:!(a::Matrix{Float32})
- return mapslices(!, a, dims=1)
+ a[vcat(end-1:-1:1, end:end),:]
 end
 
 # mask off all vectors except those with specified grade (k)
@@ -259,7 +259,7 @@ end
 
 # convert multivector fields to string
 function toStr(V::Vector{Float32})
- nField = size(V,1)
+ nField = size(V,1)&~1 # clearing LSB ignores status field
  nNZField = 0
  S = String[]
  for iField = 1:nField

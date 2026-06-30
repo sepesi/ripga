@@ -1,12 +1,12 @@
 # traffic sources of Julia and PGA
-426	email,IM,direct
-407	discourse.julialang.org
-353	google.com
-75	en.wikipedia.org
+779	google.com
+444	email,IM,direct
+417	discourse.julialang.org
+88	en.wikipedia.org
 15	en.m.wikipedia.org
-13	search.brave.com
-10	duckduckgo.com
-4	gemini.google.com
-4	Android device (not Medium app)
+14	search.brave.com
+12	duckduckgo.com
+6	Android device (not Medium app)
+5	gemini.google.com
 3	keep.google.com
-5 	All other external referrals
+6 	All other external referrals

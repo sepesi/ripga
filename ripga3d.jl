@@ -10,17 +10,17 @@ using Printf
 # define multivector basis names 
 # 0 denotes projective dimension (e.g., e0 * e0 = 0)
 basis = [ # iField
- "1"  #  1 scalar
- "e0" #  2 grade 1 vectors
- "e1" #  3
- "e2" #  4
- "e3" #  5
- "e01" #  6 grade 2 vectors (bivectors)
- "e02" #  7
- "e03" #  8
- "e12" #  9
- "e31" # 10
- "e23" # 11
+ "1"    #  1 scalar
+ "e0"   #  2 grade 1 vectors
+ "e1"   #  3
+ "e2"   #  4
+ "e3"   #  5
+ "e01"  #  6 grade 2 vectors (bivectors)
+ "e02"  #  7
+ "e03"  #  8
+ "e12"  #  9
+ "e31"  # 10
+ "e23"  # 11
  "e021" # 12 grade 3 vectors (trivectors)
  "e013" # 13
  "e032" # 14
@@ -28,7 +28,7 @@ basis = [ # iField
  "e0123"]# 16 pseudoscalar
 
 # define basis multivectors
-nField = 2^4 # 4 = 3D + 1 dimensions 
+nField = 2^4+1 # 4 = 3 dimensions + extra dimension; trailing +1 is a status field
 e0 =    zeros(Float32, nField); e0[2] = 1
 e1 =    zeros(Float32, nField); e1[3] = 1
 e2 =    zeros(Float32, nField); e2[4] = 1
@@ -187,21 +187,21 @@ function utest(nLoop=100,
   flgMathSyntax::Bool=false)
 
  # allocate some multivectors
- nField = length(basis)
- axis_z = Vector{Float32}(undef,nField)
- origin = Vector{Float32}(undef,nField)
- px = Vector{Float32}(undef,nField)
- line = Vector{Float32}(undef,nField)
- p = Vector{Float32}(undef,nField)
- rot = Vector{Float32}(undef,nField)
- rot_point = Vector{Float32}(undef,nField)
- rot_line = Vector{Float32}(undef,nField)
- rot_plane = Vector{Float32}(undef,nField)
+ nField         = length(basis)+1 # +1 is for status field
+ axis_z         = Vector{Float32}(undef,nField)
+ origin         = Vector{Float32}(undef,nField)
+ px             = Vector{Float32}(undef,nField)
+ line           = Vector{Float32}(undef,nField)
+ p              = Vector{Float32}(undef,nField)
+ rot            = Vector{Float32}(undef,nField)
+ rot_point      = Vector{Float32}(undef,nField)
+ rot_line       = Vector{Float32}(undef,nField)
+ rot_plane      = Vector{Float32}(undef,nField)
  point_on_plane = Vector{Float32}(undef,nField)
- to = Vector{Float32}(undef,nField)
+ to             = Vector{Float32}(undef,nField)
  point_on_torus = Vector{Float32}(undef,nField)
- tst1 = Vector{Float32}(undef,nField)
- tst2 = Vector{Float32}(undef,nField)
+ tst1           = Vector{Float32}(undef,nField)
+ tst2           = Vector{Float32}(undef,nField)
  
  for iLoop = 1:nLoop
   if flgMathSyntax == false

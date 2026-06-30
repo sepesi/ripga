@@ -16,7 +16,7 @@ basis = [ # iField
  "e01"]# 4 pseudoscalar
 
 # define basis multivectors
-nField = 2^2 # 2 = 1D + 1 dimensions
+nField = 2^2+1 # 2 = 1 dimension + extra dimension; trailing +1 is a status field
 e0 =  zeros(Float32, nField); e0[2] = 1
 e1 =  zeros(Float32, nField); e1[3] = 1
 e01 = zeros(Float32, nField); e01[4] = 1
@@ -97,7 +97,7 @@ function utest(nLoop=100,
   flgMathSyntax::Bool=false)
 
  # allocate some multivectors
- nField = length(basis)
+ nField = length(basis)+1 # +1 is for status field
  a    = Vector{Float32}(undef,nField)
  b    = Vector{Float32}(undef,nField)
  res1 = Vector{Float32}(undef,nField)

@@ -10,17 +10,17 @@ using Printf
 # define multivector basis names
 # 0 denotes projective dimension (e.g., e0 * e0 = 0)
 basis = [ # iField
- "1"  #  1 scalar
- "e0" #  2 grade 1 vectors
- "e1" #  3
- "e2" #  4
- "e01" #  5 grade 2 vectors (bivectors)
- "e20" #  6
- "e12" #  7
+ "1"   # 1 scalar
+ "e0"  # 2 grade 1 vectors
+ "e1"  # 3
+ "e2"  # 4
+ "e01" # 5 grade 2 vectors (bivectors)
+ "e20" # 6
+ "e12" # 7
  "e012"] #  8 pseudoscalar
 
 # define basis multivectors
-nField = 2^3 # 3 = 2D + 1 dimensions
+nField = 2^3+1 # 3 = 2 dimensions + extra dimension; trailing +1 is a status field 
 e0 =   zeros(Float32, nField); e0[2] = 1
 e1 =   zeros(Float32, nField); e1[3] = 1
 e2 =   zeros(Float32, nField); e2[4] = 1
@@ -121,16 +121,16 @@ function utest(nLoop=100,
   flgMathSyntax::Bool=false)
 
  # allocate some multivectors
- nField = length(basis)
- P0 = Vector{Float32}(undef,nField)
- P1 = Vector{Float32}(undef,nField)
- P2 = Vector{Float32}(undef,nField)
- P3 = Vector{Float32}(undef,nField)
+ nField = length(basis)+1 # +1 is for status field
+ P0    = Vector{Float32}(undef,nField)
+ P1    = Vector{Float32}(undef,nField)
+ P2    = Vector{Float32}(undef,nField)
+ P3    = Vector{Float32}(undef,nField)
  line0 = Vector{Float32}(undef,nField)
  line1 = Vector{Float32}(undef,nField)
- tst1 = Vector{Float32}(undef,nField)
- tst2 = Vector{Float32}(undef,nField)
- x = Vector{Float32}(undef,nField)
+ tst1  = Vector{Float32}(undef,nField)
+ tst2  = Vector{Float32}(undef,nField)
+ x     = Vector{Float32}(undef,nField)
 
  for iLoop = 1:nLoop
   P0 = point(0,0)
