@@ -21,6 +21,7 @@ basis = [ # iField
 
 # define basis multivectors
 nField = 2^3+1 # 3 = 2 dimensions + extra dimension; trailing +1 is a status field 
+eu =   zeros(Float32, nField); eu[1] = 1
 e0 =   zeros(Float32, nField); e0[2] = 1
 e1 =   zeros(Float32, nField); e1[3] = 1
 e2 =   zeros(Float32, nField); e2[4] = 1

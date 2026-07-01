@@ -10,22 +10,22 @@ using Printf
 # define multivector basis names
 # 0 denotes projective dimension (e.g., e0 * e0 = 0)
 basis = [# iField
- "1"   #  1 scalar
- "e0"  #  2 grade 1 vectors
- "e1"  #  3
- "e2"  #  4
- "e3"  #  5
- "e4"  #  6
- "e01"  #  7 grade 2 vectors (bivectors)
- "e02"  #  8
- "e03"  #  9
- "e04"  # 10
- "e12"  # 11
- "e13"  # 12
- "e14"  # 13
- "e23"  # 14
- "e24"  # 15
- "e34"  # 16
+ "1"     #  1 scalar
+ "e0"    #  2 grade 1 vectors
+ "e1"    #  3
+ "e2"    #  4
+ "e3"    #  5
+ "e4"    #  6
+ "e01"   #  7 grade 2 vectors (bivectors)
+ "e02"   #  8
+ "e03"   #  9
+ "e04"   # 10
+ "e12"   # 11
+ "e13"   # 12
+ "e14"   # 13
+ "e23"   # 14
+ "e24"   # 15
+ "e34"   # 16
  "e012"  # 17 grade 3 vectors (trivectors)
  "e013"  # 18
  "e014"  # 19
@@ -36,15 +36,16 @@ basis = [# iField
  "e124"  # 24
  "e134"  # 25
  "e234"  # 26
- "e0123"  # 27
- "e0124"  # 28
- "e0134"  # 29
- "e0234"  # 30
- "e1234"  # 31
+ "e0123" # 27
+ "e0124" # 28
+ "e0134" # 29
+ "e0234" # 30
+ "e1234" # 31
  "e01234"] # 32 pseudoscalar
 
 # define basis multivectors
 nField = 2^5
+eu =    zeros(Float32, nField); eu[1] = 1
 e0 =    zeros(Float32, nField); e0[2] = 1
 e1 =    zeros(Float32, nField); e1[3] = 1
 e2 =    zeros(Float32, nField); e2[4] = 1
