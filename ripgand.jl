@@ -144,10 +144,15 @@ function grade(a::Vector{Float32},k::Int64)
 end
 
 # convert Euclidean coordinates to PGA expression
-function point(x::Number, y::Number)::Vector{Float32}
+function point(
+ x::Number,
+ y::Number)::Vector{Float32}
  return x*e20 + y*e01 + e12
 end
-function point(x::Number, y::Number, z::Number)::Vector{Float32}
+function point(
+ x::Number,
+ y::Number,
+ z::Number)::Vector{Float32}
  return x*e032 + y*e013 + z*e021 + e123
 end
 function point(

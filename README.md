@@ -7,9 +7,9 @@
 >key to the greatest discoveries in all fields of mathematics." - Joseph-Louis Lagrange (1736–1813)
 
 # 0. TLDR
-Here's a showcase of animations demonstrating Julia, Makie, and Projective Geometric Algebra. The intent of this 
-essay is to educate, to increase the familiarity with PGA so that more people are able to create transformative
-designs solving intricate geometry problems. The source code of the animations and the PGA library is in the
+Here's a showcase of animations demonstrating [Julia](https://julialang.org), [Makie](https://docs.makie.org/stable),
+and [Projective Geometric Algebra](https://bivector.net). The intent of this essay is to educate, to increase the
+familiarity with PGA so that more people are able to design solutions to intricate geometry problems. The source code of the animations and the PGA library is in the
 github repository at https://github.com/sepesi/ripga
 
 <table>
@@ -18,8 +18,8 @@ github repository at https://github.com/sepesi/ripga
     <td><img alt="Image" title="3D slicing" src="./res/sl.gif" /></td>
   </tr>
   <tr>
-    <td><b>Figure 0.1. inverse kinematics animation</b></td>
-    <td><b>Figure 0.2. 3D object slicing animation</b></td>
+    <td><b>Figure 0.1. [inverse kinematics](https://enkimute.github.io/ganja.js/examples/coffeeshop.html#pga2d_inverse_kinematics) animation</b></td>
+    <td><b>Figure 0.2. [3D object slicing](https://enkimute.github.io/ganja.js/examples/coffeeshop.html#pga3d_slicing) animation</b></td>
   </tr>
   <tr>
     <td>Based upon Steven De Keninck's inverse kinematics example application in JavaScript and ported to Julia and Makie.</td>
@@ -30,8 +30,8 @@ github repository at https://github.com/sepesi/ripga
     <td><img alt="Image" title="origami animation" src="./res/origami.gif" /></td>
   </tr>
   <tr>
-    <td><b>Figure 0.3. Separating Axis Theorem (SAT) animatio</b></td>
-    <td><b>Figure 0.4. origami animation</b></td>
+    <td><b>Figure 0.3. [Separating Axis Theorem (SAT)](https://enkimute.github.io/ganja.js/examples/coffeeshop.html#pga2d_separating_axis) animatio</b></td>
+    <td><b>Figure 0.4. [origami](https://enkimute.github.io/ganja.js/examples/coffeeshop.html#pga2d_origami) animation</b></td>
   </tr>
   <tr>
     <td>3D version of Separating Axis Theorem (SAT) implemented in Julia and Makie.</td>
@@ -40,7 +40,7 @@ github repository at https://github.com/sepesi/ripga
 </table>
 
 # 1. Why Projective Geometric Algebra?
-There are a few compelling reasons for using Projective Geometric Algebra instead of linear algebra:
+For intricate geometry problems, there are a few compelling reasons for using Projective Geometric Algebra:
 * PGA unifies many concepts and therefore makes them easier to implement,
 * PGA has geometric objects (e.g., points, lines, planes) that hide the coordinates and are easier to
   mentally manipulate than matrices of coordinates, and
@@ -57,10 +57,10 @@ Projective Geometric Algebra is good at unifying concepts. For example, in Proje
 * Maxwell's four equations can be written as one equation.
 
 More concise implementations in software result in faster development, fewer bugs, and less technical debt. 
-For example, this video shows Dr. Todd Ell, senior technical fellow at Collins Aerospace (with 68,000 
-employees, the world's largest supplier of aerospace components) describing how he is pushing to convert 
-the highly regulated Collins Aerospace design and development tool chain currently based upon linear 
-algebra to being based instead upon Projective Geometric Algebra.
+For example, [this video](https://www.youtube.com/watch?v=_3WPLawT-H0) shows Dr. Todd Ell, senior technical
+fellow at Collins Aerospace (with 68,000 employees, the world's largest supplier of aerospace components)
+describing how he is pushing to convert the highly regulated Collins Aerospace design and development tool
+chain currently based upon linear algebra to being based instead upon Projective Geometric Algebra.
 
 ## 1.2 Hide Coordinates
 In Projective Geometric Algebra, the coordinates are embedded in geometric objects, avoiding the difficulties
@@ -86,17 +86,46 @@ There are several compelling reasons for using Julia to implement Projective Geo
 
 ## 2.1 Easy Access to All PGA Vector Operations
 Although bivector.net lists reference implementations of PGA in several programming languages (e.g., JavaScript, 
-C++, C#, Python, Rust), it does not currently list a Julia reference implementation. Julia is also obviously 
+C++, C#, Python, Rust), it does not currently list a Julia reference implementation. Also, Julia is necessarily
 missing from the book Geometric Algebra for Computer Science given that the Julia language was created two years 
 after the book's publication. So, I ported bivector.net's C++ reference implementation of PGA to Julia in the github 
 public repository at https://github.com/sepesi/ripga
 
-To avoid an unnecessary operator translation, the Julia port of ripga uses exactly the same vector operator symbols 
-as the vector operators in the programming syntax of the original bivector.net reference implementation as shown in 
-the table below.
+To avoid confusion, the Julia port of ripga uses exactly the same [vector operator symbols](https://www.youtube.com/watch?v=2DgxeizE3E8&t=105s)
+as the vector operators in the programming syntax of the original bivector.net reference implementation as shown in the table below.
 
-A slide from Steven De Keninck's presentation to SIGBRAPI, showing the differences between the "standard" math syntax 
-and the "standard" programming syntax when writing geometric algebra expressions.
+| Math Syntax | Vector Operator Name | Programming Syntax |
+| :--- | :--- | :--- |
+| $`ab`$ | Geometric Product | $`a * b`$ |
+| $`a \wedge b`$ | Outer Product (Wedge) | $`a ^ b`$ |
+| $`a \vee b`$ | Regressive Product (Vee) | $`a & b`$ |
+| $`a \cdot b`$ | Inner Product (Dot) | $`a | b`$ |
+| $`a\ast`$ | Dual | $`a!` |
+| $`ab\tilde{a}`$ | Sandwich Product | $`a >>> b`$ |
+
+<table>
+  <tr>
+	<td><b>Math Syntax</b></td>
+    <td><b>Operator Name</b></td>
+    <td><b>Programming Syntax</b></td>
+  </tr>
+  <tr>
+    <td>Based upon Steven De Keninck's inverse kinematics example application in JavaScript and ported to Julia and Makie.</td>
+    <td>Based upon Steven De Keninck's pga3d_slicing example application in JavaScript and ported to Julia and Makie.</td>
+  </tr>
+  <tr>
+    <td><img alt="Image" title="SAT animation" src="./res/polyx3.gif" /></td>
+    <td><img alt="Image" title="origami animation" src="./res/origami.gif" /></td>
+  </tr>
+  <tr>
+    <td><b>Figure 0.3. [Separating Axis Theorem (SAT)](https://enkimute.github.io/ganja.js/examples/coffeeshop.html#pga2d_separating_axis) animatio</b></td>
+    <td><b>Figure 0.4. [origami](https://enkimute.github.io/ganja.js/examples/coffeeshop.html#pga2d_origami) animation</b></td>
+  </tr>
+  <tr>
+    <td>3D version of Separating Axis Theorem (SAT) implemented in Julia and Makie.</td>
+    <td>Based upon Steven De Keninck's oeigami example application in JavaScript and ported to Julia and Makie.</td>
+  </tr>
+</table>
 
 It should be noted that several people in the Julia community strongly disagree with my approach to overloading the 
 vector operators. They refer to my approach as "type piracy" and they would prefer that I instead overload custom 

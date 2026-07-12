@@ -44,7 +44,7 @@ basis = [# iField
  "e01234"] # 32 pseudoscalar
 
 # define basis multivectors
-nField = 2^5
+nField = 2^5+1 # 5 = 4 dimensions + extra dimension; trailing +1 is a status field
 eu =    zeros(Float32, nField); eu[1] = 1
 e0 =    zeros(Float32, nField); e0[2] = 1
 e1 =    zeros(Float32, nField); e1[3] = 1
@@ -929,16 +929,16 @@ end # conjugate()
 # - @btime utest() is a test for execution speed of ripga.jl.
 #   (NOTE: requires using BenchmarkTools)
 function utest(nLoop=100, flgSimplify::Bool=false)
- nField = length(basis)
- P0 = Vector{Float32}(undef,nField)
- P1 = Vector{Float32}(undef,nField)
- P2 = Vector{Float32}(undef,nField)
- P3 = Vector{Float32}(undef,nField)
+ nField = length(basis)+1 # +1 is for status field
+ P0 =    Vector{Float32}(undef,nField)
+ P1 =    Vector{Float32}(undef,nField)
+ P2 =    Vector{Float32}(undef,nField)
+ P3 =    Vector{Float32}(undef,nField)
  line0 = Vector{Float32}(undef,nField)
  line1 = Vector{Float32}(undef,nField)
- x = Vector{Float32}(undef,nField)
- tst1 = Vector{Float32}(undef,nField)
- tst2 = Vector{Float32}(undef,nField)
+ x =     Vector{Float32}(undef,nField)
+ tst1 =  Vector{Float32}(undef,nField)
+ tst2 =  Vector{Float32}(undef,nField)
 
  for iLoop = 1:nLoop
   # define some points

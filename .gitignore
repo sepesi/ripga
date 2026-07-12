@@ -30,6 +30,7 @@
 *.sbr
 *.scc
 meetfood.tsv
+ripga4d.bak.jl
 [Dd]ebug*/
 bdd/
 obj/
