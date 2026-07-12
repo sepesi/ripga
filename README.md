@@ -58,9 +58,10 @@ Projective Geometric Algebra is good at unifying concepts. For example, in Proje
 
 More concise implementations in software result in faster development, fewer bugs, and less technical debt. 
 For example, [this video](https://www.youtube.com/watch?v=_3WPLawT-H0) shows Dr. Todd Ell, senior technical
-fellow at Collins Aerospace (with 68,000 employees, the world's largest supplier of aerospace components)
-describing how he is pushing to convert the highly regulated Collins Aerospace design and development tool
-chain currently based upon linear algebra to being based instead upon Projective Geometric Algebra.
+fellow at Collins Aerospace (with 68,000 employees including 16,700 engineers, the world's largest supplier
+of aerospace components) describing how he is pushing to train the highly regulated Collins Aerospace engineers
+to use geometric algebra as a design and development tool, in many cases instead of the traditional linear
+algebra tools.
 
 ## 1.2 Hide Coordinates
 In Projective Geometric Algebra, the coordinates are embedded in geometric objects, avoiding the difficulties
@@ -145,7 +146,7 @@ or deployment. One of their design goals for Julia was to solve this two-languag
 prototyping and also fast for deployment.
 
 ## 2.4 Plotting Capabilities
-According to the Makie documentation,
+According to the official [introduction to Makie](https://docs.makie.org/stable/),
 > "Makie is a data visualization ecosystem for the Julia programming language, with high performance and extensibility.
 > It is available for Windows, Mac and Linux."
 
@@ -153,23 +154,24 @@ The Makie backend package with interactive plotting capabilities is GLMakie whic
 surprisingly fast.
 
 ## 2.5 REPL (Read Execute Print Loop)
-In the tools section of bivector.net, there is a PGA expression evaluator that enables the exploration of PGA expressions 
-without writing a program. Julia's REPL does that and more: in addition to evaluating PGA expressions, Julia's REPL (after 
-including ripgand.jl and ripga1d.jl, ripga2d.jl, ripga3d.jl, or ripga4d.jl) can 
+In the tools section of bivector.net, there is a PGA expression evaluator for exploring PGA expressions. Julia's REPL
+does that and more: in addition to evaluating PGA expressions, Julia's REPL (after including ripgand.jl and ripga1d.jl,
+ripga2d.jl, ripga3d.jl, or ripga4d.jl) can 
 * assign PGA expressions to variables,
 * call functions, and
 * display inline comments.
 
 All are helpful capabilities when learning or troubleshooting PGA expressions.
 
-REPL is particularly helpful when soliciting help from the Julia community. A common phrase throughout Julia's discourse 
-community is MWE (i.e., Minimal Working Example). Even though programmers often work on lengthy Julia programs, requests 
-for help from the Julia community programmers are restricted to tiny snippets of code so that the problem can easily be 
-replicated by everyone in their own REPL. This is an extremely useful programming practice because the solution often 
-reveals itself while writing the MWE to ask the community for help.
+REPL is particularly helpful when soliciting help from the Julia community. A common term posted in Julia's discourse
+channel is MWE (i.e., Minimal Working Example). Even though programmers often work on lengthy Julia programs, requests 
+for help from the Julia community are restricted to tiny snippets of code so that the problem can be easily replicated
+by everyone in their own REPL. This is an extremely useful programming practice because the solution often reveals itself
+while writing the MWE to ask the community for help.
 
 ## 2.6 Developer Community
-In the conclusion of Julia: A Fresh Approach to Numerical Computing, the authors wrote
+In the conclusion of _[Julia: A Fresh Approach to Numerical Computing](https://julialang.org/assets/research/julia-fresh-approach-BEKS.pdf)_,
+the authors write
 > "We built Julia to meet our needs for numerical computing, and it turns out that many others wanted exactly the same thing. 
 > At the time of writing, not a day goes by when we don't learn that someone new has picked up Julia at universities and
 > companies around the world, in fields as diverse as engineering, mathematics, physical and social sciences, finance, biotech,
