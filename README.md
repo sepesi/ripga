@@ -97,10 +97,10 @@ as the vector operators in the programming syntax of the original bivector.net r
 | Math Syntax | Vector Operator Symbol Name | Programming Syntax |
 | :--- | :--- | :--- |
 | $`ab`$ | Geometric Product | $`a * b`$ |
-| $`a \wedge b`$ | Outer Product (Wedge) | $`a \^ b`$ |
-| $`a \vee b`$ | Regressive Product (Vee) | $`a \& b`$ |
-| $`a \cdot b`$ | Inner Product (Dot) | $`a | b`$ |
-| $`a\ast`$ | Dual | $`a!` |
+| $`a \wedge b`$ | Outer Product (Wedge) | `a \^ b` |
+| $`a \vee b`$ | Regressive Product (Vee) | `a \& b` |
+| $`a \cdot b`$ | Inner Product (Dot) | `a \| b` |
+| $`a\ast`$ | Dual | `a!` |
 | $`ab\tilde{a}`$ | Sandwich Product | $`a >>> b`$ |
 
 It should be noted that several people in the Julia community strongly disagree with my approach to overloading the 
