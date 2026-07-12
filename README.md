@@ -103,22 +103,22 @@ as the vector operators in the programming syntax of the original bivector.net r
 | $`a\ast`$ | Dual | `a!` |
 | $`ab\tilde{a}`$ | Sandwich Product | `a >>> b` |
 
-It should be noted that several people in the Julia community strongly disagree with my approach to overloading the 
-vector operators. They refer to my approach as "type piracy" and they would prefer that I instead overload custom 
-types instead of base types because my approach of overloading base types violates the "avoid type piracy" rule in 
-Julia's style guide. Their concerns are that my "type piracy" might
+It should be noted that the general consensus from the Julia community is that my approach to overloading the
+vector operators is "type piracy". They suggested that I instead overload custom types instead of base types
+in order to comply with the "avoid type piracy" rule in Julia's style guide. Their concerns are that my approach
+of overloading base types might
 * crash Julia,
 * introduce incompatibilities that are hard to predict and diagnose,
 * change the behavior of unrelated code unexpectedly, and
-* make code not very readable.
+* make code difficult to read.
 
 However, I've been using ripga and its "type piracy" for several years and have not experienced any of their 
-"type piracy" concerns. (If someone dislikes my "type piracy" enough to fork the ripga repository at 
+"type piracy" concerns. (Of course, if someone dislikes my "type piracy" enough to fork the ripga repository at 
 https://github.com/sepesi/ripga and fix my "type piracy" by defining some custom types, I'd love to see it 
-and compare the two approaches.) The "type piracy" label seems like an exaggeration to me because "piracy" 
-implies stealing but my overloading of base types occurs only when the arguments are vectors and that doesn't 
-even compile without the overload. So, given that the vector operations are currently unused, perhaps a better 
-name for my violation of Julia's style guide is "type squatting"??
+and compare the two approaches.) To me, the "type piracy" label seems like an exaggeration because "piracy"
+implies stealing but my overloading of base types occurs only when the arguments are vectors and the vector
+operations don't even compile without the overload. So, given that the vector operations are currently unused,
+perhaps a better name for my violation of Julia's style guide is "type squatting"??
 
 ## 2.2 Metaprogramming Capabilities
 Julia's extensive metaprogramming capabilities offer a convenient bridge from PGA "math syntax" to PGA "programming 
