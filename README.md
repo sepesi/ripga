@@ -105,8 +105,8 @@ as the vector operators in the programming syntax of the original bivector.net r
 
 It should be noted that the general consensus from the Julia community is that my approach to overloading the
 vector operators is "type piracy". They suggested that I instead overload custom types instead of base types
-in order to comply with the "avoid type piracy" rule in Julia's style guide. Their concerns are that my approach
-of overloading base types might
+in order to comply with the "avoid type piracy" rule in [Julia's style guide](https://docs.julialang.org/en/v1/manual/style-guide/).
+Their concerns are that my approach of overloading base types might
 * crash Julia,
 * introduce incompatibilities that are hard to predict and diagnose,
 * change the behavior of unrelated code unexpectedly, and
