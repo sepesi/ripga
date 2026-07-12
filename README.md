@@ -94,38 +94,14 @@ public repository at https://github.com/sepesi/ripga
 To avoid confusion, the Julia port of ripga uses exactly the same [vector operator symbols](https://www.youtube.com/watch?v=2DgxeizE3E8&t=105s)
 as the vector operators in the programming syntax of the original bivector.net reference implementation as shown in the table below.
 
-| Math Syntax | Vector Operator Name | Programming Syntax |
+| Math Syntax | Vector Operator Symbol Name | Programming Syntax |
 | :--- | :--- | :--- |
 | $`ab`$ | Geometric Product | $`a * b`$ |
-| $`a \wedge b`$ | Outer Product (Wedge) | $`a ^ b`$ |
-| $`a \vee b`$ | Regressive Product (Vee) | $`a & b`$ |
+| $`a \wedge b`$ | Outer Product (Wedge) | $`a \\^ b`$ |
+| $`a \vee b`$ | Regressive Product (Vee) | $`a \\& b`$ |
 | $`a \cdot b`$ | Inner Product (Dot) | $`a | b`$ |
 | $`a\ast`$ | Dual | $`a!` |
 | $`ab\tilde{a}`$ | Sandwich Product | $`a >>> b`$ |
-
-<table>
-  <tr>
-	<td><b>Math Syntax</b></td>
-    <td><b>Operator Name</b></td>
-    <td><b>Programming Syntax</b></td>
-  </tr>
-  <tr>
-    <td>Based upon Steven De Keninck's inverse kinematics example application in JavaScript and ported to Julia and Makie.</td>
-    <td>Based upon Steven De Keninck's pga3d_slicing example application in JavaScript and ported to Julia and Makie.</td>
-  </tr>
-  <tr>
-    <td><img alt="Image" title="SAT animation" src="./res/polyx3.gif" /></td>
-    <td><img alt="Image" title="origami animation" src="./res/origami.gif" /></td>
-  </tr>
-  <tr>
-    <td><b>Figure 0.3. [Separating Axis Theorem (SAT)](https://enkimute.github.io/ganja.js/examples/coffeeshop.html#pga2d_separating_axis) animatio</b></td>
-    <td><b>Figure 0.4. [origami](https://enkimute.github.io/ganja.js/examples/coffeeshop.html#pga2d_origami) animation</b></td>
-  </tr>
-  <tr>
-    <td>3D version of Separating Axis Theorem (SAT) implemented in Julia and Makie.</td>
-    <td>Based upon Steven De Keninck's oeigami example application in JavaScript and ported to Julia and Makie.</td>
-  </tr>
-</table>
 
 It should be noted that several people in the Julia community strongly disagree with my approach to overloading the 
 vector operators. They refer to my approach as "type piracy" and they would prefer that I instead overload custom 
