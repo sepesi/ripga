@@ -23,6 +23,15 @@ function cumgprod(a::Matrix{Float32})::Matrix{Float32}
  return res  # cumulative geometric product
 end    # similar to cumulative product cumprod()
 
+function geoprodset(a::Matrix{Float32},b::Matrix{Float32})::Matrix{Float32}
+ n = min(size(a,2),size(b,2))
+ res = Matrix{Float32}(undef, size(a,1), n)
+ for i=1:n
+  res[:,i] = a[:,i] * b[:,i]
+ end
+ return res  # geometric product set (1 geometric product per column)
+end
+
 function Base.:&(a::Matrix{Float32},b::Matrix{Float32})::Matrix{Float32}
  nCol = size(a,2)
  if nCol >= size(b,2)
