@@ -104,7 +104,7 @@ as the vector operators in the programming syntax of the original bivector.net r
 | $`ab\tilde{a}`$ | Sandwich Product | `a >>> b` |
 
 It should be noted that the general consensus from the Julia community is that my approach to overloading the
-vector operators is "type piracy". They suggested that I instead overload custom types instead of base types
+vector operators is "type piracy". They suggested that I overload custom types instead of base types
 in order to comply with the "avoid type piracy" rule in [Julia's style guide](https://docs.julialang.org/en/v1/manual/style-guide/).
 Their concerns are that my approach of overloading base types might
 * crash Julia,
@@ -112,35 +112,37 @@ Their concerns are that my approach of overloading base types might
 * change the behavior of unrelated code unexpectedly, and
 * make code difficult to read.
 
-However, I've been using ripga and its "type piracy" for several years and have not experienced any of their 
-"type piracy" concerns. (Of course, if someone dislikes my "type piracy" enough to fork the ripga repository at 
-https://github.com/sepesi/ripga and fix my "type piracy" by defining some custom types, I'd love to see it 
-and compare the two approaches.) To me, the "type piracy" label seems like an exaggeration because "piracy"
-implies stealing but my overloading of base types occurs only when the arguments are vectors and the vector
-operations don't even compile without the overload. So, given that the vector operations are currently unused,
-perhaps a better name for my violation of Julia's style guide is "type squatting"??
+However, I've been using ripga and its "type piracy" for several years. I think overloading the base types is
+easier to read and I have not experienced any of their "type piracy" concerns. (Of course, if someone dislikes
+my "type piracy" enough to fork the ripga repository at https://github.com/sepesi/ripga and fix my "type piracy"
+by defining some custom types, I'd love to see it and compare the two approaches.) To me, the "type piracy" label
+seems like an exaggeration because "piracy" implies stealing but my overloading of base types occurs only when
+the arguments are vectors and the vector operations don't even compile without the overload. So, given that the
+vector operations are currently unused, perhaps a better name for my particular violation of Julia's style guide
+is "type squatting"??
 
 ## 2.2 Metaprogramming Capabilities
-Julia's extensive metaprogramming capabilities offer a convenient bridge from PGA "math syntax" to PGA "programming 
-syntax". Referring again to the above slide from bivector.net, the geometric product operator in math syntax is 
-'\thinspace' which takes less space and ink than '*', the geometric product operator in programming syntax. Similarly,
+Julia's extensive metaprogramming capabilities offer a convenient conversion from PGA "math syntax" to "programming 
+syntax". Referring to the above Vector Operator Symbol table, the geometric product operator in math syntax is 
+'\thinspace' which takes less space than '*' (the geometric product operator in programming syntax). Similarly,
 * the wedge operator (outer product) in math syntax is '\wedge',
 * the vee operator (regressive product) in math syntax is '\vee',
 * the dot operator (inner product) in math syntax is '\cdot', and
 * the dual operator in math syntax is '\ast'.
 
-The string macro called ga (for geometric algebra and located in ripgand.jl) translates the math syntax back to the 
+The string macro called ga (for geometric algebra and coded in ripgand.jl) translates the math syntax back to the 
 programming syntax. For example, the ga macro translates the Unicode '\thinspace' character (i.e., U+02009) representing 
 the geometric product operator in math syntax to '*' that represents the geometric product operator in programming syntax.
 
-Typically, I use the programming syntax because it is easier to type. However, the math syntax is easier to read. 
-Therefore, for a section of code with a lot of PGA vector operators that are hard to read, the ga macro might be helpful.
+Typically, I prefer the programming syntax because it is easier to type. However, the math syntax is easier to read. 
+Therefore, for a section of code with a lot of PGA vector operators that are hard to read, the ga macro can be helpful.
 
 ## 2.3 Program Execution Speed
-As mentioned in the abstract to Julia: A Fresh Approach to Numerical Computing, the authors (i.e., four people who 
-started the Julia programming language) mention a long standing belief among many practitioners of numerical computing: 
-one must prototype in one language and then rewrite in another language for speed or deployment. One of their design 
-goals for Julia was to solve this two-language problem by making Julia both good for prototyping and also fast for deployment.
+As mentioned in the official [introduction to Julia](https://julialang.org): A Fresh Approach to Numerical Computing,
+the authors (i.e., four people who started the Julia programming language) mention a long standing belief among many
+practitioners of numerical computing: one must prototype in one language and then rewrite in another language for speed
+or deployment. One of their design goals for Julia was to solve this two-language problem by making Julia both good for
+prototyping and also fast for deployment.
 
 ## 2.4 Plotting Capabilities
 According to the Makie documentation,
