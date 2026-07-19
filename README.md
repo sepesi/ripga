@@ -199,19 +199,21 @@ manipulated (e.g., translation or rotation) by performing PGA operations (e.g., 
 PGA expressions are the summation of terms, each consisting of a scaled element from the PGA basis. The PGA basis is determined by the
 underlying space. For example, the metric signature for an n-dimensional [Euclidean space](https://en.wikipedia.org/wiki/Euclidean_space)
 is $\mathbb{R}^\*\_{n,0,1}$, where n is the number of Euclidean dimensions, which is also the number of Euclidean basis vectors in the PGA basis.
-As specified in the signature, those n Euclidean basis vectors all square to +1. They are named e1, e2, ..., en. In addition to the n
-Euclidean basis vectors, there is also an ideal basis vector for projection. The ideal basis vector is also known as the null basis vector
-because it has the name e0. As specified in the last index in the 3-index metric signature for PGA, the ideal basis vector is the only basis
-vector that squares to 0. The n Euclidean basis vectors and the one ideal basis are said to have grade-1 in the PGA basis because they are
+As specified in the signature (i.e., $\mathbb{R}^\*\_{n,0,1}$), those n Euclidean basis vectors all square to +1. They are named e1, e2, ..., en.
+In addition to the n Euclidean basis vectors, there is also an ideal basis vector for projection. The ideal basis vector is also known as the
+null basis vector because it has the name e0. As specified in the last index in the 3-index metric signature for PGA, the ideal basis vector is
+ the only basis vector that squares to 0.
+
+The n Euclidean basis vectors and the one ideal basis are said to have grade-1 in the PGA basis because they are
 generated from a single PGA basis vector. Similarly, the grade-n elements of the PGA basis are composed of n PGA basis vectors. Grade-2 elements
-of the PGA basis are also called bivectors (e.g., e12 = e1*e2) and grade-3 elements of the PGA basis are also called trivectors (e.g., e012 =
-e0*e1*e2). Because each element of the PGA basis can be represesnted by a vector, a PGA basis can be thought of as a vector of vectors. However,
+of the PGA basis are also called bivectors (e.g., e12 = e1e2) and grade-3 elements of the PGA basis are also called trivectors (e.g., e012 =
+e0e1e2). Because each element of the PGA basis can be represesnted by a vector, a PGA basis can be thought of as a vector of vectors. However,
 to avoid ambiguity about the meaning of "vector", the phrase "PGA basis vector" in this essay will be reserved for just the grade-1 PGA basis
 elements and the phrases "PGA basis bivector" and PGA basis trivector will be reserved for grade-2 and grade-3 PGA basis elements, respectively.
 Arbitrary grade PGA basis elements of an arbitrary grade will be called "PGA basis elements". (More on the PGA basis elements in the next
 section of this essay.)
 
-For the metric signature $\mathbb{R}\_{n,0,1}$, there are a total of $2^{n+1}$ PGA basis elements according to the [rule of product]
+For the metric signature $\mathbb{R}\*\_{n,0,1}$, there are a total of $2^{n+1}$ PGA basis elements according to the [rule of product]
 (https://wikipedia.org/wiki/Rule_of_product) covering n+2 grades (i.e., grade-0 through grade n+1), each with $\binom{n+1}{grade}$ PGA basis
 elements per grade, according to [Pascal's triangle](https://wikipedia.org/wiki/Pascal's_triangle) from [combinatorics](https://en.wikipedia.org/wiki/Combinatorics).
 For example in 3D PGA, there are 16 (i.e., $2^{3+1}$) PGA basis elements: 
