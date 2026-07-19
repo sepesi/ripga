@@ -87,7 +87,7 @@ There are several compelling reasons for using Julia to implement Projective Geo
 * REPL (Read Execute Print Loop), and
 * developer community.
 
-## 2.1 Advanced Vector Capabilities
+## 2.1 Advanced Capabilities in Vector Operations
 Although [bivector.net](https://bivector.net) lists reference implementations of PGA in several programming languages
 (e.g., JavaScript, C++, C#, Python, Rust), it does not currently list a Julia reference implementation. Also, Julia is
 necessarily missing from the book Geometric Algebra for Computer Science given that the Julia language was created two
@@ -198,8 +198,8 @@ In PGA, simple geometric objects (e.g., points, lines, planes) are written as PG
 manipulated (e.g., translation or rotation) by performing PGA operations (e.g., geometric product or outer product) on those PGA expressions.
 PGA expressions are the summation of terms, each consisting of a scaled element from the PGA basis. The PGA basis is determined by the
 underlying space. For example, the metric signature for an n-dimensional [Euclidean space](https://en.wikipedia.org/wiki/Euclidean_space)
-is $\mathbb{R}^*\_{n,0,1}$, where n is the number of Euclidean dimensions, which is also the number of Euclidean basis vectors in the PGA basis.
-As specified in the signature, those n Euclidean basis vectors all square to +1. They are named e1, e2, $\dots$, en. In addition to the n
+is $\mathbb{R}^\*\_{n,0,1}$, where n is the number of Euclidean dimensions, which is also the number of Euclidean basis vectors in the PGA basis.
+As specified in the signature, those n Euclidean basis vectors all square to +1. They are named e1, e2, ..., en. In addition to the n
 Euclidean basis vectors, there is also an ideal basis vector for projection. The ideal basis vector is also known as the null basis vector
 because it has the name e0. As specified in the last index in the 3-index metric signature for PGA, the ideal basis vector is the only basis
 vector that squares to 0. The n Euclidean basis vectors and the one ideal basis are said to have grade-1 in the PGA basis because they are
