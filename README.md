@@ -8,9 +8,11 @@
 
 # 0. TLDR
 Here's a showcase of animations demonstrating [Julia](https://julialang.org), [Makie](https://docs.makie.org/stable),
-and [Projective Geometric Algebra](https://bivector.net). The intent of this essay is to educate, to increase the
-familiarity with PGA so that more people are able to design solutions to intricate geometry problems. The source code of the animations and the PGA library is in the
-github repository at https://github.com/sepesi/ripga
+and [Projective Geometric Algebra](https://bivector.net) as implemented by ripga (i.e., the Reference Implementation
+of Projective Geometric Algebra). The intent of the ripga library and this essay is to educate: to increase the
+familiarity with PGA so that more people are able to design solutions to intricate geometry problems. The source
+code of the animations and the ripga library, both written in Julia, is in the github repository at
+https://github.com/sepesi/ripga
 
 <table>
   <tr>
@@ -78,19 +80,19 @@ geometry capabilities.
 
 # 2. Why Julia?
 There are several compelling reasons for using Julia to implement Projective Geometric Algebra applications:
-* easy access to all PGA vector operations,
+* advanced capabilities in vector operations (and vector operations play a central role in PGA),
 * metaprogramming capabilities,
 * program execution speed,
 * plotting capabilities,
 * REPL (Read Execute Print Loop), and
 * developer community.
 
-## 2.1 Easy Access to All PGA Vector Operations
-Although bivector.net lists reference implementations of PGA in several programming languages (e.g., JavaScript, 
-C++, C#, Python, Rust), it does not currently list a Julia reference implementation. Also, Julia is necessarily
-missing from the book Geometric Algebra for Computer Science given that the Julia language was created two years 
-after the book's publication. So, I ported bivector.net's C++ reference implementation of PGA to Julia in the github 
-public repository at https://github.com/sepesi/ripga
+## 2.1 Advanced Vector Capabilities
+Although [bivector.net](https://bivector.net) lists reference implementations of PGA in several programming languages
+(e.g., JavaScript, C++, C#, Python, Rust), it does not currently list a Julia reference implementation. Also, Julia is
+necessarily missing from the book Geometric Algebra for Computer Science given that the Julia language was created two
+years after the book's publication. So, I ported bivector.net's C++ reference implementation of PGA to Julia in the
+github public repository at https://github.com/sepesi/ripga
 
 To avoid confusion, the Julia port of ripga uses exactly the same [vector operator symbols](https://www.youtube.com/watch?v=2DgxeizE3E8&t=105s)
 as the vector operators in the programming syntax of the original bivector.net reference implementation as shown in the table below.
@@ -105,22 +107,22 @@ as the vector operators in the programming syntax of the original bivector.net r
 | $`ab\tilde{a}`$ | Sandwich Product | `a >>> b` |
 
 It should be noted that the general consensus from the Julia community is that my approach to overloading the
-vector operators is "type piracy". They suggested that I overload custom types instead of base types
-in order to comply with the "avoid type piracy" rule in [Julia's style guide](https://docs.julialang.org/en/v1/manual/style-guide/).
+vector operators is "type piracy". They suggested that I overload custom types instead of base types in order
+to comply with the "avoid type piracy" rule in [Julia's style guide](https://docs.julialang.org/en/v1/manual/style-guide/).
 Their concerns are that my approach of overloading base types might
 * crash Julia,
 * introduce incompatibilities that are hard to predict and diagnose,
 * change the behavior of unrelated code unexpectedly, and
-* make code difficult to read.
+* make the code difficult to read.
 
-However, I've been using ripga and its "type piracy" for several years. I think overloading the base types is
-easier to read and I have not experienced any of their "type piracy" concerns. (Of course, if someone dislikes
-my "type piracy" enough to fork the ripga repository at https://github.com/sepesi/ripga and fix my "type piracy"
-by defining some custom types, I'd love to see it and compare the two approaches.) To me, the "type piracy" label
-seems like an exaggeration because "piracy" implies stealing but my overloading of base types occurs only when
-the arguments are vectors and the vector operations don't even compile without the overload. So, given that the
-vector operations are currently unused, perhaps a better name for my particular violation of Julia's style guide
-is "type squatting"??
+However, I've been using ripga and its "type piracy" for several years and have not experienced any of those
+concerns. In my opinion, I think overloading the base types actually makes the code easier to read. Of course,
+if someone dislikes my "type piracy" enough to fork the ripga repository and overload custom types instead of
+base types, I'd love to see it and compare the two approaches. To me, the community's "type piracy" label seems
+like an exaggeration because "piracy" implies stealing but my overloading of base types occurs only when the
+arguments are vectors and those vector operations don't even compile without the base type overloading. So,
+given that the vector operations are currently unused, perhaps a better name for my particular violation of
+Julia's style guide is "type squatting" instead of "type piracy"??
 
 ## 2.2 Metaprogramming Capabilities
 Julia's extensive metaprogramming capabilities offer a convenient conversion from PGA "math syntax" to "programming 
@@ -183,53 +185,60 @@ Geometric Algebra, spacetime geometric algebra, conformal geometric algebra) sug
 Geometric Algebra community would benefit from each other.
 
 # 3. Getting the Hang of PGA
-The phrase "three-view orthographic projection" is from the field of mechanical drawing and it is the standard approach to
-understanding a 3D object drawn on a 2D surface showing three mutually perpendicular perspectives. An analogous multiple perspective
-approach helps with understanding PGA. Specifically, the following perspectives (preferably met in the listed order) are
-helpful in getting the hang of PGA:
-1. Read a thorough description of the history of the major contributions by individual mathematicians to PGA. The history reveals
-   the impressive math lineage behind today's PGA, which builds confidence in the underlying concepts. I particularly like Slehar's
-   historical description of Clifford algebra at https://slehar.wordpress.com/2014/03/18/clifford-algebra-a-visual-introduction/
-   followed by Slehar's explanation of how Clifford algebra extends to Projective Geometry at
-   https://slehar.wordpress.com/2014/06/26/geometric-algebra-projective-geometry/
-2. Review the 2D and 3D PGA cheat sheets by Charles Gunn and Steven De Keninck at https://bivector.net/2DPGA.pdf and
-   https://bivector.net/3DPGA.pdf, respectively.
-3. Watch a series of PGA video tutorials. These tutorials are generally information dense and probably should be watched
-   more than once. They give the motivation to keep learning. I particularly like the PGA tutorial given by Charles Gunn and
-   Steven De Keninck during the 2019 SIGGRAPH conference at https://www.youtube.com/watch?v=tX4H_ctggYo. However, there are a
-   lot of other very good PGA video tutorials at https://bivector.net/doc.html.
-4. Read a variety of papers and essays to fill in the gaps in whatever you need to know to implement your own PGA applications.
-   For example, if you are interested in using PGA to simulate the physics of interacting objects, read the Leo Dorst and Steven
-   De Keninck essay _May the Forque Be with You - Dynamics in PGA_ at https://bivector.net/PGAdyn.pdf. Or if you are interested in
-   using Julia's REPL to examine the details of some of the 2D and 3D PGA cheat sheet formulas, continue reading this essay.
+There are three perspectives that contribute to getting the overall hang of PGA:
+
+## 3.1 History
+Reading a thorough description of the history of the major contributions by individual mathematicians to PGA reveals the impressive
+math lineage behind today's PGA, which builds confidence in the underlying concepts. I particularly like Slehar's historical description of
+Clifford algebra at https://slehar.wordpress.com/2014/03/18/clifford-algebra-a-visual-introduction/ followed by Slehar's explanation of how
+Clifford algebra extends to Projective Geometry at https://slehar.wordpress.com/2014/06/26/geometric-algebra-projective-geometry/
+
+## 3.2 Nomenclature
+In PGA, simple geometric objects (e.g., points, lines, planes) are written as PGA expressions. Those geometric objects are geometrically
+manipulated (e.g., translation or rotation) by performing PGA operations (e.g., geometric product or outer product) on those PGA expressions.
+PGA expressions are the summation of terms, each consisting of a scaled element from the PGA basis. The PGA basis is determined by the
+underlying space. For example, the metric signature for an n-dimensional [Euclidean space](https://en.wikipedia.org/wiki/Euclidean_space)
+is $\mathbb{R}^*\_{n,0,1}$, where n is the number of Euclidean dimensions, which is also the number of Euclidean basis vectors in the PGA basis.
+As specified in the signature, those n Euclidean basis vectors all square to +1. They are named e1, e2, $\dots$, en. In addition to the n
+Euclidean basis vectors, there is also an ideal basis vector for projection. The ideal basis vector is also known as the null basis vector
+because it has the name e0. As specified in the last index in the 3-index metric signature for PGA, the ideal basis vector is the only basis
+vector that squares to 0. The n Euclidean basis vectors and the one ideal basis are said to have grade-1 in the PGA basis because they are
+generated from a single PGA basis vector. Similarly, the grade-n elements of the PGA basis are composed of n PGA basis vectors. Grade-2 elements
+of the PGA basis are also called bivectors (e.g., e12 = e1*e2) and grade-3 elements of the PGA basis are also called trivectors (e.g., e012 =
+e0*e1*e2). Because each element of the PGA basis can be represesnted by a vector, a PGA basis can be thought of as a vector of vectors. However,
+to avoid ambiguity about the meaning of "vector", the phrase "PGA basis vector" in this essay will be reserved for just the grade-1 PGA basis
+elements and the phrases "PGA basis bivector" and PGA basis trivector will be reserved for grade-2 and grade-3 PGA basis elements, respectively.
+Arbitrary grade PGA basis elements of an arbitrary grade will be called "PGA basis elements". (More on the PGA basis elements in the next
+section of this essay.)
+
+For the metric signature $\mathbb{R}\_{n,0,1}$, there are a total of $2^{n+1}$ PGA basis elements according to the [rule of product]
+(https://wikipedia.org/wiki/Rule_of_product) covering n+2 grades (i.e., grade-0 through grade n+1), each with $\binom{n+1}{grade}$ PGA basis
+elements per grade, according to [Pascal's triangle](https://wikipedia.org/wiki/Pascal's_triangle) from [combinatorics](https://en.wikipedia.org/wiki/Combinatorics).
+For example in 3D PGA, there are 16 (i.e., $2^{3+1}$) PGA basis elements: 
+* 1 grade-0 (i.e., the scalar),
+* 4 grade-1 (i,e., e0, e1, e2, e3),
+* 6 grade-2 (i.e., e01, e02, e03, e12, e31, e23),
+* 4 grade-3 (i.e., e021, e013, e032, e123), and
+* 1 grade-4 (i.e., e0123).
+
+## 3.3 Geometric Interpretation
+Each element of the PGA basis has a geometric interpretation. For many people already familiar with linear algebra, the geometric interpretation of
+each element of the PGA basis is the most confusing perspective, much more confusing than the historic and nomenclature perspectives. The metric
+signature associated with PGA in an n-dimensional Euclidean space is typically $\mathbb{R}^*\_{n,0,1}$. Note that the asterisk in the metric signature
+denotes the "plane based" geometric interpretation. The signature $\mathbb{R}\_{n,0,1}$ (i.e., without the asterisk) denotes the "point-based"
+geometric interpretation. Because plane-based PGA offers several advantages (e.g., universal rotors) over point-based PGA, plane-based PGA is used
+much more often than point-based PGA. If the plane-based/point-based qualifier is missing it is usually safe to assume the intent was plane-based PGA.
+
+A key difference between the geometric interpretations of plane-based PGA and point-based PGA is what the PGA basis elements represent. For example in
+3D plane-based PGA, a grade-1 PGA basis element (e.g., e1) represents a plane, a grade-2 PGA basis element (e.g., e12) represents a line, and a grade-3
+PGA basis element (e.g., e123) represents a point. In contrast in 3D point-based PGA, a grade-1 PGA basis element (e.g., e1) represents a point, a Grade-2
+PGA basis element (e.g., e12) represents a line, and a grade-3 PGA basis element (e.g., e123) represents a plane. (More on the geometric interpretations
+in the next section.)
 
 # 4. PGA Basis
-First, some vocabulary. The metric signature for work in an n-dimensional Euclidean space is $\mathbb{R}\_{n,0,1}$, where n is the
-number of Euclidean dimensions, which is also the number of Euclidean basis vectors (also known as proper basis vectors). As specified
-in the signature, those n Euclidean basis vectors all square to +1. They are named e1, e2, $\dots$, en. In addition to the n Euclidean
-basis vectors, there is a basis vector for projection and it is called the ideal basis vector (also known as the null basis vector).
-As specified in the signature, the ideal basis vector squares to 0. It is named e0. Given that the metric signature $\mathbb{R}\_{n,0,1}$
-is associated with a total of n+1 independent basis vectors (i.e., n Euclidean basis vectors and one ideal basis vector), the number
-of possible combinations of those n+1 basis vectors is $2^{n+1}$ according to the [rule of product](https://wikipedia.org/wiki/Rule_of_product) in [combinatorics](https://en.wikipedia.org/wiki/Combinatorics).
+The ripga library is capable of switching back and forth between the bases for PGA 1D, PGA 2D, PGA 3D, and PGA 4D.
 
-The list of all $2^{n+1}$ possible combinations of the n+1 basis vectors is called the basis. The number of basis vectors included in a
-term is called its grade. For example, the scalar term (e.g., 4) includes no basis vectors and therefore has grade 0. Similarly, the
-n+1 basis vectors (i.e., the n Euclidean basis vectors and the ideal basis vector) all include just one basis vector and therefore have grade 1. Grade 1 terms are called vectors (e.g., 3e2). Continuing, grade 2 terms are called bivectors (e.g., 6e12, short for 6e1e2), grade 3 terms are called trivectors (e.g., e012, short for e0e1e2), and so on. The summation of different grade terms is called a multivector
-(e.g., 4 + 3e2 + 6e12). In general, the basis for the space defined by metric signature $\mathbb{R}\_{n,0,1}$ has $\binom{n+1}{grade}$ terms of each possible grade. As expected, summing over those [binomial coefficients](https://en.wikipedia.org/wiki/Binomial_coefficient),
-$\sum_{grade=0}^{n+1}\binom{n+1}{grade}$ = $2^{n+1}$ possible terms (e.g., for n=2, the $2^{n+1}$ possible terms in the basis are
-1, e0, e1, e2, e01, e20, e12, and e012, which is a basis with one grade 0 term, three grade 1 terms, three grade 2 terms, and one grade 3 term).
-
-Although the vocabulary about the PGA basis is relatively easy, the interpretation of the PGA basis requires a little more work. To begin,
-the basis vectors specified by the metric signature $\mathbb{R}\_{n,0,1}$ are not real numbers but they square to real numbers (i.e., for n=2, {e0, e1, e2} $\notin \mathbb{R}$, but {e00, e11, e22} $\in \mathbb{R}$). The set of Euclidean basis vectors (i.e., for n=2, e1 and e2) represent the set of orthogonal Euclidean axes, and the ideal basis vector represents the Euclidean origin but offset by one in the added projective dimension. That interpretation is called the direct (i.e., point-based) representation of PGA. Now for the twist: for a couple compelling reasons, the dual (i.e., plane-based) interpretation of PGA is preferred over the direct (i.e., point-based) interpretation of PGA. The metric signature for the dual (i.e., plane-based) interpretation of PGA is $\mathbb{R}^*\_{n,0,1}$ (note the asterisk superscript), where again ei $\notin \mathbb{R}$ and eii $\in \mathbb{R} \forall i \in \lbrace 0,\dots,n \rbrace$. However, in the dual interpretation of PGA, the Euclidean basis vectors represent the planes orthogonal to the Euclidean axes. For example, e1 represents the x=0 plane and e2 represents the y=0 plane. Even weirder, the ideal basis vector represents the plane at infinity (i.e., the "boundary" of the Euclidean space).
-
-In addition to the interpretations of the PGA basis vectors, the interpretations of the PGA basis bivectors are also interesting because,
-for the dual interpretation of PGA, bivectors specify rotation points, and if the bivector contains an ideal basis vector (i.e., the 
-bivector term contains a 0) then the rotation is about a point at infinity, which is a translation not a rotation. As for the compelling
-reasons for using the dual interpretation of the PGA basis, there are two:
-1. Dual PGA unifies rotations and translations.
-2. Dual PGA unifies operations in 2D and 3D Euclidean spaces.
-
-Both reasons are closely examined in the REPL sessions in the following subsections about motors in 1D PGA, 2D PGA, and 3D PGA.
+(TODO)
 
 ## 4.1 1D PGA Motor
 To prepare Julia's REPL for 1D PGA, include the files ripgand.jl and ripga1d.jl. To confirm the initialization, print out the basis.
@@ -468,7 +477,21 @@ julia> [basis reverse(basis)] # col 1 basis in order of grade; col 2 basis in re
  "e0123"  "1"
 ```
 
+
 (TODO)
+
+
+2. Review the 2D and 3D PGA cheat sheets by Charles Gunn and Steven De Keninck at https://bivector.net/2DPGA.pdf and
+   https://bivector.net/3DPGA.pdf, respectively.
+3. Watch a series of PGA video tutorials. These tutorials are generally information dense and probably should be watched
+   more than once. They give the motivation to keep learning. I particularly like the PGA tutorial given by Charles Gunn and
+   Steven De Keninck during the 2019 SIGGRAPH conference at https://www.youtube.com/watch?v=tX4H_ctggYo. However, there are a
+   lot of other very good PGA video tutorials at https://bivector.net/doc.html.
+4. Read a variety of papers and essays to fill in the gaps in whatever you need to know to implement your own PGA applications.
+   For example, if you are interested in using PGA to simulate the physics of interacting objects, read the Leo Dorst and Steven
+   De Keninck essay _May the Forque Be with You - Dynamics in PGA_ at https://bivector.net/PGAdyn.pdf. Or if you are interested in
+   using Julia's REPL to examine the details of some of the 2D and 3D PGA cheat sheet formulas, continue reading this essay.
+
 
 PGA in a two dimensional Euclidean space requires a basis of eight hypercomplex numbers which can be initialized by including the 
 following two files:
