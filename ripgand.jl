@@ -32,6 +32,33 @@ function geoprodset(a::Matrix{Float32},b::Matrix{Float32})::Matrix{Float32}
  return res  # geometric product set (1 geometric product per column)
 end
 
+function outprodset(a::Matrix{Float32},b::Matrix{Float32})::Matrix{Float32}
+ n = min(size(a,2),size(b,2))
+ res = Matrix{Float32}(undef, size(a,1), n)
+ for i=1:n
+  res[:,i] = a[:,i] ^ b[:,i]
+ end
+ return res  # outer product set (1 outer product per column)
+end
+
+function regprodset(a::Matrix{Float32},b::Matrix{Float32})::Matrix{Float32}
+ n = min(size(a,2),size(b,2))
+ res = Matrix{Float32}(undef, size(a,1), n)
+ for i=1:n
+  res[:,i] = a[:,i] & b[:,i]
+ end
+ return res  # regressive product set (1 regressive product per column)
+end
+
+function inprodset(a::Matrix{Float32},b::Matrix{Float32})::Matrix{Float32}
+ n = min(size(a,2),size(b,2))
+ res = Matrix{Float32}(undef, size(a,1), n)
+ for i=1:n
+  res[:,i] = a[:,i] | b[:,i]
+ end
+ return res  # inner product set (1 inner product per column)
+end
+
 function Base.:&(a::Matrix{Float32},b::Matrix{Float32})::Matrix{Float32}
  nCol = size(a,2)
  if nCol >= size(b,2)
