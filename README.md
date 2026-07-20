@@ -73,7 +73,7 @@ when dealing with complex geometry problems.
 ## 1.3 Unify Geometries
 The metric signature (i.e., $\mathbb{R}\_{positive,negative,zero}$, where the three subscripts denote how many
 basis vectors square to +1, -1, and 0, respectively) denotes the geometry's dimensions and spatial curvature.
-For example, the metric signatures $\mathbb{R}\_{2,0,1}$ and $\mathbb{R}\_{3,0,1}$ enable the Projective Geometric
+For example, the metric signatures $\mathbb{R}^\*\_{2,0,1}$ and $\mathbb{R}^\*\_{3,0,1}$ enable the Projective Geometric
 Algebra to solve many 2D and 3D Euclidean geometry problems. However, switching the signature to
 $\mathbb{R}\_{4,0,0}$ enables elliptic geometry capabililties and $\mathbb{R}\_{3,1,0}$ enables hyperbolic
 geometry capabilities.
@@ -197,23 +197,22 @@ Clifford algebra extends to Projective Geometry at https://slehar.wordpress.com/
 In PGA, simple geometric objects (e.g., points, lines, planes) are written as PGA expressions. Those geometric objects are geometrically
 manipulated (e.g., translation or rotation) by performing PGA operations (e.g., geometric product or outer product) on those PGA expressions.
 PGA expressions are the summation of terms, each consisting of a scaled element from the PGA basis. The PGA basis is determined by the
-underlying space. For example, the metric signature for an n-dimensional [Euclidean space](https://en.wikipedia.org/wiki/Euclidean_space)
-is $\mathbb{R}^\*\_{n,0,1}$, where n is the number of Euclidean dimensions, which is also the number of Euclidean basis vectors in the PGA basis.
-As specified in the signature (i.e., $\mathbb{R}^\*\_{n,0,1}$), those n Euclidean basis vectors all square to +1. They are named e1, e2, ..., en.
-In addition to the n Euclidean basis vectors, there is also an ideal basis vector for projection. The ideal basis vector is also known as the
-null basis vector because it has the name e0. As specified in the last index in the 3-index metric signature for PGA, the ideal basis vector is
- the only basis vector that squares to 0.
+underlying space. As mentioned earlier, the metric signature (i.e., $\mathbb{R}\_{positive,negative,zero}$, where the three subscripts denote
+how many basis vectors square to +1, -1, and 0, respectively) denotes the geometry's dimensions and spatial curvature. For example, the metric
+signature for an n-dimensional [Euclidean space](https://en.wikipedia.org/wiki/Euclidean_space) is $\mathbb{R}^\*\_{n,0,1}$, where n is the
+number of Euclidean dimensions (which is also the number of Euclidean basis vectors in the PGA basis) and the 1 in the last of the three
+subscripts specifies the single ideal basis vector that squares to 0. That ideal basis vector is also known as the null basis vector and e0.
 
-The n Euclidean basis vectors and the one ideal basis are said to have grade-1 in the PGA basis because they are
-generated from a single PGA basis vector. Similarly, the grade-n elements of the PGA basis are composed of n PGA basis vectors. Grade-2 elements
-of the PGA basis are also called bivectors (e.g., e12 = e1e2) and grade-3 elements of the PGA basis are also called trivectors (e.g., e012 =
-e0e1e2). Because each element of the PGA basis can be represesnted by a vector, a PGA basis can be thought of as a vector of vectors. However,
-to avoid ambiguity about the meaning of "vector", the phrase "PGA basis vector" in this essay will be reserved for just the grade-1 PGA basis
-elements and the phrases "PGA basis bivector" and PGA basis trivector will be reserved for grade-2 and grade-3 PGA basis elements, respectively.
-Arbitrary grade PGA basis elements of an arbitrary grade will be called "PGA basis elements". (More on the PGA basis elements in the next
+The n Euclidean basis vectors and the one ideal basis vector are said to have grade-1 in the PGA basis because they are generated from a single
+PGA basis vector. Similarly, the grade-n elements of the PGA basis are composed of n PGA basis vectors. Grade-2 elements of the PGA basis are
+also called bivectors (e.g., e12 = e1e2) and grade-3 elements of the PGA basis are also called trivectors (e.g., e012 = e0e1e2). Because each
+element of the PGA basis can be represesnted by a vector, a PGA basis can be thought of as a vector of vectors. However, to avoid ambiguity about
+the meaning of "vector", the phrase "PGA basis vector" in this essay will be reserved for just the grade-1 PGA basis elements and the phrases
+"PGA basis bivector" and "PGA basis trivector" will be reserved for grade-2 and grade-3 PGA basis elements, respectively. Arbitrary grade PGA
+basis elements of an arbitrary grade are called "PGA basis elements". (More on the PGA basis elements in the next
 section of this essay.)
 
-For the metric signature $\mathbb{R}\*\_{n,0,1}$, there are a total of $2^{n+1}$ PGA basis elements according to the [rule of product]
+For the metric signature $\mathbb{R}^\*\_{n,0,1}$, there are a total of $2^{n+1}$ PGA basis elements according to the [rule of product]
 (https://wikipedia.org/wiki/Rule_of_product) covering n+2 grades (i.e., grade-0 through grade n+1), each with $\binom{n+1}{grade}$ PGA basis
 elements per grade, according to [Pascal's triangle](https://wikipedia.org/wiki/Pascal's_triangle) from [combinatorics](https://en.wikipedia.org/wiki/Combinatorics).
 For example in 3D PGA, there are 16 (i.e., $2^{3+1}$) PGA basis elements: 
@@ -224,18 +223,29 @@ For example in 3D PGA, there are 16 (i.e., $2^{3+1}$) PGA basis elements:
 * 1 grade-4 (i.e., e0123).
 
 ## 3.3 Geometric Interpretation
-Each element of the PGA basis has a geometric interpretation. For many people already familiar with linear algebra, the geometric interpretation of
-each element of the PGA basis is the most confusing perspective, much more confusing than the historic and nomenclature perspectives. The metric
+Recalling that the three subscripts of the metric signature $\mathbb{R}\_{positive,negative,zero}$ specify how many PGA basis vectors square to +1,
+-1, and 0, respectively, you may have noticed that the metric signature for PGA in an n-dimensional Euclidean space (i.e., $\mathbb{R}^\*\_{n,0,1}$)
+has an asterisk. The asterisk specifies the geometric interpretation of the PGA basis. With the asterisk, the geometric interpretation is "plane-based"
+and without the asterisk the geometric interpretation is "point-based". For most people already somewhat familiar with linear algebra, the geometric
+interpretation is the most confusing of the three perspectives needed to fully appreciate PGA.
+
+ The metric
 signature associated with PGA in an n-dimensional Euclidean space is typically $\mathbb{R}^*\_{n,0,1}$. Note that the asterisk in the metric signature
 denotes the "plane based" geometric interpretation. The signature $\mathbb{R}\_{n,0,1}$ (i.e., without the asterisk) denotes the "point-based"
 geometric interpretation. Because plane-based PGA offers several advantages (e.g., universal rotors) over point-based PGA, plane-based PGA is used
 much more often than point-based PGA. If the plane-based/point-based qualifier is missing it is usually safe to assume the intent was plane-based PGA.
 
-A key difference between the geometric interpretations of plane-based PGA and point-based PGA is what the PGA basis elements represent. For example in
-3D plane-based PGA, a grade-1 PGA basis element (e.g., e1) represents a plane, a grade-2 PGA basis element (e.g., e12) represents a line, and a grade-3
-PGA basis element (e.g., e123) represents a point. In contrast in 3D point-based PGA, a grade-1 PGA basis element (e.g., e1) represents a point, a Grade-2
-PGA basis element (e.g., e12) represents a line, and a grade-3 PGA basis element (e.g., e123) represents a plane. (More on the geometric interpretations
-in the next section.)
+For example in 3D plane-based PGA,
+* a grade-1 PGA basis element (e.g., e1) represents a plane,
+* a grade-2 PGA basis element (e.g., e12) represents a line, and
+* a grade-3 PGA basis element (e.g., e123) represents a point.
+
+In contrast in 3D point-based PGA,
+* a grade-1 PGA basis element (e.g., e1) represents a point,
+* a grade-2 PGA basis element (e.g., e12) represents a line, and
+* a grade-3 PGA basis element (e.g., e123) represents a plane.
+
+(More on the geometric interpretations in the next section.)
 
 # 4. PGA Basis
 The ripga library is capable of switching back and forth between the bases for PGA 1D, PGA 2D, PGA 3D, and PGA 4D.
