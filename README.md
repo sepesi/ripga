@@ -20,8 +20,8 @@ https://github.com/sepesi/ripga
     <td><img alt="Image" title="3D slicing" src="./res/sl.gif" /></td>
   </tr>
   <tr>
-    <td><b>Figure 0.1. [inverse kinematics](https://enkimute.github.io/ganja.js/examples/coffeeshop.html#pga2d_inverse_kinematics) animation</b></td>
-    <td><b>Figure 0.2. [3D object slicing](https://enkimute.github.io/ganja.js/examples/coffeeshop.html#pga3d_slicing) animation</b></td>
+    <td><b>Figure 0.1. <a href="https://enkimute.github.io/ganja.js/examples/coffeeshop.html#pga2d_inverse_kinematics">inverse kinematics</a> animation</b></td>
+    <td><b>Figure 0.2. <a href="https://enkimute.github.io/ganja.js/examples/coffeeshop.html#pga3d_slicing">3D object slicing</a> animation</b></td>
   </tr>
   <tr>
     <td>Based upon Steven De Keninck's inverse kinematics example application in JavaScript and ported to Julia and Makie.</td>
@@ -32,8 +32,8 @@ https://github.com/sepesi/ripga
     <td><img alt="Image" title="origami animation" src="./res/origami.gif" /></td>
   </tr>
   <tr>
-    <td><b>Figure 0.3. [Separating Axis Theorem (SAT)](https://enkimute.github.io/ganja.js/examples/coffeeshop.html#pga2d_separating_axis) animatio</b></td>
-    <td><b>Figure 0.4. [origami](https://enkimute.github.io/ganja.js/examples/coffeeshop.html#pga2d_origami) animation</b></td>
+    <td><b>Figure 0.3. <a href="https://enkimute.github.io/ganja.js/examples/coffeeshop.html#pga2d_separating_axis">Separating Axis Theorem (SAT)</a> animation</b></td>
+    <td><b>Figure 0.4. <a href="https://enkimute.github.io/ganja.js/examples/coffeeshop.html#pga2d_origami">origami</a> animation</b></td>
   </tr>
   <tr>
     <td>3D version of Separating Axis Theorem (SAT) implemented in Julia and Makie.</td>
