@@ -66,8 +66,7 @@ algebra tools.
 
 ## 1.2 Geometric Objects
 In Projective Geometric Algebra, the coordinates are embedded in geometric objects, avoiding the difficulties
-of entering and debugging matrices of coordinates and transformations. That abstraction is especially helpful
-when dealing with complex geometry problems.
+of debugging matrices of coordinates. That abstraction is especially helpful when solving complex geometry problems.
 
 ## 1.3 Unify Geometries
 The metric signature (i.e., $\mathbb{R}\_{positive,negative,zero}$, where the three subscripts denote how many
@@ -90,7 +89,7 @@ There are several compelling reasons for using Julia to implement Projective Geo
 Although [bivector.net](https://bivector.net) lists reference implementations of PGA in several programming languages
 (e.g., JavaScript, C++, C#, Python, Rust), it does not currently list a Julia reference implementation. Also, Julia is
 necessarily missing from the book Geometric Algebra for Computer Science given that the Julia language was created two
-years after the book's publication. So, I ported bivector.net's C++ reference implementation of PGA to Julia in the
+years after the book's publication. Therefore, I ported bivector.net's C++ reference implementation of PGA to Julia in the
 github public repository at https://github.com/sepesi/ripga
 
 To avoid confusion, the Julia port of ripga uses exactly the same [vector operator symbols](https://www.youtube.com/watch?v=2DgxeizE3E8&t=105s)
@@ -106,8 +105,8 @@ as the vector operators in the programming syntax of the original bivector.net r
 | $`ab\tilde{a}`$ | Sandwich Product | `a >>> b` |
 
 It should be noted that the general consensus from the Julia community is that my approach to overloading the
-vector operators is "type piracy". They suggested that I overload custom types instead of base types in order
-to comply with the "avoid type piracy" rule in [Julia's style guide](https://docs.julialang.org/en/v1/manual/style-guide/).
+vector operators in ripga is "type piracy". The community suggested that I overload custom types instead of base
+types in order to comply with the "avoid type piracy" rule in [Julia's style guide](https://docs.julialang.org/en/v1/manual/style-guide/).
 Their concerns are that my approach of overloading base types might
 * crash Julia,
 * introduce incompatibilities that are hard to predict and diagnose,
@@ -121,10 +120,10 @@ types instead of base types, I'd love to see it and compare the two approaches. 
 label seems like an exaggeration because "piracy" implies stealing but my overloading of base types occurs only
 when the arguments are vectors and those vector operations don't even compile without the base type overloading.
 So, given that the vector operations are currently unused, perhaps a better name for my particular violation of
-Julia's style guide is "type squatting" instead of "type piracy"??
+Julia's style guide would be "type squatting" instead of "type piracy"??
 
 ## 2.2 Metaprogramming Capabilities
-Julia's extensive metaprogramming capabilities offer a convenient conversion from PGA "math syntax" to "programming 
+Julia's extensive metaprogramming capabilities offer a convenient conversion from PGA "math syntax" to PGA "programming 
 syntax". For example, referring to the above Vector Operator Symbol table, the geometric product operator in math
 syntax [Unicode](https://en.wikipedia.org/wiki/Unicode) is '\thinspace' which takes less space than '*' (the geometric
 product operator in programming syntax). Similarly,
@@ -134,15 +133,13 @@ product operator in programming syntax). Similarly,
 * the dual operator in math syntax Unicode is '\ast'.
 
 The string macro called ga (short for Geometric Algebra and coded in ripgand.jl) translates the math syntax back to
-the programming syntax. For example, the ga macro translates the Unicode '\thinspace' character (i.e., U+02009)
-representing the geometric product operator in math syntax to '*' that represents the geometric product operator
-in programming syntax. Typically, I prefer the programming syntax because it is easier to type. However, the math
+the programming syntax. Typically, I prefer the programming syntax because it is easier to type. However, the math
 syntax is easier to read. Therefore, for a section of code with a lot of PGA vector operators that are hard to read,
 the ga macro can be helpful.
 
 ## 2.3 Program Execution Speed
 As mentioned in the official _[Introduction to Julia](https://julialang.org): A Fresh Approach to Numerical Computing_,
-the authors (i.e., four people who started the Julia programming language) mention a long standing belief among many
+the authors (i.e., the four people who started the Julia programming language) mention a long standing belief among many
 practitioners of numerical computing: one must prototype in one language and then rewrite in another language for speed
 before deployment. One of their design goals for Julia was to solve this two-language problem by making Julia both good
 for prototyping and also fast for deployment.
@@ -156,10 +153,11 @@ The Makie backend package with interactive plotting capabilities is GLMakie whic
 surprisingly fast.
 
 ## 2.5 REPL (Read Execute Print Loop)
-In the tools section of bivector.net, there is a PGA expression evaluator for exploring PGA expressions. After including
-the ripga files, Julia's REPL also can explore PGA expressions. In addition to evaluating PGA expressions, Julia's REPL
-(after including ripgand.jl and ripga1d.jl, ripga2d.jl, ripga3d.jl, or ripga4d.jl) can do several things that the bivector.net
-PGA expression evaluator cannot. Specifically, Julia's REPL can help with learning or troubleshooting PGA expressions by 
+In the [tools section](https://bivector.net/tools.html?p=3&q=0&r=1) of bivector.net, there is a PGA expression evaluator
+for exploring PGA expressions. After including the ripga files, Julia's REPL can similarly explore PGA expressions. However,
+in addition to evaluating PGA expressions, Julia's REPL (after including ripgand.jl and ripga1d.jl, ripga2d.jl, ripga3d.jl,
+or ripga4d.jl) can do several things that the bivector.net PGA expression evaluator cannot. Specifically, Julia's REPL can
+help with exploring PGA expressions by 
 * assigning PGA expressions to variables,
 * calling functions, and
 * displaying inline comments.
@@ -174,8 +172,8 @@ the authors write
 > computational scientists, mathematicians, and others to pool their collective knowledge in the form of online discussions and code."
 
 The significant overlap of the many fields interested in Julia and the many fields interested in geometric algebras (e.g., Projective 
-Geometric Algebra, spacetime geometric algebra, conformal geometric algebra) suggests that the Julia community and the Projective
-Geometric Algebra community would benefit from each other.
+Geometric Algebra, spacetime geometric algebra, conformal geometric algebra) suggests that the Julia community and the Geometric Algebra
+community would benefit from each other.
 
 # 3. Getting the Hang of PGA
 There are three perspectives that contribute to getting the overall hang of PGA:
@@ -189,26 +187,30 @@ Clifford algebra extends to Projective Geometry](https://slehar.wordpress.com/20
 ## 3.2 Nomenclature
 In PGA, simple geometric objects (e.g., points, lines, planes) are written as PGA expressions. Those geometric objects are manipulated
 (e.g., translated or rotated) by performing PGA operations (e.g., geometric product or outer product) on those PGA expressions.
-PGA expressions are the summation of terms, each consisting of a scaled element from the PGA basis. The PGA basis is determined by the
-underlying space as specified by the metric signature (i.e., $\mathbb{R}\_{positive,negative,zero}$. The three subscripts of the metric
-signature denote the number of basis vectors that square to +1, -1, and 0, respectively. For example, the metric signature for doing PGA
-in an n-dimensional [Euclidean space](https://en.wikipedia.org/wiki/Euclidean_space) is $\mathbb{R}^\*\_{n,0,1}$, where n is the number
-of Euclidean dimensions (which is also the number of Euclidean basis vectors in the PGA basis) and the 1 in the last of the three subscripts
-denotes the single ideal basis vector that squares to 0. That ideal basis vector is also known as the null basis vector e0.
+PGA expressions are [linear combinations](https://en.wikipedia.org/wiki/Linear_combination) of PGA basis vectors. There is one PGA basis
+vector for each perpendicular axis in the underlying space, which is defined by the [metric signature](https://en.wikipedia.org/wiki/Metric_signature)
+typically written as $\mathbb{R}\_{positive,negative,zero}$, where the signature's three subscripts are the number of PGA basis vectors that
+square to +1, -1, and 0, respectively. For example, the metric signature for doing PGA in an n-dimensional [Euclidean space](https://en.wikipedia.org/wiki/Euclidean_space)
+is $\mathbb{R}^\*\_{n,0,1}$, where n is the number of Euclidean dimensions (which is also the number of Euclidean basis vectors in the PGA basis)
+and the 1 as the last of the three subscripts denotes the single ideal basis vector that squares to 0. That ideal basis vector is also known as the
+null basis vector e0.
 
-The n Euclidean basis vectors and the one ideal basis vector are said to have grade-1 in the PGA basis because they are generated from a single
-PGA basis vector. Similarly, the grade-n elements of the PGA basis are generated from n PGA basis vectors. Grade-2 elements of the PGA basis are
-also called bivectors (e.g., e12 = e1e2) and grade-3 elements of the PGA basis are also called trivectors (e.g., e012 = e0e1e2). Because each
-element of the PGA basis can be represesnted by a vector, a PGA basis can be thought of as a vector of vectors. However, to avoid ambiguity about
-the meaning of "vector", the phrase "PGA basis vector" in this essay will be reserved for just the grade-1 PGA basis elements and the phrases
-"PGA basis bivector" and "PGA basis trivector" will be reserved for grade-2 and grade-3 PGA basis elements, respectively. Arbitrary grade PGA
-basis elements of an arbitrary grade are just called "PGA basis elements". (More on the PGA basis elements in the next
-section of this essay.)
+In addition to the rules in the metric signature defining how the PGA basis vectors square, there is one more important rule:
+[the contraction axiom](https://www.youtube.com/watch/v=tX4H_ctggYo&t=3293s) that defines how the sign changes with the order of
+PGA basis vectors in the geometric product. For example, ei\*ej = -ej\*ei. As a notational convenience, the geometric operator is often implied (e.g.,
+ei\*ej = eiej) and as a further convenience the subsequent e's after the first are also implied (e.g., eiej = eij).
+
+The n Euclidean basis vectors and the one ideal basis vector are said to have grade-1 because they are generated from a single PGA basis vector (e.g., e2).
+The PGA basis also contains elements of grades other than grade-1. Grade-n elements of the PGA basis are generated from n PGA basis vectors. For example,
+grade-2 elements in the PGA basis are called bivectors (e.g., e12 = e1e2) and grade-3 elements in the PGA basis are called trivectors (e.g., e012 = e0e1e2).
+Because each PGA basis element can be represesnted by a vector, a PGA basis can be thought of as a vector of vectors. However, to avoid ambiguity about
+the meaning of "vector", the phrase "PGA basis vector" in this essay will be reserved for just the grade-1 PGA basis elements and the phrases "PGA basis
+bivector" and "PGA basis trivector" will be reserved for grade-2 and grade-3 PGA basis elements, respectively. Arbitrary grade PGA basis elements of an
+arbitrary grade are just called "PGA basis elements". (More on the PGA basis elements in the next section of this essay.)
 
 For the metric signature $\mathbb{R}^\*\_{n,0,1}$, there are a total of $2^{n+1}$ PGA basis elements according to the [rule of product](https://wikipedia.org/wiki/Rule_of_product)
 covering n+2 grades (i.e., grade-0 through grade n+1), each with $\binom{n+1}{grade}$ PGA basis elements per grade, according to [Pascal's triangle](https://wikipedia.org/wiki/Pascal's_triangle)
-from [combinatorics](https://en.wikipedia.org/wiki/Combinatorics).
-For example in 3D PGA, there are 16 (i.e., $2^{3+1}$) PGA basis elements: 
+from [combinatorics](https://en.wikipedia.org/wiki/Combinatorics). For example in 3D PGA, there are 16 (i.e., $2^{3+1}$) PGA basis elements: 
 * 1 grade-0 (i.e., the scalar),
 * 4 grade-1 (i,e., e0, e1, e2, e3),
 * 6 grade-2 (i.e., e01, e02, e03, e12, e31, e23),
@@ -218,11 +220,13 @@ For example in 3D PGA, there are 16 (i.e., $2^{3+1}$) PGA basis elements:
 ## 3.3 Geometric Interpretation
 Recalling that the three subscripts of the metric signature $\mathbb{R}\_{positive,negative,zero}$ specify how many PGA basis vectors square to +1,
 -1, and 0, respectively, you may have noticed that the metric signature for PGA in an n-dimensional Euclidean space (i.e., $\mathbb{R}^\*\_{n,0,1}$)
-has an asterisk. The asterisk specifies the geometric interpretation of the PGA basis. With the asterisk, the geometric interpretation is "plane-based"
-and without the asterisk the geometric interpretation is "point-based". For most people already somewhat familiar with linear algebra, the geometric
-interpretation is the most confusing of the three perspectives needed to fully appreciate PGA. Because plane-based PGA offers several advantages (e.g.,
-universal rotors) over point-based PGA, plane-based PGA is used much more often than point-based PGA. If the plane-based/point-based qualifier is
-missing, it is usually safe to assume the intent was plane-based PGA.
+has an asterisk. The asterisk specifies the geometric interpretation of the PGA basis:
+* with the asterisk, the geometric interpretation is "plane-based", and
+* without the asterisk the geometric interpretation is "point-based".
+
+For most people already somewhat familiar with linear algebra, the geometric interpretation is the most confusing of the three perspectives needed
+to fully appreciate PGA. Because plane-based PGA offers several advantages (e.g., universal rotors) over point-based PGA, plane-based PGA is used
+much more often than point-based PGA. If the plane-based/point-based qualifier is missing, it is usually safe to assume the intent was plane-based PGA.
 
 For example in 3D plane-based PGA,
 * a grade-1 PGA basis element (e.g., e1) represents a plane,
@@ -353,7 +357,7 @@ squared norm of P0 was preserved through the sandwich operation but only in the 
 of P0 collapsed to zero (i.e., e00 = 0) and the squared norm of PX also collapsed to zero (i.e., 36*36e00 = 0).
 
 ## 4.2 2D PGA Basis
-(TODO)
+(TODO) 
 To prepare Julia's REPL for 2D PGA, include the files ripgand.jl and ripga2d.jl. To confirm the initialization, print out the basis.
 Note that the basis is typically sorted by grade, which does not imply an interpretation of the PGA basis because the same basis
 can be interpreted as either direct PGA or dual PGA.
