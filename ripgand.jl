@@ -146,14 +146,6 @@ function Base.:>>>(a::Vector{Float32},b::Matrix{Float32})
  return res
 end
 
-function Base.:!(a::Vector{Float32})::Vector{Float32}
- [reverse(a[1:end-1]); a[end]]
-end
-
-function Base.:!(a::Matrix{Float32})
- a[vcat(end-1:-1:1, end:end),:]
-end
-
 # mask off all vectors except those with specified grade (k)
 function grade(a::Vector{Float32},k::Int64)
  # if specified grade out of range

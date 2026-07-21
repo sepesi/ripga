@@ -237,14 +237,10 @@ In contrast in 3D point-based PGA,
 (More on the geometric interpretations in the next section.)
 
 # 4. PGA Basis
-The ripga library is capable of switching back and forth between the bases for PGA 1D, PGA 2D, PGA 3D, and PGA 4D.
+The ripga library is capable of switching back and forth between the bases for 1D PGA, 2D PGA, 3D PGA, and 4D PGA.
 
-(TODO)
-
-## 4.1 1D PGA Motor
+## 4.1 1D PGA Basis
 To prepare Julia's REPL for 1D PGA, include the files ripgand.jl and ripga1d.jl. To confirm the initialization, print out the basis.
-Note that the basis is typically sorted by grade, which does not imply an interpretation of the PGA basis because the same basis
-can be interpreted as either direct PGA or dual PGA.
 
 ```
 julia> include("ripgand.jl"); # utility functions for all available dimensions
@@ -258,28 +254,58 @@ julia> [basis reverse(basis)]
  "e1"   "e0"
  "e01"  "1"
 ```
+The 1D PGA basis element names listed in basis specify the 1D PGA basis written in the form of vector of vectors. Note that the REPL
+shows vectors of length five instead of four because ripga appends to each PGA basis element a status field (which is currently unused).
+```
+julia> B = [eu e0 e1 e01] # 1D PGA basis in form of vector of vectors
+5×4 Matrix{Float32}:
+ 1.0  0.0  0.0  0.0
+ 0.0  1.0  0.0  0.0
+ 0.0  0.0  1.0  0.0
+ 0.0  0.0  0.0  1.0
+ 0.0  0.0  0.0  0.0
+```
+Calling the PGA basis "B" and calling the PGA basis reversed left to right "BR", B and BR can be used as inputs to geoprodset() to
+calculate the needed sign changes in the 1D PGA dual operation (omitting the appended status field in each PGA basis element before
+calling geoprodset()).
+```
+julia> BR = [e01 e1 e0 eu]
+5×4 Matrix{Float32}:
+ 0.0  0.0  0.0  1.0
+ 0.0  0.0  1.0  0.0
+ 0.0  1.0  0.0  0.0
+ 1.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0
+
+julia> geoprodset(B[1:end-1,:],BR[1:end-1,:])
+4×4 Matrix{Float32}:
+ 0.0  0.0   0.0  0.0
+ 0.0  0.0   0.0  0.0
+ 0.0  0.0   0.0  0.0
+ 1.0  1.0  -1.0  1.0
+ ```
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
 rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
 In 1D, translation is composed of reflecting across two points. The following REPL session shows an example of translation
-using dual PGA to specify reflections across two points P1 and P2 where
+using 1D PGA to specify reflections across two points P1 and P2 where
 * P1 is a point at x=1,
 * P2 is another point, 5 to the right of P1, and
 * the motor composed of those two points separated by a distance of 5 translates a point to the right by 10 (i.e., twice
   the separation distance between the two points).
 
-In 1D dual PGA, the Euclidean origin is e1 and the equation for the 1D dual PGA point at x is P = xe0 + e1.
+In 1D PGA, the Euclidean origin is e1 and the equation for the 1D PGA point at x is P = xe0 + e1.
 
 ```
-julia> P1 = e1 + e0; # Euclidean point x=1 => dual PGA point eq. (xe0+e1)
+julia> P1 = e1 + e0; # Euclidean point x=1 => 1D PGA point eq. (xe0+e1)
 
-julia> P2 = e1 + 6*e0; # Euclidean point x=6 => dual PGA point eq. (xe0+e1)
+julia> P2 = e1 + 6*e0; # Euclidean point x=6 => 1D PGA point eq. (xe0+e1)
 
 julia> T = P2*P1; # compose the two reflection Translation motor as geometric product
 
 julia> toStr(T) # check Translation motor (distance between reflection points is 5)
 "1 + 5e01"
 
-julia> P0 = e1; # Euclidean origin (x=0 => dual PGA point eq. (xe0+e1)
+julia> P0 = e1; # Euclidean origin (x=0 => 1D PGA point eq. (xe0+e1)
 
 julia> PX = T*P0*~T; # apply Translation motor to P0 at origin; alternative eq is PX = T>>>P0
 
@@ -287,46 +313,47 @@ julia> toStr(PX) # resulting dual PGA point (xe0+e1) => Euclidean point x=10
 "10e0 + e1"
 ```
 Taking a closer look, the reason that the translation motor in the above REPL session works is because the sandwich
-operation on a dual PGA object is an [orthogonal transformation](https://en.wikipedia.org/wiki/Orthogonal_transformtion)
-(i.e., the squared norm of the dual PGA object is preserved). Concretely, the
-squared norm of P0 is e11 = 1, and the squared norm of T*P0*~T is the squared norm of (1 + 5e01)e1(1 - 5e01), which simplifies
-to the squared norm of (e1 + 10e0) = (e1 + 10e0)(e1 + 10e0) = e11 + 10e01 - 10e01 + 100e00 = 1 because e11 = 1 and e00 = 0.
-In other words, the squared norm of the dual PGA point P0 is preserved through the sandwich operation.
+operation on a 1D PGA object is an [orthogonal transformation](https://en.wikipedia.org/wiki/Orthogonal_transformtion)
+(i.e., the squared norm of the 1D PGA object is preserved). Concretely, the squared norm of P0 is e11 = 1, and the
+squared norm of T*P0*~T is the squared norm of (1 + 5e01)e1(1 - 5e01), which simplifies to the squared norm of
+(e1 + 10e0) = (e1 + 10e0)(e1 + 10e0) = e11 + 10e01 - 10e01 + 100e00 = 1 because e11 = 1 and e00 = 0. In other words,
+the squared norm of the 1D PGA point P0 is preserved through the sandwich operation.
 
 In contrast, the translation motor in the above REPL session does not work when the sandwich operation transforms
-a direct PGA object instead of a dual PGA object. In 1D direct PGA, it is still true that e00 = 0 and e11 = 1, so the
-same 1D PGA library (i.e., ripga1d.jl) can do all the PGA vector operations. However, in 1D direct PGA, e0 is the Euclidean
-origin (instead of e1) and the 1D direct PGA equation for a point at x is P = e0 + xe1 (instead of P = e1 + xe0), as shown
-in the following REPL session attempting to calculate the 1D direct PGA translation motor.
+a **point-based** 1D PGA object instead of a **plane-based** 1D PGA object. In point-based 1D PGA, it is still true
+that e00 = 0 and e11 = 1, so the same 1D PGA library (i.e., ripga1d.jl) can do all the PGA vector operations. However,
+in point-based 1D PGA, e0 is the Euclidean origin (instead of e1) and the point-based 1D PGA equation for a point at
+x is P = e0 + xe1 (instead of P = e1 + xe0), as shown in the following REPL session attempting to calculate the
+point-based 1D PGA translation motor.
 ```
-julia> P1 = e0 + e1; # 1D direct PGA point at x=1
+julia> P1 = e0 + e1; # point-based 1D PGA point at x=1
 
-julia> P2 = e0 + 6*e1; # 1D direct PGA point at x=6
+julia> P2 = e0 + 6*e1; # point-based 1D PGA point at x=6
 
-julia> T = P2*P1; # attempt at calculating direct PGA translation motor
+julia> T = P2*P1; # attempt at calculating point-based 1D PGA translation motor
 
 julia> toStr(T)
 "6 - 5e01"
 ```
-Recall that the 1D dual PGA translation motor was T = 1 + 5e01, which is the exact algebraic form of a 
-[dual number](https://en.wikipedia.org/wiki/Dual_number). In contrast, the above REPL session calculates
-the 1D direct PGA translation motor T = 6 - 5e01, which is *not* in the algebraic form of a dual number.
-That is a red flag, but let's naively continue and perform the sandwich operation.
+Recall that the plane-based 1D PGA translation motor was T = 1 + 5e01, which is the exact algebraic form of a 
+[dual number](https://en.wikipedia.org/wiki/Dual_number). In contrast, the above REPL session calculates the point-
+based 1D PGA translation motor T = 6 - 5e01, which is **not** in the algebraic form of a dual number. That is a red
+flag, but let's naively continue and perform the sandwich operation.
 ```
-julia> P0 = e0; # 1D direct PGA point of Euclidean origin
+julia> P0 = e0; # point-based 1D PGA point of Euclidean origin
 
-julia> PX = T*P0*~T; # naively apply sandwich operation to calculate translated 1D direct PGA point
+julia> PX = T*P0*~T; # naive sandwich operation calculating translated point-based 1D PGA point
 
 julia> toStr(PX)
 "36e0"
 ```
-That calculated value of PX is not in the form of a 1D direct PGA translated point (i.e., PX = e0 + xe1).
-Therefore, that attempt at a 1D direct PGA translation motor failed. Looking closer for the cause of the
-failure, the squared norm of P0 was preserved through the sandwich operation but only in the trivial sense
-because the squared norm of P0 collapsed to zero (i.e., e00 = 0) and the squared norm of PX also collapsed to
-zero (i.e., 36*36e00 = 0).
+That calculated PX is not in the form of a plane-based 1D PGA translated point (i.e., PX = e0 + xe1). Therefore, that
+attempt at calculating a point-based 1D PGA translation motor failed. Looking closer for the cause of the failure, the
+squared norm of P0 was preserved through the sandwich operation but only in the trivial sense because the squared norm
+of P0 collapsed to zero (i.e., e00 = 0) and the squared norm of PX also collapsed to zero (i.e., 36*36e00 = 0).
 
-## 4.2 2D PGA Motors
+## 4.2 2D PGA Basis
+(TODO)
 To prepare Julia's REPL for 2D PGA, include the files ripgand.jl and ripga2d.jl. To confirm the initialization, print out the basis.
 Note that the basis is typically sorted by grade, which does not imply an interpretation of the PGA basis because the same basis
 can be interpreted as either direct PGA or dual PGA.

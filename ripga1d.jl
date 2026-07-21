@@ -62,6 +62,17 @@ function Base.:^(a::Vector{Float32},b::Vector{Float32})::Vector{Float32}
  return res
 end # outer product; wedge operator (^)
 
+# dual operator (!)
+function Base.:!(a::Vector{Float32})::Vector{Float32}
+ res = [reverse(a[1:end-1]); a[end]] # keep status field at end
+ res[3] *= -1
+ return res
+end
+
+#function Base.:!(a::Matrix{Float32})
+# a[vcat(end-1:-1:1, end:end),:]
+#end
+
 # reverse operator (~)
 function Base.:~(a::Vector{Float32}) # reverse operator
  res = copy(a)
@@ -92,7 +103,7 @@ end
 # 0 indicates success of the unit test.
 # - @time utest(1,true) calculates the geometric
 # objects using math syntax.
-# - @btime utest() is a test for execution speed of ripga2d.jl.
+# - @btime utest() is a test for execution speed of ripga1d.jl.
 #   (NOTE: requires using BenchmarkTools)
 function utest(nLoop=100,
   flgMathSyntax::Bool=false)
@@ -118,7 +129,11 @@ function utest(nLoop=100,
 
  tst1 = Vector{Float32}(undef,nField)
  tst2 = Vector{Float32}(undef,nField)
-
+ 
+ B =  [eu e0 e1 e01]
+ BR = [e01 e1 e0 eu]
+ BBR = geoprodset(B[1:end-1,:],BR[1:end-1,:])
+ 
  for iLoop = 1:nLoop
 
   if flgMathSyntax == false
@@ -133,7 +148,7 @@ function utest(nLoop=100,
    res1 =  e0 * e0         # = 0
    res2 =  e1 * e1         # = 1
    res3 =  e0 ^ e1         # = e01
-   res4 =  !e01            # = 1
+   res4 =  !(1+e0+e1+e01)  # = 1 + e0 - e1 + e01
    res5 =  e0 & e1         # = -1
    res6 =  e0 | e1         # = 0
    res7 =  e1 | e1         # = 1
@@ -156,13 +171,13 @@ function utest(nLoop=100,
    b = ga"2 + 4 e0 + 6 e1 + 8 e01" # not "2 + 4e0 + 6e1 + 8e01"
 
    # calculate results to be tested
-   res1 =  ga"(1 e0)   (1 e0)" # = 0
-   res2 =  ga"(1 e1)   (1 e1)" # = 1
-   res3 =  ga"(1 e0) ^ (1 e1)" # = e01
-   res4 =  ga"(1 e01)∗"        # = 1
-   res5 =  ga"(1 e0) ∨ (1 e1)" # = -1
-   res6 =  ga"(1 e0) ⋅ (1 e1)" # = 0
-   res7 =  ga"(1 e1) ⋅ (1 e1)" # = 1
+   res1 =  ga"e0   e0" # = 0
+   res2 =  ga"e1   e1" # = 1
+   res3 =  ga"e0 ^ e1" # = e01
+   res4 =  ga"(1 + e0 + e1 + e01)∗" # = 1 + e0 - e1 + e01
+   res5 =  ga"e0 ∨ e1" # = -1
+   res6 =  ga"e0 ⋅ e1" # = 0
+   res7 =  ga"e1 ⋅ e1" # = 1
    res8 =  ga"a + b"   # = 3 + 6*e0 + 9*e1 + 12*e01
    res9 =  ga"a - b"   # = -1 - 2*e0 - 3*e1 - 4*e01
    res10 = ga"a   b"   # = 20 + 8*e0 + 12*e1 + 16*e01
@@ -172,6 +187,7 @@ function utest(nLoop=100,
 
    tst1 = e0 - 1
    tst2 = 1 - e0
+
   end # flgMathSyntax
  end # iLoop
 
@@ -179,9 +195,9 @@ function utest(nLoop=100,
  if nLoop == 1
   nError = 0
 
-  S = Matrix{String}(undef,15,3) # 3 columns:
+  S = Matrix{String}(undef,18,3) # 3 columns:
   S[1,1] = " res1         : "    #  1) label
-  S[1,2] = toStr(res1)           #  2) toStr() or toStr1()
+  S[1,2] = toStr(res1)           #  2) toStr()
   S[1,3] = "0"			         #  3) expected string
 
   S[2,1] = " res2         : "
@@ -194,7 +210,7 @@ function utest(nLoop=100,
   
   S[4,1] = " res4         : "
   S[4,2] = toStr(res4)
-  S[4,3] = "1"
+  S[4,3] = "1 + e0 - e1 + e01"
   
   S[5,1] = " res5         : "
   S[5,2] = toStr(res5)
@@ -239,6 +255,18 @@ function utest(nLoop=100,
   S[15,1]= " toStr test 2 : "
   S[15,2]= toStr(tst2)
   S[15,3]= "1 - e0"
+  
+  S[16,1]= " BBR[end,:]   : "
+  S[16,2]= toStr(BBR[end,:])
+  S[16,3]= "1 + e0 - e1 + e01"
+
+  S[17,1]= " min(ZBBR)    : "
+  S[17,2]= string(minimum(BBR[1:end-1,:][:]))
+  S[17,3]= "0.0"
+
+  S[18,1]= " max(ZBBR)    : "
+  S[18,2]= string(maximum(BBR[1:end-1,:][:]))
+  S[18,3]= "0.0"
 
   # print unit test results
   #  'x' in first column denotes tests with errors
