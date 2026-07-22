@@ -134,6 +134,13 @@ function Base.:^(a::Vector{Float32},b::Vector{Float32})::Vector{Float32}
  return res
 end # outer product; wedge operator (^)
 
+# dual operator (!)
+function Base.:!(a::Vector{Float32})::Vector{Float32}
+ res = [reverse(a[1:end-1]); a[end]] # keep status field at end
+ res[12:15] *= -1
+ return res
+end
+
 # reverse operator (~)
 function Base.:~(a::Vector{Float32})
  res = copy(a)
@@ -203,6 +210,10 @@ function utest(nLoop=100,
  point_on_torus = Vector{Float32}(undef,nField)
  tst1           = Vector{Float32}(undef,nField)
  tst2           = Vector{Float32}(undef,nField)
+
+ B =  [eu e0 e1 e2 e3 e01 e02 e03 e12 e31 e23 e021 e013 e032 e123 e0123]
+ BR = [e0123 e123 e032 e013 e021 e23 e31 e12 e03 e02 e01 e3 e2 e1 e0 eu]
+ BBR = geoprodset(B[1:end-1,:],BR[1:end-1,:])
  
  for iLoop = 1:nLoop
   if flgMathSyntax == false
@@ -252,7 +263,7 @@ function utest(nLoop=100,
  if nLoop == 1
   nError = 0
   
-  S = Matrix{String}(undef,11,3) # 3 columns:
+  S = Matrix{String}(undef,14,3) # 3 columns:
   S[1,1] = " point          : "  #  1) label
   S[1,2] = toStr(px)             #  2) toStr() or toStr1()
   S[1,3] = "e032 + e123"         #  3) expected string
@@ -296,6 +307,18 @@ function utest(nLoop=100,
   S[11,1] = " toStr1 test 2  : "
   S[11,2] = toStr(tst2)
   S[11,3] = "1 - e0"
+
+  S[12,1] = " BBR[end,:]     : "
+  S[12,2] = toStr(BBR[end,:])
+  S[12,3] = "1 + e0 + e1 + e2 + e3 + e01 + e02 + e03 + e12 + e31 + e23 - e021 - e013 - e032 - e123 + e0123"
+
+  S[13,1] = " min(ZBBR)      : "
+  S[13,2] = string(minimum(BBR[1:end-1,:][:]))
+  S[13,3] = "0.0"
+
+  S[14,1] = " max(ZBBR)      : "
+  S[14,2] = string(maximum(BBR[1:end-1,:][:]))
+  S[14,3] = "0.0"
   
   # print unit test results
   #  'x' in first column denotes tests with errors
