@@ -934,16 +934,20 @@ end # point
 # unit test
 # arguments:
 # - nLoop repeats a section of the PGA calculations for benchmarking
+# - flgMathSyntax set to true tests ga macro
 # usage notes:
-# - @time utest(1) checks on whether the unit test output of ripga.jl
-# exactly matches the unit test output of pga3d.cpp. The comparison
-# ends with the printing of the number of tests in the unit test that
-# don't match. 0 indicates success.
-# - @time utest(1,true) outputs a slightly simplified version of the 
-# unit test output that does not match the unit test output by pga3d.cpp.
-# - @btime utest() is a test for execution speed of ripga.jl.
+# - @time utest(1) checks on whether the unit test
+# exactly matches the expected output. The
+# comparison ends with the printing of the
+# number of tests in the unit test that don't match.
+# 0 indicates success of the unit test.
+# - @time utest(1,true) calculates the geometric
+# objects using math syntax.
+# - @btime utest() is a test for execution speed of ripga2d.jl.
 #   (NOTE: requires using BenchmarkTools)
-function utest(nLoop=100, flgSimplify::Bool=false)
+function utest(nLoop=100,
+  flgMathSyntax::Bool=false)
+
  nField = length(basis)+1 # +1 is for status field
  P0 =    Vector{Float32}(undef,nField)
  P1 =    Vector{Float32}(undef,nField)
@@ -954,6 +958,12 @@ function utest(nLoop=100, flgSimplify::Bool=false)
  x =     Vector{Float32}(undef,nField)
  tst1 =  Vector{Float32}(undef,nField)
  tst2 =  Vector{Float32}(undef,nField)
+
+ # define some points
+ P0 = point(0,0,0,0)
+ P1 = point(1,0,0,0)
+ P2 = point(0,1,0,0)
+ P3 = point(1,1,0,0)
 
  B =    hcat(eu,
 			e0, e1, e2, e3, e4,
@@ -970,35 +980,28 @@ function utest(nLoop=100, flgSimplify::Bool=false)
  BBR = geoprodset(B[1:end-1,:],BR[1:end-1,:])
  
  for iLoop = 1:nLoop
-  # define some points
-  P0 = point(0,0,0,0)
-  P1 = point(1,0,0,0)
-  P2 = point(0,1,0,0)
-  P3 = point(1,1,0,0)
-  
-  # calculate intersection of parallel lines
-  line0 = P0 & P1
-  line1 = -(P2 & P3)
-  x = line0 ^ line1
-  
-  tst1 = e0 - 1f0
-  tst2 = 1f0 - e0
- 
-#  # geometric algebra equations in math syntax
-#  ga"axis_z = e1 ∧ e2"
-#  ga"origin = axis_z ∧ e3"
-#  
-#  px = point(1f0, 0f0, 0f0)
-#  ga"line = origin ∨ px"
-#  p = plane(2f0,0f0,1f0,-3f0)
-#  ga"rot = rotor(Float32(pi/2), e1 e2)"
-#  ga"rot_point = rot px ~rot"
-#  ga"rot_line = rot line ~rot"
-#  ga"rot_plane = rot p ~rot"
-#  
-#  tst1 = e0 - 1f0
-#  tst2 = 1f0 - e0
- end
+  if flgMathSyntax == false
+   # geometric objects in programming syntax
+   # calculate intersection of parallel lines
+   (nLoop == 1) && println("  # calculated with programming syntax")
+   line0 = P0 & P1
+   line1 = -(P2 & P3)
+   x = line0 ^ line1
+
+   tst1 = e0 - 1f0
+   tst2 = 1f0 - e0
+
+  else # flgMathSyntax == true
+   # geometric objects in math syntax
+   (nLoop == 1) && println("  # calculated with math syntax")
+   line0 = ga"P0 ∨ P1"
+   line1 = ga"-(P2 ∨ P3)"
+   x = ga"line0 ∧ line1"
+
+   tst1 = e0 - 1f0
+   tst2 = 1f0 - e0
+  end # flgMathSyntax
+ end # iLoop
 
  # if (slow) output of unit test results wanted
  if nLoop == 1
