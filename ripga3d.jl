@@ -163,6 +163,13 @@ function normIdeal(a::Vector{Float32},nd::Int64=2)
  end
 end
 
+function point(
+ x::Number,
+ y::Number,
+ z::Number)::Vector{Float32}
+ return x*e032 + y*e013 + z*e021 + e123
+end
+
 function plane(a::Number, b::Number, c::Number, d::Number)::Vector{Float32}
  return a*e1 + b*e2 + c*e3 + d*e0
 end

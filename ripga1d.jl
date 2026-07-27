@@ -69,10 +69,6 @@ function Base.:!(a::Vector{Float32})::Vector{Float32}
  return res
 end
 
-#function Base.:!(a::Matrix{Float32})
-# a[vcat(end-1:-1:1, end:end),:]
-#end
-
 # reverse operator (~)
 function Base.:~(a::Vector{Float32}) # reverse operator
  res = copy(a)

@@ -172,28 +172,7 @@ function grade(a::Vector{Float32},k::Int64)
 end
 
 # convert Euclidean coordinates to PGA expression
-function point(
- x::Number,
- y::Number)::Vector{Float32}
- return x*e20 + y*e01 + e12
-end
-function point(
- x::Number,
- y::Number,
- z::Number)::Vector{Float32}
- return x*e032 + y*e013 + z*e021 + e123
-end
-function point(
- x::Number,
- y::Number,
- z::Number,
- w::Number)::Vector{Float32}
- return x*e0234 +
-  y*e0134 +
-  z*e0124 +
-  w*e0123 +
-  e1234
-end
+#=
 function point(V::Vector{Float32},
  nBasis::Int64=0)::Vector{Float32}
  
@@ -225,6 +204,7 @@ function point(M::Matrix{Float32})::Matrix{Float32}
  end
  return res
 end
+=#
 
 # convert PGA expressions to Euclidean coordinates
 function toCoord(M::Matrix{Float32},

@@ -55,22 +55,22 @@ e01 =   zeros(Float32, nField); e01[7] = 1
 e02 =   zeros(Float32, nField); e02[8] = 1
 e03 =   zeros(Float32, nField); e03[9] = 1
 e04 =   zeros(Float32, nField); e04[10] = 1
-e12 = zeros(Float32, nField); e12[11] = 1
-e13 = zeros(Float32, nField); e13[12] = 1
-e14 = zeros(Float32, nField); e14[13] = 1
-e23 = zeros(Float32, nField); e23[14] = 1
-e24 = zeros(Float32, nField); e24[15] = 1
-e34 = zeros(Float32, nField); e34[16] = 1
-e012 = zeros(Float32, nField); e012[17] = 1
-e013 = zeros(Float32, nField); e013[18] = 1
-e014 = zeros(Float32, nField); e014[19] = 1
-e023 = zeros(Float32, nField); e023[20] = 1
-e024 = zeros(Float32, nField); e024[21] = 1
-e034 = zeros(Float32, nField); e034[22] = 1
-e123 = zeros(Float32, nField); e123[23] = 1
-e124 = zeros(Float32, nField); e124[24] = 1
-e134 = zeros(Float32, nField); e134[25] = 1
-e234 = zeros(Float32, nField); e234[26] = 1
+e12 =   zeros(Float32, nField); e12[11] = 1
+e13 =   zeros(Float32, nField); e13[12] = 1
+e14 =   zeros(Float32, nField); e14[13] = 1
+e23 =   zeros(Float32, nField); e23[14] = 1
+e24 =   zeros(Float32, nField); e24[15] = 1
+e34 =   zeros(Float32, nField); e34[16] = 1
+e012 =  zeros(Float32, nField); e012[17] = 1
+e013 =  zeros(Float32, nField); e013[18] = 1
+e014 =  zeros(Float32, nField); e014[19] = 1
+e023 =  zeros(Float32, nField); e023[20] = 1
+e024 =  zeros(Float32, nField); e024[21] = 1
+e034 =  zeros(Float32, nField); e034[22] = 1
+e123 =  zeros(Float32, nField); e123[23] = 1
+e124 =  zeros(Float32, nField); e124[24] = 1
+e134 =  zeros(Float32, nField); e134[25] = 1
+e234 =  zeros(Float32, nField); e234[26] = 1
 e0123 = zeros(Float32, nField); e0123[27] = 1
 e0124 = zeros(Float32, nField); e0124[28] = 1
 e0134 = zeros(Float32, nField); e0134[29] = 1
@@ -901,6 +901,13 @@ function Base.:^(a::Vector{Float32},b::Vector{Float32})::Vector{Float32}
  return res
 end # outer product; wedge operator (^)
 
+# dual operator (!)
+function Base.:!(a::Vector{Float32})::Vector{Float32}
+ res = [reverse(a[1:end-1]); a[end]] # keep status field at end
+ res[[3,5,8,10,12,15,18,21,23,25,28,30]] *= -1
+ return res
+end
+
 # reverse operator (~)
 function Base.:~(a::Vector{Float32})
  res = copy(a)
@@ -915,6 +922,14 @@ function conjugate(a::Vector{Float32})::Vector{Float32}
  res[32] *= -1
  return res
 end # conjugate()
+
+function point(
+ x::Number,
+ y::Number,
+ z::Number,
+ w::Number)::Vector{Float32}
+ return x*e0234 + y*e0134 + z*e0124 + w*e0123 + e1234
+end # point
 
 # unit test
 # arguments:
@@ -940,6 +955,20 @@ function utest(nLoop=100, flgSimplify::Bool=false)
  tst1 =  Vector{Float32}(undef,nField)
  tst2 =  Vector{Float32}(undef,nField)
 
+ B =    hcat(eu,
+			e0, e1, e2, e3, e4,
+			e01, e02, e03, e04, e12, e13, e14, e23, e24, e34,
+			e012, e013, e014, e023, e024, e034, e123, e124, e134, e234,
+			e0123, e0124, e0134, e0234, e1234,
+			e01234)
+ BR =   hcat(e01234,
+			e1234, e0234, e0134, e0124, e0123,
+			e234, e134, e124, e123, e034, e024, e023, e014, e013, e012,
+			e34, e24, e23, e14, e13, e12, e04, e03, e02, e01,
+			e4, e3, e2, e1, e0,
+			eu)
+ BBR = geoprodset(B[1:end-1,:],BR[1:end-1,:])
+ 
  for iLoop = 1:nLoop
   # define some points
   P0 = point(0,0,0,0)
@@ -949,7 +978,7 @@ function utest(nLoop=100, flgSimplify::Bool=false)
   
   # calculate intersection of parallel lines
   line0 = P0 & P1
-  line1 = P2 & P3
+  line1 = -(P2 & P3)
   x = line0 ^ line1
   
   tst1 = e0 - 1f0
@@ -975,7 +1004,7 @@ function utest(nLoop=100, flgSimplify::Bool=false)
  if nLoop == 1
   nError = 0
 
-  S = Matrix{String}(undef,9,3)  # 3 columns:
+  S = Matrix{String}(undef,12,3)  # 3 columns:
   S[1,1] = " P0             : "  # 1) label
   S[1,2] = toStr(P0)             # 2) toStr()
   S[1,3] = "e1234"               # 3) expected string
@@ -994,7 +1023,7 @@ function utest(nLoop=100, flgSimplify::Bool=false)
   
   S[5,1] = " line0          : "
   S[5,2] = toStr(line0)
-  S[5,3] = "-e234"
+  S[5,3] = "e234"
   
   S[6,1] = " line1          : "
   S[6,2] = toStr(line1)
@@ -1002,7 +1031,7 @@ function utest(nLoop=100, flgSimplify::Bool=false)
   
   S[7,1] = " intersection   : "
   S[7,2] = toStr(x)
-  S[7,3] = "-e20"
+  S[7,3] = "0"
   
   S[8,1] = " toStr test 1   : "
   S[8,2] = toStr(tst1)
@@ -1011,17 +1040,34 @@ function utest(nLoop=100, flgSimplify::Bool=false)
   S[9,1] = " toStr test 2   : "
   S[9,2] = toStr(tst2)
   S[9,3] = "1 - e0"
-  
-  # print unit test results;
+
+  S[10,1] = " BBR[end,:]     : "
+  S[10,2] = toStr(BBR[end,:])
+  S[10,3] = "1 + " *
+			"e0 - e1 + e2 - e3 + e4 + " *
+			"e01 - e02 + e03 - e04 + e12 - e13 + e14 + e23 - e24 + e34 + " *
+			"e012 - e013 + e014 + e023 - e024 + e034 - e123 + e124 - e134 + e234 + " *
+			"e0123 - e0124 + e0134 - e0234 + e1234 + " *
+			"e01234"
+  S[11,1] = " min(ZBBR)      : "
+  S[11,2] = string(minimum(BBR[1:end-1,:][:]))
+  S[11,3] = "0.0"
+
+  S[12,1] = " max(ZBBR)      : "
+  S[12,2] = string(maximum(BBR[1:end-1,:][:]))
+  S[12,3] = "0.0"
+
+  # print unit test results
+  #  'x' in first column denotes tests with errors
   nTest = size(S,1)
   for iTest = 1:nTest
-   if S[iTest,2] == S[iTest,3]
-    mark = " "
-   else
-    mark = "x"
+   isError = S[iTest,2] != S[iTest,3]
+   xChar = isError ? 'x' : ' '
+   println(xChar * S[iTest,1] * S[iTest,2])
+   if isError
+    println(' ' * S[iTest,1] * S[iTest,3])
     nError += 1
    end
-   println("$mark" * S[iTest,1] * S[iTest,2])
   end
 
   return nError # return unit test results

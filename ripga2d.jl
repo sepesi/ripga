@@ -109,6 +109,12 @@ function normIdeal(a::Vector{Float32})
  return sqrt(a[2]^2)
 end
 
+function point(
+ x::Number,
+ y::Number)::Vector{Float32}
+ return x*e20 + y*e01 + e12
+end
+
 # unit test
 # arguments:
 # - nLoop repeats a section of the PGA calculations for benchmarking
