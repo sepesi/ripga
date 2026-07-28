@@ -101,7 +101,7 @@ as the vector operators in the programming syntax of the original bivector.net r
 | $`a \wedge b`$ | Outer Product (Wedge) | `a ^ b` |
 | $`a \vee b`$ | Regressive Product (Vee) | `a & b` |
 | $`a \cdot b`$ | Inner Product (Dot) | `a` \| `b` |
-| ~~`a*`~~ | Dual | `a!` |
+| ~~`a`*~~ | Dual | `a!` |
 | $`ab\tilde{a}`$ | Sandwich Product | `a >>> b` |
 
 It should be noted that the general consensus from the Julia community is that my approach to overloading the
