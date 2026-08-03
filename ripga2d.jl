@@ -180,7 +180,7 @@ function utest(nLoop=100,
  if nLoop == 1
   nError = 0
 
-  S = Matrix{String}(undef,12,3) # 3 columns:
+  S = Matrix{String}(undef,14,3) # 3 columns:
   S[1,1] = " P0           : "   #  1) label
   S[1,2] = toStr(P0)            #  2) toStr() or toStr1()
   S[1,3] = "e12"		        #  3) expected string
@@ -209,25 +209,33 @@ function utest(nLoop=100,
   S[7,2] = toStr(x)
   S[7,3] = "-e20"
   
-  S[8,1] = " toStr test 1 : "
-  S[8,2] = toStr(tst1)
-  S[8,3] = "-1 + e0"
+  S[8,1] = " !!e0         : "
+  S[8,2] = toStr(!!e0)
+  S[8,3] = "e0"
   
-  S[9,1] = " toStr test 2 : "
-  S[9,2] = toStr(tst2)
-  S[9,3] = "1 - e0"
+  S[9,1] = " !!!!e0       : "
+  S[9,2] = toStr(!!!!e0)
+  S[9,3] = "e0"
+  
+  S[10,1]= " toStr test 1 : "
+  S[10,2]= toStr(tst1)
+  S[10,3]= "-1 + e0"
+  
+  S[11,1]= " toStr test 2 : "
+  S[11,2]= toStr(tst2)
+  S[11,3]= "1 - e0"
 
-  S[10,1]= " BBR[end,:]   : "
-  S[10,2]= toStr(BBR[end,:])
-  S[10,3]= "1 + e0 + e1 + e2 + e01 + e20 + e12 + e012"
+  S[12,1]= " BBR[end,:]   : "
+  S[12,2]= toStr(BBR[end,:])
+  S[12,3]= "1 + e0 + e1 + e2 + e01 + e20 + e12 + e012"
 
-  S[11,1]= " min(ZBBR)    : "
-  S[11,2]= string(minimum(BBR[1:end-1,:][:]))
-  S[11,3]= "0.0"
+  S[13,1]= " min(ZBBR)    : "
+  S[13,2]= string(minimum(BBR[1:end-1,:][:]))
+  S[13,3]= "0.0"
 
-  S[12,1]= " max(ZBBR)    : "
-  S[12,2]= string(maximum(BBR[1:end-1,:][:]))
-  S[12,3]= "0.0"
+  S[14,1]= " max(ZBBR)    : "
+  S[14,2]= string(maximum(BBR[1:end-1,:][:]))
+  S[14,3]= "0.0"
 
   # print unit test results
   #  'x' in first column denotes tests with errors
