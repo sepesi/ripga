@@ -93,7 +93,13 @@ years after the book's publication. Therefore, I ported bivector.net's C++ refer
 github public repository at https://github.com/sepesi/ripga
 
 To avoid confusion, the Julia port of ripga uses exactly the same [vector operator symbols](https://www.youtube.com/watch?v=2DgxeizE3E8&t=105s)
-as the vector operators in the programming syntax of the original bivector.net reference implementation as shown in the table below.
+as the vector operators in the programming syntax of the original bivector.net reference implementation as shown in the table below. The
+strikethrough of the dual operator math syntax entry denotes that the math syntax of the dual opertor is not currently implemented. It is
+design decision, valuing the improved code simplicity over the minor inconvenience of having to use programming syntax for the dual operator.
+The dual operator had the most complex conversion from math syntax to programming syntax because the dual operator in math syntax is the
+only postfix (i.e., a`*`) operator. All other operators in the following vector operator symvol table are either prefix operators (e.g., !a)
+or infix operators (e.g., a ^ b) which are compatible with the prefix and infix operator capabilities of Julia's  builtin [AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree)
+parser.
 
 | Math Syntax | Vector Operator Symbol Name | Programming Syntax |
 | :--- | :--- | :--- |
