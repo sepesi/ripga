@@ -270,7 +270,7 @@ function utest(nLoop=100,
  if nLoop == 1
   nError = 0
   
-  S = Matrix{String}(undef,14,3) # 3 columns:
+  S = Matrix{String}(undef,17,3) # 3 columns:
   S[1,1] = " point          : "  #  1) label
   S[1,2] = toStr(px)             #  2) toStr() or toStr1()
   S[1,3] = "e032 + e123"         #  3) expected string
@@ -307,25 +307,37 @@ function utest(nLoop=100,
   S[9,2] = toStr(point_on_torus)
   S[9,3] = "0.85e032 + e123"
   
-  S[10,1] = " toStr1 test 1  : "
-  S[10,2] = toStr(tst1)
-  S[10,3] = "-1 + e0"
+  S[10,1]= " toStr test 1   : "
+  S[10,2]= toStr(tst1)
+  S[10,3]= "-1 + e0"
   
-  S[11,1] = " toStr1 test 2  : "
-  S[11,2] = toStr(tst2)
-  S[11,3] = "1 - e0"
+  S[11,1]= " toStr test 2   : "
+  S[11,2]= toStr(tst2)
+  S[11,3]= "1 - e0"
+  
+  S[12,1]= " !!e01          : "
+  S[12,2]= toStr(!!e01)
+  S[12,3]= "e01"
+  
+  S[13,1]= " !!e3           : "
+  S[13,2]= toStr(!!e3)
+  S[13,3]= "-e3"
+  
+  S[14,1]= " !!!!e3         : "
+  S[14,2]= toStr(!!!!e3)
+  S[14,3]= "e3"
 
-  S[12,1] = " BBR[end,:]     : "
-  S[12,2] = toStr(BBR[end,:])
-  S[12,3] = "1 + e0 + e1 + e2 + e3 + e01 + e02 + e03 + e12 + e31 + e23 - e021 - e013 - e032 - e123 + e0123"
+  S[15,1]= " BBR[end,:]     : "
+  S[15,2]= toStr(BBR[end,:])
+  S[15,3]= "1 + e0 + e1 + e2 + e3 + e01 + e02 + e03 + e12 + e31 + e23 - e021 - e013 - e032 - e123 + e0123"
 
-  S[13,1] = " min(ZBBR)      : "
-  S[13,2] = string(minimum(BBR[1:end-1,:][:]))
-  S[13,3] = "0.0"
+  S[16,1]= " min(ZBBR)      : "
+  S[16,2]= string(minimum(BBR[1:end-1,:][:]))
+  S[16,3]= "0.0"
 
-  S[14,1] = " max(ZBBR)      : "
-  S[14,2] = string(maximum(BBR[1:end-1,:][:]))
-  S[14,3] = "0.0"
+  S[17,1]= " max(ZBBR)      : "
+  S[17,2]= string(maximum(BBR[1:end-1,:][:]))
+  S[17,3]= "0.0"
   
   # print unit test results
   #  'x' in first column denotes tests with errors
