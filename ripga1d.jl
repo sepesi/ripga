@@ -122,6 +122,7 @@ function utest(nLoop=100,
  res12= Vector{Float32}(undef,nField)
  res13= Vector{Float32}(undef,nField)
  res14= Vector{Float32}(undef,nField)
+ res15= Vector{Float32}(undef,nField)
 
  tst1 = Vector{Float32}(undef,nField)
  tst2 = Vector{Float32}(undef,nField)
@@ -145,15 +146,17 @@ function utest(nLoop=100,
    res2 =  e1 * e1         # = 1
    res3 =  e0 ^ e1         # = e01
    res4 =  !(1+e0+e1+e01)  # = 1 + e0 - e1 + e01
-   res5 =  e0 & e1         # = -1
-   res6 =  e0 | e1         # = 0
-   res7 =  e1 | e1         # = 1
-   res8 =  a + b   # = 3 + 6*e0 + 9*e1 + 12*e01
-   res9 =  a - b   # = -1 - 2*e0 - 3*e1 - 4*e01
-   res10 = a * b   # = 20 + 8*e0 + 12*e1 + 16*e01
-   res11 = a ^ b   # = 2 + 8*e0 + 12*e1 + 16*e01
-   res12 = a & b   # = 16 + 32*e0 + 48*e1 + 32*e01
-   res13 = a | b   # = 20 + 8*e0 + 12*e1 + 16*e01
+   res5 =  !!e0			   # = -e0
+   res6 =  !!!!e0		   # = e0
+   res7 =  e0 & e1         # = -1
+   res8 =  e0 | e1         # = 0
+   res9 =  e1 | e1         # = 1
+   res10 = a + b   # = 3 + 6*e0 + 9*e1 + 12*e01
+   res11=  a - b   # = -1 - 2*e0 - 3*e1 - 4*e01
+   res12 = a * b   # = 20 + 8*e0 + 12*e1 + 16*e01
+   res13 = a ^ b   # = 2 + 8*e0 + 12*e1 + 16*e01
+   res14 = a & b   # = 16 + 32*e0 + 48*e1 + 32*e01
+   res15 = a | b   # = 20 + 8*e0 + 12*e1 + 16*e01
      
    tst1 = e0 - 1
    tst2 = 1 - e0
@@ -170,16 +173,18 @@ function utest(nLoop=100,
    res1 =  ga"e0   e0" # = 0
    res2 =  ga"e1   e1" # = 1
    res3 =  ga"e0 ^ e1" # = e01
-   res4 =  ga"(1 + e0 + e1 + e01)∗" # = 1 + e0 - e1 + e01
-   res5 =  ga"e0 ∨ e1" # = -1
-   res6 =  ga"e0 ⋅ e1" # = 0
-   res7 =  ga"e1 ⋅ e1" # = 1
-   res8 =  ga"a + b"   # = 3 + 6*e0 + 9*e1 + 12*e01
-   res9 =  ga"a - b"   # = -1 - 2*e0 - 3*e1 - 4*e01
-   res10 = ga"a   b"   # = 20 + 8*e0 + 12*e1 + 16*e01
-   res11 = ga"a ^ b"   # = 2 + 8*e0 + 12*e1 + 16*e01
-   res12 = ga"a ∨ b"   # = 16 + 32*e0 + 48*e1 + 32*e01
-   res13 = ga"a ⋅ b"   # = 20 + 8*e0 + 12*e1 + 16*e01
+   res4 =  ga"!(1 + e0 + e1 + e01)" # = 1 + e0 - e1 + e01
+   res5 =  ga"!!e0"  # = -e0
+   res6 =  ga"!!!!e0" # = e0
+   res7 =  ga"e0 ∨ e1" # = -1
+   res8 =  ga"e0 ⋅ e1" # = 0
+   res9 =  ga"e1 ⋅ e1" # = 1
+   res10 =  ga"a + b"   # = 3 + 6*e0 + 9*e1 + 12*e01
+   res11 =  ga"a - b"   # = -1 - 2*e0 - 3*e1 - 4*e01
+   res12 = ga"a   b"   # = 20 + 8*e0 + 12*e1 + 16*e01
+   res13 = ga"a ^ b"   # = 2 + 8*e0 + 12*e1 + 16*e01
+   res14 = ga"a ∨ b"   # = 16 + 32*e0 + 48*e1 + 32*e01
+   res15 = ga"a ⋅ b"   # = 20 + 8*e0 + 12*e1 + 16*e01
 
    tst1 = e0 - 1
    tst2 = 1 - e0
@@ -191,7 +196,7 @@ function utest(nLoop=100,
  if nLoop == 1
   nError = 0
 
-  S = Matrix{String}(undef,18,3) # 3 columns:
+  S = Matrix{String}(undef,20,3) # 3 columns:
   S[1,1] = " res1         : "    #  1) label
   S[1,2] = toStr(res1)           #  2) toStr()
   S[1,3] = "0"			         #  3) expected string
@@ -210,59 +215,67 @@ function utest(nLoop=100,
   
   S[5,1] = " res5         : "
   S[5,2] = toStr(res5)
-  S[5,3] = "-1"
+  S[5,3] = "-e0"
   
   S[6,1] = " res6         : "
   S[6,2] = toStr(res6)
-  S[6,3] = "0"
+  S[6,3] = "e0"
   
   S[7,1] = " res7         : "
   S[7,2] = toStr(res7)
-  S[7,3] = "1"
+  S[7,3] = "-1"
   
   S[8,1] = " res8         : "
   S[8,2] = toStr(res8)
-  S[8,3] = "3 + 6e0 + 9e1 + 12e01"
+  S[8,3] = "0"
   
   S[9,1] = " res9         : "
   S[9,2] = toStr(res9)
-  S[9,3] = "-1 - 2e0 - 3e1 - 4e01"
+  S[9,3] = "1"
   
   S[10,1]= " res10        : "
   S[10,2]= toStr(res10)
-  S[10,3]= "20 + 8e0 + 12e1 + 16e01"
+  S[10,3]= "3 + 6e0 + 9e1 + 12e01"
   
   S[11,1]= " res11        : "
   S[11,2]= toStr(res11)
-  S[11,3]= "2 + 8e0 + 12e1 + 16e01"
+  S[11,3]= "-1 - 2e0 - 3e1 - 4e01"
   
   S[12,1]= " res12        : "
   S[12,2]= toStr(res12)
-  S[12,3]= "16 + 32e0 + 48e1 + 32e01"
+  S[12,3]= "20 + 8e0 + 12e1 + 16e01"
   
   S[13,1]= " res13        : "
   S[13,2]= toStr(res13)
-  S[13,3]= "20 + 8e0 + 12e1 + 16e01"
+  S[13,3]= "2 + 8e0 + 12e1 + 16e01"
   
-  S[14,1]= " toStr test 1 : "
-  S[14,2]= toStr(tst1)
-  S[14,3]= "-1 + e0"
+  S[14,1]= " res14        : "
+  S[14,2]= toStr(res14)
+  S[14,3]= "16 + 32e0 + 48e1 + 32e01"
   
-  S[15,1]= " toStr test 2 : "
-  S[15,2]= toStr(tst2)
-  S[15,3]= "1 - e0"
+  S[15,1]= " res15        : "
+  S[15,2]= toStr(res15)
+  S[15,3]= "20 + 8e0 + 12e1 + 16e01"
   
-  S[16,1]= " BBR[end,:]   : "
-  S[16,2]= toStr(BBR[end,:])
-  S[16,3]= "1 + e0 - e1 + e01"
+  S[16,1]= " toStr test 1 : "
+  S[16,2]= toStr(tst1)
+  S[16,3]= "-1 + e0"
+  
+  S[17,1]= " toStr test 2 : "
+  S[17,2]= toStr(tst2)
+  S[17,3]= "1 - e0"
+  
+  S[18,1]= " BBR[end,:]   : "
+  S[18,2]= toStr(BBR[end,:])
+  S[18,3]= "1 + e0 - e1 + e01"
 
-  S[17,1]= " min(ZBBR)    : "
-  S[17,2]= string(minimum(BBR[1:end-1,:][:]))
-  S[17,3]= "0.0"
+  S[19,1]= " min(ZBBR)    : "
+  S[19,2]= string(minimum(BBR[1:end-1,:][:]))
+  S[19,3]= "0.0"
 
-  S[18,1]= " max(ZBBR)    : "
-  S[18,2]= string(maximum(BBR[1:end-1,:][:]))
-  S[18,3]= "0.0"
+  S[20,1]= " max(ZBBR)    : "
+  S[20,2]= string(maximum(BBR[1:end-1,:][:]))
+  S[20,3]= "0.0"
 
   # print unit test results
   #  'x' in first column denotes tests with errors

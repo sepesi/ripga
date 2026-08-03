@@ -335,6 +335,7 @@ macro ga_str(str)
    C[i] = '&'
   elseif C[i] == '⋅' # \cdot for inner product
    C[i] = '|'
+#= simplify by avoiding postfix operator
   elseif C[i] == '∗' # \ast for dual (suffix)
    j = i-1
    if C[j] == ')'
@@ -359,10 +360,26 @@ macro ga_str(str)
     end
    end
    C[j+1] = '!' # prefix '!'
-  end
- end
+=#
+  end # ifs for conversion of math operators
+ end # for each character in string
  return esc(Meta.parse(String(C)))
 end # ga_str()
+
+# dump expression
+# args:
+#  x: Expr::expression
+#  d: Integer::depth
+function dumpexpr(x::Expr, d::Integer=0)
+ n = 0
+ d += 2
+ for a in x.args
+  n += 1
+  t = typeof(x.args[n])
+  println("$(" "^d)$n> $a ($t)")
+  (t == Expr) && m2p(x.args[n], d)
+ end # for each arg
+end # dumpexpr()
 
 # switch dimension of geometry workspace
 function xdimension(nD::Int64, isVerbose::Bool=false)

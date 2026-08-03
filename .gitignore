@@ -31,6 +31,7 @@
 *.scc
 meetfood.tsv
 ripga4d.bak.jl
+design.ripga.txt
 [Dd]ebug*/
 bdd/
 obj/
