@@ -943,7 +943,7 @@ end # point
 # 0 indicates success of the unit test.
 # - @time utest(1,true) calculates the geometric
 # objects using math syntax.
-# - @btime utest() is a test for execution speed of ripga2d.jl.
+# - @btime utest() is a test for execution speed of ripga4d.jl.
 #   (NOTE: requires using BenchmarkTools)
 function utest(nLoop=100,
   flgMathSyntax::Bool=false)
@@ -1007,7 +1007,7 @@ function utest(nLoop=100,
  if nLoop == 1
   nError = 0
 
-  S = Matrix{String}(undef,12,3)  # 3 columns:
+  S = Matrix{String}(undef,16,3) # 3 columns:
   S[1,1] = " P0             : "  # 1) label
   S[1,2] = toStr(P0)             # 2) toStr()
   S[1,3] = "e1234"               # 3) expected string
@@ -1043,22 +1043,39 @@ function utest(nLoop=100,
   S[9,1] = " toStr test 2   : "
   S[9,2] = toStr(tst2)
   S[9,3] = "1 - e0"
+  
+  S[10,1]= " !e1            : "
+  S[10,2]= toStr(!e1)
+  S[10,3]= "-e0234"
+  
+  S[11,1]= " !!e1           : "
+  S[11,2]= toStr(!!e1)
+  S[11,3]= "e1"
+  
+  S[12,1]= " !e2            : "
+  S[12,2]= toStr(!e2)
+  S[12,3]= "e0134"
+  
+  S[13,1]= " !!e2           : "
+  S[13,2]= toStr(!!e2)
+  S[13,3]= "e2"
+  
+  S[14,1]= " BBR[end,:]     : "
+  S[14,2]= toStr(BBR[end,:])
+  S[14,3]= "1 + " *
+		   "e0 - e1 + e2 - e3 + e4 + " *
+		   "e01 - e02 + e03 - e04 + e12 - e13 + e14 + e23 - e24 + e34 + " *
+		   "e012 - e013 + e014 + e023 - e024 + e034 - e123 + e124 - e134 + e234 + " *
+		   "e0123 - e0124 + e0134 - e0234 + e1234 + " *
+		   "e01234"
+		   
+  S[15,1]= " min(ZBBR)      : "
+  S[15,2]= string(minimum(BBR[1:end-1,:][:]))
+  S[15,3]= "0.0"
 
-  S[10,1] = " BBR[end,:]     : "
-  S[10,2] = toStr(BBR[end,:])
-  S[10,3] = "1 + " *
-			"e0 - e1 + e2 - e3 + e4 + " *
-			"e01 - e02 + e03 - e04 + e12 - e13 + e14 + e23 - e24 + e34 + " *
-			"e012 - e013 + e014 + e023 - e024 + e034 - e123 + e124 - e134 + e234 + " *
-			"e0123 - e0124 + e0134 - e0234 + e1234 + " *
-			"e01234"
-  S[11,1] = " min(ZBBR)      : "
-  S[11,2] = string(minimum(BBR[1:end-1,:][:]))
-  S[11,3] = "0.0"
-
-  S[12,1] = " max(ZBBR)      : "
-  S[12,2] = string(maximum(BBR[1:end-1,:][:]))
-  S[12,3] = "0.0"
+  S[16,1]= " max(ZBBR)      : "
+  S[16,2]= string(maximum(BBR[1:end-1,:][:]))
+  S[16,3]= "0.0"
 
   # print unit test results
   #  'x' in first column denotes tests with errors
