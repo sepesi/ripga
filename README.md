@@ -7,12 +7,12 @@
 >key to the greatest discoveries in all fields of mathematics." - Joseph-Louis Lagrange (1736–1813)
 
 # 0. TLDR
-Here's a showcase of animations demonstrating [Julia](https://julialang.org), [Makie](https://docs.makie.org/stable),
-and [Projective Geometric Algebra](https://bivector.net) as implemented by ripga (i.e., the Reference Implementation
-of Projective Geometric Algebra). The intent of the ripga library and this essay is to educate: to increase the
-familiarity with PGA so that more people are able to design solutions to intricate geometry problems. The source
-code of the animations and the ripga library, both written in Julia, is in the github repository at
-https://github.com/sepesi/ripga
+Here's a showcase of animations from simple applications demonstrating [Julia](https://julialang.org),
+[Makie](https://docs.makie.org/stable), and [Projective Geometric Algebra](https://bivector.net) as
+implemented by ripga (i.e., the Reference Implementation of Projective Geometric Algebra). The intent
+of the ripga library and this essay is to increase the familiarity with PGA so that more people are
+able to design solutions to intricate geometry problems. The source code of the animations and the
+ripga library, both written in Julia, is in the github repository at https://github.com/sepesi/ripga
 
 <table>
   <tr>
@@ -42,7 +42,7 @@ https://github.com/sepesi/ripga
 </table>
 
 # 1. Why Projective Geometric Algebra?
-For intricate geometry problems, there are a few compelling reasons for using Projective Geometric Algebra:
+For intricate geometry problems, there are several compelling reasons for using Projective Geometric Algebra:
 * PGA unifies many concepts (e.g., translations and rotations), making them easier to implement,
 * PGA has geometric objects (e.g., points, lines, planes), making them easier to mentally manipulate than matrices of coordinates, and
 * PGA belongs to the family of [Cayley-Klein](https://en.wikipedia.org/wiki/Cayley%E2%80%93Klein_metric)
@@ -52,7 +52,7 @@ For intricate geometry problems, there are a few compelling reasons for using Pr
   modeling).
 
 ## 1.1 Unify Concepts
-Projective Geometric Algebra is good at unifying concepts. For example, in Projective Geometric Algebra
+In Projective Geometric Algebra,
 * translation and rotation are the same thing,
 * force and torque are the same thing, and
 * Maxwell's four equations can be written as one equation.
@@ -65,19 +65,18 @@ to use geometric algebra as a design and development tool, in many cases instead
 algebra tools.
 
 ## 1.2 Geometric Objects
-In Projective Geometric Algebra, the coordinates are embedded in geometric objects, avoiding the difficulties
-of debugging matrices of coordinates. That abstraction is especially helpful when solving complex geometry problems.
+Projective Geometric Algebra embeds coordinates in geometric objects, which are easier to debug than matrices
+of coordinates. That abstraction is especially helpful when solving complex geometry problems.
 
 ## 1.3 Unify Geometries
 The metric signature (i.e., $\mathbb{R}\_{positive,negative,zero}$, where the three subscripts denote how many
 basis vectors square to +1, -1, and 0, respectively) denotes the geometry's dimensions and spatial curvature.
-For example, the metric signatures $\mathbb{R}^\*\_{2,0,1}$ and $\mathbb{R}^\*\_{3,0,1}$ enable the Projective Geometric
-Algebra to solve many 2D and 3D Euclidean geometry problems. However, switching the signature to
-$\mathbb{R}\_{4,0,0}$ enables elliptic geometry capabililties and $\mathbb{R}\_{3,1,0}$ enables hyperbolic
-geometry capabilities.
+For example, the metric signatures $\mathbb{R}^\*\_{2,0,1}$ and $\mathbb{R}^\*\_{3,0,1}$ denote 2D and 3D
+Euclidean spaces. However, switching the signature to $\mathbb{R}\_{4,0,0}$ denotes an elliptic space and
+$\mathbb{R}\_{3,1,0}$ denotes a hyperbolic space.
 
 # 2. Why Julia?
-There are several compelling reasons for using Julia to implement Projective Geometric Algebra applications:
+There are quite a few advantages in using Julia to implement Projective Geometric Algebra applications:
 * advanced capabilities in vector operations (and vector operations play a central role in PGA),
 * metaprogramming capabilities,
 * program execution speed,
@@ -88,18 +87,18 @@ There are several compelling reasons for using Julia to implement Projective Geo
 ## 2.1 Advanced Capabilities in Vector Operations
 Although [bivector.net](https://bivector.net) lists reference implementations of PGA in several programming languages
 (e.g., JavaScript, C++, C#, Python, Rust), it does not currently list a Julia reference implementation. Also, Julia is
-necessarily missing from the book Geometric Algebra for Computer Science given that the Julia language was created two
-years after the book's publication. Therefore, I ported bivector.net's C++ reference implementation of PGA to Julia in the
-github public repository at https://github.com/sepesi/ripga
+necessarily missing from the book _[Geometric Algebra for Computer Science](https://www.amazon.com/s?k=geometric+algebra+for+computer+science&crid=2W6JCKEWE1CTO)_
+given that the Julia language was created two years after the book's publication. To get a Julia implementation of PGA,
+I ported bivector.net's C++ reference implementation of PGA to Julia. The github repository is at https://github.com/sepesi/ripga
 
-To avoid confusion, the Julia port of ripga uses exactly the same [vector operator symbols](https://www.youtube.com/watch?v=2DgxeizE3E8&t=105s)
-as the vector operators in the programming syntax of the original bivector.net reference implementation as shown in the table below. The
-strikethrough of the dual operator math syntax entry denotes that the math syntax of the dual opertor is not currently implemented. It is a
-design decision, valuing the improved code simplicity over the minor inconvenience of having to use programming syntax for the dual operator.
-The dual operator had the most complex conversion from math syntax to programming syntax because the dual operator in math syntax is the
-only postfix (i.e., a`*`) operator. All other operators in the following vector operator symvol table are either prefix operators (e.g., !a)
-or infix operators (e.g., a ^ b) which are compatible with the prefix and infix operator capabilities of Julia's  built-in [AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree)
-parser.
+To avoid confusion, ripga uses exactly the same [vector operator symbols](https://www.youtube.com/watch?v=2DgxeizE3E8&t=105s)
+as the vector operators in the programming syntax of the original bivector.net reference implementation as shown in the table
+below. The strikethrough of the dual operator math syntax entry denotes that the math syntax of the dual opertor is not currently
+implemented due to a design decision valuing the improved code simplicity over the minor inconvenience of having to use programming
+syntax for the dual operator. The dual operator had the most complex conversion from math syntax to programming syntax because the
+dual operator in math syntax is the only postfix (i.e., a`*`) operator. All other operators in the following vector operator symvol
+table are either prefix operators (e.g., !a) or infix operators (e.g., a ^ b) which are compatible with the prefix and infix operator
+capabilities of Julia's  built-in [AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree) parser.
 
 | Math Syntax | Vector Operator Symbol Name | Programming Syntax |
 | :--- | :--- | :--- |

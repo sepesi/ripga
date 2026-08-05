@@ -985,7 +985,7 @@ function utest(nLoop=100,
    # calculate intersection of parallel lines
    (nLoop == 1) && println("  # calculated with programming syntax")
    line0 = P0 & P1
-   line1 = -(P2 & P3)
+   line1 = -(P2 & P3) # TODO: double check sign
    x = line0 ^ line1
 
    tst1 = e0 - 1f0
@@ -995,7 +995,7 @@ function utest(nLoop=100,
    # geometric objects in math syntax
    (nLoop == 1) && println("  # calculated with math syntax")
    line0 = ga"P0 ∨ P1"
-   line1 = ga"-(P2 ∨ P3)"
+   line1 = ga"-(P2 ∨ P3)" # TODO: double check sign
    x = ga"line0 ∧ line1"
 
    tst1 = e0 - 1f0
