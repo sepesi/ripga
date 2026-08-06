@@ -85,7 +85,7 @@ There are quite a few advantages in using Julia to implement Projective Geometri
 * developer community.
 
 ## 2.1 Advanced Capabilities in Vector Operations
-Although [bivector.net](https://bivector.net) lists reference implementations of PGA in several programming languages
+Although [bivector.net](https://bivector.net) has reference implementations of PGA in several programming languages
 (e.g., JavaScript, C++, C#, Python, Rust), it does not currently list a Julia reference implementation. Also, Julia is
 necessarily missing from the book _[Geometric Algebra for Computer Science](https://www.amazon.com/s?k=geometric+algebra+for+computer+science&crid=2W6JCKEWE1CTO)_
 given that the Julia language was created two years after the book's publication. To get a Julia implementation of PGA,
@@ -133,9 +133,8 @@ syntax". For example, referring to the above Vector Operator Symbol table, the g
 syntax [Unicode](https://en.wikipedia.org/wiki/Unicode) is '\thinspace' which takes less space than '*' (the geometric
 product operator in programming syntax). Similarly,
 * the wedge operator (outer product) in math syntax Unicode is '\wedge',
-* the vee operator (regressive product) in math syntax Unicode is '\vee',
-* the dot operator (inner product) in math syntax Unicode is '\cdot', and
-* the dual operator in math syntax Unicode is '\ast'.
+* the vee operator (regressive product) in math syntax Unicode is '\vee', and
+* the dot operator (inner product) in math syntax Unicode is '\cdot'.
 
 The string macro called ga (short for Geometric Algebra and coded in ripgand.jl) translates the math syntax back to
 the programming syntax. Typically, I prefer the programming syntax because it is easier to type. However, the math
@@ -145,24 +144,23 @@ the ga macro can be helpful.
 ## 2.3 Program Execution Speed
 As mentioned in the official _[Introduction to Julia](https://julialang.org): A Fresh Approach to Numerical Computing_,
 the authors (i.e., the four people who started the Julia programming language) mention a long standing belief among many
-practitioners of numerical computing: one must prototype in one language and then rewrite in another language for speed
-before deployment. One of their design goals for Julia was to solve this two-language problem by making Julia both good
-for prototyping and also fast for deployment.
+practitioners of numerical computing: one must prototype in one language for development speed but then rewrite in another
+language for execution speed. One of the Julia design goals was to solve this two-language problem by making Julia both
+fast for prototyping and execution.
 
 ## 2.4 Plotting Capabilities
 According to the official [introduction to Makie](https://docs.makie.org/stable/),
 > "Makie is a data visualization ecosystem for the Julia programming language, with high performance and extensibility.
 > It is available for Windows, Mac and Linux."
 
-The Makie backend package with interactive plotting capabilities is GLMakie which is based upon OpenGL and is 
-surprisingly fast.
+The Makie backend package is GLMakie which is based upon OpenGL and is surprisingly fast.
 
 ## 2.5 REPL (Read Execute Print Loop)
 In the [tools section](https://bivector.net/tools.html?p=3&q=0&r=1) of bivector.net, there is a PGA expression evaluator
 for exploring PGA expressions. After including the ripga files, Julia's REPL can similarly explore PGA expressions. However,
 in addition to evaluating PGA expressions, Julia's REPL (after including ripgand.jl and ripga1d.jl, ripga2d.jl, ripga3d.jl,
-or ripga4d.jl) can do several things that the bivector.net PGA expression evaluator cannot. Specifically, Julia's REPL can
-help with exploring PGA expressions by 
+or ripga4d.jl) can do several things that the bivector.net PGA expression evaluator cannot. Specifically, Julia's REPL helps
+by being capable of
 * assigning PGA expressions to variables,
 * calling functions, and
 * displaying inline comments.
@@ -181,13 +179,12 @@ Geometric Algebra, spacetime geometric algebra, conformal geometric algebra) sug
 community would benefit from each other.
 
 # 3. Getting the Hang of PGA
-There are three perspectives that contribute to getting the overall hang of PGA:
+There are three perspectives that contribute to understanding PGA:
 
 ## 3.1 History
-Reading a thorough description of the history of the major contributions by individual mathematicians to PGA reveals the impressive
-math lineage behind today's PGA, which builds confidence in the underlying concepts. I particularly like [Slehar's historical description of
-Clifford algebra](https://slehar.wordpress.com/2014/03/18/clifford-algebra-a-visual-introduction/) followed by [Slehar's explanation of how
-Clifford algebra extends to Projective Geometry](https://slehar.wordpress.com/2014/06/26/geometric-algebra-projective-geometry/).
+Reading a description of the historical contributions to the development of PGA by individual mathematicians builds confidence in the
+underlying concepts. I particularly like [Slehar's historical description of Clifford algebra](https://slehar.wordpress.com/2014/03/18/clifford-algebra-a-visual-introduction/)
+followed by [Slehar's explanation of how Clifford algebra extends to Projective Geometry](https://slehar.wordpress.com/2014/06/26/geometric-algebra-projective-geometry/).
 
 ## 3.2 Nomenclature
 In PGA, simple geometric objects (e.g., points, lines, planes) are written as PGA expressions. Those geometric objects are manipulated
