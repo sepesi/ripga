@@ -188,14 +188,14 @@ followed by [Slehar's explanation of how Clifford algebra extends to Projective 
 
 ## 3.2 Nomenclature
 In PGA, simple geometric objects (e.g., points, lines, planes) are written as PGA expressions. Those geometric objects are manipulated
-(e.g., translated or rotated) by performing PGA operations (e.g., geometric product or outer product) on those PGA expressions.
-PGA expressions are [linear combinations](https://en.wikipedia.org/wiki/Linear_combination) of PGA basis vectors. There is one PGA basis
-vector for each perpendicular axis in the underlying space, which is defined by the [metric signature](https://en.wikipedia.org/wiki/Metric_signature)
+(e.g., translated or rotated) by performing PGA operations (e.g., geometric product or outer product) on them. PGA expressions are
+[linear combinations](https://en.wikipedia.org/wiki/Linear_combination) of PGA basis vectors. There is one PGA basis vector for each
+perpendicular axis in the underlying space, which is defined by the [metric signature](https://en.wikipedia.org/wiki/Metric_signature)
 typically written as $\mathbb{R}\_{positive,negative,zero}$, where the signature's three subscripts are the number of PGA basis vectors that
 square to +1, -1, and 0, respectively. For example, the metric signature for doing PGA in an n-dimensional [Euclidean space](https://en.wikipedia.org/wiki/Euclidean_space)
 is $\mathbb{R}^\*\_{n,0,1}$, where n is the number of Euclidean dimensions (which is also the number of Euclidean basis vectors in the PGA basis)
 and the 1 as the last of the three subscripts denotes the single ideal basis vector that squares to 0. That ideal basis vector is also known as the
-null basis vector e0.
+null basis vector e0. The n Euclidean basis vectors in an n-dimvensional Euclidean space $\mathbb{R}^\*\_{n,0,1}$ are called e1, e2, ..., en.
 
 In addition to the rules in the metric signature defining how the PGA basis vectors square, there is one more important rule:
 [the contraction axiom](https://www.youtube.com/watch/v=tX4H_ctggYo&t=3293s) that defines how the sign changes with the order of
@@ -210,9 +210,9 @@ the meaning of "vector", the phrase "PGA basis vector" in this essay will be res
 bivector" and "PGA basis trivector" will be reserved for grade-2 and grade-3 PGA basis elements, respectively. Arbitrary grade PGA basis elements of an
 arbitrary grade are just called "PGA basis elements". (More on the PGA basis elements in the next section of this essay.)
 
-For the metric signature $\mathbb{R}^\*\_{n,0,1}$, there are a total of $2^{n+1}$ PGA basis elements according to the [rule of product](https://wikipedia.org/wiki/Rule_of_product)
-covering n+2 grades (i.e., grade-0 through grade n+1), each with $\binom{n+1}{grade}$ PGA basis elements per grade, according to [Pascal's triangle](https://wikipedia.org/wiki/Pascal's_triangle)
-from [combinatorics](https://en.wikipedia.org/wiki/Combinatorics). For example in 3D PGA, there are 16 (i.e., $2^{3+1}$) PGA basis elements: 
+For the metric signature $\mathbb{R}^\*\_{n,0,1}$, there are a total of $2^{n+1}$ PGA basis elements according to the [rule of product](https://wikipedia.org/wiki/Rule_of_product).
+Those $2^{n+1}$ PGA basis elements cover n+2 grades (i.e., grade-0 through grade n+1), each with $\binom{n+1}{grade}$ PGA basis elements per grade, according to [Pascal's triangle](https://wikipedia.org/wiki/Pascal's_triangle)
+from [combinatorics](https://en.wikipedia.org/wiki/Combinatorics). For example in 3D PGA, there are a total of 16 (i.e., $2^{3+1}$) PGA basis elements: 
 * 1 grade-0 (i.e., the scalar),
 * 4 grade-1 (i,e., e0, e1, e2, e3),
 * 6 grade-2 (i.e., e01, e02, e03, e12, e31, e23),
@@ -226,11 +226,11 @@ has an asterisk. The asterisk specifies the geometric interpretation of the PGA 
 * with the asterisk, the geometric interpretation is "plane-based", and
 * without the asterisk the geometric interpretation is "point-based".
 
-For most people already somewhat familiar with linear algebra, the geometric interpretation is the most confusing of the three perspectives needed
-to fully appreciate PGA. Because plane-based PGA offers several advantages (e.g., universal rotors) over point-based PGA, plane-based PGA is used
-much more often than point-based PGA. If the plane-based/point-based qualifier is missing, it is usually safe to assume the intent was plane-based PGA.
+For most people familiar with linear algebra, the geometric interpretation is the most confusing of the three perspectives needed to fully appreciate
+PGA. Because plane-based PGA offers several advantages (e.g., universal rotors) over point-based PGA, plane-based PGA is used much more often than
+point-based PGA. If the plane-based/point-based qualifier is missing, it is usually safe to assume the intent was plane-based PGA.
 
-For example in 3D plane-based PGA,
+In 3D plane-based PGA,
 * a grade-1 PGA basis element (e.g., e1) represents a plane,
 * a grade-2 PGA basis element (e.g., e12) represents a line, and
 * a grade-3 PGA basis element (e.g., e123) represents a point.
