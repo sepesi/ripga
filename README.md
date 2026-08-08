@@ -260,6 +260,11 @@ julia> [basis reverse(basis)]
  "e1"   "e0"
  "e01"  "1"
 ```
+In 1D PGA, there are a total of four (i.e., $2^{1+1}$) PGA basis elements:
+* 1 grade-0 (i.e., the scalar),
+* 2 grade-1 (i,e., e0, e1), and
+* 1 grade-2 (i.e., e01).
+
 Listing the 1D PGA basis element names in a vector results in the vector of vectors form of the 1D PGA basis. Note that the REPL
 shows column vectors of length five instead of four because ripga appends to each PGA basis element a status field (which is
 currently unused).
@@ -292,26 +297,23 @@ julia> geoprodset(B[1:end-1,:],BR[1:end-1,:])[end,:] # needed sign changes in du
 ```
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
 rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
-In 1D, translation is composed of reflecting across two points. The following REPL session shows an example of translation
-using 1D PGA to specify reflections across two points P1 and P2 where
+In 1D, a translation is two reflections across two points, as shown in the following REPL session where 
 * P1 is a point at x=1,
-* P2 is another point, 5 to the right of P1, and
+* P2 is a point at x=6, and
 * the motor composed of those two points separated by a distance of 5 translates a point to the right by 10 (i.e., twice
   the separation distance between the two points).
 
-In 1D PGA, the Euclidean origin is e1 and the equation for the 1D PGA point at x is P = xe0 + e1.
-
 ```
-julia> P1 = e1 + e0; # Euclidean point x=1 => 1D PGA point eq. (xe0+e1)
+julia> P1 = e1 + e0; # Euclidean point x=1 => 1D PGA point (xe0+e1)
 
-julia> P2 = e1 + 6*e0; # Euclidean point x=6 => 1D PGA point eq. (xe0+e1)
+julia> P2 = e1 + 6*e0; # Euclidean point x=6 => 1D PGA point (xe0+e1)
 
 julia> T = P2*P1; # compose the two reflection Translation motor as geometric product
 
 julia> toStr(T) # check Translation motor (distance between reflection points is 5)
 "1 + 5e01"
 
-julia> P0 = e1; # Euclidean origin (x=0 => 1D PGA point eq. (xe0+e1)
+julia> P0 = e1; # Euclidean origin (x=0 => 1D PGA point (xe0+e1)
 
 julia> PX = T*P0*~T; # apply Translation motor to P0 at origin; alternative eq is PX = T>>>P0
 
