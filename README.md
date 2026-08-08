@@ -323,12 +323,12 @@ julia> toStr(PX) # resulting dual PGA point (xe0+e1) => Euclidean point x=10
 Taking a closer look, the reason that the translation motor in the above REPL session works is because the sandwich
 operation on a 1D PGA object is an [orthogonal transformation](https://en.wikipedia.org/wiki/Orthogonal_transformtion)
 (i.e., the squared norm of the 1D PGA object is preserved through translation T). Concretely, the squared norm of P0
-is e11 = 1, and the squared norm of T*P0*~T is the squared norm of (1 + 5e01)e1(1 - 5e01), which simplifies to the
-squared norm of (e1 + 10e0) = (e1 + 10e0)(e1 + 10e0) = e11 + 10e01 - 10e01 + 100e00 = 1 because e11 = 1 and e00 = 0.
-In other words, the squared norm of the 1D PGA point P0 is preserved through the sandwich operation.
+is e11 = 1 and so is the squared norm of T*P0*~T = 1 because (e1 + 10e0)(e1 + 10e0) = e11 + 10e01 - 10e01 + 100e00 = 1
+because e11 = 1 and e00 = 0. In other words, the squared norm of the 1D PGA point P0 is preserved through the sandwich
+operation.
 
-In contrast to that translation using the **plane-based** geometric interpretation, an attempt to do a similar translation
-using the **point-based** geometric interpretation does not work:
+In contrast to that translation using the **plane-based** geometric interpretation of PGA basis elements, an attempt
+to do a similar translation using the **point-based** geometric interpretation does not work:
 ```
 julia> P1 = e0 + e1; # point-based 1D PGA point at x=1
 
@@ -340,9 +340,9 @@ julia> toStr(T)
 "6 - 5e01"
 ```
 Recall that the plane-based 1D PGA translation motor was T = 1 + 5e01, which is the exact algebraic form of a 
-[dual number](https://en.wikipedia.org/wiki/Dual_number). In contrast, the above REPL session calculates the point-
-based 1D PGA translation motor T = 6 - 5e01, which is **not** in the algebraic form of a dual number. That is a red
-flag, but let's naively continue and perform the sandwich operation.
+[dual number](https://en.wikipedia.org/wiki/Dual_number). In contrast, when using the **point-based** geometric
+Interpretation, the translation motor is T = 6 - 5e01, which is **not** in the algebraic form of a dual number.
+That is a red flag, but let's naively continue with the sandwich operation.
 ```
 julia> P0 = e0; # point-based 1D PGA point of Euclidean origin
 
@@ -351,10 +351,11 @@ julia> PX = T*P0*~T; # naive sandwich operation calculating translated point-bas
 julia> toStr(PX)
 "36e0"
 ```
-That calculated PX is not in the form of a plane-based 1D PGA translated point (i.e., PX = e0 + xe1). Therefore, that
-attempt at calculating a point-based 1D PGA translation motor failed. Looking closer for the cause of the failure, the
-squared norm of P0 was preserved through the sandwich operation but only in the trivial sense because the squared norm
-of P0 collapsed to zero (i.e., e00 = 0) and the squared norm of PX also collapsed to zero (i.e., 36*36e00 = 0).
+That calculated PX is not in the form of a translated point (i.e., PX = e0 + xe1). Therefore, that attempt at
+using a **point-based** geometric interpretation with a 1D PGA translation motor failed. Looking closer for the
+cause of the failure, the squared norm of P0 was preserved through the sandwich operation but only in the trivial
+sense because the squared norm of P0 collapsed to zero (i.e., e00 = 0) and the squared norm of PX also collapsed
+to zero (i.e., 36*36e00 = 0).
 
 ## 4.2 2D PGA Basis
 (TODO) 
