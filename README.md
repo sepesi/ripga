@@ -235,7 +235,7 @@ In 3D plane-based PGA,
 * a grade-2 PGA basis element (e.g., e12) represents a line, and
 * a grade-3 PGA basis element (e.g., e123) represents a point.
 
-In contrast in 3D point-based PGA,
+In contrast, in 3D point-based PGA,
 * a grade-1 PGA basis element (e.g., e1) represents a point,
 * a grade-2 PGA basis element (e.g., e12) represents a line, and
 * a grade-3 PGA basis element (e.g., e123) represents a plane.
@@ -260,8 +260,9 @@ julia> [basis reverse(basis)]
  "e1"   "e0"
  "e01"  "1"
 ```
-The 1D PGA basis element names listed in basis specify the 1D PGA basis written in the form of vector of vectors. Note that the REPL
-shows vectors of length five instead of four because ripga appends to each PGA basis element a status field (which is currently unused).
+Listing the 1D PGA basis element names in a vector results in the vector of vectors form of the 1D PGA basis. Note that the REPL
+shows column vectors of length five instead of four because ripga appends to each PGA basis element a status field (which is
+currently unused).
 ```
 julia> B = [eu e0 e1 e01] # 1D PGA basis in form of vector of vectors
 5×4 Matrix{Float32}:
@@ -272,8 +273,7 @@ julia> B = [eu e0 e1 e01] # 1D PGA basis in form of vector of vectors
  0.0  0.0  0.0  0.0
 ```
 Calling the PGA basis "B" and calling the PGA basis reversed left to right "BR", B and BR can be used as inputs to geoprodset() to
-calculate the needed sign changes in the 1D PGA dual operation (omitting the appended status field in each PGA basis element before
-calling geoprodset()).
+calculate the needed sign changes in the dual operation (omitting the appended status field in each PGA basis element).
 ```
 julia> BR = [e01 e1 e0 eu]
 5×4 Matrix{Float32}:
@@ -283,13 +283,13 @@ julia> BR = [e01 e1 e0 eu]
  1.0  0.0  0.0  0.0
  0.0  0.0  0.0  0.0
 
-julia> geoprodset(B[1:end-1,:],BR[1:end-1,:])
-4×4 Matrix{Float32}:
- 0.0  0.0   0.0  0.0
- 0.0  0.0   0.0  0.0
- 0.0  0.0   0.0  0.0
- 1.0  1.0  -1.0  1.0
- ```
+julia> geoprodset(B[1:end-1,:],BR[1:end-1,:])[end,:] # needed sign changes in dual operation
+4-element Vector{Float32}:
+  1.0
+  1.0
+ -1.0
+  1.0
+```
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
 rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
 In 1D, translation is composed of reflecting across two points. The following REPL session shows an example of translation
