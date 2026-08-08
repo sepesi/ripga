@@ -322,17 +322,13 @@ julia> toStr(PX) # resulting dual PGA point (xe0+e1) => Euclidean point x=10
 ```
 Taking a closer look, the reason that the translation motor in the above REPL session works is because the sandwich
 operation on a 1D PGA object is an [orthogonal transformation](https://en.wikipedia.org/wiki/Orthogonal_transformtion)
-(i.e., the squared norm of the 1D PGA object is preserved). Concretely, the squared norm of P0 is e11 = 1, and the
-squared norm of T*P0*~T is the squared norm of (1 + 5e01)e1(1 - 5e01), which simplifies to the squared norm of
-(e1 + 10e0) = (e1 + 10e0)(e1 + 10e0) = e11 + 10e01 - 10e01 + 100e00 = 1 because e11 = 1 and e00 = 0. In other words,
-the squared norm of the 1D PGA point P0 is preserved through the sandwich operation.
+(i.e., the squared norm of the 1D PGA object is preserved through translation T). Concretely, the squared norm of P0
+is e11 = 1, and the squared norm of T*P0*~T is the squared norm of (1 + 5e01)e1(1 - 5e01), which simplifies to the
+squared norm of (e1 + 10e0) = (e1 + 10e0)(e1 + 10e0) = e11 + 10e01 - 10e01 + 100e00 = 1 because e11 = 1 and e00 = 0.
+In other words, the squared norm of the 1D PGA point P0 is preserved through the sandwich operation.
 
-In contrast, the translation motor in the above REPL session does not work when the sandwich operation transforms
-a **point-based** 1D PGA object instead of a **plane-based** 1D PGA object. In point-based 1D PGA, it is still true
-that e00 = 0 and e11 = 1, so the same 1D PGA library (i.e., ripga1d.jl) can do all the PGA vector operations. However,
-in point-based 1D PGA, e0 is the Euclidean origin (instead of e1) and the point-based 1D PGA equation for a point at
-x is P = e0 + xe1 (instead of P = e1 + xe0), as shown in the following REPL session attempting to calculate the
-point-based 1D PGA translation motor.
+In contrast to that translation using the **plane-based** geometric interpretation, an attempt to do a similar translation
+using the **point-based** geometric interpretation does not work:
 ```
 julia> P1 = e0 + e1; # point-based 1D PGA point at x=1
 
