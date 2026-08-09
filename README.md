@@ -307,10 +307,10 @@ In 1D, a translation is two reflections across two points, as shown in the follo
 julia> P1 = e1 + e0; # Euclidean point x=1 => 1D PGA point (xe0+e1)
 
 julia> P2 = e1 + 6*e0; # Euclidean point x=6 => 1D PGA point (xe0+e1)
+on motor as geometric product
 
-julia> T = P2*P1; # compose the two reflection Translation motor as geometric product
-
-julia> toStr(T) # check Translation motor (distance between reflection points is 5)
+julia> 
+julia> T = P2*P1; # compose the two reflection TranslatitoStr(T) # check Translation motor (distance between reflection points is 5)
 "1 + 5e01"
 
 julia> P0 = e1; # Euclidean origin (x=0 => 1D PGA point (xe0+e1)
@@ -321,9 +321,9 @@ julia> toStr(PX) # resulting dual PGA point (xe0+e1) => Euclidean point x=10
 "10e0 + e1"
 ```
 Taking a closer look, the reason that the translation motor in the above REPL session works is because the sandwich
-operation on a 1D PGA object is an [orthogonal transformation](https://en.wikipedia.org/wiki/Orthogonal_transformtion)
-(i.e., the squared norm of the 1D PGA object is preserved through translation T). Concretely, the squared norm of P0
-is e11 = 1 and so is the squared norm of T*P0*~T = 1 because (e1 + 10e0)(e1 + 10e0) = e11 + 10e01 - 10e01 + 100e00 = 1
+operation is an [orthogonal transformation](https://en.wikipedia.org/wiki/Orthogonal_transformtion) (i.e., the squared
+norm of the 1D PGA object is preserved through translation T). Concretely, the squared norm of P0 is e11 = 1 and so is
+the squared norm of T*P0*~T = 1 because T*P0*~T = e1 + 10e0 and (e1 + 10e0)(e1 + 10e0) = e11 + 10e01 - 10e01 + 100e00 = 1
 because e11 = 1 and e00 = 0. In other words, the squared norm of the 1D PGA point P0 is preserved through the sandwich
 operation.
 
@@ -358,10 +358,7 @@ sense because the squared norm of P0 collapsed to zero (i.e., e00 = 0) and the s
 to zero (i.e., 36*36e00 = 0).
 
 ## 4.2 2D PGA Basis
-(TODO) 
 To prepare Julia's REPL for 2D PGA, include the files ripgand.jl and ripga2d.jl. To confirm the initialization, print out the basis.
-Note that the basis is typically sorted by grade, which does not imply an interpretation of the PGA basis because the same basis
-can be interpreted as either direct PGA or dual PGA.
 
 ```
 julia> include("ripgand.jl"); # utility functions for all available dimensions
@@ -379,110 +376,94 @@ julia> [basis reverse(basis)] # col 1 basis in order of grade; col 2 basis in re
  "e12"   "e0"
  "e012"  "1"```
 ```
-According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every rigid body
-transformation is composed of reflections across hyperplanes (i.e., lines in 2D, planes in 3D). In 2D, translation is composed of 
-reflecting across two parallel lines, and rotation is composed of reflecting across two intersecting lines. Here is an example of
-translation using dual PGA to specify reflections across two parallel lines L1 and L2 where
+In 2D PGA, there are a total of eight (i.e., $2^{2+1}$) PGA basis elements:
+* 1 grade-0 (i.e., the scalar),
+* 3 grade-1 (i,e., e0, e1, e2),
+* 3 grade-2 (i.e., e01, e20, e12), and
+* 1 grade-3 (i.e., e012).
+
+Listing the 2D PGA basis element names in a vector results in the vector of vectors form of the 2D PGA basis. Note that the REPL
+shows column vectors of length nine instead of eight because ripga appends to each PGA basis element a status field (which is
+currently unused).
+```
+julia> B = [eu e0 e1 e2 e01 e20 e12 e012]  # 2D PGA basis in form of vector of vectors
+9×8 Matrix{Float32}:
+ 1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+```
+Calling the PGA basis "B" and calling the PGA basis reversed left to right "BR", B and BR can be used as inputs to geoprodset() to
+calculate the needed sign changes in the dual operation (omitting the appended status field in each PGA basis element).
+```
+julia> BR = [e012 e12 e20 e01 e2 e1 e0 eu] # B in Reverse order (i.e., right to left)
+9×8 Matrix{Float32}:
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+
+julia> geoprodset(B[1:end-1,:],BR[1:end-1,:])[end,:]
+8-element Vector{Float32}:
+ 1.0
+ 1.0
+ 1.0
+ 1.0
+ 1.0
+ 1.0
+ 1.0
+ 1.0
+```
+According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
+rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
+In 2D, a translation is two reflections across parallel lines and a rotation is two reflections across intersecting lines,
+as shown in the following REPL where
 * L1 is a vertical line, the y-axis,
 * L2 is another vertical line, 5 to the right of the y-axis, and
-* the motor composed of those two vertical lines separated by a distance of 5 translates a point to the right by 10 (i.e., twice
-  the separation distance between the parallel vertical lines).
+* the motor composed of those two parallel vertical lines separated by a distance of 5 translates a point to the right by 10
+  (i.e., twice the distance between the two parallel lines).
 
 ```
 julia> L1 = e1; # the x=0 hyperplane is the y-axis
 
-julia> L2 = e1-5*e0; # Euclidean eq. x-d=0 => dual PGA line eq. (ae1+be2+ce0); see cheat sheet
+julia> L2 = e1-5*e0; # Euclidean x-d=0 => dual PGA line (ae1+be2+ce0); see cheat sheet
 
 julia> T = L2*L1; # compose the two reflection Translation motor as geometric product
 
 julia> toStr(T) # check Translation motor
 "1 - 5e01"
 
-julia> P = e12; # Euclidean origin => dual PGA point eq (xe20+ye01+e12); see cheat sheet
+julia> P = e12; # Euclidean origin => dual PGA point (xe20+ye01+e12); see cheat sheet
 
 julia> P2 = T*P*~T; # apply Translation motor to P at origin; alternative eq is P2 = T>>>P
 
 julia> toStr(P2) # resulting dual PGA point (xe20+ye01+e12) => Euclidean point (x,y) = (10,0); see cheat sheet
 "10e20 + e12"
 ```
-Similarly, here is an example of rotation using dual PGA to specify reflections across two intersecting lines L1 and L2 where
-* L1 is a vertical line, the y-axis,
-* L2 is L1 rotated by 45 degrees, and
-* the rotor composed of those two intersecting lines rotates any line by 90 degrees (i.e., twice the angle between
-  the two intersecting lines composing the rotor).
+Taking a closer look, the reason that the above translation motor works is because the sandwich
+operation is an [orthogonal transformation](https://en.wikipedia.org/wiki/Orthogonal_transformtion) (i.e., the squared
+norm of the 2D PGA object is preserved through translation T). Concretely, the squared norm of P is e1212 = -1 and so is
+the squared norm of T*P0*~T = -1 because T*P*~T = (1 - 5e01)e12(1 - 5e10) = e12 - 5 e1210 - 5e02 + 25e0210 = e12 and
+(T*P*~T)*(T*P*~T) = e1212 = -1. In other words, the squared norm of the 2D PGA point P is preserved through the sandwich
+operation.
 
-```
-julia> L1 = e1; # the x=0 hyperplane is the y-axis
+In contrast to that translation using the **plane-based** geometric interpretation of PGA basis elements, an attempt
+to make a translation motor using the **point-based** geometric interpretation fails where
+* L1 is still the y-axis but has the 2D **point-based** PGA expression e0^e2 = -e20,
+* L2 is still 5 to right of L1 but has the 2D **point-based** PGA expression e0^e2+5e1^e2 = -e20+5e12, and
+* the attempt to make a translation motor T = L2*L1 fails because L2*L1 = (-e20+5e12)*(-e20) = 5e01 which is not in the
+  correct form (i.e., is not a dual number) to be a translation motor.
 
-julia> theta = pi/4; L2 = cos(theta)e1+sin(theta)e2; # L2 is L1 rotated by pi/4 = 45 degrees
-
-julia> R = L2*L1; # generate the rotation motor (also called a Rotor) as geometric product
-
-julia> toStr(R) # check Rotation motor
-"0.7071068 - 0.7071068e12"
-
-julia> L1R = R*L1*~R; # apply Rotation motor to rotate line L1
-
-julia> toStr(L1R) # resulting dual PGA line (ae1+be2+ce0) => Euclidean line (ax+by+c=0) => y=0; see cheat sheet
-"0.9999999e2"
-```
-Combining the translation and the rotation operation from the previous two REPL sessions, here is an example of
-a general motor composed of a rotation motor followed by a translation motor.
-
-```
-julia> toStr(T)
-"1 - 5e01"
-
-julia> toStr(R)
-"0.7071068 - 0.7071068e12"
-
-julia> M = T*R; # general Motor applying rotation first (order is right to left, like matrix multiply)
-
-julia> toStr(M)
-"0.7071068 - 3.535534e01 - 3.535534e20 - 0.7071068e12"
-
-julia> P = e20 + e12; # Euclidean point (x,y) => dual PGA point (xe20+ye01+e12); see cheat sheet
-
-julia> P2 = M*P*~M; # apply general motor to PGA point P
-
-julia> toStr(P2) # resulting dual PGA point (xe20+ye01+e12) => Euclidean point (x,y) = (10,1); see cheat sheet
-"e01 + 10e20 + 0.9999999e12"
-```
-
-Yet another type of translation motor is generated by the geometric product of two points. For example,
-the Euclidean points (x1,y1) and (x2,y2) correspond to 2D dual PGA points P1 = x1e20 + y1e01 + e12 and
-P2 = x2e20 + y2e01 + e12, respectively (see 2D PGA cheat sheet). The geometric product of those points is
-P2P1 = e12(x1e20 + y1e01) + (x2e20 + y2e01)e12 + e1212, where several terms dropped out because e00 = 0.
-Applying the anti-commuting properties of the basis vectors, that geometric product simplifies to 
-P2P1 = -x1e01 + y1e20 + x2e01 - y2e20 - 1. After grouping, P2P1 = (x2-x1)e01 - (y2-y1)e20 - 1. After
-factoring out a -1 and rearranging, the geometric product of the two points can be written as
-P2P1 = -1(1 - E01(x2-x1) + e20(y2-y1)), where the -1 factor can be ignored because the motor always
-gets implemented in a sandwich operation and the -1 factor at the beginning of the sandwich cancels
-out the -1 factor at the end of the sandwich. Recalling the first REPL session in which the formula for
-the translation motor composed of two reflections in parallel planes was T = 1 - de01, where d was the
-shortest distance between the two planes and the resulting translation was 2d in the e02 direction, the
-same factor of two applies to the point to point translation.
-
-Concretely, the following REPL session translates one tenth of the way from the Euclidean point (-1.5,-1)
-to Euclidean point (1.5,-1).
-
-```
-julia> P1 = e12 - 1.5*e20 - e01; # 2D dual PGA point for Euclidean point (-1.5,-1); see 2D cheat sheet
-
-julia> P2 = e12 + 1.5*e20 - e01; # 2D dual PGA point for Euclidean point (1.5,-1); see 2D cheat sheet
-
-julia> T = P2*P1; toStr(T) # translation motor with distance between P1 and P2
-"-1 + 3e01"
-
-julia> T[5] /= 2; # scale motor distance by 1/2 so that translation distance goes from P1 to P2
-
-julia> T[5] /= 10; # scale translation distance so that translation distance goes 1/10th from P1 to P2
-
-julia> PX = T*P1*~T; # calculate intermediate point between P1 and P2
-
-julia> toStr(PX) # 1st intermediate point 1/10th the way from P1 to P2 is at Euclidean point (-1.2,-1)
-"-e01 - 1.2e20 + e12"
-```
 ## 4.3 3D PGA Motors
 To prepare Julia's REPL for 3D PGA, include the files ripgand.jl and ripga3d.jl. To confirm the initialization, print out the basis.
 ```
