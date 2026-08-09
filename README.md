@@ -265,7 +265,7 @@ In 1D PGA, there are a total of four (i.e., $2^{1+1}$) PGA basis elements:
 * 2 grade-1 (i,e., e0, e1), and
 * 1 grade-2 (i.e., e01).
 
-Listing the 1D PGA basis element names in a vector results in the vector of vectors form of the 1D PGA basis. Note that the REPL
+Listing the 1D PGA basis element names in a row vector results in the vector of vectors form of the 1D PGA basis. Note that the REPL
 shows column vectors of length five instead of four because ripga appends to each PGA basis element a status field (which is
 currently unused).
 ```
@@ -374,7 +374,7 @@ julia> [basis reverse(basis)] # col 1 basis in order of grade; col 2 basis in re
  "e01"   "e2"
  "e20"   "e1"
  "e12"   "e0"
- "e012"  "1"```
+ "e012"  "1"
 ```
 In 2D PGA, there are a total of eight (i.e., $2^{2+1}$) PGA basis elements:
 * 1 grade-0 (i.e., the scalar),
@@ -382,7 +382,7 @@ In 2D PGA, there are a total of eight (i.e., $2^{2+1}$) PGA basis elements:
 * 3 grade-2 (i.e., e01, e20, e12), and
 * 1 grade-3 (i.e., e012).
 
-Listing the 2D PGA basis element names in a vector results in the vector of vectors form of the 2D PGA basis. Note that the REPL
+Listing the 2D PGA basis element names in a row vector results in the vector of vectors form of the 2D PGA basis. Note that the REPL
 shows column vectors of length nine instead of eight because ripga appends to each PGA basis element a status field (which is
 currently unused).
 ```
@@ -401,7 +401,7 @@ julia> B = [eu e0 e1 e2 e01 e20 e12 e012]  # 2D PGA basis in form of vector of v
 Calling the PGA basis "B" and calling the PGA basis reversed left to right "BR", B and BR can be used as inputs to geoprodset() to
 calculate the needed sign changes in the dual operation (omitting the appended status field in each PGA basis element).
 ```
-julia> BR = [e012 e12 e20 e01 e2 e1 e0 eu] # B in Reverse order (i.e., right to left)
+ulia> BR = [e012 e12 e20 e01 e2 e1 e0 eu] # B in Reverse order (i.e., right to left)
 9×8 Matrix{Float32}:
  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0
  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0
@@ -463,9 +463,19 @@ to make a translation motor using the **point-based** geometric interpretation f
 * L2 is still 5 to right of L1 but has the 2D **point-based** PGA expression e0^e2+5e1^e2 = -e20+5e12, and
 * the attempt to make a translation motor T = L2*L1 fails because L2*L1 = (-e20+5e12)*(-e20) = 5e01 which is not in the
   correct form (i.e., is not a dual number) to be a translation motor.
+```
+julia> L1 = -e20; # Line 1 in 2D point-based PGA
 
-## 4.3 3D PGA Motors
-To prepare Julia's REPL for 3D PGA, include the files ripgand.jl and ripga3d.jl. To confirm the initialization, print out the basis.
+julia> L2 = -e20 + 5*e12; # Line 2 in 2D point-based PGA
+
+julia> T = L2*L1; # failed attempt to calculate point-based Translation motor
+
+julia> toStr(T) # failed because not in form of dual number, missing scalar term
+"5e01"
+```
+## 4.3 3D PGA basis
+To prepare Julia's REPL for 2D PGA, include the files ripgand.jl and ripga2d.jl. To confirm the initialization, print out the basis.
+
 ```
 julia> include("ripgand.jl"); # utility functions for all available dimensions
 
@@ -488,8 +498,92 @@ julia> [basis reverse(basis)] # col 1 basis in order of grade; col 2 basis in re
  "e013"   "e2"
  "e032"   "e1"
  "e123"   "e0"
- "e0123"  "1"
+ "e0123"  "1"```
 ```
+In 3D PGA, there are a total of 16 (i.e., $2^{3+1}$) PGA basis elements:
+* 1 grade-0 (i.e., the scalar),
+* 4 grade-1 (i,e., e0, e1, e2, e3),
+* 6 grade-2 (i.e., e01, e02, e03, e12, e31, e23),
+* 4 grade-3 (i.e., e021, e013, e032, e123), and
+* 1 grade-4 (i.e., e0123).
+
+Listing the 3D PGA basis element names in a row vector results in the vector of vectors form of the 3D PGA basis. Note that the REPL
+shows column vectors of length 17 instead of 16 because ripga appends to each PGA basis element a status field (which is
+currently unused).
+```
+julia> B = [eu e0 e1 e2 e3 e01 e02 e03 e12 e31 e23 e021 e013 e032 e123 e0123]
+17×16 Matrix{Float32}:
+ 1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+
+julia> BR = [e0123 e123 e032 e013 e021 e23 e31 e12 e03 e02 e01 e3 e2 e1 e0 eu]
+17×16 Matrix{Float32}:
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+```
+Calling the PGA basis "B" and calling the PGA basis reversed left to right "BR", B and BR can be used as inputs to geoprodset() to
+calculate the needed sign changes in the dual operation (omitting the appended status field in each PGA basis element).
+```
+julia> geoprodset(B[1:end-1,:],BR[1:end-1,:])[end,:]
+16-element Vector{Float32}:
+  1.0
+  1.0
+  1.0
+  1.0
+  1.0
+  1.0
+  1.0
+  1.0
+  1.0
+  1.0
+  1.0
+ -1.0
+ -1.0
+ -1.0
+ -1.0
+  1.0
+```
+According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
+rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
+In 2D, a translation is two reflections across parallel lines and a rotation is two reflections across intersecting lines,
+as shown in the following REPL where
+* L1 is a vertical line, the y-axis,
+* L2 is another vertical line, 5 to the right of the y-axis, and
+* the motor composed of those two parallel vertical lines separated by a distance of 5 translates a point to the right by 10
+  (i.e., twice the distance between the two parallel lines).
+
+
+
 
 
 (TODO)
