@@ -172,30 +172,6 @@ function grade(a::Vector{Float32},k::Int64)
 end
 
 # convert Euclidean coordinates to PGA expression
-#=
-function point(V::Vector{Float32},
- nBasis::Int64=0)::Vector{Float32}
- 
- if nBasis == 0
-  nBasis = length(basis)
- end
- if nBasis == 8 # 2D
-  return V[1]*e20 +
-   V[2]*e01 +
-   e12
- elseif nBasis == 16 # 3D
-  return V[1]*e032 +
-   V[2]*e013 +
-   V[3]*e021 +
-   e123
- elseif nBasis == 32 # 4D
-  return V[1]*e0234 +
-   V[2]*e0134 +
-   V[3]*e0124 +
-   V[4]*e0123 +
-   e1234
- end
-end
 function point(M::Matrix{Float32})::Matrix{Float32}
  nCol = size(M,2)
  res = Matrix{Float32}(undef, length(basis), nCol)
@@ -204,7 +180,6 @@ function point(M::Matrix{Float32})::Matrix{Float32}
  end
  return res
 end
-=#
 
 # convert PGA expressions to Euclidean coordinates
 function toCoord(M::Matrix{Float32},
@@ -212,7 +187,7 @@ function toCoord(M::Matrix{Float32},
  nBasis::Int64=0)
  
  if nBasis == 0
-  nBasis = length(basis)
+  nBasis = length(basis)&~1 # don't count the appended status field 
  end
  
  nB1 = nBasis - 1
@@ -227,12 +202,11 @@ function toCoord(M::Matrix{Float32},
  return keepIdeal ? MC : MC[:,B]
 end
 function toCoord(V::Vector{Float32})
- nBasis = size(V,1)
- nB1 = nBasis - 1
- nD = Int(log2(nBasis)) - 1
+ nBasis = size(V,1)&~1 # don't count the appended status field
+ nD = Int(log2(nBasis)) - 1 # count just Euclidean dimensions
  res = Vector{Float32}(undef, nD)
- for iRow = 1:nD
-  res[iRow] = V[nB1-iRow]
+ for iCoord = 1:nD
+  res[iCoord] = V[nBasis-1-iCoord] # copy basis element scalar to proper coordinate
  end
  return res
 end

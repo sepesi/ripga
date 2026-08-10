@@ -295,6 +295,8 @@ julia> geoprodset(B[1:end-1,:],BR[1:end-1,:])[end,:] # needed sign changes in du
  -1.0
   1.0
 ```
+Applying those sign changes to the reverse(basis) converts it to the dual of the basis.
+
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
 rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
 In 1D, a translation is two reflections across two points, as shown in the following REPL session where 
@@ -424,6 +426,8 @@ julia> geoprodset(B[1:end-1,:],BR[1:end-1,:])[end,:]
  1.0
  1.0
 ```
+Applying those sign changes to the reverse(basis) converts it to the dual of the basis.
+
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
 rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
 In 2D, a translation is two reflections across parallel lines and a rotation is two reflections across intersecting lines,
@@ -573,86 +577,42 @@ julia> geoprodset(B[1:end-1,:],BR[1:end-1,:])[end,:]
  -1.0
   1.0
 ```
+Applying those sign changes to the reverse(basis) converts it to the dual of the basis.
+
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
 rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
-In 2D, a translation is two reflections across parallel lines and a rotation is two reflections across intersecting lines,
+In 3D, a translation is two reflections across parallel planes and a rotation is two reflections across intersecting planes,
 as shown in the following REPL where
-* L1 is a vertical line, the y-axis,
-* L2 is another vertical line, 5 to the right of the y-axis, and
-* the motor composed of those two parallel vertical lines separated by a distance of 5 translates a point to the right by 10
-  (i.e., twice the distance between the two parallel lines).
+* p1 is the x=0 plane,
+* p2 is the x=5 plane, and
+* the motor composed of those two parallel planes separated by a distance of 5 translates a point at P1=(-1,0,0) to P2=(9,0,0),
+  a translation of 10 (i.e., twice the distance between the two parallel planes).
+```
+julia> p1 = e1; # x = 0 plane
 
+julia> p2 = e1 - 5*e0; # x = 5 plane
+
+julia> T = p2*p1; # Translation motor
+
+julia> P1 = point(-1,0,0); # starting point
+
+julia> P2 = T*P1*~T; # ending point, after translation T
+
+julia> toStr(P2)
+"9e032 + e123"
+
+julia> toCoord(P2)
+3-element Vector{Float32}:
+ 9.0
+ 0.0
+ 0.0
+```
 
 
 
 
 (TODO)
 
-
-2. Review the 2D and 3D PGA cheat sheets by Charles Gunn and Steven De Keninck at https://bivector.net/2DPGA.pdf and
-   https://bivector.net/3DPGA.pdf, respectively.
-3. Watch a series of PGA video tutorials. These tutorials are generally information dense and probably should be watched
-   more than once. They give the motivation to keep learning. I particularly like the PGA tutorial given by Charles Gunn and
-   Steven De Keninck during the 2019 SIGGRAPH conference at https://www.youtube.com/watch?v=tX4H_ctggYo. However, there are a
-   lot of other very good PGA video tutorials at https://bivector.net/doc.html.
-4. Read a variety of papers and essays to fill in the gaps in whatever you need to know to implement your own PGA applications.
-   For example, if you are interested in using PGA to simulate the physics of interacting objects, read the Leo Dorst and Steven
-   De Keninck essay _May the Forque Be with You - Dynamics in PGA_ at https://bivector.net/PGAdyn.pdf. Or if you are interested in
-   using Julia's REPL to examine the details of some of the 2D and 3D PGA cheat sheet formulas, continue reading this essay.
-
-
-PGA in a two dimensional Euclidean space requires a basis of eight hypercomplex numbers which can be initialized by including the 
-following two files:
-* the filename ripga2d.jl is an acronym for Reference Implementation of Projective Geometric Algebra in 2 Dimensions, and
-* the filename ripgand.jl is an acronym for Reference Implementation of Projective Geometric Algebra in n Dimensions.
-
-The notation of the basis is simple, where eij is short for eiej (i.e., the multiplication of ei and ej), where eijk is short for 
-eiejek (i.e., the multiplication of ei, ej, and ek), where eij = -eji, where e1e1 = e2e2 = 1, and e0e0 = 0 (i.e., the degenerate case).
-
-
-As mentioned in this essay's introduction, a compelling reason for using projective geometric algebra is the unification of 
-the translation and rotation operations. However, that desired unification comes at the expense of an unintuitive geometric 
-interpretation of the basis, where
-* e0 is interpreted as a line at infinity,
-* e1 and e2 are lines along the y axis and x axis, respectively (which can initially seem like a mislabeling), and
-* the bivectors e01, e20, and e12 are interpreted as points (i.e., the meet of two lines). Points that are generated by the
-  meeting of two lines, one of which is e0, are called ideal points and they are located at the intersection of parallel lines.
-
-The order of this basis can be reversed, where element i becomes element 9-i. This reverse ordering of the basis results in a 
-type of symmetry called the dual and it swaps the roles of points and lines. For example, the third element of the basis is e1, 
-which is the line at x=0, but the third element of reverse(basis) is e20 is a point and is called the dual of e1 (i.e., the dual 
-of basis[3] is reverse(basis[3]). In practice, duality is a gift of time because every derived PGA equation automatically offers 
-a dual form of that PGA equation without any derivation necessary. Similarly, PGA software can be significantly reduced in size 
-because the dual of an implemented PGA function is automatically available without any software implementation necessary.
-
-
-Similar to PGA in two dimensional Euclidean space, PGA in a three dimensional Euclidean space requires a basis of 16 hypercomplex 
-numbers which can be initialized by including two files: ripgand.jl and ripga3d.jl. As before, the notation of the basis is simple, 
-where e0123 is short for e0e1e2e3 (i.e., the multiplication of e0, e1, e2, and e3), where eij = -eji, where e1e1 = e2e2 = e3e3 = 1, 
-and e0e0 = 0 (i.e., the degenerate case).
-
-
-Again, the desired unification of the translation and rotation operation comes at the expense of an unintuitive geometric 
-interpretation of the basis, where
-* e0 is interpreted as the plane at infinity,
-* e1, e2, and e3 are planes at x=0, y=0, and z=0 respectively,
-* the bivectors e01, e02, e03, e12, e31, and e23 are interpreted as lines (i.e., the meet of two planes), and the lines
-  that are generated by the meeting of two planes, one of which is e0, are called ideal lines and they are located at the
-  intersection of parallel planes, and
-* the trivectors e021, e013, e032, and e123 are interpreted as points (i.e., the meet of three planes).
-
-As an aside, interpreting the vectors e0, e1, e2, and e3 as planes is such a key insight that many people would prefer that 
-the acronym PGA stand for "Plane-based Geometric Algebra" instead of "Projective Geometric Algebra".
-
-Again, the order of the basis can be reversed, where element i becomes element 17-i. This reverse ordering of the basis again 
-results in a type of symmetry called the dual and, in the three dimension case, it swaps the roles of planes and points. For 
-example, the third element of the basis is e1, which is the x=0 plane, but the third element of reverse(basis) is e032 is a 
-point and it is called the dual of e1 (i.e., the dual of basis[3] is reverse(basis)[3]).
-
-
-In general, PGA in an nD dimensional space requires a basis of 2ᵐ hypercomplex numbers, where m = nD + 1. In general, the 
-interpretation of the basis starts with vectors being interpreted as (nD-1)-dimensional subspaces (e.g., 1D lines for nD = 2, 
-or 2D planes for nD = 3) and decrements that subspace dimension with the multiplication of each additional vector.
 
 # 5. PGA Exponentials
 At the risk of being too ee-sy (pun intended), the letter e is used in several ways:
