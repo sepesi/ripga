@@ -211,8 +211,9 @@ bivector" and "PGA basis trivector" will be reserved for grade-2 and grade-3 PGA
 arbitrary grade are just called "PGA basis elements". (More on the PGA basis elements in the next section of this essay.)
 
 For the metric signature $\mathbb{R}^\*\_{n,0,1}$, there are a total of $2^{n+1}$ PGA basis elements according to the [rule of product](https://wikipedia.org/wiki/Rule_of_product).
-Those $2^{n+1}$ PGA basis elements cover n+2 grades (i.e., grade-0 through grade n+1), each with $\binom{n+1}{grade}$ PGA basis elements per grade, according to [Pascal's triangle](https://wikipedia.org/wiki/Pascal's_triangle)
-from [combinatorics](https://en.wikipedia.org/wiki/Combinatorics). For example in 3D PGA, there are a total of 16 (i.e., $2^{3+1}$) PGA basis elements: 
+Those $2^{n+1}$ PGA basis elements are diswtributed across n+2 grades (i.e., grade-0 through grade n+1), each with $\binom{n+1}{grade}$ PGA basis elements per grade, according to
+[Pascal's triangle](https://wikipedia.org/wiki/Pascal's_triangle) from [combinatorics](https://en.wikipedia.org/wiki/Combinatorics). For example in 3D PGA, there are a total of
+16 (i.e., $2^{3+1}$) PGA basis elements: 
 * 1 grade-0 (i.e., the scalar),
 * 4 grade-1 (i,e., e0, e1, e2, e3),
 * 6 grade-2 (i.e., e01, e02, e03, e12, e31, e23),
@@ -253,12 +254,12 @@ julia> include("ripgand.jl"); # utility functions for all available dimensions
 
 julia> include("ripga1d.jl"); # enable 1D PGA
 
-julia> [basis reverse(basis)]
+julia> basis
 4×2 Matrix{String}:
- "1"    "e01"
- "e0"   "e1"
- "e1"   "e0"
- "e01"  "1"
+ "1"    "# scalar (specified as eu in vector form)"
+ "e0"   "# ideal point (the point at infinity)"
+ "e1"   "# Euclidean point at origin (x=0)"
+ "e01"  "# pseudoscalar (the entire 1D space)"
 ```
 In 1D PGA, there are a total of four (i.e., $2^{1+1}$) PGA basis elements:
 * 1 grade-0 (i.e., the scalar),
@@ -367,16 +368,16 @@ julia> include("ripgand.jl"); # utility functions for all available dimensions
 
 julia> include("ripga2d.jl"); # enable 2D PGA
 
-julia> [basis reverse(basis)] # col 1 basis in order of grade; col 2 basis in reverse order of grade
+julia> basis
 8×2 Matrix{String}:
- "1"     "e012"
- "e0"    "e12"
- "e1"    "e20"
- "e2"    "e01"
- "e01"   "e2"
- "e20"   "e1"
- "e12"   "e0"
- "e012"  "1"
+ "1"     "# scalar (specified as eu in vector form)"
+ "e0"    "# ideal line (line at infinity, encloses the 2D space)"
+ "e1"    "# y-axis line (i.e., the x=0 line)"
+ "e2"    "# x-axis line (i.e., the y=0 line)"
+ "e01"   "# ideal point in y-direction"
+ "e20"   "# ideal point in x-direction"
+ "e12"   "# Euclidean point at origin (x=0,y=0)"
+ "e012"  "# pseudoscalar (the entire 2D space)"
 ```
 In 2D PGA, there are a total of eight (i.e., $2^{2+1}$) PGA basis elements:
 * 1 grade-0 (i.e., the scalar),
@@ -485,24 +486,24 @@ julia> include("ripgand.jl"); # utility functions for all available dimensions
 
 julia> include("ripga3d.jl"); # enable 3D PGA
 
-julia> [basis reverse(basis)] # col 1 basis in order of grade; col 2 basis in reverse order of grade
+julia> basis
 16×2 Matrix{String}:
- "1"      "e0123"
- "e0"     "e123"
- "e1"     "e032"
- "e2"     "e013"
- "e3"     "e021"
- "e01"    "e23"
- "e02"    "e31"
- "e03"    "e12"
- "e12"    "e03"
- "e31"    "e02"
- "e23"    "e01"
- "e021"   "e3"
- "e013"   "e2"
- "e032"   "e1"
- "e123"   "e0"
- "e0123"  "1"```
+ "1"      "# scalar (specified as eu in vector form)"
+ "e0"     "# ideal plane (the plane at infinity)"
+ "e1"     "# Euclidean yz-plane (i.e., the x=0 plane)"
+ "e2"     "# Euclidean zx-plane (i.e., the y=0 plane)"
+ "e3"     "# Euclidean xy-plane (i.e., the z=0 plane)"
+ "e01"    "# ideal line x (i.e., in yz-plane, the line at infinity)"
+ "e02"    "# ideal line y (i.e., in zx-plane, the line at infinity)"
+ "e03"    "# ideal line z (i.e., in xy-plane, the line at infinity)"
+ "e12"    "# z-axis line"
+ "e31"    "# y-axis line"
+ "e23"    "# x-axis line"
+ "e021"   "# ideal point z (i.e., the point at infinity along z-axis)"
+ "e013"   "# ideal point y (i.e., the point at infinity along y-axis)"
+ "e032"   "# ideal point x (i.e., the point at infinity along x-axis)"
+ "e123"   "# Euclidean point at origin (x=0,y=0,z=0)"
+ "e0123"  "# pseudoscalar (the entire 3D space)"
 ```
 In 3D PGA, there are a total of 16 (i.e., $2^{3+1}$) PGA basis elements:
 * 1 grade-0 (i.e., the scalar),

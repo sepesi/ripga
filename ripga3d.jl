@@ -8,24 +8,23 @@
 using Printf
  
 # define multivector basis names 
-# 0 denotes projective dimension (e.g., e0 * e0 = 0)
-basis = [ # iField
- "1"    #  1 scalar
- "e0"   #  2 grade 1 vectors
- "e1"   #  3
- "e2"   #  4
- "e3"   #  5
- "e01"  #  6 grade 2 vectors (bivectors)
- "e02"  #  7
- "e03"  #  8
- "e12"  #  9
- "e31"  # 10
- "e23"  # 11
- "e021" # 12 grade 3 vectors (trivectors)
- "e013" # 13
- "e032" # 14
- "e123" # 15
- "e0123"]# 16 pseudoscalar
+basis = [																# iField
+ "1"     "# scalar (specified as eu in vector form)"					#  1
+ "e0"    "# ideal plane (the plane at infinity)"						#  2
+ "e1"    "# Euclidean yz-plane (i.e., the x=0 plane)"					#  3
+ "e2"    "# Euclidean zx-plane (i.e., the y=0 plane)"					#  4
+ "e3"    "# Euclidean xy-plane (i.e., the z=0 plane)"					#  5
+ "e01"   "# ideal line x (i.e., in yz-plane, the line at infinity)"		#  6
+ "e02"   "# ideal line y (i.e., in zx-plane, the line at infinity)"		#  7
+ "e03"   "# ideal line z (i.e., in xy-plane, the line at infinity)"		#  8
+ "e12"   "# z-axis line"												#  9
+ "e31"   "# y-axis line"												# 10
+ "e23"   "# x-axis line"												# 11
+ "e021"  "# ideal point z (i.e., the point at infinity along z-axis)"	# 12
+ "e013"  "# ideal point y (i.e., the point at infinity along y-axis)"	# 13
+ "e032"  "# ideal point x (i.e., the point at infinity along x-axis)"	# 14
+ "e123"  "# Euclidean point at origin (x=0,y=0,z=0)"					# 15
+ "e0123" "# pseudoscalar (the entire 3D space)"]						# 16
 
 # define basis multivectors
 nField = 2^4+1 # 4 = 3 dimensions + extra dimension; trailing +1 is a status field
@@ -202,7 +201,7 @@ function utest(nLoop=100,
   flgMathSyntax::Bool=false)
 
  # allocate some multivectors
- nField         = length(basis)+1 # +1 is for status field
+ nField         = size(basis,1)+1 # +1 is for status field
  axis_z         = Vector{Float32}(undef,nField)
  origin         = Vector{Float32}(undef,nField)
  px             = Vector{Float32}(undef,nField)

@@ -8,12 +8,11 @@
 using Printf
 
 # define multivector basis names
-# 0 denotes projective dimension (e.g., e0 * e0 = 0)
-basis = [ # iField
- "1"  #  1 scalar vector (i.e., vector with only nonzero scalar term)
- "e0" #  2 grade 1 vectors
- "e1" #  3
- "e01"]# 4 pseudoscalar
+basis = [ 											# iField
+ "1"   "# scalar (specified as eu in vector form)"	# 1
+ "e0"  "# ideal point (the point at infinity)"		# 2
+ "e1"  "# Euclidean point at origin (x=0)"			# 3
+ "e01" "# pseudoscalar (the entire 1D space)"]		# 4
 
 # define basis multivectors
 nField = 2^2+1 # 2 = 1 dimension + extra dimension; trailing +1 is a status field
@@ -87,6 +86,10 @@ function normIdeal(a::Vector{Float32})
  return sqrt(a[2]^2)
 end
 
+function point(x::Number)::Vector{Float32}
+ return e1 - x*e0
+end
+
 # unit test
 # arguments:
 # - nLoop repeats a section of the PGA calculations for benchmarking
@@ -105,7 +108,7 @@ function utest(nLoop=100,
   flgMathSyntax::Bool=false)
 
  # allocate some multivectors
- nField = length(basis)+1 # +1 is for status field
+ nField = size(basis,1)+1 # +1 is for status field
  a    = Vector{Float32}(undef,nField)
  b    = Vector{Float32}(undef,nField)
  res1 = Vector{Float32}(undef,nField)

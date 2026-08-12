@@ -8,16 +8,15 @@
 using Printf
 
 # define multivector basis names
-# 0 denotes projective dimension (e.g., e0 * e0 = 0)
-basis = [ # iField
- "1"   # 1 scalar
- "e0"  # 2 grade 1 vectors
- "e1"  # 3
- "e2"  # 4
- "e01" # 5 grade 2 vectors (bivectors)
- "e20" # 6
- "e12" # 7
- "e012"] #  8 pseudoscalar
+basis = [ 															# iField
+ "1"    "# scalar (specified as eu in vector form)" 				# 1
+ "e0"   "# ideal line (line at infinity, encloses the 2D space)"	# 2
+ "e1"   "# y-axis line (i.e., the x=0 line)"						# 3
+ "e2"   "# x-axis line (i.e., the y=0 line)"						# 4
+ "e01"  "# ideal point in y-direction"								# 5
+ "e20"  "# ideal point in x-direction"								# 6
+ "e12"  "# Euclidean point at origin (x=0,y=0)"						# 7
+ "e012" "# pseudoscalar (the entire 2D space)"]						# 8
 
 # define basis multivectors
 nField = 2^3+1 # 3 = 2 dimensions + extra dimension; trailing +1 is a status field 
@@ -133,7 +132,7 @@ function utest(nLoop=100,
   flgMathSyntax::Bool=false)
 
  # allocate some multivectors
- nField = length(basis)+1 # +1 is for status field
+ nField = size(basis,1)+1 # +1 is for status field
  P0    = Vector{Float32}(undef,nField)
  P1    = Vector{Float32}(undef,nField)
  P2    = Vector{Float32}(undef,nField)

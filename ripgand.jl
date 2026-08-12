@@ -1,8 +1,8 @@
 # ripgand.jl : reference implementation of
 # Projective Geometric Algebra common for nD (i.e., 2D,3D,4D)
 #
-# This is a Julia port of pga3d.cpp, bivector.net's C++
-# reference implementation of projective geometric algebra
+# This is a Julia port of bivector.net's C++ reference
+# implementation of projective geometric algebra
 # available at https://bivector.net/tools.html
 #
 using Printf
@@ -174,7 +174,7 @@ end
 # convert Euclidean coordinates to PGA expression
 function point(M::Matrix{Float32})::Matrix{Float32}
  nCol = size(M,2)
- res = Matrix{Float32}(undef, length(basis), nCol)
+ res = Matrix{Float32}(undef, size(basis,1), nCol)
  for iCol = 1:nCol
   res[:,iCol] = point(M[:,iCol])
  end
@@ -187,7 +187,7 @@ function toCoord(M::Matrix{Float32},
  nBasis::Int64=0)
  
  if nBasis == 0
-  nBasis = length(basis)&~1 # don't count the appended status field 
+  nBasis = size(basis,1)&~1 # don't include the appended status field 
  end
  
  nB1 = nBasis - 1
@@ -258,35 +258,35 @@ function toStr(V::Vector{Float32})
     if V[iField] < 0
      if V[iField] == -1
       push!(S, @sprintf(" - %s",
-       basis[iField]))
+       basis[iField,1]))
      else
       push!(S, @sprintf(" - %0.7g%s",
-       abs(V[iField]), basis[iField]))
+       abs(V[iField]), basis[iField,1]))
      end
     # else nonzero field is positive
     else
      if V[iField] == 1
       push!(S, @sprintf(" + %s",
-       basis[iField]))
+       basis[iField,1]))
      else
       push!(S, @sprintf(" + %0.7g%s",
-       V[iField], basis[iField]))
+       V[iField], basis[iField,1]))
      end
     end
    # else the first nonzero field
    else
     if V[iField] == 1
      push!(S, @sprintf("%s",
-      (iField==1) ? "1" : basis[iField]))
+      (iField==1) ? "1" : basis[iField,1]))
     elseif V[iField] == -1
      push!(S, @sprintf("-%s",
-      (iField==1) ? "1" : basis[iField]))
+      (iField==1) ? "1" : basis[iField,1]))
     elseif iField == 1
      push!(S, @sprintf("%0.7g",
       V[iField]))
     else
      push!(S, @sprintf("%0.7g%s",
-      V[iField], basis[iField]))
+      V[iField], basis[iField,1]))
     end
    end
    nNZField += 1
@@ -358,7 +358,7 @@ end # dumpexpr()
 # switch dimension of geometry workspace
 function xdimension(nD::Int64, isVerbose::Bool=false)
  # if specified dimension is current dimension
- if 2^(nD+1) == length(basis)
+ if 2^(nD+1) == size(basis,1)
   if isVerbose
    println("dimension is already $nD")
   end
@@ -378,7 +378,7 @@ end # xdimension()
 
 # rtest: random test
 function rtest()
- nBasis = length(basis)
+ nBasis = size(basis,1)
  M = Float32.(rand(1:9,nBasis,3))
  M[:,3] = M[:,1] * M[:,2]
 # M[:,3] = normalize(M[:,1])

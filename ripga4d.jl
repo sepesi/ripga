@@ -1,47 +1,46 @@
 # ripga4d.jl : reference implementation of
 # Projective Geometric Algebra for 4D
 #
-# This is an extension of pga3d.cpp, bivector.net's C++
-# reference implementation of projective geometric algebra
+# This is a Julia port of bivector.net's C++ reference
+# implementation of projective geometric algebra
 # available at https://bivector.net/tools.html
 #
 using Printf
 
 # define multivector basis names
-# 0 denotes projective dimension (e.g., e0 * e0 = 0)
-basis = [# iField
- "1"     #  1 scalar
- "e0"    #  2 grade 1 vectors
- "e1"    #  3
- "e2"    #  4
- "e3"    #  5
- "e4"    #  6
- "e01"   #  7 grade 2 vectors (bivectors)
- "e02"   #  8
- "e03"   #  9
- "e04"   # 10
- "e12"   # 11
- "e13"   # 12
- "e14"   # 13
- "e23"   # 14
- "e24"   # 15
- "e34"   # 16
- "e012"  # 17 grade 3 vectors (trivectors)
- "e013"  # 18
- "e014"  # 19
- "e023"  # 20
- "e024"  # 21
- "e034"  # 22
- "e123"  # 23
- "e124"  # 24
- "e134"  # 25
- "e234"  # 26
- "e0123" # 27
- "e0124" # 28
- "e0134" # 29
- "e0234" # 30
- "e1234" # 31
- "e01234"] # 32 pseudoscalar
+basis = [																				# iField
+ "1"      "# scalar (specified as eu in vector form)"									#  1
+ "e0"     "# ideal 3D hyperplane (the 3D hyperplane at infinity)"						#  2
+ "e1"     "# Euclidean yzw-hyperplane (i.e., the x=0 3D hyperplane)"					#  3
+ "e2"     "# Euclidean xzw-hyperplane (i.e., the y=0 3D hyperplane)"					#  4
+ "e3"     "# Euclidean xyw-hyperplane (i.e., the z=0 3D hyperplane)"					#  5
+ "e4"     "# Euclidean xyz-hyperplane (i.e., the w=0 3D hyperplane)"					#  6
+ "e01"    "# ideal plane in x=0 hyperplane, for translations along x-axis"				#  7
+ "e02"    "# ideal plane in y=0 hyperplane, for translations along y-axis"				#  8
+ "e03"    "# ideal plane in z=0 hyperplane, for translations along z-axis"				#  9
+ "e04"    "# ideal plane in w=0 hyperplane, for translations along w-axis"				# 10
+ "e12"    "# Euclidean zw-plane (intersection of e1 and e2, for rotations in xy-plane)"	# 11
+ "e13"    "# Euclidean yw-plane (intersection of e1 and e3, for rotations in xz-plane)"	# 12
+ "e14"    "# Euclidean yz-plane (intersection of e1 and e4, for rotations in xw-plane)"	# 13
+ "e23"    "# Euclidean xw-plane (intersection of e2 and e3, for rotations in yz-plane)"	# 14
+ "e24"    "# Euclidean xz-plane (intersection of e2 and e4, for rotations in yw-plane)"	# 15
+ "e34"    "# Euclidean xy-plane (intersection of e3 and e4, for rotations in zw-plane)"	# 16
+ "e012"   "# ideal line in zw-plane for defining directionality within 2D subspaces"	# 17
+ "e013"   "# ideal line in yw-plane for defining directionality within 2D subspaces"	# 18
+ "e014"   "# ideal line in yz-plane for defining directionality within 2D subspaces"	# 19
+ "e023"   "# ideal line in xw-plane for defining directionality within 2D subspaces"	# 20
+ "e024"   "# ideal line in xz-plane for defining directionality within 2D subspaces"	# 21
+ "e034"   "# ideal line in xy-plane for defining directionality within 2D subspaces"	# 22
+ "e123"   "# Euclidean w-line (i.e., intersection of x=0, y=0, z=0 hyperplanes)"		# 23
+ "e124"   "# Euclidean z-line (i.e., intersection of x=0, y=0, w=0 hyperplanes)"		# 24
+ "e134"   "# Euclidean y-line (i.e., intersection of x=0, z=0, w=0 hyperplanes)"		# 25
+ "e234"   "# Euclidean x-line (i.e., intersection of y=0, z=0, w=0 hyperplanes)"		# 26
+ "e0123"  "# ideal point along w-axis for defining absolute direction of w-axis"		# 27
+ "e0124"  "# ideal point along z-axis for defining absolute direction of z-axis"		# 28
+ "e0134"  "# ideal point along y-axis for defining absolute direction of y-axis"		# 29
+ "e0234"  "# ideal point along x-axis for defining absolute direction of x-axis"		# 30
+ "e1234"  "# Euclidean origin (i.e., coordinate at (0,0,0,0))"							# 31
+ "e01234" "# pseudoscalar (the entire 4D space)"]										# 32
 
 # define basis multivectors
 nField = 2^5+1 # 5 = 4 dimensions + extra dimension; trailing +1 is a status field
@@ -948,7 +947,7 @@ end # point
 function utest(nLoop=100,
   flgMathSyntax::Bool=false)
 
- nField = length(basis)+1 # +1 is for status field
+ nField = size(basis,1)+1 # +1 is for status field
  P0 =    Vector{Float32}(undef,nField)
  P1 =    Vector{Float32}(undef,nField)
  P2 =    Vector{Float32}(undef,nField)
