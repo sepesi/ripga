@@ -411,32 +411,42 @@ julia> B = [eu e0 e1 e2 e01 e20 e12 e012]  # 2D PGA basis in form of vector of v
  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
 ```
 Calling the PGA basis "B" and calling the PGA basis reversed left to right "BR", B and BR can be used as inputs to geoprodset() to
-calculate the needed sign changes in the dual operation (omitting the appended status field in each PGA basis element).
+calculate the needed sign changes in the dual operation (omitting the appended status field in each PGA basis element). Applying
+those sign changes to the reverse(basis) converts it to the dual of the basis, as shown in the following REPL.
 ```
-ulia> BR = [e012 e12 e20 e01 e2 e1 e0 eu] # B in Reverse order (i.e., right to left)
-9×8 Matrix{Float32}:
- 0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0
- 0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0
- 0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0
- 0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0
- 0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0
- 0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0
- 0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0
- 1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
- 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+julia> BR = [e012 e12 e20 e01 e2 e1 e0 eu] # B in Reverse order (i.e., right to left)
 
-julia> geoprodset(B[1:end-1,:],BR[1:end-1,:])[end,:]
-8-element Vector{Float32}:
- 1.0
- 1.0
- 1.0
- 1.0
- 1.0
- 1.0
- 1.0
- 1.0
+julia> P = geoprodset(B[1:end-1,:],BR[1:end-1,:])[end,:]; # Pseudoscalar row of geoprodset() result
+
+julia> S = [p < 0 ? "-" : "" for p in P] # Sign changes needed for dual operation
+8-element Vector{String}:
+ ""
+ ""
+ ""
+ ""
+ ""
+ ""
+ ""
+ ""
+
+julia> HDR = ["PGA BASIS"  "DUAL PGA BASIS"; "" ""] # header
+2×2 Matrix{String}:
+ "PGA BASIS"  "DUAL PGA BASIS"
+ ""           ""
+
+julia> [HDR; [basis[:,1]  S.*reverse(basis[:,1])]]
+10×2 Matrix{String}:
+ "PGA BASIS"  "DUAL PGA BASIS"
+ ""           ""
+ "1"          "e012"
+ "e0"         "e12"
+ "e1"         "e20"
+ "e2"         "e01"
+ "e01"        "e2"
+ "e20"        "e1"
+ "e12"        "e0"
+ "e012"       "1"
 ```
-Applying those sign changes to the reverse(basis) converts it to the dual of the basis.
 
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
 rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
