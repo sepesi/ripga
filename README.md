@@ -279,30 +279,19 @@ julia> B = [eu e0 e1 e01] # 1D PGA basis in form of vector of vectors
  0.0  0.0  0.0  0.0
 ```
 Calling the PGA basis "B" and calling the PGA basis reversed left to right "BR", B and BR can be used as inputs to geoprodset() to
-calculate the needed sign changes in the dual operation (omitting the appended status field in each PGA basis element).
+calculate the needed sign changes in the dual operation (omitting the appended status field in each PGA basis element). Applying
+those sign changes to the reverse(basis) converts it to the dual of the basis, as shown in the following REPL.
 ```
-julia> BR = [e01 e1 e0 eu]
-5×4 Matrix{Float32}:
- 0.0  0.0  0.0  1.0
- 0.0  0.0  1.0  0.0
- 0.0  1.0  0.0  0.0
- 1.0  0.0  0.0  0.0
- 0.0  0.0  0.0  0.0
-
-julia> geoprodset(B[1:end-1,:],BR[1:end-1,:])[end,:] # needed sign changes in dual operation
-4-element Vector{Float32}:
-  1.0
-  1.0
- -1.0
-  1.0
-```
-Applying those sign changes to the reverse(basis) converts it to the dual of the basis, as shown in the following REPL.
-```
-julia> B = [eu e0 e1 e01]; # 1D PGA basis in form of vector of vectors
-
 julia> BR = [e01 e1 e0 eu]; # B in Reverse (right to left)
 
 julia> P = geoprodset(B[1:end-1,:],BR[1:end-1,:])[end,:]; # Pseudoscalar row of geoprodset() result
+
+julia> S = [p < 0 ? "-" : "" for p in P] # Sign changes needed for dual operation
+4-element Vector{String}:
+ ""
+ ""
+ "-"
+ ""
 
 julia> HDR = ["PGA BASIS"  "DUAL PGA BASIS"; "" ""] # header
 2×2 Matrix{String}:
