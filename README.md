@@ -296,8 +296,28 @@ julia> geoprodset(B[1:end-1,:],BR[1:end-1,:])[end,:] # needed sign changes in du
  -1.0
   1.0
 ```
-Applying those sign changes to the reverse(basis) converts it to the dual of the basis.
+Applying those sign changes to the reverse(basis) converts it to the dual of the basis, as shown in the following REPL.
+```
+julia> B = [eu e0 e1 e01]; # 1D PGA basis in form of vector of vectors
 
+julia> BR = [e01 e1 e0 eu]; # B in Reverse (right to left)
+
+julia> P = geoprodset(B[1:end-1,:],BR[1:end-1,:])[end,:]; # Pseudoscalar row of geoprodset() result
+
+julia> HDR = ["PGA BASIS"  "DUAL PGA BASIS"; "" ""] # header
+2×2 Matrix{String}:
+ "PGA BASIS"  "DUAL PGA BASIS"
+ ""           ""
+
+julia> [HDR; [basis[:,1]  S.*reverse(basis[:,1])]]
+6×2 Matrix{String}:
+ "PGA BASIS"  "DUAL PGA BASIS"
+ ""           ""
+ "1"          "e01"
+ "e0"         "e1"
+ "e1"         "-e0"
+ "e01"        "1"
+```
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
 rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
 In 1D, a translation is two reflections across two points, as shown in the following REPL session where 
