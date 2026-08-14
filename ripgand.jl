@@ -182,6 +182,7 @@ function point(M::Matrix{Float32})::Matrix{Float32}
 end
 
 # convert PGA expressions to Euclidean coordinates
+#=
 function toCoord(M::Matrix{Float32},
  keepIdeal::Bool=false,
  nBasis::Int64=0)
@@ -201,6 +202,7 @@ function toCoord(M::Matrix{Float32},
  end
  return keepIdeal ? MC : MC[:,B]
 end
+
 function toCoord(V::Vector{Float32})
  nBasis = size(V,1)&~1 # don't count the appended status field
  nD = Int(log2(nBasis)) - 1 # count just Euclidean dimensions
@@ -210,6 +212,7 @@ function toCoord(V::Vector{Float32})
  end
  return res
 end
+=#
 
 function rotor(angle::Number, line::Vector{Float32})::Vector{Float32}
  return Float32(cos(angle/2)) +

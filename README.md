@@ -256,18 +256,18 @@ julia> include("ripga1d.jl"); # enable 1D PGA
 
 julia> basis
 4×2 Matrix{String}:
- "1"    "# scalar (specified as eu in vector form)"
- "e0"   "# ideal point (the point at infinity)"
- "e1"   "# Euclidean point at origin (x=0)"
- "e01"  "# pseudoscalar (the entire 1D space)"
+ "1"    "#1: scalar (specified as eu in vector form)"
+ "e0"   "#2: ideal point (the point at infinity)"
+ "e1"   "#3: Euclidean point at origin (x=0)"
+ "e01"  "#4: pseudoscalar (the entire 1D space)"
 ```
 With a longer command, the REPL displays that basis without the quotation mark clutter.
 ```
 julia> foreach(row->println(join(row, "\t")), eachrow(basis))
-1       # scalar (specified as eu in vector form)
-e0      # ideal point (the point at infinity)
-e1      # Euclidean point at origin (x=0)
-e01     # pseudoscalar (the entire 1D space)
+1       #1: scalar (specified as eu in vector form)
+e0      #2: ideal point (the point at infinity)
+e1      #3: Euclidean point at origin (x=0)
+e01     #4: pseudoscalar (the entire 1D space)
 ```
 In 1D PGA, there are a total of four (i.e., $2^{1+1}$) PGA basis elements:
 * 1 grade-0 (i.e., the scalar),

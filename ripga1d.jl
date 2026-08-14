@@ -8,11 +8,11 @@
 using Printf
 
 # define multivector basis names
-basis = [ 											# iField
- "1"   "# scalar (specified as eu in vector form)"	# 1
- "e0"  "# ideal point (the point at infinity)"		# 2
- "e1"  "# Euclidean point at origin (x=0)"			# 3
- "e01" "# pseudoscalar (the entire 1D space)"]		# 4
+basis = [ 												# iField
+ "1"   "#1: scalar (specified as eu in vector form)"	# 1
+ "e0"  "#2: ideal point (the point at infinity)"		# 2
+ "e1"  "#3: Euclidean point at origin (x=0)"			# 3
+ "e01" "#4: pseudoscalar (the entire 1D space)"]		# 4
 
 # define basis multivectors
 nField = 2^2+1 # 2 = 1 dimension + extra dimension; trailing +1 is a status field
@@ -86,8 +86,16 @@ function normIdeal(a::Vector{Float32})
  return sqrt(a[2]^2)
 end
 
+# convert Euclidean coordinate to PGA expression
 function point(x::Number)::Vector{Float32}
  return e1 - x*e0
+end
+
+# convert PGA expression to Euclidean coordinate
+function toCoord(V::Vector{Float32})
+ res = Vector{Float32}(undef, 1) # nD = 1
+ res[1] = -V[2] # -e0 element is x component
+ return res
 end
 
 # unit test
@@ -199,7 +207,7 @@ function utest(nLoop=100,
  if nLoop == 1
   nError = 0
 
-  S = Matrix{String}(undef,20,3) # 3 columns:
+  S = Matrix{String}(undef,22,3) # 3 columns:
   S[1,1] = " res1         : "    #  1) label
   S[1,2] = toStr(res1)           #  2) toStr()
   S[1,3] = "0"			         #  3) expected string
@@ -268,17 +276,25 @@ function utest(nLoop=100,
   S[17,2]= toStr(tst2)
   S[17,3]= "1 - e0"
   
-  S[18,1]= " BBR[end,:]   : "
-  S[18,2]= toStr(BBR[end,:])
-  S[18,3]= "1 + e0 - e1 + e01"
+  S[18,1]= " point test   : "
+  S[18,2]= toStr(point(5))
+  S[18,3]= "-5e0 + e1"
+  
+  S[19,1]= " toCoord      : "
+  S[19,2]= string(toCoord(point(5)))
+  S[19,3]= "Float32[5.0]"
+  
+  S[20,1]= " BBR[end,:]   : "
+  S[20,2]= toStr(BBR[end,:])
+  S[20,3]= "1 + e0 - e1 + e01"
 
-  S[19,1]= " min(ZBBR)    : "
-  S[19,2]= string(minimum(BBR[1:end-1,:][:]))
-  S[19,3]= "0.0"
+  S[21,1]= " min(ZBBR)    : "
+  S[21,2]= string(minimum(BBR[1:end-1,:][:]))
+  S[21,3]= "0.0"
 
-  S[20,1]= " max(ZBBR)    : "
-  S[20,2]= string(maximum(BBR[1:end-1,:][:]))
-  S[20,3]= "0.0"
+  S[22,1]= " max(ZBBR)    : "
+  S[22,2]= string(maximum(BBR[1:end-1,:][:]))
+  S[22,3]= "0.0"
 
   # print unit test results
   #  'x' in first column denotes tests with errors
