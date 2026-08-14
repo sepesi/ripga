@@ -525,42 +525,42 @@ julia> include("ripga3d.jl"); # enable 3D PGA
 
 julia> basis
 16×2 Matrix{String}:
- "1"      "# scalar (specified as eu in vector form)"
- "e0"     "# ideal plane (the plane at infinity)"
- "e1"     "# Euclidean yz-plane (i.e., the x=0 plane)"
- "e2"     "# Euclidean zx-plane (i.e., the y=0 plane)"
- "e3"     "# Euclidean xy-plane (i.e., the z=0 plane)"
- "e01"    "# ideal line x (i.e., in yz-plane, the line at infinity)"
- "e02"    "# ideal line y (i.e., in zx-plane, the line at infinity)"
- "e03"    "# ideal line z (i.e., in xy-plane, the line at infinity)"
- "e12"    "# z-axis line"
- "e31"    "# y-axis line"
- "e23"    "# x-axis line"
- "e021"   "# ideal point z (i.e., the point at infinity along z-axis)"
- "e013"   "# ideal point y (i.e., the point at infinity along y-axis)"
- "e032"   "# ideal point x (i.e., the point at infinity along x-axis)"
- "e123"   "# Euclidean point at origin (x=0,y=0,z=0)"
- "e0123"  "# pseudoscalar (the entire 3D space)"
+ "1"      "# 1 scalar (specified as eu in vector form)"
+ "e0"     "# 2 ideal plane (the plane at infinity)"
+ "e1"     "# 3 Euclidean yz-plane (i.e., the x=0 plane)"
+ "e2"     "# 4 Euclidean zx-plane (i.e., the y=0 plane)"
+ "e3"     "# 5 Euclidean xy-plane (i.e., the z=0 plane)"
+ "e01"    "# 6 ideal line x (i.e., in yz-plane, the line at infinity)"
+ "e02"    "# 7 ideal line y (i.e., in zx-plane, the line at infinity)"
+ "e03"    "# 8 ideal line z (i.e., in xy-plane, the line at infinity)"
+ "e12"    "# 9 z-axis line"
+ "e31"    "#10 y-axis line"
+ "e23"    "#11 x-axis line"
+ "e021"   "#12 ideal point z (i.e., the point at infinity along z-axis)"
+ "e013"   "#13 ideal point y (i.e., the point at infinity along y-axis)"
+ "e032"   "#14 ideal point x (i.e., the point at infinity along x-axis)"
+ "e123"   "#15 Euclidean point at origin (x=0,y=0,z=0)"
+ "e0123"  "#16 pseudoscalar (the entire 3D space)"
 ```
 With a longer command, the REPL displays that basis without the quotation mark clutter.
 ```
 julia> foreach(row->println(join(row, "\t")), eachrow(basis))
-1       # scalar (specified as eu in vector form)
-e0      # ideal plane (the plane at infinity)
-e1      # Euclidean yz-plane (i.e., the x=0 plane)
-e2      # Euclidean zx-plane (i.e., the y=0 plane)
-e3      # Euclidean xy-plane (i.e., the z=0 plane)
-e01     # ideal line x (i.e., in yz-plane, the line at infinity)
-e02     # ideal line y (i.e., in zx-plane, the line at infinity)
-e03     # ideal line z (i.e., in xy-plane, the line at infinity)
-e12     # z-axis line
-e31     # y-axis line
-e23     # x-axis line
-e021    # ideal point z (i.e., the point at infinity along z-axis)
-e013    # ideal point y (i.e., the point at infinity along y-axis)
-e032    # ideal point x (i.e., the point at infinity along x-axis)
-e123    # Euclidean point at origin (x=0,y=0,z=0)
-e0123   # pseudoscalar (the entire 3D space)
+1       # 1 scalar (specified as eu in vector form)
+e0      # 2 ideal plane (the plane at infinity)
+e1      # 3 Euclidean yz-plane (i.e., the x=0 plane)
+e2      # 4 Euclidean zx-plane (i.e., the y=0 plane)
+e3      # 5 Euclidean xy-plane (i.e., the z=0 plane)
+e01     # 6 ideal line x (i.e., in yz-plane, the line at infinity)
+e02     # 7 ideal line y (i.e., in zx-plane, the line at infinity)
+e03     # 8 ideal line z (i.e., in xy-plane, the line at infinity)
+e12     # 9 z-axis line
+e31     #10 y-axis line
+e23     #11 x-axis line
+e021    #12 ideal point z (i.e., the point at infinity along z-axis)
+e013    #13 ideal point y (i.e., the point at infinity along y-axis)
+e032    #14 ideal point x (i.e., the point at infinity along x-axis)
+e123    #15 Euclidean point at origin (x=0,y=0,z=0)
+e0123   #16 pseudoscalar (the entire 3D space)
 ```
 In 3D PGA, there are a total of 16 (i.e., $2^{3+1}$) PGA basis elements:
 * 1 grade-0 (i.e., the scalar),

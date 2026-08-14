@@ -108,14 +108,14 @@ function normIdeal(a::Vector{Float32})
  return sqrt(a[2]^2)
 end
 
-# convert Euclidean coordinate to PGA expression
+# convert Euclidean coordinates to PGA expression
 function point(
  x::Number,
  y::Number)::Vector{Float32}
  return x*e20 + y*e01 + e12
 end
 
-# convert PGA expression to Euclidean coordinate
+# convert PGA expression to Euclidean coordinates
 function toCoord(V::Vector{Float32})
  res = Vector{Float32}(undef, 2) # nD = 2
  res[1] = V[6] # e20 element is x component

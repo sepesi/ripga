@@ -9,22 +9,22 @@ using Printf
  
 # define multivector basis names 
 basis = [																# iField
- "1"     "# scalar (specified as eu in vector form)"					#  1
- "e0"    "# ideal plane (the plane at infinity)"						#  2
- "e1"    "# Euclidean yz-plane (i.e., the x=0 plane)"					#  3
- "e2"    "# Euclidean zx-plane (i.e., the y=0 plane)"					#  4
- "e3"    "# Euclidean xy-plane (i.e., the z=0 plane)"					#  5
- "e01"   "# ideal line x (i.e., in yz-plane, the line at infinity)"		#  6
- "e02"   "# ideal line y (i.e., in zx-plane, the line at infinity)"		#  7
- "e03"   "# ideal line z (i.e., in xy-plane, the line at infinity)"		#  8
- "e12"   "# z-axis line"												#  9
- "e31"   "# y-axis line"												# 10
- "e23"   "# x-axis line"												# 11
- "e021"  "# ideal point z (i.e., the point at infinity along z-axis)"	# 12
- "e013"  "# ideal point y (i.e., the point at infinity along y-axis)"	# 13
- "e032"  "# ideal point x (i.e., the point at infinity along x-axis)"	# 14
- "e123"  "# Euclidean point at origin (x=0,y=0,z=0)"					# 15
- "e0123" "# pseudoscalar (the entire 3D space)"]						# 16
+ "1"     "# 1 scalar (specified as eu in vector form)"					#  1
+ "e0"    "# 2 ideal plane (the plane at infinity)"						#  2
+ "e1"    "# 3 Euclidean yz-plane (i.e., the x=0 plane)"					#  3
+ "e2"    "# 4 Euclidean zx-plane (i.e., the y=0 plane)"					#  4
+ "e3"    "# 5 Euclidean xy-plane (i.e., the z=0 plane)"					#  5
+ "e01"   "# 6 ideal line x (i.e., in yz-plane, the line at infinity)"	#  6
+ "e02"   "# 7 ideal line y (i.e., in zx-plane, the line at infinity)"	#  7
+ "e03"   "# 8 ideal line z (i.e., in xy-plane, the line at infinity)"	#  8
+ "e12"   "# 9 z-axis line"												#  9
+ "e31"   "#10 y-axis line"												# 10
+ "e23"   "#11 x-axis line"												# 11
+ "e021"  "#12 ideal point z (i.e., the point at infinity along z-axis)"	# 12
+ "e013"  "#13 ideal point y (i.e., the point at infinity along y-axis)"	# 13
+ "e032"  "#14 ideal point x (i.e., the point at infinity along x-axis)"	# 14
+ "e123"  "#15 Euclidean point at origin (x=0,y=0,z=0)"					# 15
+ "e0123" "#16 pseudoscalar (the entire 3D space)"]						# 16
 
 # define basis multivectors
 nField = 2^4+1 # 4 = 3 dimensions + extra dimension; trailing +1 is a status field
@@ -162,11 +162,21 @@ function normIdeal(a::Vector{Float32},nd::Int64=2)
  end
 end
 
+# convert Euclidean coordinates to PGA expression
 function point(
  x::Number,
  y::Number,
  z::Number)::Vector{Float32}
  return x*e032 + y*e013 + z*e021 + e123
+end
+
+# convert PGA expression to Euclidean coordinates
+function toCoord(V::Vector{Float32})
+ res = Vector{Float32}(undef, 3) # nD = 3
+ res[1] = V[14] # e032 element is x component
+ res[2] = V[13] # e013 element is y component
+ res[3] = V[12] # e021 element is z component
+ return res
 end
 
 function plane(a::Number, b::Number, c::Number, d::Number)::Vector{Float32}
@@ -269,7 +279,7 @@ function utest(nLoop=100,
  if nLoop == 1
   nError = 0
   
-  S = Matrix{String}(undef,17,3) # 3 columns:
+  S = Matrix{String}(undef,19,3) # 3 columns:
   S[1,1] = " point          : "  #  1) label
   S[1,2] = toStr(px)             #  2) toStr() or toStr1()
   S[1,3] = "e032 + e123"         #  3) expected string
@@ -314,29 +324,37 @@ function utest(nLoop=100,
   S[11,2]= toStr(tst2)
   S[11,3]= "1 - e0"
   
-  S[12,1]= " !!e01          : "
-  S[12,2]= toStr(!!e01)
-  S[12,3]= "e01"
+  S[12,1]= " point test     : "
+  S[12,2]= toStr(point(5,6,7))
+  S[12,3]= "7e021 + 6e013 + 5e032 + e123"
   
-  S[13,1]= " !!e3           : "
-  S[13,2]= toStr(!!e3)
-  S[13,3]= "-e3"
+  S[13,1]= " toCoord        : "
+  S[13,2]= string(toCoord(point(5,6,7)))
+  S[13,3]= "Float32[5.0, 6.0, 7.0]"
   
-  S[14,1]= " !!!!e3         : "
-  S[14,2]= toStr(!!!!e3)
-  S[14,3]= "e3"
+  S[14,1]= " !!e01          : "
+  S[14,2]= toStr(!!e01)
+  S[14,3]= "e01"
+  
+  S[15,1]= " !!e3           : "
+  S[15,2]= toStr(!!e3)
+  S[15,3]= "-e3"
+  
+  S[16,1]= " !!!!e3         : "
+  S[16,2]= toStr(!!!!e3)
+  S[16,3]= "e3"
 
-  S[15,1]= " BBR[end,:]     : "
-  S[15,2]= toStr(BBR[end,:])
-  S[15,3]= "1 + e0 + e1 + e2 + e3 + e01 + e02 + e03 + e12 + e31 + e23 - e021 - e013 - e032 - e123 + e0123"
+  S[17,1]= " BBR[end,:]     : "
+  S[17,2]= toStr(BBR[end,:])
+  S[17,3]= "1 + e0 + e1 + e2 + e3 + e01 + e02 + e03 + e12 + e31 + e23 - e021 - e013 - e032 - e123 + e0123"
 
-  S[16,1]= " min(ZBBR)      : "
-  S[16,2]= string(minimum(BBR[1:end-1,:][:]))
-  S[16,3]= "0.0"
+  S[18,1]= " min(ZBBR)      : "
+  S[18,2]= string(minimum(BBR[1:end-1,:][:]))
+  S[18,3]= "0.0"
 
-  S[17,1]= " max(ZBBR)      : "
-  S[17,2]= string(maximum(BBR[1:end-1,:][:]))
-  S[17,3]= "0.0"
+  S[19,1]= " max(ZBBR)      : "
+  S[19,2]= string(maximum(BBR[1:end-1,:][:]))
+  S[19,3]= "0.0"
   
   # print unit test results
   #  'x' in first column denotes tests with errors
