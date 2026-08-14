@@ -9,14 +9,14 @@ using Printf
 
 # define multivector basis names
 basis = [ 															# iField
- "1"    "# scalar (specified as eu in vector form)" 				# 1
- "e0"   "# ideal line (line at infinity, encloses the 2D space)"	# 2
- "e1"   "# y-axis line (i.e., the x=0 line)"						# 3
- "e2"   "# x-axis line (i.e., the y=0 line)"						# 4
- "e01"  "# ideal point in y-direction"								# 5
- "e20"  "# ideal point in x-direction"								# 6
- "e12"  "# Euclidean point at origin (x=0,y=0)"						# 7
- "e012" "# pseudoscalar (the entire 2D space)"]						# 8
+ "1"    "#1: scalar (specified as eu in vector form)" 				# 1
+ "e0"   "#2: ideal line (line at infinity, encloses the 2D space)"	# 2
+ "e1"   "#3: y-axis line (i.e., the x=0 line)"						# 3
+ "e2"   "#4: x-axis line (i.e., the y=0 line)"						# 4
+ "e01"  "#5: ideal point in y-direction"							# 5
+ "e20"  "#6: ideal point in x-direction"							# 6
+ "e12"  "#7: Euclidean point at origin (x=0,y=0)"					# 7
+ "e012" "#8: pseudoscalar (the entire 2D space)"]					# 8
 
 # define basis multivectors
 nField = 2^3+1 # 3 = 2 dimensions + extra dimension; trailing +1 is a status field 
@@ -108,10 +108,19 @@ function normIdeal(a::Vector{Float32})
  return sqrt(a[2]^2)
 end
 
+# convert Euclidean coordinate to PGA expression
 function point(
  x::Number,
  y::Number)::Vector{Float32}
  return x*e20 + y*e01 + e12
+end
+
+# convert PGA expression to Euclidean coordinate
+function toCoord(V::Vector{Float32})
+ res = Vector{Float32}(undef, 2) # nD = 2
+ res[1] = V[6] # e20 element is x component
+ res[2] = V[5] # e01 element is y component
+ return res
 end
 
 # unit test
@@ -179,7 +188,7 @@ function utest(nLoop=100,
  if nLoop == 1
   nError = 0
 
-  S = Matrix{String}(undef,14,3) # 3 columns:
+  S = Matrix{String}(undef,16,3) # 3 columns:
   S[1,1] = " P0           : "   #  1) label
   S[1,2] = toStr(P0)            #  2) toStr() or toStr1()
   S[1,3] = "e12"		        #  3) expected string
@@ -224,17 +233,25 @@ function utest(nLoop=100,
   S[11,2]= toStr(tst2)
   S[11,3]= "1 - e0"
 
-  S[12,1]= " BBR[end,:]   : "
-  S[12,2]= toStr(BBR[end,:])
-  S[12,3]= "1 + e0 + e1 + e2 + e01 + e20 + e12 + e012"
+  S[12,1]= " point test   : "
+  S[12,2]= toStr(point(5,6))
+  S[12,3]= "6e01 + 5e20 + e12"
+  
+  S[13,1]= " toCoord      : "
+  S[13,2]= string(toCoord(point(5,6)))
+  S[13,3]= "Float32[5.0, 6.0]"
+  
+  S[14,1]= " BBR[end,:]   : "
+  S[14,2]= toStr(BBR[end,:])
+  S[14,3]= "1 + e0 + e1 + e2 + e01 + e20 + e12 + e012"
 
-  S[13,1]= " min(ZBBR)    : "
-  S[13,2]= string(minimum(BBR[1:end-1,:][:]))
-  S[13,3]= "0.0"
+  S[15,1]= " min(ZBBR)    : "
+  S[15,2]= string(minimum(BBR[1:end-1,:][:]))
+  S[15,3]= "0.0"
 
-  S[14,1]= " max(ZBBR)    : "
-  S[14,2]= string(maximum(BBR[1:end-1,:][:]))
-  S[14,3]= "0.0"
+  S[16,1]= " max(ZBBR)    : "
+  S[16,2]= string(maximum(BBR[1:end-1,:][:]))
+  S[16,3]= "0.0"
 
   # print unit test results
   #  'x' in first column denotes tests with errors

@@ -387,26 +387,26 @@ julia> include("ripga2d.jl"); # enable 2D PGA
 
 julia> basis
 8×2 Matrix{String}:
- "1"     "# scalar (specified as eu in vector form)"
- "e0"    "# ideal line (line at infinity, encloses the 2D space)"
- "e1"    "# y-axis line (i.e., the x=0 line)"
- "e2"    "# x-axis line (i.e., the y=0 line)"
- "e01"   "# ideal point in y-direction"
- "e20"   "# ideal point in x-direction"
- "e12"   "# Euclidean point at origin (x=0,y=0)"
- "e012"  "# pseudoscalar (the entire 2D space)"
+ "1"     "#1: scalar (specified as eu in vector form)"
+ "e0"    "#2: ideal line (line at infinity, encloses the 2D space)"
+ "e1"    "#3: y-axis line (i.e., the x=0 line)"
+ "e2"    "#4: x-axis line (i.e., the y=0 line)"
+ "e01"   "#5: ideal point in y-direction"
+ "e20"   "#6: ideal point in x-direction"
+ "e12"   "#7: Euclidean point at origin (x=0,y=0)"
+ "e012"  "#8: pseudoscalar (the entire 2D space)"
 ```
 With a longer command, the REPL displays that basis without the quotation mark clutter.
 ```
 julia> foreach(row->println(join(row, "\t")), eachrow(basis))
-1       # scalar (specified as eu in vector form)
-e0      # ideal line (line at infinity, encloses the 2D space)
-e1      # y-axis line (i.e., the x=0 line)
-e2      # x-axis line (i.e., the y=0 line)
-e01     # ideal point in y-direction
-e20     # ideal point in x-direction
-e12     # Euclidean point at origin (x=0,y=0)
-e012    # pseudoscalar (the entire 2D space)
+1       #1: scalar (specified as eu in vector form)
+e0      #2: ideal line (line at infinity, encloses the 2D space)
+e1      #3: y-axis line (i.e., the x=0 line)
+e2      #4: x-axis line (i.e., the y=0 line)
+e01     #5: ideal point in y-direction
+e20     #6: ideal point in x-direction
+e12     #7: Euclidean point at origin (x=0,y=0)
+e012    #8: pseudoscalar (the entire 2D space)
 ```
 In 2D PGA, there are a total of eight (i.e., $2^{2+1}$) PGA basis elements:
 * 1 grade-0 (i.e., the scalar),
