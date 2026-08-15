@@ -8,39 +8,39 @@
 using Printf
 
 # define multivector basis names
-basis = [																				# iField
- "1"      "# scalar (specified as eu in vector form)"									#  1
- "e0"     "# ideal 3D hyperplane (the 3D hyperplane at infinity)"						#  2
- "e1"     "# Euclidean yzw-hyperplane (i.e., the x=0 3D hyperplane)"					#  3
- "e2"     "# Euclidean xzw-hyperplane (i.e., the y=0 3D hyperplane)"					#  4
- "e3"     "# Euclidean xyw-hyperplane (i.e., the z=0 3D hyperplane)"					#  5
- "e4"     "# Euclidean xyz-hyperplane (i.e., the w=0 3D hyperplane)"					#  6
- "e01"    "# ideal plane in x=0 hyperplane, for translations along x-axis"				#  7
- "e02"    "# ideal plane in y=0 hyperplane, for translations along y-axis"				#  8
- "e03"    "# ideal plane in z=0 hyperplane, for translations along z-axis"				#  9
- "e04"    "# ideal plane in w=0 hyperplane, for translations along w-axis"				# 10
- "e12"    "# Euclidean zw-plane (intersection of e1 and e2, for rotations in xy-plane)"	# 11
- "e13"    "# Euclidean yw-plane (intersection of e1 and e3, for rotations in xz-plane)"	# 12
- "e14"    "# Euclidean yz-plane (intersection of e1 and e4, for rotations in xw-plane)"	# 13
- "e23"    "# Euclidean xw-plane (intersection of e2 and e3, for rotations in yz-plane)"	# 14
- "e24"    "# Euclidean xz-plane (intersection of e2 and e4, for rotations in yw-plane)"	# 15
- "e34"    "# Euclidean xy-plane (intersection of e3 and e4, for rotations in zw-plane)"	# 16
- "e012"   "# ideal line in zw-plane for defining directionality within 2D subspaces"	# 17
- "e013"   "# ideal line in yw-plane for defining directionality within 2D subspaces"	# 18
- "e014"   "# ideal line in yz-plane for defining directionality within 2D subspaces"	# 19
- "e023"   "# ideal line in xw-plane for defining directionality within 2D subspaces"	# 20
- "e024"   "# ideal line in xz-plane for defining directionality within 2D subspaces"	# 21
- "e034"   "# ideal line in xy-plane for defining directionality within 2D subspaces"	# 22
- "e123"   "# Euclidean w-line (i.e., intersection of x=0, y=0, z=0 hyperplanes)"		# 23
- "e124"   "# Euclidean z-line (i.e., intersection of x=0, y=0, w=0 hyperplanes)"		# 24
- "e134"   "# Euclidean y-line (i.e., intersection of x=0, z=0, w=0 hyperplanes)"		# 25
- "e234"   "# Euclidean x-line (i.e., intersection of y=0, z=0, w=0 hyperplanes)"		# 26
- "e0123"  "# ideal point along w-axis for defining absolute direction of w-axis"		# 27
- "e0124"  "# ideal point along z-axis for defining absolute direction of z-axis"		# 28
- "e0134"  "# ideal point along y-axis for defining absolute direction of y-axis"		# 29
- "e0234"  "# ideal point along x-axis for defining absolute direction of x-axis"		# 30
- "e1234"  "# Euclidean origin (i.e., coordinate at (0,0,0,0))"							# 31
- "e01234" "# pseudoscalar (the entire 4D space)"]										# 32
+basis = [																					# iField
+ "1"      "# 1 scalar (specified as eu in vector form)"										#  1
+ "e0"     "# 2 ideal 3D hyperplane (the 3D hyperplane at infinity)"							#  2
+ "e1"     "# 3 Euclidean yzw-hyperplane (i.e., the x=0 3D hyperplane)"						#  3
+ "e2"     "# 4 Euclidean xzw-hyperplane (i.e., the y=0 3D hyperplane)"						#  4
+ "e3"     "# 5 Euclidean xyw-hyperplane (i.e., the z=0 3D hyperplane)"						#  5
+ "e4"     "# 6 Euclidean xyz-hyperplane (i.e., the w=0 3D hyperplane)"						#  6
+ "e01"    "# 7 ideal plane in x=0 hyperplane, for translations along x-axis"				#  7
+ "e02"    "# 8 ideal plane in y=0 hyperplane, for translations along y-axis"				#  8
+ "e03"    "# 9 ideal plane in z=0 hyperplane, for translations along z-axis"				#  9
+ "e04"    "#10 ideal plane in w=0 hyperplane, for translations along w-axis"				# 10
+ "e12"    "#11 Euclidean zw-plane (intersection of e1 and e2, for rotations in xy-plane)"	# 11
+ "e13"    "#12 Euclidean yw-plane (intersection of e1 and e3, for rotations in xz-plane)"	# 12
+ "e14"    "#13 Euclidean yz-plane (intersection of e1 and e4, for rotations in xw-plane)"	# 13
+ "e23"    "#14 Euclidean xw-plane (intersection of e2 and e3, for rotations in yz-plane)"	# 14
+ "e24"    "#15 Euclidean xz-plane (intersection of e2 and e4, for rotations in yw-plane)"	# 15
+ "e34"    "#16 Euclidean xy-plane (intersection of e3 and e4, for rotations in zw-plane)"	# 16
+ "e012"   "#17 ideal line in zw-plane for defining directionality within 2D subspaces"		# 17
+ "e013"   "#18 ideal line in yw-plane for defining directionality within 2D subspaces"		# 18
+ "e014"   "#19 ideal line in yz-plane for defining directionality within 2D subspaces"		# 19
+ "e023"   "#20 ideal line in xw-plane for defining directionality within 2D subspaces"		# 20
+ "e024"   "#21 ideal line in xz-plane for defining directionality within 2D subspaces"		# 21
+ "e034"   "#22 ideal line in xy-plane for defining directionality within 2D subspaces"		# 22
+ "e123"   "#23 Euclidean w-line (i.e., intersection of x=0, y=0, z=0 hyperplanes)"			# 23
+ "e124"   "#24 Euclidean z-line (i.e., intersection of x=0, y=0, w=0 hyperplanes)"			# 24
+ "e134"   "#25 Euclidean y-line (i.e., intersection of x=0, z=0, w=0 hyperplanes)"			# 25
+ "e234"   "#26 Euclidean x-line (i.e., intersection of y=0, z=0, w=0 hyperplanes)"			# 26
+ "e0123"  "#27 ideal point along w-axis for defining absolute direction of w-axis"			# 27
+ "e0124"  "#28 ideal point along z-axis for defining absolute direction of z-axis"			# 28
+ "e0134"  "#29 ideal point along y-axis for defining absolute direction of y-axis"			# 29
+ "e0234"  "#30 ideal point along x-axis for defining absolute direction of x-axis"			# 30
+ "e1234"  "#31 Euclidean origin (i.e., coordinate at (0,0,0,0))"							# 31
+ "e01234" "#32 pseudoscalar (the entire 4D space)"]											# 32
 
 # define basis multivectors
 nField = 2^5+1 # 5 = 4 dimensions + extra dimension; trailing +1 is a status field
@@ -922,13 +922,24 @@ function conjugate(a::Vector{Float32})::Vector{Float32}
  return res
 end # conjugate()
 
+# convert Euclidean coordinates to PGA expression
 function point(
  x::Number,
  y::Number,
  z::Number,
  w::Number)::Vector{Float32}
- return x*e0234 + y*e0134 + z*e0124 + w*e0123 + e1234
-end # point
+ return x*e0234 - y*e0134 + z*e0124 - w*e0123 + e1234
+end # point()
+
+# convert PGA expression to Euclidean coordinates
+function toCoord(V::Vector{Float32})
+ res = Vector{Float32}(undef, 4) # nD = 4
+ res[1] = V[30] # e0234 element is x component
+ res[2] = V[29] # -e0134 element is y component
+ res[3] = V[28] # e0124 element is z component
+ res[4] = V[27] # -e0123 element is w component
+ return res
+end # toCoord()
 
 # unit test
 # arguments:
@@ -984,7 +995,7 @@ function utest(nLoop=100,
    # calculate intersection of parallel lines
    (nLoop == 1) && println("  # calculated with programming syntax")
    line0 = P0 & P1
-   line1 = -(P2 & P3) # TODO: double check sign
+   line1 = P2 & P3
    x = line0 ^ line1
 
    tst1 = e0 - 1f0
@@ -994,7 +1005,7 @@ function utest(nLoop=100,
    # geometric objects in math syntax
    (nLoop == 1) && println("  # calculated with math syntax")
    line0 = ga"P0 ∨ P1"
-   line1 = ga"-(P2 ∨ P3)" # TODO: double check sign
+   line1 = ga"P2 ∨ P3"
    x = ga"line0 ∧ line1"
 
    tst1 = e0 - 1f0
@@ -1006,7 +1017,7 @@ function utest(nLoop=100,
  if nLoop == 1
   nError = 0
 
-  S = Matrix{String}(undef,16,3) # 3 columns:
+  S = Matrix{String}(undef,18,3) # 3 columns:
   S[1,1] = " P0             : "  # 1) label
   S[1,2] = toStr(P0)             # 2) toStr()
   S[1,3] = "e1234"               # 3) expected string
@@ -1017,11 +1028,11 @@ function utest(nLoop=100,
   
   S[3,1] = " P2             : "
   S[3,2] = toStr(P2)
-  S[3,3] = "e0134 + e1234"
+  S[3,3] = "-e0134 + e1234"
   
   S[4,1] = " P3             : "
   S[4,2] = toStr(P3)
-  S[4,3] = "e0134 + e0234 + e1234"
+  S[4,3] = "-e0134 + e0234 + e1234"
   
   S[5,1] = " line0          : "
   S[5,2] = toStr(line0)
@@ -1029,7 +1040,7 @@ function utest(nLoop=100,
   
   S[6,1] = " line1          : "
   S[6,2] = toStr(line1)
-  S[6,3] = "e034 - e234"
+  S[6,3] = "e034 + e234"
   
   S[7,1] = " intersection   : "
   S[7,2] = toStr(x)
@@ -1043,38 +1054,46 @@ function utest(nLoop=100,
   S[9,2] = toStr(tst2)
   S[9,3] = "1 - e0"
   
-  S[10,1]= " !e1            : "
-  S[10,2]= toStr(!e1)
-  S[10,3]= "-e0234"
+  S[10,1]= " point test     : "
+  S[10,2]= toStr(point(5,6,7,8))
+  S[10,3]= "-8e0123 + 7e0124 - 6e0134 + 5e0234 + e1234"
   
-  S[11,1]= " !!e1           : "
-  S[11,2]= toStr(!!e1)
-  S[11,3]= "e1"
+  S[11,1]= " toCoord        : "
+  S[11,2]= string(toCoord(point(5,6,7,8)))
+  S[11,3]= "Float32[5.0, -6.0, 7.0, -8.0]"
   
-  S[12,1]= " !e2            : "
-  S[12,2]= toStr(!e2)
-  S[12,3]= "e0134"
+  S[12,1]= " !e1            : "
+  S[12,2]= toStr(!e1)
+  S[12,3]= "-e0234"
   
-  S[13,1]= " !!e2           : "
-  S[13,2]= toStr(!!e2)
-  S[13,3]= "e2"
+  S[13,1]= " !!e1           : "
+  S[13,2]= toStr(!!e1)
+  S[13,3]= "e1"
   
-  S[14,1]= " BBR[end,:]     : "
-  S[14,2]= toStr(BBR[end,:])
-  S[14,3]= "1 + " *
+  S[14,1]= " !e2            : "
+  S[14,2]= toStr(!e2)
+  S[14,3]= "e0134"
+  
+  S[15,1]= " !!e2           : "
+  S[15,2]= toStr(!!e2)
+  S[15,3]= "e2"
+  
+  S[16,1]= " BBR[end,:]     : "
+  S[16,2]= toStr(BBR[end,:])
+  S[16,3]= "1 + " *
 		   "e0 - e1 + e2 - e3 + e4 + " *
 		   "e01 - e02 + e03 - e04 + e12 - e13 + e14 + e23 - e24 + e34 + " *
 		   "e012 - e013 + e014 + e023 - e024 + e034 - e123 + e124 - e134 + e234 + " *
 		   "e0123 - e0124 + e0134 - e0234 + e1234 + " *
 		   "e01234"
 		   
-  S[15,1]= " min(ZBBR)      : "
-  S[15,2]= string(minimum(BBR[1:end-1,:][:]))
-  S[15,3]= "0.0"
+  S[17,1]= " min(ZBBR)      : "
+  S[17,2]= string(minimum(BBR[1:end-1,:][:]))
+  S[17,3]= "0.0"
 
-  S[16,1]= " max(ZBBR)      : "
-  S[16,2]= string(maximum(BBR[1:end-1,:][:]))
-  S[16,3]= "0.0"
+  S[18,1]= " max(ZBBR)      : "
+  S[18,2]= string(maximum(BBR[1:end-1,:][:]))
+  S[18,3]= "0.0"
 
   # print unit test results
   #  'x' in first column denotes tests with errors

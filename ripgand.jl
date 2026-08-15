@@ -171,49 +171,6 @@ function grade(a::Vector{Float32},k::Int64)
  return res
 end
 
-# convert Euclidean coordinates to PGA expression
-function point(M::Matrix{Float32})::Matrix{Float32}
- nCol = size(M,2)
- res = Matrix{Float32}(undef, size(basis,1), nCol)
- for iCol = 1:nCol
-  res[:,iCol] = point(M[:,iCol])
- end
- return res
-end
-
-# convert PGA expressions to Euclidean coordinates
-#=
-function toCoord(M::Matrix{Float32},
- keepIdeal::Bool=false,
- nBasis::Int64=0)
- 
- if nBasis == 0
-  nBasis = size(basis,1)&~1 # don't include the appended status field 
- end
- 
- nB1 = nBasis - 1
- nD = Int(log2(nBasis)) - 1
- MC = Matrix{Float32}(undef, (nD,size(M,2)))
- B = M[nB1,:] .!= 0
- S = sign.(M[nB1,:])
- S[.!B] .= 1.0
- for iRow = 1:nD
-  MC[iRow,:] = M[nB1-iRow,:] .* S # account for orientation
- end
- return keepIdeal ? MC : MC[:,B]
-end
-
-function toCoord(V::Vector{Float32})
- nBasis = size(V,1)&~1 # don't count the appended status field
- nD = Int(log2(nBasis)) - 1 # count just Euclidean dimensions
- res = Vector{Float32}(undef, nD)
- for iCoord = 1:nD
-  res[iCoord] = V[nBasis-1-iCoord] # copy basis element scalar to proper coordinate
- end
- return res
-end
-=#
-
 function rotor(angle::Number, line::Vector{Float32})::Vector{Float32}
  return Float32(cos(angle/2)) +
   Float32(sin(angle/2))*normalize(line)
