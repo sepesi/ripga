@@ -286,9 +286,9 @@ julia> B = [eu e0 e1 e01] # 1D PGA basis in form of vector of vectors
  0.0  0.0  0.0  1.0
  0.0  0.0  0.0  0.0
 ```
-Calling the PGA basis "B" and calling the PGA basis reversed left to right "BR", B and BR can be used as inputs to geoprodset() to
-calculate the needed sign changes in the dual operation (omitting the appended status field in each PGA basis element). Applying
-those sign changes to the reverse(basis) converts it to the dual of the basis, as shown in the following REPL.
+Calling the PGA basis "B" and calling the PGA basis reversed left to right "BR", they can be arguments to geoprodset() to calculate
+the needed sign changes in the dual operation. Applying those sign changes to the reverse(basis) converts it to the dual of the basis,
+as shown in the following REPL.
 ```
 julia> BR = [e01 e1 e0 eu]; # B in Reverse (right to left)
 
@@ -301,19 +301,20 @@ julia> S = [p < 0 ? "-" : "" for p in P] # Sign changes needed for dual operatio
  "-"
  ""
 
-julia> HDR = ["PGA BASIS"  "DUAL PGA BASIS"; "" ""] # header
+julia> HDR = ["BASIS"  "DUAL"; "" ""]
 2×2 Matrix{String}:
- "PGA BASIS"  "DUAL PGA BASIS"
- ""           ""
+ "BASIS"  "DUAL"
+ ""       ""
 
-julia> [HDR; [basis[:,1]  S.*reverse(basis[:,1])]]
-6×2 Matrix{String}:
- "PGA BASIS"  "DUAL PGA BASIS"
- ""           ""
- "1"          "e01"
- "e0"         "e1"
- "e1"         "-e0"
- "e01"        "1"
+julia> D = [HDR; [basis[:,1]  S.*reverse(basis[:,1])]]; # Dual table
+
+julia> foreach(row->println(join(row, "\t")), eachrow(D))
+BASIS   DUAL
+
+1       e01
+e0      e1
+e1      -e0
+e01     1
 ```
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
 rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
@@ -430,11 +431,11 @@ julia> B = [eu e0 e1 e2 e01 e20 e12 e012]  # 2D PGA basis in form of vector of v
  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0
  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
 ```
-Calling the PGA basis "B" and calling the PGA basis reversed left to right "BR", B and BR can be used as inputs to geoprodset() to
-calculate the needed sign changes in the dual operation (omitting the appended status field in each PGA basis element). Applying
-those sign changes to the reverse(basis) converts it to the dual of the basis, as shown in the following REPL.
+Calling the PGA basis "B" and calling the PGA basis reversed left to right "BR", they can be arguments to geoprodset() to calculate
+the needed sign changes in the dual operation. Applying those sign changes to the reverse(basis) converts it to the dual of the basis,
+as shown in the following REPL.
 ```
-julia> BR = [e012 e12 e20 e01 e2 e1 e0 eu] # B in Reverse order (i.e., right to left)
+julia> BR = [e012 e12 e20 e01 e2 e1 e0 eu]; # B in Reverse order (i.e., right to left)
 
 julia> P = geoprodset(B[1:end-1,:],BR[1:end-1,:])[end,:]; # Pseudoscalar row of geoprodset() result
 
@@ -449,23 +450,24 @@ julia> S = [p < 0 ? "-" : "" for p in P] # Sign changes needed for dual operatio
  ""
  ""
 
-julia> HDR = ["PGA BASIS"  "DUAL PGA BASIS"; "" ""] # header
+julia> HDR = ["BASIS"  "DUAL"; "" ""]
 2×2 Matrix{String}:
- "PGA BASIS"  "DUAL PGA BASIS"
- ""           ""
+ "BASIS"  "DUAL"
+ ""       ""
 
-julia> [HDR; [basis[:,1]  S.*reverse(basis[:,1])]]
-10×2 Matrix{String}:
- "PGA BASIS"  "DUAL PGA BASIS"
- ""           ""
- "1"          "e012"
- "e0"         "e12"
- "e1"         "e20"
- "e2"         "e01"
- "e01"        "e2"
- "e20"        "e1"
- "e12"        "e0"
- "e012"       "1"
+julia> D = [HDR; [basis[:,1]  S.*reverse(basis[:,1])]]; # Dual table
+
+julia> foreach(row->println(join(row, "\t")), eachrow(D))
+BASIS   DUAL
+
+1       e012
+e0      e12
+e1      e20
+e2      e01
+e01     e2
+e20     e1
+e12     e0
+e012    1
 ```
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
 rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
@@ -593,9 +595,9 @@ julia> B = [eu e0 e1 e2 e3 e01 e02 e03 e12 e31 e23 e021 e013 e032 e123 e0123]
  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0
  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
 ```
-Calling the PGA basis "B" and calling the PGA basis reversed left to right "BR", B and BR can be used as inputs to geoprodset() to
-calculate the needed sign changes in the dual operation (omitting the appended status field in each PGA basis element). Applying
-those sign changes to the reverse(basis) converts it to the dual of the basis, as shown in the following REPL.
+Calling the PGA basis "B" and calling the PGA basis reversed left to right "BR", they can be arguments to geoprodset() to calculate
+the needed sign changes in the dual operation. Applying those sign changes to the reverse(basis) converts it to the dual of the basis,
+as shown in the following REPL.
 ```
 julia> BR = [e0123 e123 e032 e013 e021 e23 e31 e12 e03 e02 e01 e3 e2 e1 e0 eu]; # B Reversed
 
@@ -620,31 +622,32 @@ julia> S = [p < 0 ? "-" : "" for p in P] # Sign changes needed for dual operatio
  "-"
  ""
 
-julia> HDR = ["PGA BASIS"  "DUAL PGA BASIS"; "" ""] # header
+julia> HDR = ["BASIS"  "DUAL"; "" ""]
 2×2 Matrix{String}:
- "PGA BASIS"  "DUAL PGA BASIS"
- ""           ""
+ "BASIS"  "DUAL"
+ ""       ""
 
-julia> [HDR; [basis[:,1]  S.*reverse(basis[:,1])]]
-18×2 Matrix{String}:
- "PGA BASIS"  "DUAL PGA BASIS"
- ""           ""
- "1"          "e0123"
- "e0"         "e123"
- "e1"         "e032"
- "e2"         "e013"
- "e3"         "e021"
- "e01"        "e23"
- "e02"        "e31"
- "e03"        "e12"
- "e12"        "e03"
- "e31"        "e02"
- "e23"        "e01"
- "e021"       "-e3"
- "e013"       "-e2"
- "e032"       "-e1"
- "e123"       "-e0"
- "e0123"      "1"
+julia> D = [HDR; [basis[:,1]  S.*reverse(basis[:,1])]]; # Dual table
+
+julia> foreach(row->println(join(row, "\t")), eachrow(D))
+BASIS   DUAL
+
+1       e0123
+e0      e123
+e1      e032
+e2      e013
+e3      e021
+e01     e23
+e02     e31
+e03     e12
+e12     e03
+e31     e02
+e23     e01
+e021    -e3
+e013    -e2
+e032    -e1
+e123    -e0
+e0123   1
 ```
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
 rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
