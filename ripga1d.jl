@@ -92,7 +92,7 @@ function point(x::Number)::Vector{Float32}
 end
 function point(M::Matrix{Float32})::Matrix{Float32}
  nCol = size(M,2)
- res = Matrix{Float32}(undef, 4+1, nCol) # +1 for appended status
+ res = Matrix{Float32}(undef, 4+1, nCol) # nBasis is 4, +1 for appended status
  for iCol=1:nCol
 	res[:,iCol] = e1 - M[1,iCol]*e0
  end
@@ -107,7 +107,7 @@ function toCoord(V::Vector{Float32})
 end
 function toCoord(M::Matrix{Float32})::Matrix{Float32}
  nCol = size(M,2)
- res = Matrix{Float32}(undef, 1, nCol)
+ res = Matrix{Float32}(undef, 1, nCol) # nD is 1
  for iCol=1:nCol
   res[1,iCol] = -M[2,iCol]
  end

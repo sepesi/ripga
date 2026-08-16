@@ -114,12 +114,29 @@ function point(
  y::Number)::Vector{Float32}
  return x*e20 + y*e01 + e12
 end
+function point(M::Matrix{Float32})::Matrix{Float32}
+ nCol = size(M,2)
+ res = Matrix{Float32}(undef, 8+1, nCol) # nBasis is 8, +1 for appended status
+ for iCol=1:nCol
+	res[:,iCol] = M[1,iCol]*e20 + M[2,iCol]*e01 + e12
+ end
+ return res
+end
 
 # convert PGA expression to Euclidean coordinates
 function toCoord(V::Vector{Float32})
  res = Vector{Float32}(undef, 2) # nD = 2
  res[1] = V[6] # e20 element is x component
  res[2] = V[5] # e01 element is y component
+ return res
+end
+function toCoord(M::Matrix{Float32})::Matrix{Float32}
+ nCol = size(M,2)
+ res = Matrix{Float32}(undef, 2, nCol) # nD = 2
+ for iCol=1:nCol
+  res[1,iCol] = M[6,iCol] # e20 element is x component
+  res[2,iCol] = M[5,iCol] # e01 element is y component
+ end
  return res
 end
 
@@ -188,7 +205,7 @@ function utest(nLoop=100,
  if nLoop == 1
   nError = 0
 
-  S = Matrix{String}(undef,16,3) # 3 columns:
+  S = Matrix{String}(undef,17,3) # 3 columns:
   S[1,1] = " P0           : "   #  1) label
   S[1,2] = toStr(P0)            #  2) toStr() or toStr1()
   S[1,3] = "e12"		        #  3) expected string
@@ -241,17 +258,21 @@ function utest(nLoop=100,
   S[13,2]= string(toCoord(point(5,6)))
   S[13,3]= "Float32[5.0, 6.0]"
   
-  S[14,1]= " BBR[end,:]   : "
-  S[14,2]= toStr(BBR[end,:])
-  S[14,3]= "1 + e0 + e1 + e2 + e01 + e20 + e12 + e012"
+  S[14,1]= " point test 2 : "
+  S[14,2]= string(toCoord(point([5f0 10f0; 6f0 11f0])))
+  S[14,3]= "Float32[5.0 10.0; 6.0 11.0]"
+  
+  S[15,1]= " BBR[end,:]   : "
+  S[15,2]= toStr(BBR[end,:])
+  S[15,3]= "1 + e0 + e1 + e2 + e01 + e20 + e12 + e012"
 
-  S[15,1]= " min(ZBBR)    : "
-  S[15,2]= string(minimum(BBR[1:end-1,:][:]))
-  S[15,3]= "0.0"
-
-  S[16,1]= " max(ZBBR)    : "
-  S[16,2]= string(maximum(BBR[1:end-1,:][:]))
+  S[16,1]= " min(ZBBR)    : "
+  S[16,2]= string(minimum(BBR[1:end-1,:][:]))
   S[16,3]= "0.0"
+
+  S[17,1]= " max(ZBBR)    : "
+  S[17,2]= string(maximum(BBR[1:end-1,:][:]))
+  S[17,3]= "0.0"
 
   # print unit test results
   #  'x' in first column denotes tests with errors
