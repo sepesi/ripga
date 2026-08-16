@@ -930,6 +930,15 @@ function point(
  w::Number)::Vector{Float32}
  return x*e0234 - y*e0134 + z*e0124 - w*e0123 + e1234
 end # point()
+function point(M::Matrix{Float32})::Matrix{Float32}
+ nCol = size(M,2)
+ res = Matrix{Float32}(undef, 32+1, nCol) # nBasis is 32, +1 for appended status
+ for iCol=1:nCol
+  res[:,iCol] =
+   M[1,iCol]*e0234 - M[2,iCol]*e0134 + M[3,iCol]*e0124 - M[4,iCol]*e0123 + e1234
+ end
+ return res
+end # point()
 
 # convert PGA expression to Euclidean coordinates
 function toCoord(V::Vector{Float32})
@@ -938,6 +947,17 @@ function toCoord(V::Vector{Float32})
  res[2] = V[29] # -e0134 element is y component
  res[3] = V[28] # e0124 element is z component
  res[4] = V[27] # -e0123 element is w component
+ return res
+end # toCoord()
+function toCoord(M::Matrix{Float32})::Matrix{Float32}
+ nCol = size(M,2)
+ res = Matrix{Float32}(undef, 4, nCol) # nD = 4
+ for iCol=1:nCol
+  res[1,iCol] = M[30,iCol] # e0234 element is x component
+  res[2,iCol] = -M[29,iCol] # -e0134 element is y component
+  res[3,iCol] = M[28,iCol] # e01241 element is z component
+  res[4,iCol] = -M[27,iCol] # -e0123 element is w component
+ end
  return res
 end # toCoord()
 
@@ -1017,7 +1037,7 @@ function utest(nLoop=100,
  if nLoop == 1
   nError = 0
 
-  S = Matrix{String}(undef,18,3) # 3 columns:
+  S = Matrix{String}(undef,19,3) # 3 columns:
   S[1,1] = " P0             : "  # 1) label
   S[1,2] = toStr(P0)             # 2) toStr()
   S[1,3] = "e1234"               # 3) expected string
@@ -1062,38 +1082,42 @@ function utest(nLoop=100,
   S[11,2]= string(toCoord(point(5,6,7,8)))
   S[11,3]= "Float32[5.0, -6.0, 7.0, -8.0]"
   
-  S[12,1]= " !e1            : "
-  S[12,2]= toStr(!e1)
-  S[12,3]= "-e0234"
+  S[12,1]= " point test 2   : "
+  S[12,2]= string(toCoord(point([5f0 10f0; 6f0 11f0; 7f0 12f0; 8f0 13f0])))
+  S[12,3]= "Float32[5.0 10.0; 6.0 11.0; 7.0 12.0; 8.0 13.0]"
   
-  S[13,1]= " !!e1           : "
-  S[13,2]= toStr(!!e1)
-  S[13,3]= "e1"
+  S[13,1]= " !e1            : "
+  S[13,2]= toStr(!e1)
+  S[13,3]= "-e0234"
   
-  S[14,1]= " !e2            : "
-  S[14,2]= toStr(!e2)
-  S[14,3]= "e0134"
+  S[14,1]= " !!e1           : "
+  S[14,2]= toStr(!!e1)
+  S[14,3]= "e1"
   
-  S[15,1]= " !!e2           : "
-  S[15,2]= toStr(!!e2)
-  S[15,3]= "e2"
+  S[15,1]= " !e2            : "
+  S[15,2]= toStr(!e2)
+  S[15,3]= "e0134"
   
-  S[16,1]= " BBR[end,:]     : "
-  S[16,2]= toStr(BBR[end,:])
-  S[16,3]= "1 + " *
+  S[16,1]= " !!e2           : "
+  S[16,2]= toStr(!!e2)
+  S[16,3]= "e2"
+  
+  S[17,1]= " BBR[end,:]     : "
+  S[17,2]= toStr(BBR[end,:])
+  S[17,3]= "1 + " *
 		   "e0 - e1 + e2 - e3 + e4 + " *
 		   "e01 - e02 + e03 - e04 + e12 - e13 + e14 + e23 - e24 + e34 + " *
 		   "e012 - e013 + e014 + e023 - e024 + e034 - e123 + e124 - e134 + e234 + " *
 		   "e0123 - e0124 + e0134 - e0234 + e1234 + " *
 		   "e01234"
 		   
-  S[17,1]= " min(ZBBR)      : "
-  S[17,2]= string(minimum(BBR[1:end-1,:][:]))
-  S[17,3]= "0.0"
-
-  S[18,1]= " max(ZBBR)      : "
-  S[18,2]= string(maximum(BBR[1:end-1,:][:]))
+  S[18,1]= " min(ZBBR)      : "
+  S[18,2]= string(minimum(BBR[1:end-1,:][:]))
   S[18,3]= "0.0"
+
+  S[19,1]= " max(ZBBR)      : "
+  S[19,2]= string(maximum(BBR[1:end-1,:][:]))
+  S[19,3]= "0.0"
 
   # print unit test results
   #  'x' in first column denotes tests with errors
