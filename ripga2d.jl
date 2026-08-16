@@ -118,7 +118,7 @@ function point(M::Matrix{Float32})::Matrix{Float32}
  nCol = size(M,2)
  res = Matrix{Float32}(undef, 8+1, nCol) # nBasis is 8, +1 for appended status
  for iCol=1:nCol
-	res[:,iCol] = M[1,iCol]*e20 + M[2,iCol]*e01 + e12
+  res[:,iCol] = M[1,iCol]*e20 + M[2,iCol]*e01 + e12
  end
  return res
 end
