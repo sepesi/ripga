@@ -170,12 +170,15 @@ function point(
  return x*e032 + y*e013 + z*e021 + e123
 end
 function point(M::Matrix{Float32})::Matrix{Float32}
- nCol = size(M,2)
- res = Matrix{Float32}(undef, 16+1, nCol) # nBasis is 16, +1 for appended status
- for iCol=1:nCol
-  res[:,iCol] = M[1,iCol]*e032 + M[2,iCol]*e013 + M[3,iCol]*e021 + e123
+ nPoint = size(M,2) # M is coordinate Matrix where each column is a point
+ res = Matrix{Float32}(undef, 16+1, nPoint) # nBasis is 16, +1 for appended status
+ for iPoint=1:nPoint
+  res[:,iPoint] =
+   M[1,iPoint]*e032 +
+   M[2,iPoint]*e013 +
+   M[3,iPoint]*e021 + e123
  end
- return res
+ return res # each column of result matrix is a PGA expression of a point
 end
 
 # convert PGA expression to Euclidean coordinates
@@ -187,14 +190,14 @@ function toCoord(V::Vector{Float32})
  return res
 end
 function toCoord(M::Matrix{Float32})::Matrix{Float32}
- nCol = size(M,2)
- res = Matrix{Float32}(undef, 3, nCol) # nD = 3
- for iCol=1:nCol
-  res[1,iCol] = M[14,iCol] # e032 element is x component
-  res[2,iCol] = M[13,iCol] # e013 element is y component
-  res[3,iCol] = M[12,iCol] # e021 element is z component
+ nPoint = size(M,2) # M is PGA Matrix, each column is PGA expression of point
+ res = Matrix{Float32}(undef, 3, nPoint) # nD = 3
+ for iPoint=1:nPoint
+  res[1,iPoint] = M[14,iPoint] # e032 element is x component
+  res[2,iPoint] = M[13,iPoint] # e013 element is y component
+  res[3,iPoint] = M[12,iPoint] # e021 element is z component
  end
- return res
+ return res # each column of result matrix is a coordinate of a point
 end
 
 function plane(a::Number, b::Number, c::Number, d::Number)::Vector{Float32}

@@ -115,12 +115,14 @@ function point(
  return x*e20 + y*e01 + e12
 end
 function point(M::Matrix{Float32})::Matrix{Float32}
- nCol = size(M,2)
- res = Matrix{Float32}(undef, 8+1, nCol) # nBasis is 8, +1 for appended status
- for iCol=1:nCol
-  res[:,iCol] = M[1,iCol]*e20 + M[2,iCol]*e01 + e12
+ nPoint = size(M,2) # M is coordinate Matrix where each column is a point
+ res = Matrix{Float32}(undef, 8+1, nPoint) # nBasis is 8, +1 for appended status
+ for iPoint=1:nPoint
+  res[:,iPoint] =
+   M[1,iPoint]*e20 +
+   M[2,iPoint]*e01 + e12
  end
- return res
+ return res # each column of result matrix is a PGA expression of a point
 end
 
 # convert PGA expression to Euclidean coordinates
@@ -131,13 +133,13 @@ function toCoord(V::Vector{Float32})
  return res
 end
 function toCoord(M::Matrix{Float32})::Matrix{Float32}
- nCol = size(M,2)
- res = Matrix{Float32}(undef, 2, nCol) # nD = 2
- for iCol=1:nCol
-  res[1,iCol] = M[6,iCol] # e20 element is x component
-  res[2,iCol] = M[5,iCol] # e01 element is y component
+ nPoint = size(M,2) # M is PGA Matrix, each column is PGA expression of point
+ res = Matrix{Float32}(undef, 2, nPoint) # nD = 2
+ for iPoint=1:nPoint
+  res[1,iPoint] = M[6,iPoint] # e20 element is x component
+  res[2,iPoint] = M[5,iPoint] # e01 element is y component
  end
- return res
+ return res # each column of result matrix is a coordinate of a point
 end
 
 # unit test

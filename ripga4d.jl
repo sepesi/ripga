@@ -931,13 +931,16 @@ function point(
  return x*e0234 - y*e0134 + z*e0124 - w*e0123 + e1234
 end # point()
 function point(M::Matrix{Float32})::Matrix{Float32}
- nCol = size(M,2)
- res = Matrix{Float32}(undef, 32+1, nCol) # nBasis is 32, +1 for appended status
- for iCol=1:nCol
-  res[:,iCol] =
-   M[1,iCol]*e0234 - M[2,iCol]*e0134 + M[3,iCol]*e0124 - M[4,iCol]*e0123 + e1234
+ nPoint = size(M,2) # M is coordinate Matrix where each column is a point
+ res = Matrix{Float32}(undef, 32+1, nPoint) # nBasis is 32, +1 for appended status
+ for iPoint=1:nPoint
+  res[:,iPoint] =
+   M[1,iPoint]*e0234 - 
+   M[2,iPoint]*e0134 + 
+   M[3,iPoint]*e0124 - 
+   M[4,iPoint]*e0123 + e1234
  end
- return res
+ return res # each column of result matrix is a PGA expression of a point
 end # point()
 
 # convert PGA expression to Euclidean coordinates
@@ -950,15 +953,15 @@ function toCoord(V::Vector{Float32})
  return res
 end # toCoord()
 function toCoord(M::Matrix{Float32})::Matrix{Float32}
- nCol = size(M,2)
- res = Matrix{Float32}(undef, 4, nCol) # nD = 4
- for iCol=1:nCol
-  res[1,iCol] = M[30,iCol] # e0234 element is x component
-  res[2,iCol] = -M[29,iCol] # -e0134 element is y component
-  res[3,iCol] = M[28,iCol] # e01241 element is z component
-  res[4,iCol] = -M[27,iCol] # -e0123 element is w component
+ nPoint = size(M,2) # M is PGA Matrix, each column is PGA expression of point
+ res = Matrix{Float32}(undef, 4, nPoint) # nD = 4
+ for iPoint=1:nPoint
+  res[1,iPoint] = M[30,iPoint] # e0234 element is x component
+  res[2,iPoint] = -M[29,iPoint] # -e0134 element is y component
+  res[3,iPoint] = M[28,iPoint] # e01241 element is z component
+  res[4,iPoint] = -M[27,iPoint] # -e0123 element is w component
  end
- return res
+ return res # each column of result matrix is a coordinate of a point
 end # toCoord()
 
 # unit test

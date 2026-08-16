@@ -91,12 +91,12 @@ function point(x::Number)::Vector{Float32}
  return e1 - x*e0
 end
 function point(M::Matrix{Float32})::Matrix{Float32}
- nCol = size(M,2)
- res = Matrix{Float32}(undef, 4+1, nCol) # nBasis is 4, +1 for appended status
- for iCol=1:nCol
-  res[:,iCol] = e1 - M[1,iCol]*e0
+ nPoint = size(M,2) # M is coordinate Matrix where each column is a point
+ res = Matrix{Float32}(undef, 4+1, nPoint) # nBasis is 4, +1 for appended status
+ for iPoint=1:nPoint
+  res[:,iPoint] = e1 - M[1,iPoint]*e0
  end
- return res
+ return res # each column of result matrix is a PGA expression of a point
 end
 
 # convert PGA expression to Euclidean coordinate
@@ -106,12 +106,12 @@ function toCoord(V::Vector{Float32})
  return res
 end
 function toCoord(M::Matrix{Float32})::Matrix{Float32}
- nCol = size(M,2)
- res = Matrix{Float32}(undef, 1, nCol) # nD is 1
- for iCol=1:nCol
-  res[1,iCol] = -M[2,iCol]
+ nPoint = size(M,2) # M is PGA Matrix, each column is PGA expression of point
+ res = Matrix{Float32}(undef, 1, nPoint) # nD is 1
+ for iPoint=1:nPoint
+  res[1,iPoint] = -M[2,iPoint]
  end
- return res
+ return res # each column of result matrix is a coordinate of a point
 end
 
 # unit test
