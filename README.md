@@ -519,7 +519,7 @@ julia> toStr(T) # failed because not in form of dual number, missing scalar term
 "5e01"
 ```
 ## 4.3 3D PGA basis
-To prepare Julia's REPL for 2D PGA, include the files ripgand.jl and ripga2d.jl. To confirm the initialization, print out the basis.
+To prepare Julia's REPL for 3D PGA, include the files ripgand.jl and ripga3d.jl. To confirm the initialization, print out the basis.
 ```
 julia> include("ripgand.jl"); # utility functions for all available dimensions
 
@@ -678,9 +678,178 @@ julia> toCoord(P2)
  0.0
 ```
 
+## 4.4 4D PGA BASIS
+To prepare Julia's REPL for 4D PGA, include the files ripgand.jl and ripga4d.jl. To confirm the initialization, print out the basis.
+```
+julia> include("ripgand.jl")
+rtest (generic function with 1 method)
+
+julia> include("ripga4d.jl")
+utest (generic function with 3 methods)
+
+julia> basis
+32×2 Matrix{String}:
+ "1"       "# 1 scalar (specified as eu in vector form)"
+ "e0"      "# 2 ideal 3D hyperplane (the 3D hyperplane at infinity)"
+ "e1"      "# 3 Euclidean yzw-hyperplane (i.e., the x=0 3D hyperplane)"
+ "e2"      "# 4 Euclidean xzw-hyperplane (i.e., the y=0 3D hyperplane)"
+ "e3"      "# 5 Euclidean xyw-hyperplane (i.e., the z=0 3D hyperplane)"
+ "e4"      "# 6 Euclidean xyz-hyperplane (i.e., the w=0 3D hyperplane)"
+ "e01"     "# 7 ideal plane in x=0 hyperplane, for translations along x-axis"
+ "e02"     "# 8 ideal plane in y=0 hyperplane, for translations along y-axis"
+ "e03"     "# 9 ideal plane in z=0 hyperplane, for translations along z-axis"
+ "e04"     "#10 ideal plane in w=0 hyperplane, for translations along w-axis"
+ "e12"     "#11 Euclidean zw-plane (intersection of e1 and e2, for rotations in xy-plane)"
+ "e13"     "#12 Euclidean yw-plane (intersection of e1 and e3, for rotations in xz-plane)"
+ "e14"     "#13 Euclidean yz-plane (intersection of e1 and e4, for rotations in xw-plane)"
+ ⋮
+ "e024"    "#21 ideal line in xz-plane for defining directionality within 2D subspaces"
+ "e034"    "#22 ideal line in xy-plane for defining directionality within 2D subspaces"
+ "e123"    "#23 Euclidean w-line (i.e., intersection of x=0, y=0, z=0 hyperplanes)"
+ "e124"    "#24 Euclidean z-line (i.e., intersection of x=0, y=0, w=0 hyperplanes)"
+ "e134"    "#25 Euclidean y-line (i.e., intersection of x=0, z=0, w=0 hyperplanes)"
+ "e234"    "#26 Euclidean x-line (i.e., intersection of y=0, z=0, w=0 hyperplanes)"
+ "e0123"   "#27 ideal point along w-axis for defining absolute direction of w-axis"
+ "e0124"   "#28 ideal point along z-axis for defining absolute direction of z-axis"
+ "e0134"   "#29 ideal point along y-axis for defining absolute direction of y-axis"
+ "e0234"   "#30 ideal point along x-axis for defining absolute direction of x-axis"
+ "e1234"   "#31 Euclidean origin (i.e., coordinate at (0,0,0,0))"
+ "e01234"  "#32 pseudoscalar (the entire 4D space)"
+```
+With a longer command, the REPL displays that basis without the quotation mark clutter and without the
+abbreviation of the middle of the basis.
+```
+julia> foreach(row->println(join(row, "\t")), eachrow(basis))
+1       # 1 scalar (specified as eu in vector form)
+e0      # 2 ideal 3D hyperplane (the 3D hyperplane at infinity)
+e1      # 3 Euclidean yzw-hyperplane (i.e., the x=0 3D hyperplane)
+e2      # 4 Euclidean xzw-hyperplane (i.e., the y=0 3D hyperplane)
+e3      # 5 Euclidean xyw-hyperplane (i.e., the z=0 3D hyperplane)
+e4      # 6 Euclidean xyz-hyperplane (i.e., the w=0 3D hyperplane)
+e01     # 7 ideal plane in x=0 hyperplane, for translations along x-axis
+e02     # 8 ideal plane in y=0 hyperplane, for translations along y-axis
+e03     # 9 ideal plane in z=0 hyperplane, for translations along z-axis
+e04     #10 ideal plane in w=0 hyperplane, for translations along w-axis
+e12     #11 Euclidean zw-plane (intersection of e1 and e2, for rotations in xy-plane)
+e13     #12 Euclidean yw-plane (intersection of e1 and e3, for rotations in xz-plane)
+e14     #13 Euclidean yz-plane (intersection of e1 and e4, for rotations in xw-plane)
+e23     #14 Euclidean xw-plane (intersection of e2 and e3, for rotations in yz-plane)
+e24     #15 Euclidean xz-plane (intersection of e2 and e4, for rotations in yw-plane)
+e34     #16 Euclidean xy-plane (intersection of e3 and e4, for rotations in zw-plane)
+e012    #17 ideal line in zw-plane for defining directionality within 2D subspaces
+e013    #18 ideal line in yw-plane for defining directionality within 2D subspaces
+e014    #19 ideal line in yz-plane for defining directionality within 2D subspaces
+e023    #20 ideal line in xw-plane for defining directionality within 2D subspaces
+e024    #21 ideal line in xz-plane for defining directionality within 2D subspaces
+e034    #22 ideal line in xy-plane for defining directionality within 2D subspaces
+e123    #23 Euclidean w-line (i.e., intersection of x=0, y=0, z=0 hyperplanes)
+e124    #24 Euclidean z-line (i.e., intersection of x=0, y=0, w=0 hyperplanes)
+e134    #25 Euclidean y-line (i.e., intersection of x=0, z=0, w=0 hyperplanes)
+e234    #26 Euclidean x-line (i.e., intersection of y=0, z=0, w=0 hyperplanes)
+e0123   #27 ideal point along w-axis for defining absolute direction of w-axis
+e0124   #28 ideal point along z-axis for defining absolute direction of z-axis
+e0134   #29 ideal point along y-axis for defining absolute direction of y-axis
+e0234   #30 ideal point along x-axis for defining absolute direction of x-axis
+e1234   #31 Euclidean origin (i.e., coordinate at (0,0,0,0))
+e01234  #32 pseudoscalar (the entire 4D space)
+```
+In 4D PGA, there are a total of 32 (i.e., $2^{4+1}$) PGA basis elements:
+*  1 grade-0 (i.e., the scalar),
+*  5 grade-1 (i,e., e0, e1, e2, e3, e4),
+* 10 grade-2 (i.e., e01, e02, e03, e04, e12, e13, e14, e23, e24, e34),
+* 10 grade-3 (i.e., e012, e013, e014, e023, e024, e034, e123, e124, e134, e234),
+*  5 grade-4 (i.e., e0123, e0124, e0134, e0234, e1234), and
+*  1 grade-5 (i.e., e01234).
+
+Listing the 4D PGA basis element names in a row vector results in the vector of vectors form of the 4D PGA basis. Note that the REPL
+shows column vectors of length 33 instead of 32 because ripga appends to each PGA basis element a status field (which is currently
+unused).
+```
+julia> B = [eu e0 e1 e2 e3 e4 e01 e02 e03 e04 e12 e13 e14 e23 e24 e34 e012 e013 e014 e023 e024 e034 e123 e124 e134 e234 e0123 e0124 e0134 e0234 e1234 e01234]
+33×32 Matrix{Float32}:
+ 1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  …  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0     0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0     0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0     0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0     0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0  …  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0     0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0     0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0     0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0     0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0  …  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0     0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0     0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ ⋮                        ⋮                        ⋮         ⋱                      ⋮                        ⋮
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0     1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0     0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0     0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0     0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  …  0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0     0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0     0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0     0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0     0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  …  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0     0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0
+ 0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0     0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+```
+Calling the PGA basis "B" and calling the PGA basis reversed left to right "BR", they can be arguments to geoprodset() to calculate
+the needed sign changes in the dual operation. Applying those sign changes to the reverse(basis) converts it to the dual of the basis,
+as shown in the following REPL.
+```
+julia> BR = [e01234 e1234 e0234 e0134 e0124 e0123 e234 e134 e124 e123 e034 e024 e023 e014 e013 e012 e34 e24 e23 e14 e13 e12 e04 e03 e02 e01 e4 e3 e2 e1 e0 eu]; # B reversed
+
+julia> P = geoprodset(B[1:end-1,:],BR[1:end-1,:])[end,:]; # Pseudoscalar row of geoprodset() result
+
+julia> S = [p < 0 ? "-" : "" for p in P]; # Sign changes needed for dual operation
+
+julia> HDR = ["BASIS"  "DUAL"; "" ""]
+2×2 Matrix{String}:
+ "BASIS"  "DUAL"
+ ""       ""
+
+julia> D = [HDR; [basis[:,1]  S.*reverse(basis[:,1])]]; # Dual table
+
+julia> foreach(row->println(join(row, "\t")), eachrow(D))
+BASIS   DUAL
+
+1       e01234
+e0      e1234
+e1      -e0234
+e2      e0134
+e3      -e0124
+e4      e0123
+e01     e234
+e02     -e134
+e03     e124
+e04     -e123
+e12     e034
+e13     -e024
+e14     e023
+e23     e014
+e24     -e013
+e34     e012
+e012    e34
+e013    -e24
+e014    e23
+e023    e14
+e024    -e13
+e034    e12
+e123    -e04
+e124    e03
+e134    -e02
+e234    e01
+e0123   e4
+e0124   -e3
+e0134   e2
+e0234   -e1
+e1234   e0
+e01234  1
+```
 
 
-
+```
 (TODO)
 
 
