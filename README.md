@@ -325,28 +325,28 @@ In 1D, a translation is two reflections across two points, as shown in the follo
   the separation distance between the two points).
 
 ```
-julia> P1 = e1 + e0; # Euclidean point x=1 => 1D PGA point (xe0+e1)
+julia> P1 = point(1); # Euclidean point x=1
 
-julia> P2 = e1 + 6*e0; # Euclidean point x=6 => 1D PGA point (xe0+e1)
-on motor as geometric product
+julia> P2 = point(6); # Euclidean point x=6
 
-julia> 
-julia> T = P2*P1; # compose the two reflection TranslatitoStr(T) # check Translation motor (distance between reflection points is 5)
-"1 + 5e01"
+julia> T = P2*P1; # compose the two reflection TranslatitoStr(T)
 
-julia> P0 = e1; # Euclidean origin (x=0 => 1D PGA point (xe0+e1)
+julia> toStr(T) # check Translation motor
+"1 - 5e01"
+
+julia> P0 = point(0); # Euclidean origin (x=0
 
 julia> PX = T*P0*~T; # apply Translation motor to P0 at origin; alternative eq is PX = T>>>P0
 
-julia> toStr(PX) # resulting dual PGA point (xe0+e1) => Euclidean point x=10
-"10e0 + e1"
+julia> toCoord(PX) # resulting translated coordinate (shifted P0 twice distance from P1 to P2)
+1-element Vector{Float32}:
+ 10.0
 ```
 Taking a closer look, the reason that the translation motor in the above REPL session works is because the sandwich
 operation is an [orthogonal transformation](https://en.wikipedia.org/wiki/Orthogonal_transformtion) (i.e., the squared
 norm of the 1D PGA object is preserved through translation T). Concretely, the squared norm of P0 is e11 = 1 and so is
-the squared norm of T*P0*~T = 1 because T*P0*~T = e1 + 10e0 and (e1 + 10e0)(e1 + 10e0) = e11 + 10e01 - 10e01 + 100e00 = 1
-because e11 = 1 and e00 = 0. In other words, the squared norm of the 1D PGA point P0 is preserved through the sandwich
-operation.
+the squared norm of T*P0*~T = 1 because T*P0*~T = (1-5e0)e1(1+5e10) = e1 and e11 = 1. In other words, the squared norm
+of the 1D PGA point P0 is preserved through the sandwich operation.
 
 In contrast to that translation using the **plane-based** geometric interpretation of PGA basis elements, an attempt
 to do a similar translation using the **point-based** geometric interpretation does not work:
@@ -372,11 +372,11 @@ julia> PX = T*P0*~T; # naive sandwich operation calculating translated point-bas
 julia> toStr(PX)
 "36e0"
 ```
-That calculated PX is not in the form of a translated point (i.e., PX = e0 + xe1). Therefore, that attempt at
-using a **point-based** geometric interpretation with a 1D PGA translation motor failed. Looking closer for the
-cause of the failure, the squared norm of P0 was preserved through the sandwich operation but only in the trivial
-sense because the squared norm of P0 collapsed to zero (i.e., e00 = 0) and the squared norm of PX also collapsed
-to zero (i.e., 36*36e00 = 0).
+That calculated PX is not in the form of a point-based translated point (i.e., PX = e0 + xe1). Therefore, that
+attempt at using a **point-based** geometric interpretation with a 1D PGA translation motor failed. Looking closer
+for the cause of the failure, the squared norm of P0 was preserved through the sandwich operation but only in the
+trivial sense because the squared norm of P0 collapsed to zero (i.e., e00 = 0) and the squared norm of PX also
+collapsed to zero (i.e., PX = 36e0 and PX\*PX = 0).
 
 ## 4.2 2D PGA Basis
 To prepare Julia's REPL for 2D PGA, include the files ripgand.jl and ripga2d.jl. To confirm the initialization, print out the basis.
