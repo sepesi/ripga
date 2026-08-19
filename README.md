@@ -334,7 +334,7 @@ julia> T = P2*P1; # compose the two reflection TranslatitoStr(T)
 julia> toStr(T) # check Translation motor
 "1 - 5e01"
 
-julia> P0 = point(0); # Euclidean origin (x=0
+julia> P0 = point(0); # Euclidean origin (x=0,y=0)
 
 julia> PX = T*P0*~T; # apply Translation motor to P0 at origin; alternative eq is PX = T>>>P0
 
@@ -345,8 +345,8 @@ julia> toCoord(PX) # resulting translated coordinate (shifted P0 twice distance 
 Taking a closer look, the reason that the translation motor in the above REPL session works is because the sandwich
 operation is an [orthogonal transformation](https://en.wikipedia.org/wiki/Orthogonal_transformtion) (i.e., the squared
 norm of the 1D PGA object is preserved through translation T). Concretely, the squared norm of P0 is e11 = 1 and so is
-the squared norm of T*P0*~T = 1 because T*P0*~T = (1-5e0)e1(1+5e10) = e1 and e11 = 1. In other words, the squared norm
-of the 1D PGA point P0 is preserved through the sandwich operation.
+the squared norm of T*P0*~T = 1 because T*P0*~T = (1-5e01)e12(1+5e01) = e12 + 10e20 and (e12 + 10e20)*e12 + 10e20) = 1.
+In other words, the squared norm of the 1D PGA point P0 is preserved through the sandwich operation.
 
 In contrast to that translation using the **plane-based** geometric interpretation of PGA basis elements, an attempt
 to do a similar translation using the **point-based** geometric interpretation does not work:
@@ -488,7 +488,7 @@ julia> T = L2*L1; # compose the two reflection Translation motor as geometric pr
 julia> toStr(T) # check Translation motor
 "1 - 5e01"
 
-julia> P = e12; # Euclidean origin => dual PGA point (xe20+ye01+e12); see cheat sheet
+julia> P = point(0,0); # Euclidean origin
 
 julia> P2 = T*P*~T; # apply Translation motor to P at origin; alternative eq is P2 = T>>>P
 
