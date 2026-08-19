@@ -360,7 +360,7 @@ julia> T = P2*P1; # attempt at calculating point-based 1D PGA translation motor
 julia> toStr(T)
 "6 - 5e01"
 ```
-Recall that the plane-based 1D PGA translation motor was T = 1 + 5e01, which is the exact algebraic form of a 
+Recall that the plane-based 1D PGA translation motor was T = 1 - 5e01, which is the exact algebraic form of a 
 [dual number](https://en.wikipedia.org/wiki/Dual_number). In contrast, when using the **point-based** geometric
 Interpretation, the translation motor is T = 6 - 5e01, which is **not** in the algebraic form of a dual number.
 That is a red flag, but let's naively continue with the sandwich operation.
