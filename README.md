@@ -274,6 +274,7 @@ In 1D PGA, there are a total of four (i.e., $2^{1+1}$) PGA basis elements:
 * 2 grade-1 (i,e., e0, e1), and
 * 1 grade-2 (i.e., e01).
 
+### 4.1.1 Derivation of 1D PGA Dual
 Listing the 1D PGA basis element names in a row vector results in the vector of vectors form of the 1D PGA basis. Note that the REPL
 shows column vectors of length five instead of four because ripga appends to each PGA basis element a status field (which is
 currently unused).
@@ -316,6 +317,10 @@ e0      e1
 e1      -e0
 e01     1
 ```
+### 4.1.2 Derivation of 1D PGA Point
+(TODO)
+
+### 4.1.3 Example of 1D PGA Point Translation
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
 rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
 In 1D, a translation is two reflections across two points, as shown in the following REPL session where 
@@ -415,6 +420,7 @@ In 2D PGA, there are a total of eight (i.e., $2^{2+1}$) PGA basis elements:
 * 3 grade-2 (i.e., e01, e20, e12), and
 * 1 grade-3 (i.e., e012).
 
+### 4.2.1 Derivative of 2D PGA Dual
 Listing the 2D PGA basis element names in a row vector results in the vector of vectors form of the 2D PGA basis. Note that the REPL
 shows column vectors of length nine instead of eight because ripga appends to each PGA basis element a status field (which is
 currently unused).
@@ -469,6 +475,10 @@ e20     e1
 e12     e0
 e012    1
 ```
+### 4.2.2 Derivative of 2D PGA Point
+(TODO)
+
+### 4.2.3 Example of 2D PGA Point Translation
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
 rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
 In 2D, a translation is two reflections across parallel lines and a rotation is two reflections across intersecting lines,
@@ -571,6 +581,7 @@ In 3D PGA, there are a total of 16 (i.e., $2^{3+1}$) PGA basis elements:
 * 4 grade-3 (i.e., e021, e013, e032, e123), and
 * 1 grade-4 (i.e., e0123).
 
+### 4.3.1 Derivative of 3D PGA Dual
 Listing the 3D PGA basis element names in a row vector results in the vector of vectors form of the 3D PGA basis. Note that the REPL
 shows column vectors of length 17 instead of 16 because ripga appends to each PGA basis element a status field (which is
 currently unused).
@@ -649,6 +660,10 @@ e032    -e1
 e123    -e0
 e0123   1
 ```
+### 4.3.2 Derivative of 3D PGA Point
+(TODO)
+
+### 4.3.3 Exsmple of 3D PGA Point Translation
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
 rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
 In 3D, a translation is two reflections across parallel planes and a rotation is two reflections across intersecting planes,
@@ -761,6 +776,7 @@ In 4D PGA, there are a total of 32 (i.e., $2^{4+1}$) PGA basis elements:
 *  5 grade-4 (i.e., e0123, e0124, e0134, e0234, e1234), and
 *  1 grade-5 (i.e., e01234).
 
+### 4.4.1 Derivation of 4D PGA Dual
 Listing the 4D PGA basis element names in a row vector results in the vector of vectors form of the 4D PGA basis. Note that the REPL
 shows column vectors of length 33 instead of 32 because ripga appends to each PGA basis element a status field (which is currently
 unused).
@@ -848,9 +864,11 @@ e1234   e0
 e01234  1
 ```
 
-
+### 4.4.2 Derivation of 4D PGA Point
 (TODO)
 
+### 4.4.3 Example of 4D PGA Point Translation
+(TODO)
 
 # 5. PGA Exponentials
 At the risk of being too ee-sy (pun intended), the letter e is used in several ways:
