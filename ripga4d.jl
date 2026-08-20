@@ -928,17 +928,17 @@ function point(
  y::Number,
  z::Number,
  w::Number)::Vector{Float32}
- return x*e0234 - y*e0134 + z*e0124 - w*e0123 + e1234
+ return e1234 - x*e0234 + y*e0134 - z*e0124 + w*e0123
 end # point()
 function point(M::Matrix{Float32})::Matrix{Float32}
  nPoint = size(M,2) # M is coordinate Matrix where each column is a point
  res = Matrix{Float32}(undef, 32+1, nPoint) # nBasis is 32, +1 for appended status
  for iPoint=1:nPoint
-  res[:,iPoint] =
-   M[1,iPoint]*e0234 - 
-   M[2,iPoint]*e0134 + 
-   M[3,iPoint]*e0124 - 
-   M[4,iPoint]*e0123 + e1234
+  res[:,iPoint] = e1234 -
+   M[1,iPoint]*e0234 +
+   M[2,iPoint]*e0134 -
+   M[3,iPoint]*e0124 +
+   M[4,iPoint]*e0123
  end
  return res # each column of result matrix is a PGA expression of a point
 end # point()
@@ -946,20 +946,20 @@ end # point()
 # convert PGA expression to Euclidean coordinates
 function toCoord(V::Vector{Float32})
  res = Vector{Float32}(undef, 4) # nD = 4
- res[1] = V[30] # e0234 element is x component
- res[2] = V[29] # -e0134 element is y component
- res[3] = V[28] # e0124 element is z component
- res[4] = V[27] # -e0123 element is w component
+ res[1] = -V[30] # -e0234 element is x component
+ res[2] = V[29] # e0134 element is y component
+ res[3] = -V[28] # -e0124 element is z component
+ res[4] = V[27] # e0123 element is w component
  return res
 end # toCoord()
 function toCoord(M::Matrix{Float32})::Matrix{Float32}
  nPoint = size(M,2) # M is PGA Matrix, each column is PGA expression of point
  res = Matrix{Float32}(undef, 4, nPoint) # nD = 4
  for iPoint=1:nPoint
-  res[1,iPoint] = M[30,iPoint] # e0234 element is x component
-  res[2,iPoint] = -M[29,iPoint] # -e0134 element is y component
-  res[3,iPoint] = M[28,iPoint] # e01241 element is z component
-  res[4,iPoint] = -M[27,iPoint] # -e0123 element is w component
+  res[1,iPoint] = -M[30,iPoint] # -e0234 element is x component
+  res[2,iPoint] = M[29,iPoint] # e0134 element is y component
+  res[3,iPoint] = -M[28,iPoint] # -e0124 element is z component
+  res[4,iPoint] = M[27,iPoint] # e0123 element is w component
  end
  return res # each column of result matrix is a coordinate of a point
 end # toCoord()
@@ -1047,23 +1047,23 @@ function utest(nLoop=100,
   
   S[2,1] = " P1             : "
   S[2,2] = toStr(P1)
-  S[2,3] = "e0234 + e1234"
+  S[2,3] = "-e0234 + e1234"
   
   S[3,1] = " P2             : "
   S[3,2] = toStr(P2)
-  S[3,3] = "-e0134 + e1234"
+  S[3,3] = "e0134 + e1234"
   
   S[4,1] = " P3             : "
   S[4,2] = toStr(P3)
-  S[4,3] = "-e0134 + e0234 + e1234"
+  S[4,3] = "e0134 - e0234 + e1234"
   
   S[5,1] = " line0          : "
   S[5,2] = toStr(line0)
-  S[5,3] = "e234"
+  S[5,3] = "-e234"
   
   S[6,1] = " line1          : "
   S[6,2] = toStr(line1)
-  S[6,3] = "e034 + e234"
+  S[6,3] = "e034 - e234"
   
   S[7,1] = " intersection   : "
   S[7,2] = toStr(x)
@@ -1079,11 +1079,11 @@ function utest(nLoop=100,
   
   S[10,1]= " point test     : "
   S[10,2]= toStr(point(5,6,7,8))
-  S[10,3]= "-8e0123 + 7e0124 - 6e0134 + 5e0234 + e1234"
+  S[10,3]= "8e0123 - 7e0124 + 6e0134 - 5e0234 + e1234"
   
   S[11,1]= " toCoord        : "
   S[11,2]= string(toCoord(point(5,6,7,8)))
-  S[11,3]= "Float32[5.0, -6.0, 7.0, -8.0]"
+  S[11,3]= "Float32[5.0, 6.0, 7.0, 8.0]"
   
   S[12,1]= " point test 2   : "
   S[12,2]= string(toCoord(point([5f0 10f0; 6f0 11f0; 7f0 12f0; 8f0 13f0])))
