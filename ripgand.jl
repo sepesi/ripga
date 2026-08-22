@@ -204,6 +204,48 @@ function exp(alpha::Number, B::Vector{Float32})
  end
 end
 
+# calculate dual of basis
+# arg:
+# 1) V::Vector{String} is the first column of basis
+#
+# usage:
+# basis_dual(basis[:,1])
+#
+function basis_dual(V::Vector{String})::Vector{String}
+  # expand the basis so each element covers the entire space
+  nBasis = length(V)
+  nChar = length(V[end]) - 1 # -1 avoids counting the leading 'e'
+  BC = chop.(V, head=1, tail=0) # Basis Chopped (to remove leading 'e')
+  IS = BC .* reverse(BC) # Index Strings
+
+  # convert IS from Vector{String} to Matrix{Int} using Julia comprehension
+  M = [parse(Int, str[j]) for str in IS, j in 1:nChar] # indices Matrix
+  M = [-ones(Int, nBasis) M] # prepend data sentinel (for simpler sorting)
+  nChar += 1 # account for added data sentinel
+  
+  # count left shifts for each expanded element in basis
+  #  while performing insertion sort
+  for iBasis = 1:nBasis
+    lshift = 0
+    for iChar = 3:nChar
+      v = M[iBasis,iChar]
+      jChar = iChar - 1
+      while v < M[iBasis,jChar]
+        M[iBasis,jChar+1] = M[iBasis,jChar]
+        jChar -= 1
+        lshift += 1
+      end
+      M[iBasis,jChar+1] = v
+    end
+    M[iBasis,1] = lshift # replace data sentinel with left shift count
+  end
+  
+  # use Julia comprehension to generate sign strings based upon number of left shifts
+  S = [v&0x1 > 0 ? "-" : "" for v in M[:,1]]
+  
+  return S .* reverse(V) # return reverse of basis with sign from dual operation
+end
+
 # convert multivector fields to string
 function toStr(V::Vector{Float32})
  nField = size(V,1)&~1 # clearing LSB ignores status field

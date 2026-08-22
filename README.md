@@ -663,7 +663,7 @@ e0123   1
 ### 4.3.2 Derivative of 3D PGA Point
 (TODO)
 
-### 4.3.3 Exsmple of 3D PGA Point Translation
+### 4.3.3 Example of 3D PGA Point Translation
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
 rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
 In 3D, a translation is two reflections across parallel planes and a rotation is two reflections across intersecting planes,
