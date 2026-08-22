@@ -175,9 +175,9 @@ function utest(nLoop=100,
    res1 =  e0 * e0         # = 0
    res2 =  e1 * e1         # = 1
    res3 =  e0 ^ e1         # = e01
-   res4 =  !(1+e0+e1+e01)  # = 1 + e0 - e1 + e01
-   res5 =  !!e0			   # = -e0
-   res6 =  !!!!e0		   # = e0
+   res4 =  !(1+e0+e1+e01)  # = 1 - e0 + e1 + e01
+   res5 =  !!e0            # = -e0
+   res6 =  !!!!e0          # = e0
    res7 =  e0 & e1         # = -1
    res8 =  e0 | e1         # = 0
    res9 =  e1 | e1         # = 1
@@ -203,7 +203,7 @@ function utest(nLoop=100,
    res1 =  ga"e0   e0" # = 0
    res2 =  ga"e1   e1" # = 1
    res3 =  ga"e0 ^ e1" # = e01
-   res4 =  ga"!(1 + e0 + e1 + e01)" # = 1 + e0 - e1 + e01
+   res4 =  ga"!(1 + e0 + e1 + e01)" # = 1 - e0 + e1 + e01
    res5 =  ga"!!e0"  # = -e0
    res6 =  ga"!!!!e0" # = e0
    res7 =  ga"e0 ∨ e1" # = -1
@@ -241,7 +241,7 @@ function utest(nLoop=100,
   
   S[4,1] = " res4         : "
   S[4,2] = toStr(res4)
-  S[4,3] = "1 + e0 - e1 + e01"
+  S[4,3] = "1 - e0 + e1 + e01"
   
   S[5,1] = " res5         : "
   S[5,2] = toStr(res5)
