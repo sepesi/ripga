@@ -21,6 +21,9 @@ e0 =  zeros(Float32, nField); e0[2] = 1
 e1 =  zeros(Float32, nField); e1[3] = 1
 e01 = zeros(Float32, nField); e01[4] = 1
 
+# alternative basis index ordering
+e10 = -e01
+
 # geometric product
 function Base.:*(a::Vector{Float32},b::Vector{Float32})::Vector{Float32}
  res = similar(a)
@@ -64,7 +67,7 @@ end # outer product; wedge operator (^)
 # dual operator (!)
 function Base.:!(a::Vector{Float32})::Vector{Float32}
  res = [reverse(a[1:end-1]); a[end]] # keep status field at end
- res[3] *= -1
+ res[2] *= -1 # index 2 is reverse of index 3
  return res
 end
 
