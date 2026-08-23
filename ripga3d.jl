@@ -45,6 +45,16 @@ e032 =  zeros(Float32, nField); e032[14] = 1
 e123 =  zeros(Float32, nField); e123[15] = 1
 e0123 = zeros(Float32, nField); e0123[16] = 1
 
+# alternative basis index ordering
+e10 = -e01
+e20 = -e02
+e30 = -e03
+e21 = -e12
+e13 = -e31
+e32 = -e23
+e012 = -e021
+e023 = -e032
+
 # geometric product
 function Base.:*(a::Vector{Float32},b::Vector{Float32})::Vector{Float32}
  res = similar(a)
