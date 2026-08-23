@@ -211,7 +211,11 @@ end
 # usage:
 # basis_dual(basis[:,1])
 #
-function basis_dual(V::Vector{String})::Vector{String}
+# returns matrix with 2 columns:
+# 1) V (the original basis)
+# 2) the dual of the basis
+#
+function basis_dual(V::Vector{String})::Matrix{String}
   # expand the basis so each element covers the entire space
   nBasis = length(V)
   nChar = length(V[end]) - 1 # -1 avoids counting the leading 'e'
@@ -243,7 +247,7 @@ function basis_dual(V::Vector{String})::Vector{String}
   # use Julia comprehension to generate sign strings based upon number of left shifts
   S = [v&0x1 > 0 ? "-" : "" for v in M[:,1]]
   
-  return S .* reverse(V) # return reverse of basis with sign from dual operation
+  return [V S.*reverse(V)] # return basis (col 1) and its dual (col 2)
 end
 
 # convert multivector fields to string

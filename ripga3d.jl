@@ -146,7 +146,7 @@ end # outer product; wedge operator (^)
 # dual operator (!)
 function Base.:!(a::Vector{Float32})::Vector{Float32}
  res = [reverse(a[1:end-1]); a[end]] # keep status field at end
- res[12:15] *= -1
+ res[2:5] *= -1 # indices 2:5 are the reverse of indices 12:15
  return res
 end
 
