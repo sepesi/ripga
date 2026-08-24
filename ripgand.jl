@@ -211,9 +211,9 @@ end
 # usage:
 # basis_dual(basis[:,1])
 #
-# returns matrix with 2 columns:
+# returns matrix with 2 columns of Strings:
 # 1) V (the original basis)
-# 2) the dual of the basis
+# 2) the dual (!) of the basis
 #
 function basis_dual(V::Vector{String})::Matrix{String}
   # expand the basis so each element covers the entire space
@@ -248,6 +248,53 @@ function basis_dual(V::Vector{String})::Matrix{String}
   S = [v&0x1 > 0 ? "-" : "" for v in M[:,1]]
   
   return [V S.*reverse(V)] # return basis (col 1) and its dual (col 2)
+end
+
+# calculate reverse of basis
+# arg:
+# 1) V::Vector{String} is the first column of basis
+#
+# usage:
+# basis_reverse(basis[:,1])
+#
+# returns matrix with 2 columns of Strings:
+# 1) V (the original basis)
+# 2) the reverse (~) of the basis
+#
+function basis_reverse(V::Vector{String})::Matrix{String}
+  # generate reverse position matrix
+  nBasis = length(V)
+  nChar = length(V[end]) # -1 removes 'e', +1 for data sentinel
+  R = zeros(Int,1,nChar) # empty Row
+  copyto!(R,nChar:-1:1)
+  R[1] = -1 # put data sentinel (for simpler sort) in leftmost position
+  maxLength = nChar - 1
+  M = repeat(R, maxLength)
+  
+  # sort reverse position matrix for each possible length
+  for iLength = 1:maxLength
+    lshift = 0
+    for iChar = 3:iLength+1
+      v = M[iLength,iChar]
+      jChar = iChar - 1
+      while v < M[iLength,jChar]
+        M[iLength,jChar+1] = M[iLength,jChar]
+        jChar -= 1
+        lshift += 1
+      end
+      M[iLength,jChar+1] = v
+    end
+    M[iLength,1] = lshift # replace data sentinel with left shift count
+  end
+  
+  # define prepending sign string based upon left shift count
+  S = fill("",nBasis)
+  for iBasis = 2:nBasis
+    n = length(V[iBasis]) - 1 # -1 removes leading each
+	(M[n,1]&0x1 > 0) && (S[iBasis] = "-")
+  end
+  
+  return [V S.*V] # return basis (col 1) and its reverse (col 2)
 end
 
 # convert multivector fields to string
