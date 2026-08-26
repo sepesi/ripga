@@ -274,53 +274,83 @@ In 1D PGA, there are a total of four (i.e., $2^{1+1}$) PGA basis elements:
 * 2 grade-1 (i,e., e0, e1), and
 * 1 grade-2 (i.e., e01).
 
-### 4.1.1 Derivation of 1D PGA Dual
-Listing the 1D PGA basis element names in a row vector results in the vector of vectors form of the 1D PGA basis. Note that the REPL
-shows column vectors of length five instead of four because ripga appends to each PGA basis element a status field (which is
-currently unused).
+### 4.1.1 Calculating 1D PGA Dual
+Because duality is a key concept throughout PGA, becoming familiar with the two steps to calculate the dual of the basis can be
+helpful. The two steps are
+1. extend each PGA element to the grade of the pseudoscalar,
+2. repeatedly apply the contraction axiom (i.e., eij = -eji) to adjust the index ordering in each extended PGA element to match
+   the index ordering in the pseudoscalar,
+although there are several approaches to accomplishing those two steps.
+
+The first of the three approaches is perhaps the easiest because it uses the geometric product operator expands the grade of each
+PGA basis element (step 1) and that same geometric product operation automatically corrects the order of each expanded PGA basis
+element (step 2). However, this first approach is not the easiest to implement because it requires an implementation of the
+geometric product operator. Note that in this first approach, a short cut is to put all the PGA basis elements into a single
+matrix so that the geometric product can be done just once (with geoprodset()) instead of to each of the four PGA basis elements.
+Also, instead of listing each of the four PGA basis elements within a matrix, a Julia comprehension constructs that matrix (i.e.,
+[Float32(i == j) for i in 1:5, j in 1:4] == [eu e0 e1 e01]). Although this Julia comprehension doesn't save much typing with the
+1D PGA basis elements, it does save typing when constructing matrices that include all the PGA basis elements for 3D PGA and 4D PGA.
 ```
-julia> B = [eu e0 e1 e01] # 1D PGA basis in form of vector of vectors
+julia> I = [Float32(i == j) for i in 1:size(basis,1)+1, j in 1:size(basis,1)] # Identity matrix (with an appended row for status)
 5×4 Matrix{Float32}:
  1.0  0.0  0.0  0.0
  0.0  1.0  0.0  0.0
  0.0  0.0  1.0  0.0
  0.0  0.0  0.0  1.0
  0.0  0.0  0.0  0.0
-```
-Calling the PGA basis "B" and calling the PGA basis reversed left to right "BR", they can be arguments to geoprodset() to calculate
-the needed sign changes in the dual operation. Applying those sign changes to the reverse(basis) converts it to the dual of the basis,
-as shown in the following REPL.
-```
-julia> BR = [e01 e1 e0 eu]; # B in Reverse (right to left)
 
-julia> P = geoprodset(B[1:end-1,:],BR[1:end-1,:])[end,:]; # Pseudoscalar row of geoprodset() result
+julia> P = geoprodset(I,reverse(I,dims=2))[size(basis,1),:] # a vector with all the Pseudoscalars
+4-element Vector{Float32}:
+  1.0
+  1.0
+ -1.0
+  1.0
 
-julia> S = [p < 0 ? "-" : "" for p in P] # Sign changes needed for dual operation
+julia> S = [p < 0 ? "-" : "" for p in P] # a Sign vector of strings
 4-element Vector{String}:
  ""
  ""
  "-"
  ""
 
-julia> HDR = ["BASIS"  "DUAL"; "" ""]
-2×2 Matrix{String}:
- "BASIS"  "DUAL"
- ""       ""
-
-julia> D = [HDR; [basis[:,1]  S.*reverse(basis[:,1])]]; # Dual table
-
-julia> foreach(row->println(join(row, "\t")), eachrow(D))
-BASIS   DUAL
-
-1       e01
-e0      e1
-e1      -e0
-e01     1
+julia> [basis[:,1] S.*reverse(basis[:,1])] # the 1D PGA basis (col 1) and its dual (col 2)
+4×2 Matrix{String}:
+ "1"    "e01"
+ "e0"   "e1"
+ "e1"   "-e0"
+ "e01"  "1"
 ```
-### 4.1.2 Derivation of 1D PGA Point
+The second approach to calculating the dual of the PGA basis is perhaps the quickest because it is performed by a single
+call to the utility function basis_dual(basis[:,1]). Looking at the code, basis_dual() does not use the geometric product
+to expand each PGA basis element to the grade of the pseudoscalar element (step 1). Instead, that expansion is done With
+the concatenation of strings. Then the index ordering is sorted with a classic insertion sort algorithm.
+```
+julia> basis_dual(basis[:,1])
+4×2 Matrix{String}:
+ "1"    "e01"
+ "e0"   "e1"
+ "e1"   "-e0"
+ "e01"  "1"
+```
+The third and final approach to calculating the dual of the PGA basis is neither the easiest or the quickest but it may be
+the best approach to becoming familiar with PGA's duality. Specifically, this third approach is manual calculation, using
+paper and pencil to write a table with four columns:
+* column 1: the basis
+* column 2: reverse(basis)
+* column 3: the number of left shifts to move the 0 index to the first position
+* column 4: the number of left shifts to move the 1 index to the second position.
+
+Then, for a given row of the table (i.e., a given PGA basis element), sum the total number of left shifts (i.e., sum the
+entries in columns 3 and 4. If that sum is odd (i.e., the contraction axiom was applied an odd number of times), prepend a
+negative sign to the entry in column 2 (the reverse(basis)). The new column 2 is the 1D PGA dual.
+
+### 4.1.2 Calculating 1D PGA Reverse
 (TODO)
 
-### 4.1.3 Example of 1D PGA Point Translation
+### 4.1.3 Derivation of 1D PGA Point
+(TODO)
+
+### 4.1.4 Example of 1D PGA Point Translation
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
 rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
 In 1D, a translation is two reflections across two points, as shown in the following REPL session where 
@@ -420,7 +450,7 @@ In 2D PGA, there are a total of eight (i.e., $2^{2+1}$) PGA basis elements:
 * 3 grade-2 (i.e., e01, e20, e12), and
 * 1 grade-3 (i.e., e012).
 
-### 4.2.1 Derivative of 2D PGA Dual
+### 4.2.1 Calculating 2D PGA Dual
 Listing the 2D PGA basis element names in a row vector results in the vector of vectors form of the 2D PGA basis. Note that the REPL
 shows column vectors of length nine instead of eight because ripga appends to each PGA basis element a status field (which is
 currently unused).
@@ -475,10 +505,13 @@ e20     e1
 e12     e0
 e012    1
 ```
-### 4.2.2 Derivative of 2D PGA Point
+### 4.2.2 Calculating 2D PGA Reverse
 (TODO)
 
-### 4.2.3 Example of 2D PGA Point Translation
+### 4.2.3 Derivative of 2D PGA Point
+(TODO)
+
+### 4.2.4 Example of 2D PGA Point Translation
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
 rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
 In 2D, a translation is two reflections across parallel lines and a rotation is two reflections across intersecting lines,
@@ -581,7 +614,7 @@ In 3D PGA, there are a total of 16 (i.e., $2^{3+1}$) PGA basis elements:
 * 4 grade-3 (i.e., e021, e013, e032, e123), and
 * 1 grade-4 (i.e., e0123).
 
-### 4.3.1 Derivative of 3D PGA Dual
+### 4.3.1 Calculating 3D PGA Dual
 Listing the 3D PGA basis element names in a row vector results in the vector of vectors form of the 3D PGA basis. Note that the REPL
 shows column vectors of length 17 instead of 16 because ripga appends to each PGA basis element a status field (which is
 currently unused).
@@ -660,10 +693,13 @@ e032    -e1
 e123    -e0
 e0123   1
 ```
-### 4.3.2 Derivative of 3D PGA Point
+### 4.3.2 Calculating 3D PGA Reverse
 (TODO)
 
-### 4.3.3 Example of 3D PGA Point Translation
+### 4.3.3 Derivative of 3D PGA Point
+(TODO)
+
+### 4.3.4 Example of 3D PGA Point Translation
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
 rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
 In 3D, a translation is two reflections across parallel planes and a rotation is two reflections across intersecting planes,
@@ -776,7 +812,7 @@ In 4D PGA, there are a total of 32 (i.e., $2^{4+1}$) PGA basis elements:
 *  5 grade-4 (i.e., e0123, e0124, e0134, e0234, e1234), and
 *  1 grade-5 (i.e., e01234).
 
-### 4.4.1 Derivation of 4D PGA Dual
+### 4.4.1 Calculating 4D PGA Dual
 Listing the 4D PGA basis element names in a row vector results in the vector of vectors form of the 4D PGA basis. Note that the REPL
 shows column vectors of length 33 instead of 32 because ripga appends to each PGA basis element a status field (which is currently
 unused).
@@ -863,11 +899,13 @@ e0234   -e1
 e1234   e0
 e01234  1
 ```
-
-### 4.4.2 Derivation of 4D PGA Point
+### 4.4.2 Calculating 4D PGA Reverse
 (TODO)
 
-### 4.4.3 Example of 4D PGA Point Translation
+### 4.4.3 Derivation of 4D PGA Point
+(TODO)
+
+### 4.4.4 Example of 4D PGA Point Translation
 (TODO)
 
 # 5. PGA Exponentials
