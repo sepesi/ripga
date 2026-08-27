@@ -248,7 +248,6 @@ The ripga library is capable of switching back and forth between the bases for 1
 
 ## 4.1 1D PGA Basis
 To prepare Julia's REPL for 1D PGA, include the files ripgand.jl and ripga1d.jl. To confirm the initialization, print out the basis.
-
 ```
 julia> include("ripgand.jl"); # utility functions for all available dimensions
 
@@ -283,10 +282,10 @@ calculate the dual of the basis can be helpful. The two steps are
 although those two steps can be accomplished in several different ways.
 
 The first of the three approaches is perhaps the easiest because it uses the geometric product operator to expand the grade of each
-PGA basis element (step 1) and that same geometric product operation automatically corrects the order of each expanded PGA basis
+PGA basis element (step 1) and that same geometric product operation automatically corrects the index order of each expanded PGA basis
 element (step 2). However, this first approach is not the easiest to implement because it requires an implementation of the
 geometric product operator. Note that in this first approach, a short cut is to put all the PGA basis elements into a single
-matrix so that the geometric product can be done just once (with geoprodset()) instead of to each of the four PGA basis elements.
+matrix so that the geometric product can be done just once (with geoprodset()) instead of on each of the four PGA basis elements.
 Also, instead of listing each of the four PGA basis elements within a matrix, a Julia comprehension constructs that matrix (i.e.,
 [Float32(i == j) for i in 1:5, j in 1:4] == [eu e0 e1 e01]). Although this Julia comprehension doesn't save much typing with the
 1D PGA basis elements, it does save typing when constructing matrices that include all the PGA basis elements for 3D PGA and 4D PGA.
@@ -422,7 +421,6 @@ collapsed to zero (i.e., PX = 36e0 and PX\*PX = 0).
 
 ## 4.2 2D PGA Basis
 To prepare Julia's REPL for 2D PGA, include the files ripgand.jl and ripga2d.jl. To confirm the initialization, print out the basis.
-
 ```
 julia> include("ripgand.jl"); # utility functions for all available dimensions
 
@@ -466,10 +464,10 @@ calculate the dual of the basis can be helpful. The two steps are
 although those two steps can be accomplished in several different ways.
 
 The first of the three approaches is perhaps the easiest because it uses the geometric product operator to expand the grade of each
-PGA basis element (step 1) and that same geometric product operation automatically corrects the order of each expanded PGA basis
+PGA basis element (step 1) and that same geometric product operation automatically corrects the index order of each expanded PGA basis
 element (step 2). However, this first approach is not the easiest to implement because it requires an implementation of the
 geometric product operator. Note that in this first approach, a short cut is to put all the PGA basis elements into a single
-matrix so that the geometric product can be called just once (with geoprodset()) instead of to each of the eight PGA basis elements.
+matrix so that the geometric product can be called just once (with geoprodset()) instead of on each of the eight PGA basis elements.
 Also, instead of listing each of the eight PGA basis elements within a matrix, a Julia comprehension constructs that matrix (i.e.,
 [Float32(i == j) for i in 1:9, j in 1:8] == [eu e0 e1 e2 e01 e20 e12 e012]). Although this Julia comprehension doesn't save much
 typing with the 2D PGA basis elements, it does save typing when constructing matrices that include all the PGA basis elements for
@@ -542,7 +540,7 @@ paper and pencil to write a table with five columns:
 * column 1: the basis
 * column 2: reverse(basis)
 * column 3: the number of left shifts to move the 0 index to the first position
-* column 4: the number of left shifts to move the 1 index to the second position.
+* column 4: the number of left shifts to move the 1 index to the second position
 * column 5: the number of left shifts to move the 2 index to the third position.
 ```
 julia> [basis[:,1] reverse(basis[:,1]) [0 0 0;0 0 0;2 0 0;1 1 0;0 0 0;1 1 0;2 0 0;0 0 0]]
@@ -670,11 +668,22 @@ In 3D PGA, there are a total of 16 (i.e., $2^{3+1}$) PGA basis elements:
 * 1 grade-4 (i.e., e0123).
 
 ### 4.3.1 Calculating 3D PGA Dual
-Listing the 3D PGA basis element names in a row vector results in the vector of vectors form of the 3D PGA basis. Note that the REPL
-shows column vectors of length 17 instead of 16 because ripga appends to each PGA basis element a status field (which is
-currently unused).
+Because duality defines the relationship between point-based and plane-based PGA, becoming familiar with the two steps to
+calculate the dual of the basis can be helpful. The two steps are
+1. extend the grade of each PGA basis element to the grade of the pseudoscalar,
+2. repeatedly apply the contraction axiom (i.e., eij = -eji) to adjust the index ordering in each extended PGA basis element
+   to match the index ordering in the pseudoscalar,
+although those two steps can be accomplished in several different ways.
+
+The first of the three approaches is perhaps the easiest because it uses the geometric product operator to expand the grade of each
+PGA basis element (step 1) and that same geometric product operation automatically corrects the index order of each expanded PGA basis
+element (step 2). However, this first approach is not the easiest to implement because it requires an implementation of the
+geometric product operator. Note that in this first approach, a short cut is to put all the PGA basis elements into a single
+matrix so that the geometric product can be called just once (with geoprodset()) instead of on each of the 16 PGA basis elements.
+Also, instead of listing each of the 16 PGA basis elements within a matrix, a Julia comprehension constructs that matrix (i.e.,
+[Float32(i == j) for i in 1:17, j in 1:16] == [eu e0 e1 e2 e3 e01 e02 e03 e12 e31 e23 e021 e013 e032 e123 e0123]).
 ```
-julia> B = [eu e0 e1 e2 e3 e01 e02 e03 e12 e31 e23 e021 e013 e032 e123 e0123]
+julia> I = [Float32(i == j) for i in 1:size(basis,1)+1, j in 1:size(basis,1)] # Identity matrix
 17×16 Matrix{Float32}:
  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
  0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
@@ -693,16 +702,27 @@ julia> B = [eu e0 e1 e2 e3 e01 e02 e03 e12 e31 e23 e021 e013 e032 e123 e0123]
  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0
  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0
  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
-```
-Calling the PGA basis "B" and calling the PGA basis reversed left to right "BR", they can be arguments to geoprodset() to calculate
-the needed sign changes in the dual operation. Applying those sign changes to the reverse(basis) converts it to the dual of the basis,
-as shown in the following REPL.
-```
-julia> BR = [e0123 e123 e032 e013 e021 e23 e31 e12 e03 e02 e01 e3 e2 e1 e0 eu]; # B Reversed
 
-julia> P = geoprodset(B[1:end-1,:],BR[1:end-1,:])[end,:]; # Pseudoscalar row of geoprodset() result
+julia> P = geoprodset(I,reverse(I,dims=2))[size(basis,1),:] # a vector with all the Pseudoscalars
+16-element Vector{Float32}:
+  1.0
+  1.0
+  1.0
+  1.0
+  1.0
+  1.0
+  1.0
+  1.0
+  1.0
+  1.0
+  1.0
+ -1.0
+ -1.0
+ -1.0
+ -1.0
+  1.0
 
-julia> S = [p < 0 ? "-" : "" for p in P] # Sign changes needed for dual operation
+julia> S = [p < 0 ? "-" : "" for p in P]  # a Sign vector of strings
 16-element Vector{String}:
  ""
  ""
@@ -721,33 +741,82 @@ julia> S = [p < 0 ? "-" : "" for p in P] # Sign changes needed for dual operatio
  "-"
  ""
 
-julia> HDR = ["BASIS"  "DUAL"; "" ""]
-2×2 Matrix{String}:
- "BASIS"  "DUAL"
- ""       ""
-
-julia> D = [HDR; [basis[:,1]  S.*reverse(basis[:,1])]]; # Dual table
-
-julia> foreach(row->println(join(row, "\t")), eachrow(D))
-BASIS   DUAL
-
-1       e0123
-e0      e123
-e1      e032
-e2      e013
-e3      e021
-e01     e23
-e02     e31
-e03     e12
-e12     e03
-e31     e02
-e23     e01
-e021    -e3
-e013    -e2
-e032    -e1
-e123    -e0
-e0123   1
+julia> [basis[:,1] S.*reverse(basis[:,1])]
+16×2 Matrix{String}:
+ "1"      "e0123"
+ "e0"     "e123"
+ "e1"     "e032"
+ "e2"     "e013"
+ "e3"     "e021"
+ "e01"    "e23"
+ "e02"    "e31"
+ "e03"    "e12"
+ "e12"    "e03"
+ "e31"    "e02"
+ "e23"    "e01"
+ "e021"   "-e3"
+ "e013"   "-e2"
+ "e032"   "-e1"
+ "e123"   "-e0"
+ "e0123"  "1"
 ```
+The second approach to calculating the dual of the PGA basis is perhaps the quickest because it is performed by a single
+call to the utility function basis_dual(basis[:,1]). Looking at the code, basis_dual() does not use the geometric product
+to expand each PGA basis element to the grade of the pseudoscalar element (step 1). Instead, that expansion is done with
+the concatenation of strings. Then an insertion sort algorithm orders the indices.
+```
+julia> basis_dual(basis[:,1])
+16×2 Matrix{String}:
+ "1"      "e0123"
+ "e0"     "e123"
+ "e1"     "e032"
+ "e2"     "e013"
+ "e3"     "e021"
+ "e01"    "e23"
+ "e02"    "e31"
+ "e03"    "e12"
+ "e12"    "e03"
+ "e31"    "e02"
+ "e23"    "e01"
+ "e021"   "-e3"
+ "e013"   "-e2"
+ "e032"   "-e1"
+ "e123"   "-e0"
+ "e0123"  "1"
+```
+The third and final approach to calculating the dual of the PGA basis is neither the easiest or the quickest but it may be
+the best approach to becoming familiar with PGA's duality. Specifically, this third approach is manual calculation, using
+paper and pencil to write a table with six columns:
+* column 1: the basis
+* column 2: reverse(basis)
+* column 3: the number of left shifts to move the 0 index to the first position
+* column 4: the number of left shifts to move the 1 index to the second position
+* column 5: the number of left shifts to move the 2 index to the third position
+* column 6: the number of left shifts to move the 3 index to the fourth position.
+```
+julia> [basis[:,1] reverse(basis[:,1]) [0 0 0 0;0 0 0 0;1 0 1 0;1 1 0 0;1 2 1 0;0 0 0 0;0 2 0 0;0 1 1 0;2 0 0 0;2 1 1 0;2 2 0 0;0 1 0 0;0 0 1 0;0 2 1 0;3 0 0 0;0 0 0 0]]
+16×6 Matrix{Any}:
+ "1"      "e0123"  0  0  0  0
+ "e0"     "e123"   0  0  0  0
+ "e1"     "e032"   1  0  1  0
+ "e2"     "e013"   1  1  0  0
+ "e3"     "e021"   1  2  1  0
+ "e01"    "e23"    0  0  0  0
+ "e02"    "e31"    0  2  0  0
+ "e03"    "e12"    0  1  1  0
+ "e12"    "e03"    2  0  0  0
+ "e31"    "e02"    2  1  1  0
+ "e23"    "e01"    2  2  0  0
+ "e021"   "e3"     0  1  0  0
+ "e013"   "e2"     0  0  1  0
+ "e032"   "e1"     0  2  1  0
+ "e123"   "e0"     3  0  0  0
+ "e0123"  "1"      0  0  0  0
+```
+Then, for a given row of the table (i.e., a given PGA basis element), sum the total number of left shifts (i.e., sum the
+counts in columns 3, 4, 5, and 6. If that sum is odd (i.e., the contraction axiom was applied an odd number of times), prepend a
+negative sign to the entry in column 2 (the reverse(basis)). The new column 2 is the 2D PGA dual.
+
 ### 4.3.2 Calculating 3D PGA Reverse
 (TODO)
 
