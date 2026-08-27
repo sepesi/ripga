@@ -279,12 +279,15 @@ to calculate the dual of the basis can be helpful. The two steps are
 1. extend the grade of each PGA basis element to the grade of the pseudoscalar,
 2. repeatedly apply the contraction axiom (i.e., eij = -eji) to adjust the index ordering in each extended PGA basis element
    to match the index ordering in the pseudoscalar,
+
 although those two steps can be accomplished in several different ways.
 
 The first of the three approaches is conceptually the easiest because it uses the geometric product to expand the grade of each
 PGA basis element (step 1) and that same geometric product automatically corrects the index order of each expanded PGA basis
 element (step 2). However, this first approach is not the easiest to implement because it requires an implementation of the
-geometric product. Note that in this first approach, a short cut is to put all the PGA basis elements into a single matrix so
+geometric product.
+
+Note that in this first approach, a short cut is to put all the PGA basis elements into a single matrix so
 that the geometric product can be done just once (with geoprodset()) instead of on each of the four PGA basis elements. Also,
 instead of listing the name of each of the four PGA basis elements within a matrix, a Julia comprehension constructs that matrix
 (i.e., [Float32(i == j) for i in 1:5, j in 1:4] == [eu e0 e1 e01]). Although this Julia comprehension doesn't save much typing
@@ -462,12 +465,15 @@ to calculate the dual of the basis can be helpful. The two steps are
 1. extend the grade of each PGA basis element to the grade of the pseudoscalar,
 2. repeatedly apply the contraction axiom (i.e., eij = -eji) to adjust the index ordering in each extended PGA basis element
    to match the index ordering in the pseudoscalar,
+
 although those two steps can be accomplished in several different ways.
 
 The first of the three approaches is conceptually the easiest because it uses the geometric product to expand the grade of each
 PGA basis element (step 1) and that same geometric product automatically corrects the index order of each expanded PGA basis
 element (step 2). However, this first approach is not the easiest to implement because it requires an implementation of the
-geometric product. Note that in this first approach, a short cut is to put all the PGA basis elements into a single matrix so
+geometric product.
+
+Note that in this first approach, a short cut is to put all the PGA basis elements into a single matrix so
 that the geometric product can be called just once (with geoprodset()) instead of on each of the eight PGA basis elements.
 Also, instead of listing the name of each of the eight PGA basis elements within a matrix, a Julia comprehension constructs that
 matrix (i.e., [Float32(i == j) for i in 1:9, j in 1:8] == [eu e0 e1 e2 e01 e20 e12 e012]). Although this Julia comprehension doesn't
@@ -674,12 +680,15 @@ to calculate the dual of the basis can be helpful. The two steps are
 1. extend the grade of each PGA basis element to the grade of the pseudoscalar,
 2. repeatedly apply the contraction axiom (i.e., eij = -eji) to adjust the index ordering in each extended PGA basis element
    to match the index ordering in the pseudoscalar,
+   
 although those two steps can be accomplished in several different ways.
 
 The first of the three approaches is conceptually the easiest because it uses the geometric product to expand the grade of each
 PGA basis element (step 1) and that same geometric product automatically corrects the index order of each expanded PGA basis
 element (step 2). However, this first approach is not the easiest to implement because it requires an implementation of the
-geometric product. Note that in this first approach, a short cut is to put all the PGA basis elements into a single matrix so
+geometric product.
+
+Note that in this first approach, a short cut is to put all the PGA basis elements into a single matrix so
 that the geometric product can be called just once (with geoprodset()) instead of on each of the 16 PGA basis elements. Also,
 instead of listing the names of each of the 16 PGA basis elements within a matrix, a Julia comprehension constructs that matrix
 (i.e., [Float32(i == j) for i in 1:17, j in 1:16] == [eu e0 e1 e2 e3 e01 e02 e03 e12 e31 e23 e021 e013 e032 e123 e0123]).
@@ -943,12 +952,15 @@ to calculate the dual of the basis can be helpful. The two steps are
 1. extend the grade of each PGA basis element to the grade of the pseudoscalar,
 2. repeatedly apply the contraction axiom (i.e., eij = -eji) to adjust the index ordering in each extended PGA basis element
    to match the index ordering in the pseudoscalar,
+   
 although those two steps can be accomplished in several different ways.
 
 The first of the three approaches is cpmceptually the easiest because it uses the geometric product to expand the grade of each
 PGA basis element (step 1) and that same geometric product automatically corrects the index order of each expanded PGA basis
 element (step 2). However, this first approach is not the easiest to implement because it requires an implementation of the
-geometric product. Note that in this first approach, a short cut is to put all the PGA basis elements into a single matrix so
+geometric product.
+
+Note that in this first approach, a short cut is to put all the PGA basis elements into a single matrix so
 that the geometric product can be called just once (with geoprodset()) instead of on each of the 16 PGA basis elements. Also,
 instead of listing the names of each of the 16 PGA basis elements within a matrix, a Julia comprehension constructs that matrix
 (i.e., [Float32(i == j) for i in 1:33, j in 1:32] == [eu e0 e1 e2 e3 e01 e02 e03 e12 e31 e23 e021 e013 e032 e123 e0123]).
