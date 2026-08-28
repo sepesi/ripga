@@ -355,7 +355,48 @@ counts in columns 3 and 4. If that sum is odd (i.e., the contraction axiom was a
 negative sign to the entry in column 2 (the reverse(basis)). The new column 2 is the 1D PGA dual.
 
 ### 4.1.2 Calculating 1D PGA Reverse
-(TODO)
+Similar to the PGA dual (!), which is central to the geometric interpretation of PGA basis elements, the PGA reverse (~),
+which is central to the PGA sandwich operation, also is computed in two steps:
+1. reverse the order of the indices in each PGA basis element,
+2. repeatedly apply the contraction axiom (i.e., eij = -eji) to restore the original (i.e., unreversed) index ordering
+   in each PGA basis element.
+
+As with the PGA dual (!), there are different ways to calculate the PGA reverse (~).
+
+The quickest approach to calculating the PGA reverse (~) is to call the utility function basis_reverse(basis[:,1]).
+```
+julia> basis_reverse(basis[:,1])
+4×2 Matrix{String}:
+ "1"    "1"
+ "e0"   "e0"
+ "e1"   "e1"
+ "e01"  "-e01"
+```
+The alternative approach to calculating the PGA reverse (~) is a manual calculation with paper and pencil, which is not
+the quickest approach but may be the best approach to gain familiarity with the PGA reverse. Specifically, this manual
+calculation involves writing a table with up to three columns:
+* column 1: the number of indices in the PGA basis element (e.g., e01 has 2 indices)
+* columns 2,,, : column 1 repeatedly decremented to 0 (e.g., e01 has 3 column: 2 1 0) 
+
+The decrementing columns denote the reversed positions (not the values) of the PGA basis element's indices where 0 denotes
+the leftmost position and 1 denotes the second leftmost position. Numbering the positions starting at 0 (i.e., leftmost)
+causes the decrementing columns to also be the number of left shifts required to restore the values to their initial positions
+at 0, and 1. Therefore, summing over each row starting at column 2 determines the number of left shifts (i.e., the number Of
+applications of the contraction axiom) that were needed to restore the reversed PGA basis element to its original index ordering.
+If that total number of left shifts is odd, then a negaitve sign must be prepended to the PGA basis element of that given length.
+
+julia> M = [1 0 0;2 1 0] # length and shift count matrix for 1D PGA
+2×3 Matrix{Int64}:
+ 1  0  0
+ 2  1  0
+
+To be clear, the PGA reverse (~) is different from Julia's reverse() function. The PGA reverse (~) flips the left to right
+order of the indices in each PGA basis element (and then repeatedly applies the contraction axiom to restore the original
+left to right order of each PGA basis element's indices with the addition of a sign change if the required number of applications
+of the contraction axiom is odd. In contrast, Julia's reverse() function flips the top to bottom order of any column vector
+in Julia. As an aside, Julia's reverse() function acts more like the PGA reverse (~) when Julia's reverse() function is applied
+to a Matrix{Float32} and there is an additional argument in the call to the reverse() function specifying that the reversing
+needs to be done along the row dimension (e.g., reverse([e0 e1],dims=2) == [e1 e0]). 
 
 ### 4.1.3 Derivation of 1D PGA Point
 (TODO)
