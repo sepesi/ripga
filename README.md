@@ -356,7 +356,8 @@ negative sign to the entry in column 2 (the reverse(basis)). The new column 2 is
 
 ### 4.1.2 Calculating 1D PGA Reverse
 Similar to the PGA dual (!), which is central to the geometric interpretation of PGA basis elements, the PGA reverse (\~),
-which is central to the PGA sandwich operation, also is computed in two steps:
+which is central to the PGA sandwich operation (e.g., T*P0*~T or equivalently T>>>P0 translates point P0 with translation motor
+T). Like the PGA dual (!), the PGA reverse (\~) also is computed in two steps:
 1. reverse the order of the indices in each PGA basis element,
 2. repeatedly apply the contraction axiom (i.e., eij = -eji) to restore the original (i.e., unreversed) index ordering
    in each PGA basis element.
@@ -608,7 +609,8 @@ negative sign to the entry in column 2 (the reverse(basis)). The new column 2 is
 
 ### 4.2.2 Calculating 2D PGA Reverse
 Similar to the PGA dual (!), which is central to the geometric interpretation of PGA basis elements, the PGA reverse (\~),
-which is central to the PGA sandwich operation, also is computed in two steps:
+which is central to the PGA sandwich operation (e.g., T*P0*~T or equivalently T>>>P0 translates point P0 with translation motor
+T). Like the PGA dual (!), the PGA reverse (\~) also is computed in two steps:
 1. reverse the order of the indices in each PGA basis element,
 2. repeatedly apply the contraction axiom (i.e., eij = -eji) to restore the original (i.e., unreversed) index ordering
    in each PGA basis element.
@@ -916,7 +918,8 @@ negative sign to the entry in column 2 (the reverse(basis)). The new column 2 is
 
 ### 4.3.2 Calculating 3D PGA Reverse
 Similar to the PGA dual (!), which is central to the geometric interpretation of PGA basis elements, the PGA reverse (\~),
-which is central to the PGA sandwich operation, also is computed in two steps:
+which is central to the PGA sandwich operation (e.g., T*P0*~T or equivalently T>>>P0 translates point P0 with translation motor
+T). Like the PGA dual (!), the PGA reverse (\~) also is computed in two steps:
 1. reverse the order of the indices in each PGA basis element,
 2. repeatedly apply the contraction axiom (i.e., eij = -eji) to restore the original (i.e., unreversed) index ordering
    in each PGA basis element.
@@ -1216,7 +1219,8 @@ negative sign to the entry in column 2 (the reverse(basis)). The new column 2 is
 
 ### 4.4.2 Calculating 4D PGA Reverse
 Similar to the PGA dual (!), which is central to the geometric interpretation of PGA basis elements, the PGA reverse (\~),
-which is central to the PGA sandwich operation, also is computed in two steps:
+which is central to the PGA sandwich operation (e.g., T*P0*~T or equivalently T>>>P0 translates point P0 with translation motor
+T). Like the PGA dual (!), the PGA reverse (\~) also is computed in two steps:
 1. reverse the order of the indices in each PGA basis element,
 2. repeatedly apply the contraction axiom (i.e., eij = -eji) to restore the original (i.e., unreversed) index ordering
    in each PGA basis element.
