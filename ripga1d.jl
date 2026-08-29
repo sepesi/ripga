@@ -89,6 +89,19 @@ function normIdeal(a::Vector{Float32})
  return sqrt(a[2]^2)
 end
 
+# index to grade lookup table
+#
+# Construction of 1D PGA index to grade lookup table (I2G):
+#  Z = zeros(Int,4) # 4 is nBasis for 1D PGA
+#  B = binomial.(3,0:3) # 2 is nD + 1, 0:2 is range of grades
+#  BC = cumsum(B)[1:end-1] .+ 1 # B Cumulated
+#  Z[BC] .= 1;
+#  I2G = cumsum(Z) # Index "to" Grade lookup table
+#
+function grade(i::Int)
+ [0;1;1;2][i]
+end
+
 # convert Euclidean coordinate to PGA expression
 function point(x::Number)::Vector{Float32}
  return e1 - x*e0

@@ -936,6 +936,19 @@ function conjugate(a::Vector{Float32})::Vector{Float32}
  return res
 end # conjugate()
 
+# index to grade lookup table
+#
+# Construction of 4D PGA index to grade lookup table (I2G):
+#  Z = zeros(Int,32) # 32 is nBasis for 4D PGA
+#  B = binomial.(5,0:5) # 5 is nD + 1, 0:5 is range of grades
+#  BC = cumsum(B)[1:end-1] .+ 1 # B Cumulated
+#  Z[BC] .= 1;
+#  I2G = cumsum(Z)
+#
+function grade(i::Int)
+ [0;1;1;1;1;1;2;2;2;2;2;2;2;2;2;2;3;3;3;3;3;3;3;3;3;3;4;4;4;4;4;5][i]
+end
+
 # convert Euclidean coordinates to PGA expression
 function point(
  x::Number,

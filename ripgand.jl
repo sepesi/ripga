@@ -146,31 +146,6 @@ function Base.:>>>(a::Vector{Float32},b::Matrix{Float32})
  return res
 end
 
-# mask off all vectors except those with specified grade (k)
-function grade(a::Vector{Float32},k::Int64)
- # if specified grade out of range
- nBasis = length(a)
- nD = Int(log2(nBasis)) - 1
- nGrade = nD + 2
- res = zeros(Float32,nBasis)
- if (k < 0) || (k >= nGrade)
-  return res
- end
- 
- # generate CN: ending index of each grade
- N = zeros(Int32,nGrade) # basis vectors with grade
- for iGrade = 1:nGrade
-  N[iGrade] = binomial(nD+1,iGrade-1)
- end
- CN = cumsum(N)
- 
- # copy vectors with specified grade
- i2 = CN[k+1]
- i0 = i2 - N[k+1] + 1
- res[i0:i2] = a[i0:i2]
- return res
-end
-
 function rotor(angle::Number, line::Vector{Float32})::Vector{Float32}
  return Float32(cos(angle/2)) +
   Float32(sin(angle/2))*normalize(line)

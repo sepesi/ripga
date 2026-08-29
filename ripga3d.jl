@@ -172,6 +172,19 @@ function normIdeal(a::Vector{Float32},nd::Int64=2)
  end
 end
 
+# index to grade lookup table
+#
+# Construction of 3D PGA index to grade lookup table (I2G):
+#  Z = zeros(Int,16) # 16 is nBasis for 3D PGA
+#  B = binomial.(4,0:4) # 4 is nD + 1, 0:4 is range of grades
+#  BC = cumsum(B)[1:end-1] .+ 1 # B Cumulated
+#  Z[BC] .= 1;
+#  I2G = cumsum(Z)
+#
+function grade(i::Int)
+ [0;1;1;1;1;2;2;2;2;2;2;3;3;3;3;4][i]
+end
+
 # convert Euclidean coordinates to PGA expression
 function point(
  x::Number,
