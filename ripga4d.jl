@@ -15,10 +15,10 @@ basis = [																					# iField
  "e2"     "# 4 Euclidean xzw-hyperplane (i.e., the y=0 3D hyperplane)"						#  4
  "e3"     "# 5 Euclidean xyw-hyperplane (i.e., the z=0 3D hyperplane)"						#  5
  "e4"     "# 6 Euclidean xyz-hyperplane (i.e., the w=0 3D hyperplane)"						#  6
- "e01"    "# 7 ideal plane in x=0 hyperplane, for translations along x-axis"				#  7
- "e02"    "# 8 ideal plane in y=0 hyperplane, for translations along y-axis"				#  8
- "e03"    "# 9 ideal plane in z=0 hyperplane, for translations along z-axis"				#  9
- "e04"    "#10 ideal plane in w=0 hyperplane, for translations along w-axis"				# 10
+ "e01"    "# 7 ideal plane in x=0 hyperplane and x translation bivector"					#  7
+ "e02"    "# 8 ideal plane in y=0 hyperplane and y translation bivector"					#  8
+ "e03"    "# 9 ideal plane in z=0 hyperplane and z translation bivector"					#  9
+ "e04"    "#10 ideal plane in w=0 hyperplane and w translation bivector"					# 10
  "e12"    "#11 Euclidean zw-plane (intersection of e1 and e2, for rotations in xy-plane)"	# 11
  "e13"    "#12 Euclidean yw-plane (intersection of e1 and e3, for rotations in xz-plane)"	# 12
  "e14"    "#13 Euclidean yz-plane (intersection of e1 and e4, for rotations in xw-plane)"	# 13

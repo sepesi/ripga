@@ -8,15 +8,15 @@
 using Printf
 
 # define multivector basis names
-basis = [ 															# iField
- "1"    "#1: scalar (specified as eu in vector form)" 				# 1
- "e0"   "#2: ideal line (line at infinity, encloses the 2D space)"	# 2
- "e1"   "#3: y-axis line (i.e., the x=0 line)"						# 3
- "e2"   "#4: x-axis line (i.e., the y=0 line)"						# 4
- "e01"  "#5: ideal point in y-direction"							# 5
- "e20"  "#6: ideal point in x-direction"							# 6
- "e12"  "#7: Euclidean point at origin (x=0,y=0)"					# 7
- "e012" "#8: pseudoscalar (the entire 2D space)"]					# 8
+basis = [ 																# iField
+ "1"    "#1: scalar (specified as eu in vector form)" 					# 1
+ "e0"   "#2: ideal line (line at infinity, encloses the 2D space)"		# 2
+ "e1"   "#3: y-axis line (i.e., the x=0 line)"							# 3
+ "e2"   "#4: x-axis line (i.e., the y=0 line)"							# 4
+ "e01"  "#5: ideal point in y-direction and the y translation bivector"	# 5
+ "e20"  "#6: ideal point in x-direction and the x translation bivector"	# 6
+ "e12"  "#7: Euclidean point at origin and the rotation bivector"		# 7
+ "e012" "#8: pseudoscalar (the entire 2D space)"]						# 8
 
 # define basis multivectors
 nField = 2^3+1 # 3 = 2 dimensions + extra dimension; trailing +1 is a status field 

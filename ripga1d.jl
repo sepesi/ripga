@@ -12,7 +12,7 @@ basis = [ 												# iField
  "1"   "#1: scalar (specified as eu in vector form)"	# 1
  "e0"  "#2: ideal point (the point at infinity)"		# 2
  "e1"  "#3: Euclidean point at origin (x=0)"			# 3
- "e01" "#4: pseudoscalar (the entire 1D space)"]		# 4
+ "e01" "#4: pseudoscalar (the entire 1D space and the translation bivector)"] # 4
 
 # define basis multivectors
 nField = 2^2+1 # 2 = 1 dimension + extra dimension; trailing +1 is a status field

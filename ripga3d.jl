@@ -14,12 +14,12 @@ basis = [																# iField
  "e1"    "# 3 Euclidean yz-plane (i.e., the x=0 plane)"					#  3
  "e2"    "# 4 Euclidean zx-plane (i.e., the y=0 plane)"					#  4
  "e3"    "# 5 Euclidean xy-plane (i.e., the z=0 plane)"					#  5
- "e01"   "# 6 ideal line x (i.e., in yz-plane, the line at infinity)"	#  6
- "e02"   "# 7 ideal line y (i.e., in zx-plane, the line at infinity)"	#  7
- "e03"   "# 8 ideal line z (i.e., in xy-plane, the line at infinity)"	#  8
- "e12"   "# 9 z-axis line"												#  9
- "e31"   "#10 y-axis line"												# 10
- "e23"   "#11 x-axis line"												# 11
+ "e01"   "# 6 ideal line x and the x translation bivector"				#  6
+ "e02"   "# 7 ideal line y and the y translation bivector"				#  7
+ "e03"   "# 8 ideal line z and the z translation bivector"				#  8
+ "e12"   "# 9 z-axis line and bivector for rotation about z"			#  9
+ "e31"   "#10 y-axis line and bivector for rotation about y"			# 10
+ "e23"   "#11 x-axis line and bivector for rotation about x"			# 11
  "e021"  "#12 ideal point z (i.e., the point at infinity along z-axis)"	# 12
  "e013"  "#13 ideal point y (i.e., the point at infinity along y-axis)"	# 13
  "e032"  "#14 ideal point x (i.e., the point at infinity along x-axis)"	# 14
