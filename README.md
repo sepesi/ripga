@@ -438,9 +438,9 @@ In other words, the squared norm of the 1D PGA point P0 is preserved through the
 In contrast to that translation using the **plane-based** geometric interpretation of PGA basis elements, an attempt
 to do a similar translation using the **point-based** geometric interpretation does not work:
 ```
-julia> P1 = e0 + e1; # point-based 1D PGA point at x=1
+julia> P1 = point(1,true); # point-based 1D PGA point at x=1
 
-julia> P2 = e0 + 6*e1; # point-based 1D PGA point at x=6
+julia> P2 = point(6,true); # point-based 1D PGA point at x=6
 
 julia> T = P2*P1; # attempt at calculating point-based 1D PGA translation motor
 
@@ -452,7 +452,7 @@ Recall that the plane-based 1D PGA translation motor was T = 1 - 5e01, which is 
 Interpretation, the translation motor is T = 6 - 5e01, which is **not** in the algebraic form of a dual number.
 That is a red flag, but let's naively continue with the sandwich operation.
 ```
-julia> P0 = e0; # point-based 1D PGA point of Euclidean origin
+julia> P0 = point(0,true); # point-based 1D PGA point of Euclidean origin
 
 julia> PX = T*P0*~T; # naive sandwich operation calculating translated point-based 1D PGA point
 
