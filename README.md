@@ -258,10 +258,16 @@ julia> basis
  "1"    "#1: scalar (specified as eu in vector form)"
  "e0"   "#2: ideal point (the point at infinity)"
  "e1"   "#3: Euclidean point at origin (x=0)"
- "e01"  "#4: pseudoscalar (the entire 1D space)"
+ "e01"  "#4: pseudoscalar (the entire 1D space and the translation bivector)"
 ```
 With a longer command, the REPL displays that basis without the quotation mark clutter.
 ```
+julia> foreach(row->println(join(row, "\t")), eachrow(basis))
+1       #1: scalar (specified as eu in vector form)
+e0      #2: ideal point (the point at infinity)
+e1      #3: Euclidean point at origin (x=0)
+e01     #4: pseudoscalar (the entire 1D space and the translation bivector)
+
 julia> foreach(row->println(join(row, "\t")), eachrow(basis))
 1       #1: scalar (specified as eu in vector form)
 e0      #2: ideal point (the point at infinity)
@@ -399,10 +405,7 @@ As an aside, Julia's reverse() function acts more like the PGA reverse (\~) when
 to a Matrix{Float32} and there is an additional argument in the call to the reverse() function specifying that the reversing
 needs to be done along the row dimension (e.g., reverse([e0 e1],dims=2) == [e1 e0]). 
 
-### 4.1.3 Derivation of 1D PGA Point
-(TODO)
-
-### 4.1.4 Example of 1D PGA Point Translation
+### 4.1.3 Example of 1D PGA Point Translation
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
 rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
 In 1D, a translation is two reflections across two points, as shown in the following REPL session where 
@@ -465,6 +468,9 @@ for the cause of the failure, the squared norm of P0 was preserved through the s
 trivial sense because the squared norm of P0 collapsed to zero (i.e., e00 = 0) and the squared norm of PX also
 collapsed to zero (i.e., PX = 36e0 and PX\*PX = 0).
 
+### 4.1.4 Derivation of 1D PGA Point
+(TODO)
+
 ## 4.2 2D PGA Basis
 To prepare Julia's REPL for 2D PGA, include the files ripgand.jl and ripga2d.jl. To confirm the initialization, print out the basis.
 ```
@@ -478,9 +484,9 @@ julia> basis
  "e0"    "#2: ideal line (line at infinity, encloses the 2D space)"
  "e1"    "#3: y-axis line (i.e., the x=0 line)"
  "e2"    "#4: x-axis line (i.e., the y=0 line)"
- "e01"   "#5: ideal point in y-direction"
- "e20"   "#6: ideal point in x-direction"
- "e12"   "#7: Euclidean point at origin (x=0,y=0)"
+ "e01"   "#5: ideal point in y-direction and the y translation bivector"
+ "e20"   "#6: ideal point in x-direction and the x translation bivector"
+ "e12"   "#7: Euclidean point at origin and the rotation bivector"
  "e012"  "#8: pseudoscalar (the entire 2D space)"
 ```
 With a longer command, the REPL displays that basis without the quotation mark clutter.
@@ -490,9 +496,9 @@ julia> foreach(row->println(join(row, "\t")), eachrow(basis))
 e0      #2: ideal line (line at infinity, encloses the 2D space)
 e1      #3: y-axis line (i.e., the x=0 line)
 e2      #4: x-axis line (i.e., the y=0 line)
-e01     #5: ideal point in y-direction
-e20     #6: ideal point in x-direction
-e12     #7: Euclidean point at origin (x=0,y=0)
+e01     #5: ideal point in y-direction and the y translation bivector
+e20     #6: ideal point in x-direction and the x translation bivector
+e12     #7: Euclidean point at origin and the rotation bivector
 e012    #8: pseudoscalar (the entire 2D space)
 ```
 In 2D PGA, there are a total of eight (i.e., $2^{2+1}$) PGA basis elements:
@@ -657,10 +663,7 @@ As an aside, Julia's reverse() function acts more like the PGA reverse (\~) when
 to a Matrix{Float32} and there is an additional argument in the call to the reverse() function specifying that the reversing
 needs to be done along the row dimension (e.g., reverse([e0 e1],dims=2) == [e1 e0]). 
 
-### 4.2.3 Derivative of 2D PGA Point
-(TODO)
-
-### 4.2.4 Example of 2D PGA Point Translation
+### 4.2.3 Example of 2D PGA Point Translation
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
 rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
 In 2D, a translation is two reflections across parallel lines and a rotation is two reflections across intersecting lines,
@@ -710,6 +713,9 @@ julia> T = L2*L1; # failed attempt to calculate point-based Translation motor
 julia> toStr(T) # failed because not in form of dual number, missing scalar term
 "5e01"
 ```
+### 4.2.4 Derivative of 2D PGA Point
+(TODO)
+
 ## 4.3 3D PGA basis
 To prepare Julia's REPL for 3D PGA, include the files ripgand.jl and ripga3d.jl. To confirm the initialization, print out the basis.
 ```
@@ -724,12 +730,12 @@ julia> basis
  "e1"     "# 3 Euclidean yz-plane (i.e., the x=0 plane)"
  "e2"     "# 4 Euclidean zx-plane (i.e., the y=0 plane)"
  "e3"     "# 5 Euclidean xy-plane (i.e., the z=0 plane)"
- "e01"    "# 6 ideal line x (i.e., in yz-plane, the line at infinity)"
- "e02"    "# 7 ideal line y (i.e., in zx-plane, the line at infinity)"
- "e03"    "# 8 ideal line z (i.e., in xy-plane, the line at infinity)"
- "e12"    "# 9 z-axis line"
- "e31"    "#10 y-axis line"
- "e23"    "#11 x-axis line"
+ "e01"    "# 6 ideal line x and the x translation bivector"
+ "e02"    "# 7 ideal line y and the y translation bivector"
+ "e03"    "# 8 ideal line z and the z translation bivector"
+ "e12"    "# 9 z-axis line and bivector for rotation about z"
+ "e31"    "#10 y-axis line and bivector for rotation about y"
+ "e23"    "#11 x-axis line and bivector for rotation about x"
  "e021"   "#12 ideal point z (i.e., the point at infinity along z-axis)"
  "e013"   "#13 ideal point y (i.e., the point at infinity along y-axis)"
  "e032"   "#14 ideal point x (i.e., the point at infinity along x-axis)"
@@ -744,12 +750,12 @@ e0      # 2 ideal plane (the plane at infinity)
 e1      # 3 Euclidean yz-plane (i.e., the x=0 plane)
 e2      # 4 Euclidean zx-plane (i.e., the y=0 plane)
 e3      # 5 Euclidean xy-plane (i.e., the z=0 plane)
-e01     # 6 ideal line x (i.e., in yz-plane, the line at infinity)
-e02     # 7 ideal line y (i.e., in zx-plane, the line at infinity)
-e03     # 8 ideal line z (i.e., in xy-plane, the line at infinity)
-e12     # 9 z-axis line
-e31     #10 y-axis line
-e23     #11 x-axis line
+e01     # 6 ideal line x and the x translation bivector
+e02     # 7 ideal line y and the y translation bivector
+e03     # 8 ideal line z and the z translation bivector
+e12     # 9 z-axis line and bivector for rotation about z
+e31     #10 y-axis line and bivector for rotation about y
+e23     #11 x-axis line and bivector for rotation about x
 e021    #12 ideal point z (i.e., the point at infinity along z-axis)
 e013    #13 ideal point y (i.e., the point at infinity along y-axis)
 e032    #14 ideal point x (i.e., the point at infinity along x-axis)
@@ -975,10 +981,7 @@ As an aside, Julia's reverse() function acts more like the PGA reverse (\~) when
 to a Matrix{Float32} and there is an additional argument in the call to the reverse() function specifying that the reversing
 needs to be done along the row dimension (e.g., reverse([e0 e1],dims=2) == [e1 e0]). 
 
-### 4.3.3 Derivative of 3D PGA Point
-(TODO)
-
-### 4.3.4 Example of 3D PGA Point Translation
+### 4.3.3 Example of 3D PGA Point Translation
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
 rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
 In 3D, a translation is two reflections across parallel planes and a rotation is two reflections across intersecting planes,
@@ -1007,6 +1010,8 @@ julia> toCoord(P2)
  0.0
  0.0
 ```
+### 4.3.4 Derivative of 3D PGA Point
+(TODO)
 
 ## 4.4 4D PGA BASIS
 To prepare Julia's REPL for 4D PGA, include the files ripgand.jl and ripga4d.jl. To confirm the initialization, print out the basis.
@@ -1025,10 +1030,10 @@ julia> basis
  "e2"      "# 4 Euclidean xzw-hyperplane (i.e., the y=0 3D hyperplane)"
  "e3"      "# 5 Euclidean xyw-hyperplane (i.e., the z=0 3D hyperplane)"
  "e4"      "# 6 Euclidean xyz-hyperplane (i.e., the w=0 3D hyperplane)"
- "e01"     "# 7 ideal plane in x=0 hyperplane, for translations along x-axis"
- "e02"     "# 8 ideal plane in y=0 hyperplane, for translations along y-axis"
- "e03"     "# 9 ideal plane in z=0 hyperplane, for translations along z-axis"
- "e04"     "#10 ideal plane in w=0 hyperplane, for translations along w-axis"
+ "e01"     "# 7 ideal plane in x=0 hyperplane and x translation bivector"
+ "e02"     "# 8 ideal plane in y=0 hyperplane and y translation bivector"
+ "e03"     "# 9 ideal plane in z=0 hyperplane and z translation bivector"
+ "e04"     "#10 ideal plane in w=0 hyperplane and w translation bivector"
  "e12"     "#11 Euclidean zw-plane (intersection of e1 and e2, for rotations in xy-plane)"
  "e13"     "#12 Euclidean yw-plane (intersection of e1 and e3, for rotations in xz-plane)"
  "e14"     "#13 Euclidean yz-plane (intersection of e1 and e4, for rotations in xw-plane)"
@@ -1056,10 +1061,10 @@ e1      # 3 Euclidean yzw-hyperplane (i.e., the x=0 3D hyperplane)
 e2      # 4 Euclidean xzw-hyperplane (i.e., the y=0 3D hyperplane)
 e3      # 5 Euclidean xyw-hyperplane (i.e., the z=0 3D hyperplane)
 e4      # 6 Euclidean xyz-hyperplane (i.e., the w=0 3D hyperplane)
-e01     # 7 ideal plane in x=0 hyperplane, for translations along x-axis
-e02     # 8 ideal plane in y=0 hyperplane, for translations along y-axis
-e03     # 9 ideal plane in z=0 hyperplane, for translations along z-axis
-e04     #10 ideal plane in w=0 hyperplane, for translations along w-axis
+e01     # 7 ideal plane in x=0 hyperplane and x translation bivector
+e02     # 8 ideal plane in y=0 hyperplane and y translation bivector
+e03     # 9 ideal plane in z=0 hyperplane and z translation bivector
+e04     #10 ideal plane in w=0 hyperplane and w translation bivector
 e12     #11 Euclidean zw-plane (intersection of e1 and e2, for rotations in xy-plane)
 e13     #12 Euclidean yw-plane (intersection of e1 and e3, for rotations in xz-plane)
 e14     #13 Euclidean yz-plane (intersection of e1 and e4, for rotations in xw-plane)
@@ -1293,10 +1298,10 @@ As an aside, Julia's reverse() function acts more like the PGA reverse (\~) when
 to a Matrix{Float32} and there is an additional argument in the call to the reverse() function specifying that the reversing
 needs to be done along the row dimension (e.g., reverse([e0 e1],dims=2) == [e1 e0]). 
 
-### 4.4.3 Derivation of 4D PGA Point
+### 4.4.3 Example of 4D PGA Point Translation
 (TODO)
 
-### 4.4.4 Example of 4D PGA Point Translation
+### 4.4.4 Derivation of 4D PGA Point
 (TODO)
 
 # 5. PGA Exponentials
