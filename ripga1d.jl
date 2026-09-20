@@ -103,29 +103,29 @@ function grade(i::Int)
 end
 
 # convert Euclidean coordinate to PGA expression
-function point(x::Number)::Vector{Float32}
- return e1 - x*e0
+function point(x::Number,isPointBased::Bool=false)::Vector{Float32}
+ return isPointBased ? e0 + x*e1 : e1 - x*e0
 end
-function point(M::Matrix{Float32})::Matrix{Float32}
+function point(M::Matrix{Float32},isPointBased::Bool=false)::Matrix{Float32}
  nPoint = size(M,2) # M is coordinate Matrix where each column is a point
  res = Matrix{Float32}(undef, 4+1, nPoint) # nBasis is 4, +1 for appended status
  for iPoint=1:nPoint
-  res[:,iPoint] = e1 - M[1,iPoint]*e0
+  res[:,iPoint] = isPointBased ? e0 + M[2,iPoint]*e1 : e1 - M[1,iPoint]*e0
  end
  return res # each column of result matrix is a PGA expression of a point
 end
 
 # convert PGA expression to Euclidean coordinate
-function toCoord(V::Vector{Float32})
+function toCoord(V::Vector{Float32},isPointBased::Bool=false)
  res = Vector{Float32}(undef, 1) # nD = 1
- res[1] = -V[2] # -e0 element is x component
+ res[1] = isPointBased ? V[3] : -V[2] # for plane-based, -e0 element is x component
  return res
 end
-function toCoord(M::Matrix{Float32})::Matrix{Float32}
+function toCoord(M::Matrix{Float32},isPointBased::Bool=false)::Matrix{Float32}
  nPoint = size(M,2) # M is PGA Matrix, each column is PGA expression of point
  res = Matrix{Float32}(undef, 1, nPoint) # nD is 1
  for iPoint=1:nPoint
-  res[1,iPoint] = -M[2,iPoint]
+  res[1,iPoint] = isPointBased ? M[3,iPoint] : -M[2,iPoint]
  end
  return res # each column of result matrix is a coordinate of a point
 end
