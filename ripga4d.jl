@@ -954,39 +954,39 @@ function point(
  x::Number,
  y::Number,
  z::Number,
- w::Number)::Vector{Float32}
- return e1234 - x*e0234 + y*e0134 - z*e0124 + w*e0123
+ w::Number,isPointBased::Bool=false)::Vector{Float32}
+ return isPointBased ?
+  e0 + x*e1 + y*e2 + z*e3 + w*e4 :
+  e1234 - x*e0234 + y*e0134 - z*e0124 + w*e0123
 end # point()
-function point(M::Matrix{Float32})::Matrix{Float32}
+function point(M::Matrix{Float32},isPointBased::Bool=false)::Matrix{Float32}
  nPoint = size(M,2) # M is coordinate Matrix where each column is a point
  res = Matrix{Float32}(undef, 32+1, nPoint) # nBasis is 32, +1 for appended status
  for iPoint=1:nPoint
-  res[:,iPoint] = e1234 -
-   M[1,iPoint]*e0234 +
-   M[2,iPoint]*e0134 -
-   M[3,iPoint]*e0124 +
-   M[4,iPoint]*e0123
+  res[:,iPoint] = isPointBased ?
+   e0 + M[1,iPoint]*e1 + M[2,iPoint]*e2 + M[3,iPoint]*e3 + M[4,iPoint]*e4 :
+   e1234 - M[1,iPoint]*e0234 + M[2,iPoint]*e0134 - M[3,iPoint]*e0124 + M[4,iPoint]*e0123
  end
  return res # each column of result matrix is a PGA expression of a point
 end # point()
 
 # convert PGA expression to Euclidean coordinates
-function toCoord(V::Vector{Float32})
+function toCoord(V::Vector{Float32},isPointBased::Bool=false)
  res = Vector{Float32}(undef, 4) # nD = 4
- res[1] = -V[30] # -e0234 element is x component
- res[2] = V[29] # e0134 element is y component
- res[3] = -V[28] # -e0124 element is z component
- res[4] = V[27] # e0123 element is w component
+ res[1] = isPointBased ? V[3] : -V[30] # -e0234 element is x component
+ res[2] = isPointBased ? V[4] : V[29] # e0134 element is y component
+ res[3] = isPointBased ? V[5] : -V[28] # -e0124 element is z component
+ res[4] = isPointBased ? V[6] : V[27] # e0123 element is w component
  return res
 end # toCoord()
-function toCoord(M::Matrix{Float32})::Matrix{Float32}
+function toCoord(M::Matrix{Float32},isPointBased::Bool=false)::Matrix{Float32}
  nPoint = size(M,2) # M is PGA Matrix, each column is PGA expression of point
  res = Matrix{Float32}(undef, 4, nPoint) # nD = 4
  for iPoint=1:nPoint
-  res[1,iPoint] = -M[30,iPoint] # -e0234 element is x component
-  res[2,iPoint] = M[29,iPoint] # e0134 element is y component
-  res[3,iPoint] = -M[28,iPoint] # -e0124 element is z component
-  res[4,iPoint] = M[27,iPoint] # e0123 element is w component
+  res[1,iPoint] = isPointBased ? M[3,iPoint] : -M[30,iPoint] # -e0234 element is x component
+  res[2,iPoint] = isPointBased ? M[4,iPoint] : M[29,iPoint] # e0134 element is y component
+  res[3,iPoint] = isPointBased ? M[5,iPoint] : -M[28,iPoint] # -e0124 element is z component
+  res[4,iPoint] = isPointBased ? M[6,iPoint] : M[27,iPoint] # e0123 element is w component
  end
  return res # each column of result matrix is a coordinate of a point
 end # toCoord()
