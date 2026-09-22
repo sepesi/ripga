@@ -129,33 +129,34 @@ end
 # convert Euclidean coordinates to PGA expression
 function point(
  x::Number,
- y::Number)::Vector{Float32}
- return x*e20 + y*e01 + e12
+ y::Number,
+ isPointBased::Bool=false)::Vector{Float32}
+ return isPointBased ? e0 + x*e1 + y*e2 : x*e20 + y*e01 + e12
 end
-function point(M::Matrix{Float32})::Matrix{Float32}
+function point(M::Matrix{Float32},isPointBased::Bool)::Matrix{Float32}
  nPoint = size(M,2) # M is coordinate Matrix where each column is a point
  res = Matrix{Float32}(undef, 8+1, nPoint) # nBasis is 8, +1 for appended status
  for iPoint=1:nPoint
-  res[:,iPoint] =
-   M[1,iPoint]*e20 +
-   M[2,iPoint]*e01 + e12
+  res[:,iPoint] = isPointBased ?
+   e0 + M[1,iPoint]*e1 + M[2,iPoint]*e2 :
+   M[1,iPoint]*e20 + M[2,iPoint]*e01 + e12
  end
  return res # each column of result matrix is a PGA expression of a point
 end
 
 # convert PGA expression to Euclidean coordinates
-function toCoord(V::Vector{Float32})
+function toCoord(V::Vector{Float32},isPointBased::Bool=false)
  res = Vector{Float32}(undef, 2) # nD = 2
- res[1] = V[6] # e20 element is x component
- res[2] = V[5] # e01 element is y component
+ res[1] = isPointBased ? V[3] : V[6] # e20 element is x component
+ res[2] = isPointBased ? V[4] : V[5] # e01 element is y component
  return res
 end
-function toCoord(M::Matrix{Float32})::Matrix{Float32}
+function toCoord(M::Matrix{Float32},isPointBased::Bool=false)::Matrix{Float32}
  nPoint = size(M,2) # M is PGA Matrix, each column is PGA expression of point
  res = Matrix{Float32}(undef, 2, nPoint) # nD = 2
  for iPoint=1:nPoint
-  res[1,iPoint] = M[6,iPoint] # e20 element is x component
-  res[2,iPoint] = M[5,iPoint] # e01 element is y component
+  res[1,iPoint] = isPointBased ? M[3,iPoint] : M[6,iPoint] # e20 element is x component
+  res[2,iPoint] = isPointBased ? M[4,iPoint] : M[5,iPoint] # e01 element is y component
  end
  return res # each column of result matrix is a coordinate of a point
 end
