@@ -674,9 +674,15 @@ as shown in the following REPL where
   (i.e., twice the distance between the two parallel lines).
 
 ```
-julia> L1 = e1; # the x=0 hyperplane is the y-axis
+julia> L1 = point(0,0)&point(0,1); # the x=0 hyperplane is the y-axis
 
-julia> L2 = e1-5*e0; # Euclidean x-d=0 => dual PGA line (ae1+be2+ce0); see cheat sheet
+julia> toStr(L1) # e1 is y-axis
+"e1"
+
+julia> L2 = point(5,0)&point(5,1); # another vertical line but 5 to the right of L1
+
+julia> toStr(L2) # the join of (5,0) and (5,1) is L1 except shifted right by 5
+"-5e0 + e1"
 
 julia> T = L2*L1; # compose the two reflection Translation motor as geometric product
 
@@ -684,6 +690,9 @@ julia> toStr(T) # check Translation motor
 "1 - 5e01"
 
 julia> P = point(0,0); # Euclidean origin
+
+julia> toStr(P) # the Euclidean origin for 2D PGA is e12
+"e12"
 
 julia> P2 = T*P*~T; # apply Translation motor to P at origin; alternative eq is P2 = T>>>P
 
@@ -704,13 +713,19 @@ to make a translation motor using the **point-based** geometric interpretation f
 * the attempt to make a translation motor T = L2*L1 fails because L2*L1 = (-e20+5e12)*(-e20) = 5e01 which is not in the
   correct form (i.e., is not a dual number) to be a translation motor.
 ```
-julia> L1 = -e20; # Line 1 in 2D point-based PGA
+julia> L1 = point(0,0,true)^point(0,1,true); # in point-based PGA, the wedge operator does a "meet" of two points
 
-julia> L2 = -e20 + 5*e12; # Line 2 in 2D point-based PGA
+julia> toStr(L1) # note: the vee operator (that joings two points in plane-based PGA) would result in a zero vector
+"-e20"
 
-julia> T = L2*L1; # failed attempt to calculate point-based Translation motor
+julia> L2 = point(5,0,true)^point(5,1,true); # another vertical line 5 to the right of L1
 
-julia> toStr(T) # failed because not in form of dual number, missing scalar term
+julia> toStr(L2) # the "meet" operation is done by the wedge in point-based PGA but a vee in plane-based PGA
+"-e20 + 5e12"
+
+julia> T = L2*L1; # attempt to calculate point-based Translation motor
+
+julia> toStr(T) # not in form of dual number (missing scalar term), so translation will fail
 "5e01"
 ```
 ### 4.2.4 Derivative of 2D PGA Point
