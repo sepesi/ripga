@@ -712,6 +712,9 @@ to make a translation motor using the **point-based** geometric interpretation f
 * L2 is still 5 to right of L1 but has the 2D **point-based** PGA expression e0^e2+5e1^e2 = -e20+5e12, and
 * the attempt to make a translation motor T = L2*L1 fails because L2*L1 = (-e20+5e12)*(-e20) = 5e01 which is not in the
   correct form (i.e., is not a dual number) to be a translation motor.
+Notice how the "meet" operation depends upon the geometric interpretation. In plane-based PGA, the regressive product (i.e.,
+the vee operator) performs the "meet" of two points, but in point-based PGA the outer product (i.e., the wedge operation)
+performs the "meet" of two points.
 ```
 julia> L1 = point(0,0,true)^point(0,1,true); # in point-based PGA, the wedge operator does a "meet" of two points
 
