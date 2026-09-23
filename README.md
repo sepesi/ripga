@@ -71,7 +71,7 @@ of coordinates. That abstraction is especially helpful when solving complex geom
 ## 1.3 Unify Geometries
 The metric signature (i.e., $\mathbb{R}\_{positive,negative,zero}$, where the three subscripts denote how many
 basis vectors square to +1, -1, and 0, respectively) denotes the geometry's dimensions and spatial curvature.
-For example, the metric signatures $\mathbb{R}^\*\_{2,0,1}$ and $\mathbb{R}^\*\_{3,0,1}$ denote 2D and 3D
+For example, the metric signatures $\mathbb{R}^\_{2,0,1}$ and $\mathbb{R}^\_{3,0,1}$ denote 2D and 3D
 Euclidean spaces. However, switching the signature to $\mathbb{R}\_{4,0,0}$ denotes an elliptic space and
 $\mathbb{R}\_{3,1,0}$ denotes a hyperbolic space.
 
@@ -191,9 +191,9 @@ In PGA, simple geometric objects (e.g., points, lines, planes) are written as PG
 (e.g., translated or rotated) by performing PGA operations (e.g., geometric product or outer product) on them. PGA expressions are
 [linear combinations](https://en.wikipedia.org/wiki/Linear_combination) of PGA basis vectors. There is one PGA basis vector for each
 perpendicular axis in the underlying space, which is defined by the [metric signature](https://en.wikipedia.org/wiki/Metric_signature)
-typically written as $\mathbb{R}_{positive,negative,zero}$, where the signature's three subscripts are the number of PGA basis vectors that
+typically written as $\mathbb{R}\_{positive,negative,zero}$, where the signature's three subscripts are the number of PGA basis vectors that
 square to +1, -1, and 0, respectively. For example, the metric signature for doing PGA in an n-dimensional [Euclidean space](https://en.wikipedia.org/wiki/Euclidean_space)
-is $ \mathbb{R}_{n,0,1}^* $, where n is the number of Euclidean dimensions (which is also the number of Euclidean basis vectors in the PGA basis)
+is $\mathbb{R}\_{n,0,1}^*$, where n is the number of Euclidean dimensions (which is also the number of Euclidean basis vectors in the PGA basis)
 and the 1 as the last of the three subscripts denotes the single ideal basis vector that squares to 0. That ideal basis vector is also known as the
 null basis vector e0. The n Euclidean basis vectors in an n-dimensional Euclidean space $\mathbb{R}^\*\_{n,0,1}$ are called e1, e2, ..., en.
 
