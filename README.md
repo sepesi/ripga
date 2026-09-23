@@ -351,7 +351,7 @@ julia> [basis[:,1] reverse(basis[:,1]) [0 0;0 0;1 0;0 0]]
  "e01"  "1"    0  0
 ```
 Then, for a given row of the table (i.e., a given PGA basis element), sum the total number of left shifts (i.e., sum the
-counts in columns 3 and 4. If that sum is odd (i.e., the contraction axiom was applied an odd number of times), prepend a
+counts in columns 3 and 4). If that sum is odd (i.e., the contraction axiom was applied an odd number of times), prepend a
 negative sign to the entry in column 2 (the reverse(basis)). The new column 2 is the 1D PGA dual.
 
 ### 4.1.2 Calculating 1D PGA Reverse
@@ -648,12 +648,7 @@ julia> M = [1 0 0 0;2 1 0 0;3 2 1 0]
  2  1  0  0
  3  2  1  0
 ```
-To be clear, the PGA reverse ($\sim$) is different from Julia's reverse() function. The PGA reverse ($\sim$) flips the left to right
-order of the indices in each PGA basis element and repeatedly applies the contraction axiom to restore the original index ordering,
-adding a sign change if the required number of applications are required. In contrast, Julia's reverse() function flips the top to
-bottom order of any column vector. As an aside, Julia's reverse() function acts more like the PGA reverse ($\sim$) when Julia's
-reverse() function is applied to a Matrix{Float32} with an additional argument specifying that the reversing needs to be done along
-the row dimension (e.g., reverse([e0 e1],dims=2) == [e1 e0]). 
+(For details on how PGA reverse differs from Julia's built-in reverse() function, see Section 4.1.2.)
 
 ### 4.2.3 Example of 2D PGA Point Translation
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
@@ -984,12 +979,7 @@ julia> M = [1 0 0 0 0; 2 1 0 0 0; 3 2 1 0 0; 4 3 2 1 0]
  3  2  1  0  0
  4  3  2  1  0
 ```
-To be clear, the PGA reverse ($\sim$) is different from Julia's reverse() function. The PGA reverse ($\sim$) flips the left to right
-order of the indices in each PGA basis element and repeatedly applies the contraction axiom to restore the original index ordering,
-adding a sign change if the required number of applications are required. In contrast, Julia's reverse() function flips the top to
-bottom order of any column vector. As an aside, Julia's reverse() function acts more like the PGA reverse ($\sim$) when Julia's
-reverse() function is applied to a Matrix{Float32} with an additional argument specifying that the reversing needs to be done along
-the row dimension (e.g., reverse([e0 e1],dims=2) == [e1 e0]). 
+(For details on how PGA reverse differs from Julia's built-in reverse() function, see Section 4.1.2.)
 
 ### 4.3.3 Example of 3D PGA Point Translation
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
@@ -1025,6 +1015,7 @@ julia> toCoord(P2)
 
 ## 4.4 4D PGA BASIS
 To prepare Julia's REPL for 4D PGA, include the files ripgand.jl and ripga4d.jl. To confirm the initialization, print out the basis.
+Note that the 4D PGA basis is long enough for Julia's default REPL output to abbreviate the middle section of the basis.
 ```
 julia> include("ripgand.jl")
 rtest (generic function with 1 method)
@@ -1061,8 +1052,8 @@ julia> basis
  "e1234"   "#31 Euclidean origin (i.e., coordinate at (0,0,0,0))"
  "e01234"  "#32 pseudoscalar (the entire 4D space)"
 ```
-With a longer command, the REPL displays that basis without the quotation mark clutter and without the
-abbreviation of the middle of the basis.
+With a longer command, the REPL displays the emtire basis without abbreviating the middle
+of the basis.
 ```
 julia> foreach(row->println(join(row, "\t")), eachrow(basis))
 1       # 1 scalar (specified as eu in vector form)
@@ -1230,7 +1221,7 @@ paper and pencil to write a table with seven columns:
 
 Then, for a given row of the table (i.e., a given PGA basis element), sum the total number of left shifts (i.e., sum the
 counts in columns 3, 4, 5, 6, and 7. If that sum is odd (i.e., the contraction axiom was applied an odd number of times), prepend a
-negative sign to the entry in column 2 (the reverse(basis)). The new column 2 is the 2D PGA dual.
+negative sign to the entry in column 2 (the reverse(basis)). The new column 2 is the 4D PGA dual.
 
 ### 4.4.2 Calculating 4D PGA Reverse
 Similar to the PGA dual (!), which is central to the geometric interpretation of PGA basis elements, the PGA reverse (\~),
@@ -1300,12 +1291,7 @@ julia> M = [1 0 0 0 0 0; 2 1 0 0 0 0; 3 2 1 0 0 0; 4 3 2 1 0 0; 5 4 3 2 1 0]
  4  3  2  1  0  0
  5  4  3  2  1  0
 ```
-To be clear, the PGA reverse ($\sim$) is different from Julia's reverse() function. The PGA reverse ($\sim$) flips the left to right
-order of the indices in each PGA basis element and repeatedly applies the contraction axiom to restore the original index ordering,
-adding a sign change if the required number of applications are required. In contrast, Julia's reverse() function flips the top to
-bottom order of any column vector. As an aside, Julia's reverse() function acts more like the PGA reverse ($\sim$) when Julia's
-reverse() function is applied to a Matrix{Float32} with an additional argument specifying that the reversing needs to be done along
-the row dimension (e.g., reverse([e0 e1],dims=2) == [e1 e0]). 
+(For details on how PGA reverse differs from Julia's built-in reverse() function, see Section 4.1.2.)
 
 ### 4.4.3 Example of 4D PGA Point Translation
 (TODO)
