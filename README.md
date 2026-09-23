@@ -10,7 +10,7 @@
 Here's a showcase of animations from simple applications demonstrating [Julia](https://julialang.org),
 [Makie](https://docs.makie.org/stable), and [Projective Geometric Algebra](https://bivector.net) as
 implemented by ripga (i.e., the Reference Implementation of Projective Geometric Algebra). The intent
-of the ripga library and this essay is to increase the familiarity with PGA so that more people are
+of the ripga library and this essay is to increase familiarity with PGA so that more people are
 able to design solutions to intricate geometry problems. The source code of the animations and the
 ripga library, both written in Julia, is in the github repository at https://github.com/sepesi/ripga
 
@@ -37,7 +37,7 @@ ripga library, both written in Julia, is in the github repository at https://git
   </tr>
   <tr>
     <td>3D version of Separating Axis Theorem (SAT) implemented in Julia and Makie.</td>
-    <td>Based upon Steven De Keninck's oeigami example application in JavaScript and ported to Julia and Makie.</td>
+    <td>Based upon Steven De Keninck's origami example application in JavaScript and ported to Julia and Makie.</td>
   </tr>
 </table>
 
@@ -94,9 +94,9 @@ I ported bivector.net's C++ reference implementation of PGA to Julia. The github
 To avoid confusion, ripga uses exactly the same [vector operator symbols](https://www.youtube.com/watch?v=2DgxeizE3E8&t=105s)
 as the vector operators in the programming syntax of the original bivector.net reference implementation as shown in the table
 below. The strikethrough of the dual operator math syntax entry denotes that the math syntax of the dual opertor is not currently
-implemented due to a design decision valuing the improved code simplicity over the minor inconvenience of having to use programming
+implemented due to a design decision valuing improved code simplicity over the minor inconvenience of having to use programming
 syntax for the dual operator. The dual operator had the most complex conversion from math syntax to programming syntax because the
-dual operator in math syntax is the only postfix (i.e., a`*`) operator. All other operators in the following vector operator symvol
+dual operator in math syntax is the only postfix (i.e., a\*) operator. All other operators in the following vector operator symbol
 table are either prefix operators (e.g., !a) or infix operators (e.g., a ^ b) which are compatible with the prefix and infix operator
 capabilities of Julia's  built-in [AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree) parser.
 
@@ -191,31 +191,31 @@ In PGA, simple geometric objects (e.g., points, lines, planes) are written as PG
 (e.g., translated or rotated) by performing PGA operations (e.g., geometric product or outer product) on them. PGA expressions are
 [linear combinations](https://en.wikipedia.org/wiki/Linear_combination) of PGA basis vectors. There is one PGA basis vector for each
 perpendicular axis in the underlying space, which is defined by the [metric signature](https://en.wikipedia.org/wiki/Metric_signature)
-typically written as $\mathbb{R}\_{positive,negative,zero}$, where the signature's three subscripts are the number of PGA basis vectors that
+typically written as $\mathbb{R}_{positive,negative,zero}$, where the signature's three subscripts are the number of PGA basis vectors that
 square to +1, -1, and 0, respectively. For example, the metric signature for doing PGA in an n-dimensional [Euclidean space](https://en.wikipedia.org/wiki/Euclidean_space)
-is $\mathbb{R}^\*\_{n,0,1}$, where n is the number of Euclidean dimensions (which is also the number of Euclidean basis vectors in the PGA basis)
+is $ \mathbb{R}_{n,0,1}^* $, where n is the number of Euclidean dimensions (which is also the number of Euclidean basis vectors in the PGA basis)
 and the 1 as the last of the three subscripts denotes the single ideal basis vector that squares to 0. That ideal basis vector is also known as the
-null basis vector e0. The n Euclidean basis vectors in an n-dimvensional Euclidean space $\mathbb{R}^\*\_{n,0,1}$ are called e1, e2, ..., en.
+null basis vector e0. The n Euclidean basis vectors in an n-dimensional Euclidean space $\mathbb{R}^\*\_{n,0,1}$ are called e1, e2, ..., en.
 
 In addition to the rules in the metric signature defining how the PGA basis vectors square, there is one more important rule:
-[the contraction axiom](https://www.youtube.com/watch/v=tX4H_ctggYo&t=3293s) that defines how the sign changes with the order of
+[the contraction axiom](https://www.youtube.com/watch/v=tX4H_ctggYo&t=3293s), which defines how the sign changes with the order of
 PGA basis vectors in the geometric product. For example, ei\*ej = -ej\*ei. As a notational convenience, the geometric operator is often implied (e.g.,
 ei\*ej = eiej) and as a further convenience the subsequent e's after the first are also implied (e.g., eiej = eij).
 
 The n Euclidean basis vectors and the one ideal basis vector are said to have grade-1 because they are generated from a single PGA basis vector (e.g., e2).
 The PGA basis also contains elements of grades other than grade-1. Grade-n elements of the PGA basis are generated from n PGA basis vectors. For example,
 grade-2 elements in the PGA basis are called bivectors (e.g., e12 = e1e2) and grade-3 elements in the PGA basis are called trivectors (e.g., e012 = e0e1e2).
-Because each PGA basis element can be represesnted by a vector, a PGA basis can be thought of as a vector of vectors. However, to avoid ambiguity about
+Because each PGA basis element can be represented by a vector, a PGA basis can be thought of as a vector of vectors. However, to avoid ambiguity about
 the meaning of "vector", the phrase "PGA basis vector" in this essay will be reserved for just the grade-1 PGA basis elements and the phrases "PGA basis
 bivector" and "PGA basis trivector" will be reserved for grade-2 and grade-3 PGA basis elements, respectively. Arbitrary grade PGA basis elements of an
 arbitrary grade are just called "PGA basis elements". (More on the PGA basis elements in the next section of this essay.)
 
 For the metric signature $\mathbb{R}^\*\_{n,0,1}$, there are a total of $2^{n+1}$ PGA basis elements according to the [rule of product](https://wikipedia.org/wiki/Rule_of_product).
-Those $2^{n+1}$ PGA basis elements are diswtributed across n+2 grades (i.e., grade-0 through grade n+1), each with $\binom{n+1}{grade}$ PGA basis elements per grade, according to
+Those $2^{n+1}$ PGA basis elements are distributed across n+2 grades (i.e., grade-0 through grade n+1), each with $\binom{n+1}{grade}$ PGA basis elements per grade, according to
 [Pascal's triangle](https://wikipedia.org/wiki/Pascal's_triangle) from [combinatorics](https://en.wikipedia.org/wiki/Combinatorics). For example in 3D PGA, there are a total of
 16 (i.e., $2^{3+1}$) PGA basis elements: 
 * 1 grade-0 (i.e., the scalar),
-* 4 grade-1 (i,e., e0, e1, e2, e3),
+* 4 grade-1 (i.e., e0, e1, e2, e3),
 * 6 grade-2 (i.e., e01, e02, e03, e12, e31, e23),
 * 4 grade-3 (i.e., e021, e013, e032, e123), and
 * 1 grade-4 (i.e., e0123).
@@ -267,12 +267,6 @@ julia> foreach(row->println(join(row, "\t")), eachrow(basis))
 e0      #2: ideal point (the point at infinity)
 e1      #3: Euclidean point at origin (x=0)
 e01     #4: pseudoscalar (the entire 1D space and the translation bivector)
-
-julia> foreach(row->println(join(row, "\t")), eachrow(basis))
-1       #1: scalar (specified as eu in vector form)
-e0      #2: ideal point (the point at infinity)
-e1      #3: Euclidean point at origin (x=0)
-e01     #4: pseudoscalar (the entire 1D space)
 ```
 In 1D PGA, there are a total of four (i.e., $2^{1+1}$) PGA basis elements:
 * 1 grade-0 (i.e., the scalar),
@@ -397,13 +391,12 @@ julia> M = [1 0 0;2 1 0] # length and shift count matrix for 1D PGA
  1  0  0
  2  1  0
 ```
-To be clear, the PGA reverse (\~) is different from Julia's reverse() function. The PGA reverse (\~) flips the left to right
-order of the indices in each PGA basis element (and then repeatedly applies the contraction axiom to restore the original
-left to right order of each PGA basis element's indices with the addition of a sign change if the required number of applications
-of the contraction axiom is odd. In contrast, Julia's reverse() function flips the top to bottom order of any column vector.
-As an aside, Julia's reverse() function acts more like the PGA reverse (\~) when Julia's reverse() function is applied
-to a Matrix{Float32} and there is an additional argument in the call to the reverse() function specifying that the reversing
-needs to be done along the row dimension (e.g., reverse([e0 e1],dims=2) == [e1 e0]). 
+To be clear, the PGA reverse ($\sim$) is different from Julia's reverse() function. The PGA reverse ($\sim$) flips the left to right
+order of the indices in each PGA basis element and repeatedly applies the contraction axiom to restore the original index ordering,
+adding a sign change if the required number of applications are required. In contrast, Julia's reverse() function flips the top to
+bottom order of any column vector. As an aside, Julia's reverse() function acts more like the PGA reverse ($\sim$) when Julia's
+reverse() function is applied to a Matrix{Float32} with an additional argument specifying that the reversing needs to be done along
+the row dimension (e.g., reverse([e0 e1],dims=2) == [e1 e0]). 
 
 ### 4.1.3 Example of 1D PGA Point Translation
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
@@ -655,13 +648,12 @@ julia> M = [1 0 0 0;2 1 0 0;3 2 1 0]
  2  1  0  0
  3  2  1  0
 ```
-To be clear, the PGA reverse (\~) is different from Julia's reverse() function. The PGA reverse (\~) flips the left to right
-order of the indices in each PGA basis element (and then repeatedly applies the contraction axiom to restore the original
-left to right order of each PGA basis element's indices with the addition of a sign change if the required number of applications
-of the contraction axiom is odd. In contrast, Julia's reverse() function flips the top to bottom order of any column vector.
-As an aside, Julia's reverse() function acts more like the PGA reverse (\~) when Julia's reverse() function is applied
-to a Matrix{Float32} and there is an additional argument in the call to the reverse() function specifying that the reversing
-needs to be done along the row dimension (e.g., reverse([e0 e1],dims=2) == [e1 e0]). 
+To be clear, the PGA reverse ($\sim$) is different from Julia's reverse() function. The PGA reverse ($\sim$) flips the left to right
+order of the indices in each PGA basis element and repeatedly applies the contraction axiom to restore the original index ordering,
+adding a sign change if the required number of applications are required. In contrast, Julia's reverse() function flips the top to
+bottom order of any column vector. As an aside, Julia's reverse() function acts more like the PGA reverse ($\sim$) when Julia's
+reverse() function is applied to a Matrix{Float32} with an additional argument specifying that the reversing needs to be done along
+the row dimension (e.g., reverse([e0 e1],dims=2) == [e1 e0]). 
 
 ### 4.2.3 Example of 2D PGA Point Translation
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
@@ -712,6 +704,7 @@ to make a translation motor using the **point-based** geometric interpretation f
 * L2 is still 5 to right of L1 but has the 2D **point-based** PGA expression e0^e2+5e1^e2 = -e20+5e12, and
 * the attempt to make a translation motor T = L2*L1 fails because L2*L1 = (-e20+5e12)*(-e20) = 5e01 which is not in the
   correct form (i.e., is not a dual number) to be a translation motor.
+
 Notice how the "meet" operation depends upon the geometric interpretation. In plane-based PGA, the regressive product (i.e.,
 the vee operator) performs the "meet" of two points, but in point-based PGA the outer product (i.e., the wedge operation)
 performs the "meet" of two points.
@@ -991,13 +984,12 @@ julia> M = [1 0 0 0 0; 2 1 0 0 0; 3 2 1 0 0; 4 3 2 1 0]
  3  2  1  0  0
  4  3  2  1  0
 ```
-To be clear, the PGA reverse (\~) is different from Julia's reverse() function. The PGA reverse (\~) flips the left to right
-order of the indices in each PGA basis element (and then repeatedly applies the contraction axiom to restore the original
-left to right order of each PGA basis element's indices with the addition of a sign change if the required number of applications
-of the contraction axiom is odd. In contrast, Julia's reverse() function flips the top to bottom order of any column vector.
-As an aside, Julia's reverse() function acts more like the PGA reverse (\~) when Julia's reverse() function is applied
-to a Matrix{Float32} and there is an additional argument in the call to the reverse() function specifying that the reversing
-needs to be done along the row dimension (e.g., reverse([e0 e1],dims=2) == [e1 e0]). 
+To be clear, the PGA reverse ($\sim$) is different from Julia's reverse() function. The PGA reverse ($\sim$) flips the left to right
+order of the indices in each PGA basis element and repeatedly applies the contraction axiom to restore the original index ordering,
+adding a sign change if the required number of applications are required. In contrast, Julia's reverse() function flips the top to
+bottom order of any column vector. As an aside, Julia's reverse() function acts more like the PGA reverse ($\sim$) when Julia's
+reverse() function is applied to a Matrix{Float32} with an additional argument specifying that the reversing needs to be done along
+the row dimension (e.g., reverse([e0 e1],dims=2) == [e1 e0]). 
 
 ### 4.3.3 Example of 3D PGA Point Translation
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
@@ -1123,7 +1115,7 @@ to calculate the dual of the basis can be helpful. The two steps are
    
 although those two steps can be accomplished in several different ways.
 
-The first of the three approaches is cpmceptually the easiest because it uses the geometric product to expand the grade of each
+The first of the three approaches is conceptually the easiest because it uses the geometric product to expand the grade of each
 PGA basis element (step 1) and that same geometric product automatically corrects the index order of each expanded PGA basis
 element (step 2). However, this first approach is not the easiest to implement because it requires an implementation of the
 geometric product.
@@ -1308,13 +1300,12 @@ julia> M = [1 0 0 0 0 0; 2 1 0 0 0 0; 3 2 1 0 0 0; 4 3 2 1 0 0; 5 4 3 2 1 0]
  4  3  2  1  0  0
  5  4  3  2  1  0
 ```
-To be clear, the PGA reverse (\~) is different from Julia's reverse() function. The PGA reverse (\~) flips the left to right
-order of the indices in each PGA basis element (and then repeatedly applies the contraction axiom to restore the original
-left to right order of each PGA basis element's indices with the addition of a sign change if the required number of applications
-of the contraction axiom is odd. In contrast, Julia's reverse() function flips the top to bottom order of any column vector.
-As an aside, Julia's reverse() function acts more like the PGA reverse (\~) when Julia's reverse() function is applied
-to a Matrix{Float32} and there is an additional argument in the call to the reverse() function specifying that the reversing
-needs to be done along the row dimension (e.g., reverse([e0 e1],dims=2) == [e1 e0]). 
+To be clear, the PGA reverse ($\sim$) is different from Julia's reverse() function. The PGA reverse ($\sim$) flips the left to right
+order of the indices in each PGA basis element and repeatedly applies the contraction axiom to restore the original index ordering,
+adding a sign change if the required number of applications are required. In contrast, Julia's reverse() function flips the top to
+bottom order of any column vector. As an aside, Julia's reverse() function acts more like the PGA reverse ($\sim$) when Julia's
+reverse() function is applied to a Matrix{Float32} with an additional argument specifying that the reversing needs to be done along
+the row dimension (e.g., reverse([e0 e1],dims=2) == [e1 e0]). 
 
 ### 4.4.3 Example of 4D PGA Point Translation
 (TODO)
