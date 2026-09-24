@@ -1018,7 +1018,9 @@ To prepare Julia's REPL for 4D PGA, include the files ripgand.jl and ripga4d.jl.
 Note that the 4D PGA basis is long enough for Julia's default REPL output to abbreviate the middle section of the basis.
 
 <details>
+
 <summary>Click to expand/collapse the REPL output</summary>
+
 ```julia
 julia> include("ripgand.jl")
 rtest (generic function with 1 method)
