@@ -10,12 +10,12 @@
 
 <summary><b>Table of Contents</b> (Click to expand)</summary>
 
-- <a href="#0.-tldr">TLDR</a>
-- <a href="#1.-why-projective-geometric-algebra">Why Projective Geometric Algebra?</a>
+- <a href="#tldr">TLDR</a>
+- <a href="#why-pga">Why Projective Geometric Algebra?</a>
 
 </details>
 
-# 0. TLDR
+# <a id="tldr"></a>0. TLDR
 Here's a showcase of animations from simple applications demonstrating [Julia](https://julialang.org),
 [Makie](https://docs.makie.org/stable), and [Projective Geometric Algebra](https://bivector.net) as
 implemented by ripga (i.e., the Reference Implementation of Projective Geometric Algebra). The intent
@@ -50,7 +50,7 @@ ripga library, both written in Julia, is in the github repository at https://git
   </tr>
 </table>
 
-# 1. Why Projective Geometric Algebra?
+# <a id="why_pga"></a>1. Why Projective Geometric Algebra?
 For intricate geometry problems, there are several compelling reasons for using Projective Geometric Algebra:
 * PGA unifies many concepts (e.g., translations and rotations), making them easier to implement,
 * PGA has geometric objects (e.g., points, lines, planes), making them easier to mentally manipulate than matrices of coordinates, and
