@@ -50,7 +50,7 @@ ripga library, both written in Julia, is in the github repository at https://git
   </tr>
 </table>
 
-# <a id="why_pga"></a>1. Why Projective Geometric Algebra?
+# <a id="why-pga"></a>1. Why Projective Geometric Algebra?
 For intricate geometry problems, there are several compelling reasons for using Projective Geometric Algebra:
 * PGA unifies many concepts (e.g., translations and rotations), making them easier to implement,
 * PGA has geometric objects (e.g., points, lines, planes), making them easier to mentally manipulate than matrices of coordinates, and
