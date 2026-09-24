@@ -15,10 +15,10 @@
 - <a href="#why-julia">2. Why Julia?</a>
 - <a href="#hang-of-pga">3. Getting the Hang of PGA</a>
 - <a href="#pga-basis">4. PGA Basis</a>
--- <a href="#pga-basis-1d">4.1 1D PGA Basis</a>
--- <a href="#pga-basis-2d">4.2 2D PGA Basis</a>
--- <a href="#pga-basis-3d">4.3 3D PGA Basis</a>
--- <a href="#pga-basis-4d">4.4 4D PGA Basis</a>
+- <a href="#pga-basis-1d">  4.1 1D PGA Basis</a>
+- <a href="#pga-basis-2d">  4.2 2D PGA Basis</a>
+- <a href="#pga-basis-3d">  4.3 3D PGA Basis</a>
+- <a href="#pga-basis-4d">  4.4 4D PGA Basis</a>
 
 </details>
 
