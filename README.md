@@ -78,11 +78,11 @@ Projective Geometric Algebra embeds coordinates in geometric objects, which are 
 of coordinates. That abstraction is especially helpful when solving complex geometry problems.
 
 ## 1.3 Unify Geometries
-The metric signature (i.e., $\mathbb{R}\_{positive,negative,zero}$, where the three subscripts denote how many
+The metric signature (i.e., $\mathbb{R}_{positive,negative,zero}$, where the three subscripts denote how many
 basis vectors square to +1, -1, and 0, respectively) denotes the geometry's dimensions and spatial curvature.
-For example, the metric signatures $\mathbb{R}^\_{2,0,1}$ and $\mathbb{R}^\_{3,0,1}$ denote 2D and 3D
+For example, the metric signatures $\mathbb{R}\_{2,0,1}$ and $\mathbb{R}\_{3,0,1}$ denote 2D and 3D
 Euclidean spaces. However, switching the signature to $\mathbb{R}\_{4,0,0}$ denotes an elliptic space and
-$\mathbb{R}\_{3,1,0}$ denotes a hyperbolic space.
+$\mathbb{R}_{3,1,0}$ denotes a hyperbolic space.
 
 # 2. Why Julia?
 There are quite a few advantages in using Julia to implement Projective Geometric Algebra applications:
