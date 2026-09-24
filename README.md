@@ -1019,7 +1019,7 @@ Note that the 4D PGA basis is long enough for Julia's default REPL output to abb
 
 <details>
 <summary>Click to expand/collapse the REPL output</summary>
-
+```
 julia> include("ripgand.jl")
 rtest (generic function with 1 method)
 
@@ -1054,7 +1054,7 @@ julia> basis
  "e0234"   "#30 ideal point along x-axis for defining absolute direction of x-axis"
  "e1234"   "#31 Euclidean origin (i.e., coordinate at (0,0,0,0))"
  "e01234"  "#32 pseudoscalar (the entire 4D space)"
-
+```
 </details>
 
 With a longer command, the REPL displays the emtire basis without abbreviating the middle
