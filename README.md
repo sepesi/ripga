@@ -520,7 +520,12 @@ Also, instead of listing the name of each of the eight PGA basis elements within
 matrix (i.e., [Float32(i == j) for i in 1:9, j in 1:8] == [eu e0 e1 e2 e01 e20 e12 e012]). Although this Julia comprehension doesn't
 save much typing with the 2D PGA basis elements, it does save typing when constructing matrices that include all the PGA basis
 elements for 3D PGA and 4D PGA.
-```
+
+<details>
+
+<summary>Click to expand/collapse the REPL output</summary>
+
+```julia
 julia> I = [Float32(i == j) for i in 1:size(basis,1)+1, j in 1:size(basis,1)] # Identity matrix
 9×8 Matrix{Float32}:
  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
@@ -566,6 +571,8 @@ julia> [basis[:,1] S.*reverse(basis[:,1])]
  "e12"   "e0"
  "e012"  "1"
 ```
+</details>
+
 The second approach to calculating the dual of the PGA basis is perhaps the quickest because it is performed by a single
 call to the utility function basis_dual(basis[:,1]). Looking at the code, basis_dual() does not use the geometric product
 to expand each PGA basis element to the grade of the pseudoscalar element (step 1). Instead, that expansion is done with
@@ -793,7 +800,12 @@ Note that in this first approach, a short cut is to put all the PGA basis elemen
 that the geometric product can be called just once (with geoprodset()) instead of on each of the 16 PGA basis elements. Also,
 instead of listing the names of each of the 16 PGA basis elements within a matrix, a Julia comprehension constructs that matrix
 (i.e., [Float32(i == j) for i in 1:17, j in 1:16] == [eu e0 e1 e2 e3 e01 e02 e03 e12 e31 e23 e021 e013 e032 e123 e0123]).
-```
+
+<details>
+
+<summary>Click to expand/collapse the REPL output</summary>
+
+```julia
 julia> I = [Float32(i == j) for i in 1:size(basis,1)+1, j in 1:size(basis,1)] # Identity matrix
 17×16 Matrix{Float32}:
  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
@@ -871,6 +883,8 @@ julia> [basis[:,1] S.*reverse(basis[:,1])]
  "e123"   "-e0"
  "e0123"  "1"
 ```
+</details>
+
 The second approach to calculating the dual of the PGA basis is perhaps the quickest because it is performed by a single
 call to the utility function basis_dual(basis[:,1]). Looking at the code, basis_dual() does not use the geometric product
 to expand each PGA basis element to the grade of the pseudoscalar element (step 1). Instead, that expansion is done with
@@ -1061,7 +1075,12 @@ julia> basis
 
 With a longer command, the REPL displays the emtire basis without abbreviating the middle
 of the basis.
-```
+
+<details>
+
+<summary>Click to expand/collapse the REPL output</summary>
+
+```julia
 julia> foreach(row->println(join(row, "\t")), eachrow(basis))
 1       # 1 scalar (specified as eu in vector form)
 e0      # 2 ideal 3D hyperplane (the 3D hyperplane at infinity)
@@ -1096,6 +1115,8 @@ e0234   #30 ideal point along x-axis for defining absolute direction of x-axis
 e1234   #31 Euclidean origin (i.e., coordinate at (0,0,0,0))
 e01234  #32 pseudoscalar (the entire 4D space)
 ```
+</details>
+
 In 4D PGA, there are a total of 32 (i.e., $2^{4+1}$) PGA basis elements:
 *  1 grade-0 (i.e., the scalar),
 *  5 grade-1 (i,e., e0, e1, e2, e3, e4),
@@ -1122,7 +1143,12 @@ Note that in this first approach, a short cut is to put all the PGA basis elemen
 that the geometric product can be called just once (with geoprodset()) instead of on each of the 16 PGA basis elements. Also,
 instead of listing the names of each of the 16 PGA basis elements within a matrix, a Julia comprehension constructs that matrix
 (i.e., [Float32(i == j) for i in 1:33, j in 1:32] == [eu e0 e1 e2 e3 e01 e02 e03 e12 e31 e23 e021 e013 e032 e123 e0123]).
-```
+
+<details>
+
+<summary>Click to expand/collapse the REPL output</summary>
+
+```julia
 julia> I = [Float32(i == j) for i in 1:size(basis,1)+1, j in 1:size(basis,1)]; # Identity matrix
 
 julia> size(I)
@@ -1175,11 +1201,18 @@ julia> show(stdout, "text/plain", BD)
  "e1234"   "e0"
  "e01234"  "1"
 ```
+</details>
+
 The second approach to calculating the dual of the PGA basis is perhaps the quickest because it is performed by a single
 call to the utility function basis_dual(basis[:,1]). Looking at the code, basis_dual() does not use the geometric product
 to expand each PGA basis element to the grade of the pseudoscalar element (step 1). Instead, that expansion is done with
 the concatenation of strings. Then an insertion sort algorithm orders the indices.
-```
+
+<details>
+
+<summary>Click to expand/collapse the REPL output</summary>
+
+```julia
 julia> show(stdout,"text/plain",basis_dual(basis[:,1]))
 32×2 Matrix{String}:
  "1"       "e01234"
@@ -1215,6 +1248,8 @@ julia> show(stdout,"text/plain",basis_dual(basis[:,1]))
  "e1234"   "e0"
  "e01234"  "1"
 ```
+</details>
+
 The third and final approach to calculating the dual of the PGA basis is neither the easiest or the quickest but it may be
 the best approach to becoming familiar with PGA's duality. Specifically, this third approach is manual calculation, using
 paper and pencil to write a table with seven columns:
@@ -1241,7 +1276,12 @@ T). Like the PGA dual (!), the PGA reverse (\~) also is computed in two steps:
 As with the PGA dual (!), there are different ways to calculate the PGA reverse (\~).
 
 The quickest approach to calculating the PGA reverse (\~) is to call the utility function basis_reverse(basis[:,1]).
-```
+
+<details>
+
+<summary>Click to expand/collapse the REPL output</summary>
+
+```julia
 julia> show(stdout,"text/plain",basis_reverse(basis[:,1]))
 32×2 Matrix{String}:
  "1"       "1"
@@ -1277,6 +1317,8 @@ julia> show(stdout,"text/plain",basis_reverse(basis[:,1]))
  "e1234"   "e1234"
  "e01234"  "e01234"
 ```
+</details>
+
 The alternative approach to calculating the PGA reverse (\~) is a manual calculation with paper and pencil, which is not
 the quickest approach but may be the best approach to gain familiarity with the PGA reverse. Specifically, this manual
 calculation involves writing a table with up to six columns:
