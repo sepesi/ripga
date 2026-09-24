@@ -15,6 +15,10 @@
 - <a href="#why-julia">2. Why Julia?</a>
 - <a href="#hang-of-pga">3. Getting the Hang of PGA</a>
 - <a href="#pga-basis">4. PGA Basis</a>
+-- <a href="#pga-basis-1d">4.1 1D PGA Basis</a>
+-- <a href="#pga-basis-2d">4.2 2D PGA Basis</a>
+-- <a href="#pga-basis-3d">4.3 3D PGA Basis</a>
+-- <a href="#pga-basis-4d">4.4 4D PGA Basis</a>
 
 </details>
 
@@ -87,7 +91,7 @@ For example, the metric signatures $\mathbb{R}\_{2,0,1}$ and $\mathbb{R}\_{3,0,1
 Euclidean spaces. However, switching the signature to $\mathbb{R}\_{4,0,0}$ denotes an elliptic space and
 $\mathbb{R}_{3,1,0}$ denotes a hyperbolic space.
 
-# <a id="why-julia"></a>2. Why Julia?</a>
+# <a id="why-julia"></a>2. Why Julia?
 There are quite a few advantages in using Julia to implement Projective Geometric Algebra applications:
 * advanced capabilities in vector operations (and vector operations play a central role in PGA),
 * metaprogramming capabilities,
@@ -190,7 +194,7 @@ The significant overlap of the many fields interested in Julia and the many fiel
 Geometric Algebra, spacetime geometric algebra, conformal geometric algebra) suggests that the Julia community and the Geometric Algebra
 community would benefit from each other.
 
-# <a id="hang-of-pga"></a>3. Getting the Hang of PGA</a>
+# <a id="hang-of-pga"></a>3. Getting the Hang of PGA
 There are three perspectives that contribute to understanding PGA:
 
 ## 3.1 History
@@ -255,10 +259,10 @@ In contrast, in 3D point-based PGA,
 
 (More on the geometric interpretations in the next section.)
 
-# <a id="pga-basis"></a>4. PGA Basis</a>
+# <a id="pga-basis"></a>4. PGA Basis
 The ripga library is capable of switching back and forth between the bases for 1D PGA, 2D PGA, 3D PGA, and 4D PGA.
 
-## 4.1 1D PGA Basis
+## <a id="pga-basis-1d"></a>4.1 1D PGA Basis
 To prepare Julia's REPL for 1D PGA, include the files ripgand.jl and ripga1d.jl. To confirm the initialization, print out the basis.
 ```
 julia> include("ripgand.jl"); # utility functions for all available dimensions
@@ -476,7 +480,7 @@ collapsed to zero (i.e., PX = 36e0 and PX\*PX = 0).
 ### 4.1.4 Derivation of 1D PGA Point
 (TODO)
 
-## 4.2 2D PGA Basis
+## <a id="pga-basis-2d"></a>4.2 2D PGA Basis
 To prepare Julia's REPL for 2D PGA, include the files ripgand.jl and ripga2d.jl. To confirm the initialization, print out the basis.
 ```
 julia> include("ripgand.jl"); # utility functions for all available dimensions
@@ -741,7 +745,7 @@ julia> toStr(T) # not in form of dual number (missing scalar term), so translati
 ### 4.2.4 Derivative of 2D PGA Point
 (TODO)
 
-## 4.3 3D PGA Basis
+## <a id="pga-basis-3d"></a>4.3 3D PGA Basis
 To prepare Julia's REPL for 3D PGA, include the files ripgand.jl and ripga3d.jl. To confirm the initialization, print out the basis.
 ```
 julia> include("ripgand.jl"); # utility functions for all available dimensions
@@ -1039,7 +1043,7 @@ julia> toCoord(P2)
 ### 4.3.4 Derivative of 3D PGA Point
 (TODO)
 
-## 4.4 4D PGA Basis
+## <a id="pga-basis-4d">4.4 4D PGA Basis
 To prepare Julia's REPL for 4D PGA, include the files ripgand.jl and ripga4d.jl. To confirm the initialization, print out the basis.
 Note that the 4D PGA basis is long enough for Julia's default REPL output to abbreviate the middle section of the basis.
 
