@@ -10,10 +10,8 @@
 
 <summary><b>Table of Contents</b> (Click to expand)</summary>
 
-```julia
 - [TLDR](#tldr)
 - [Why Projective Geometric Algebra?](#why-projective-geometric-algebra)
-```
 
 </details>
 
