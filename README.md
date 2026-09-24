@@ -10,8 +10,8 @@
 
 <summary><b>Table of Contents</b> (Click to expand)</summary>
 
-- [TLDR](https://github.com/sepesi/ripga/tldr)
-- [Why Projective Geometric Algebra?](https://github.com/sepesi/ripga/why-projective-geometric-algebra)
+- [TLDR](https://github.com/sepesi/ripga/README.md#tldr)
+- [Why Projective Geometric Algebra?](https://github.com/sepesi/ripga/README.md#why-projective-geometric-algebra)
 
 </details>
 
