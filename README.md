@@ -1017,8 +1017,6 @@ julia> toCoord(P2)
 To prepare Julia's REPL for 4D PGA, include the files ripgand.jl and ripga4d.jl. To confirm the initialization, print out the basis.
 Note that the 4D PGA basis is long enough for Julia's default REPL output to abbreviate the middle section of the basis.
 
-<details>
-<summary>Click to view full REPL output matrix</summary>
 ```
 julia> include("ripgand.jl")
 rtest (generic function with 1 method)
@@ -1054,7 +1052,6 @@ julia> basis
  "e0234"   "#30 ideal point along x-axis for defining absolute direction of x-axis"
  "e1234"   "#31 Euclidean origin (i.e., coordinate at (0,0,0,0))"
  "e01234"  "#32 pseudoscalar (the entire 4D space)"
-</details>
 ```
 With a longer command, the REPL displays the emtire basis without abbreviating the middle
 of the basis.
@@ -1321,4 +1318,9 @@ $$
 <summary>Click to view full REPL output matrix</summary>
 
 ```julia
-# your long REPL output here
+julia> show(stdout,"text/plain",basis_dual(basis[:,1]))
+32×2 Matrix{String}:
+ "1"        "e01234"
+ "e0"       "e1234"
+ "e1"       "-e0234"
+...
