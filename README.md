@@ -1019,7 +1019,7 @@ Note that the 4D PGA basis is long enough for Julia's default REPL output to abb
 
 <details>
 <summary>Click to expand/collapse the REPL output</summary>
-julia```
+```julia
 julia> include("ripgand.jl")
 rtest (generic function with 1 method)
 
@@ -1317,12 +1317,3 @@ An exponential function can demonstrate PGA's unification of translation and rot
 $$
 \mathbf{T} = \underbrace{ e^{\frac{\theta_1}{2}\mathbf{e}_{12}} e^{\frac{r_1}{2}\mathbf{e}_{01}} }_{\text{Circle 2}} \underbrace{ e^{\frac{\theta_2}{2}\mathbf{e}_{31}} e^{\frac{r_2}{2}\mathbf{e}_{03}} }_{\text{Circle 1}} \underbrace{\mathbf{e}_{123}}_{\text{origin}}
 $$
-<details>
-<summary>Click to expand/collapse the REPL output</summary>
-
-julia> basis
-4×2 Matrix{String}:
- "1"    "#1: scalar"
- "e0"   "#2: ideal point"
-
-</details>
