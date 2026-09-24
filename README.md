@@ -1016,6 +1016,9 @@ julia> toCoord(P2)
 ## 4.4 4D PGA BASIS
 To prepare Julia's REPL for 4D PGA, include the files ripgand.jl and ripga4d.jl. To confirm the initialization, print out the basis.
 Note that the 4D PGA basis is long enough for Julia's default REPL output to abbreviate the middle section of the basis.
+
+<details>
+<summary>Click to view full REPL output matrix</summary>
 ```
 julia> include("ripgand.jl")
 rtest (generic function with 1 method)
@@ -1312,3 +1315,9 @@ An exponential function can demonstrate PGA's unification of translation and rot
 $$
 \mathbf{T} = \underbrace{ e^{\frac{\theta_1}{2}\mathbf{e}_{12}} e^{\frac{r_1}{2}\mathbf{e}_{01}} }_{\text{Circle 2}} \underbrace{ e^{\frac{\theta_2}{2}\mathbf{e}_{31}} e^{\frac{r_2}{2}\mathbf{e}_{03}} }_{\text{Circle 1}} \underbrace{\mathbf{e}_{123}}_{\text{origin}}
 $$
+
+<details>
+<summary>Click to view full REPL output matrix</summary>
+
+```julia
+# your long REPL output here
