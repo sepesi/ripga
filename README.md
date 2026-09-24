@@ -10,8 +10,8 @@
 
 <summary><b>Table of Contents</b> (Click to expand)</summary>
 
-- <a href="#tldr">TLDR</a>
-- <a href="#why-projective-geometric-algebra">Why Projective Geometric Algebra?</a>
+- <a href="#0.-tldr">TLDR</a>
+- <a href="#1.-why-projective-geometric-algebra">Why Projective Geometric Algebra?</a>
 
 </details>
 
