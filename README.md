@@ -19,6 +19,10 @@
   - <a href="#pga-basis-2d">4.2 2D PGA Basis</a>
   - <a href="#pga-basis-3d">4.3 3D PGA Basis</a>
   - <a href="#pga-basis-4d">4.4 4D PGA Basis</a>
+- <a href="#pga-exp">5. PGA Exponential</a>
+- <a href="#pga-plot">6. PGA Plotting</a>
+- <a href="#rbd">7. Rigid Body Dynamics</a>
+- <a href="#max-eq">8. Maxwell's Equations</a>
 
 </details>
 
@@ -1364,7 +1368,9 @@ julia> M = [1 0 0 0 0 0; 2 1 0 0 0 0; 3 2 1 0 0 0; 4 3 2 1 0 0; 5 4 3 2 1 0]
 ### 4.4.4 Derivation of 4D PGA Point
 (TODO)
 
-# 5. PGA Exponentials
+# <a id="pga-exp"></a>5. PGA Exponential
+(TODO)
+
 At the risk of being too ee-sy (pun intended), the letter e is used in several ways:
 * the name of the exponential function is e (e.g., e(10,X)),
 * the first letter of each of the names of the hypercomplex vectors in the basis is e (e.g., e12), and
@@ -1372,8 +1378,16 @@ At the risk of being too ee-sy (pun intended), the letter e is used in several w
 
 An exponential function can demonstrate PGA's unification of translation and rotation.
 
-(TODO)
-
 $$
 \mathbf{T} = \underbrace{ e^{\frac{\theta_1}{2}\mathbf{e}_{12}} e^{\frac{r_1}{2}\mathbf{e}_{01}} }_{\text{Circle 2}} \underbrace{ e^{\frac{\theta_2}{2}\mathbf{e}_{31}} e^{\frac{r_2}{2}\mathbf{e}_{03}} }_{\text{Circle 1}} \underbrace{\mathbf{e}_{123}}_{\text{origin}}
 $$
+
+# <a id="pga-plot"></a>6. PGA Plotting
+(TODO)
+
+# <a id="rbd"></a>7. Rigid Body Dynamics
+(TODO)
+
+# <a id="max-eq"></a>8. Maxwell's Equations
+(TODO)
+
