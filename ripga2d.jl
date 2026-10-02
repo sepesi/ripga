@@ -133,7 +133,8 @@ function point(
  isPointBased::Bool=false)::Vector{Float32}
  return isPointBased ? e0 + x*e1 + y*e2 : x*e20 + y*e01 + e12
 end
-function point(M::Matrix{Float32},isPointBased::Bool)::Matrix{Float32}
+function point(M::Matrix{Float32},
+ isPointBased::Bool=false)::Matrix{Float32}
  nPoint = size(M,2) # M is coordinate Matrix where each column is a point
  res = Matrix{Float32}(undef, 8+1, nPoint) # nBasis is 8, +1 for appended status
  for iPoint=1:nPoint

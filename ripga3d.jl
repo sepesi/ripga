@@ -206,14 +206,16 @@ function point(M::Matrix{Float32},isPointBased::Bool=false)::Matrix{Float32}
 end
 
 # convert PGA expression to Euclidean coordinates
-function toCoord(V::Vector{Float32},isPointBased::Bool=false)
+function toCoord(V::Vector{Float32},
+ isPointBased::Bool=false)
  res = Vector{Float32}(undef, 3) # nD = 3
  res[1] = isPointBased ? V[3] : V[14] # e032 element is x component
  res[2] = isPointBased ? V[4] : V[13] # e013 element is y component
  res[3] = isPointBased ? V[5] : V[12] # e021 element is z component
  return res
 end
-function toCoord(M::Matrix{Float32},isPointBased::Bool=false)::Matrix{Float32}
+function toCoord(M::Matrix{Float32},
+ isPointBased::Bool=false)::Matrix{Float32}
  nPoint = size(M,2) # M is PGA Matrix, each column is PGA expression of point
  res = Matrix{Float32}(undef, 3, nPoint) # nD = 3
  for iPoint=1:nPoint

@@ -971,7 +971,8 @@ function point(M::Matrix{Float32},isPointBased::Bool=false)::Matrix{Float32}
 end # point()
 
 # convert PGA expression to Euclidean coordinates
-function toCoord(V::Vector{Float32},isPointBased::Bool=false)
+function toCoord(V::Vector{Float32},
+ isPointBased::Bool=false)
  res = Vector{Float32}(undef, 4) # nD = 4
  res[1] = isPointBased ? V[3] : -V[30] # -e0234 element is x component
  res[2] = isPointBased ? V[4] : V[29] # e0134 element is y component
@@ -979,7 +980,8 @@ function toCoord(V::Vector{Float32},isPointBased::Bool=false)
  res[4] = isPointBased ? V[6] : V[27] # e0123 element is w component
  return res
 end # toCoord()
-function toCoord(M::Matrix{Float32},isPointBased::Bool=false)::Matrix{Float32}
+function toCoord(M::Matrix{Float32},
+ isPointBased::Bool=false)::Matrix{Float32}
  nPoint = size(M,2) # M is PGA Matrix, each column is PGA expression of point
  res = Matrix{Float32}(undef, 4, nPoint) # nD = 4
  for iPoint=1:nPoint
