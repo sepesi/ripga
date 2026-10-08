@@ -21,8 +21,13 @@
   - <a href="#pga-basis-4d">4.4 4D PGA Basis</a>
 - <a href="#pga-exp">5. PGA Exponential</a>
 - <a href="#pga-plot">6. PGA Plotting</a>
-- <a href="#rbd">7. Rigid Body Dynamics</a>
-- <a href="#max-eq">8. Maxwell's Equations</a>
+- <a href="#geo">7. Geometry</a>
+  - <a href="#geo-1d">7.1 1D Geometry</a>
+  - <a href="#geo-2d">7.1 2D Geometry</a>
+  - <a href="#geo-3d">7.1 3D Geometry</a>
+  - <a href="#geo-4d">7.1 4D Geometry</a>
+- <a href="#rbd">8. Rigid Body Dynamics</a>
+- <a href="#max-eq">9. Maxwell's Equations</a>
 
 </details>
 
@@ -1385,9 +1390,24 @@ $$
 # <a id="pga-plot"></a>6. PGA Plotting
 (TODO)
 
-# <a id="rbd"></a>7. Rigid Body Dynamics
+# <a id="geo"></a>7. Geometry
 (TODO)
 
-# <a id="max-eq"></a>8. Maxwell's Equations
+## <a id="geo-1d"></a>7.1 1D Geometry
+(TODO)
+
+## <a id="geo-2d"></a>7.2 2D Geometry
+(TODO)
+
+## <a id="geo-3d"></a>7.3 1D Geometry
+(TODO)
+
+## <a id="geo-4d"></a>7.4 4D Geometry
+(TODO)
+
+# <a id="rbd"></a>8. Rigid Body Dynamics
+(TODO)
+
+# <a id="max-eq"></a>9. Maxwell's Equations
 (TODO)
 
