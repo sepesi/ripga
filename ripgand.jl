@@ -168,7 +168,7 @@ function normalize(a::Vector{Float32})::Vector{Float32}
 end
 
 # exponential, restricted to case B ^ B = 0
-function exp(alpha::Number, B::Vector{Float32})
+function epga(alpha::Number, B::Vector{Float32})
  s = (B * B)[1]
  if s == 0
   return 1 + alpha*B
