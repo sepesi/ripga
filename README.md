@@ -28,6 +28,7 @@
   - <a href="#geo-4d">7.1 4D Euclidean Geometry</a>
 - <a href="#rbd">8. Rigid Body Dynamics</a>
 - <a href="#max-eq">9. Maxwell's Equations</a>
+- <a href="#conc">10. Conclusion</a>
 
 </details>
 
@@ -1411,3 +1412,5 @@ $$
 # <a id="max-eq"></a>9. Maxwell's Equations
 (TODO)
 
+# <a id="conc"></a>10. Conclusion
+(TODO)
