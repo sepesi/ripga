@@ -7,6 +7,55 @@
 #
 using Printf
 
+# 2D cubic Bezier curves of left footprint
+# NOTES:
+# 1) There is one set of Bezier curve control points per column
+# 2) Appended to the end of each column is a status field of flags:
+#    bit 0: start of a group of columns (e.g., a group of adjacent curves)
+#    bit 1: not currently used
+#    bit 2: the group of columns makes a closed curve (the end connects to the beginning)
+# 3) Each Bezier curve (i.e., each column) has 4 Bezier curve control points:
+#    P0: start point
+#    P1: mid control point
+#    P2: mid control point
+#    P3: end point
+# 4) However, P3 is not stored because the endpoint of one segment is identical to the
+#    start point of the next segment (i.e., Footprint2D[6,k] == Footprint2D[1,k+1] and
+#    Footprint2D[7,k] == Footprint2D[2,k+1]) because the adjacent segments in a group
+#    are connected.
+# 5) Also, because adjacent curves in a group have G1 geometric continuity (i.e., the slope
+#    stays the same across the boundary between two adjacent Bezier curves in a group) which
+#    means that the previous curve's P2 is colinear with the new curve's P0 and P1.
+# 6) If a Bezier curve is not closed, then there needs to be a final column for defining the
+#    curve's endpoint.
+# 7) The first 10 columns in the following matrix specify the Bezier control points of the
+#    outline of the toes, starting with the big toe (columns 1 and 2) and ending with the little
+#    toe (columns 9 and 10).
+# 8) The remaining 7 columns (columns 11 through 17) specify the Bezier control points of the
+#    outline of the sole of the foot.
+#=
+Footprint2D = Float32[  # uncentered 2D cubic Bezier control points of footprint
+# 1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  # column numbers
+ 80  82  59  60  43  45  29  32  17  21  48  22  16  28  78  74  64; # P0 x
+212 250 212 242 205 233 195 220 181 202  12  44 128 180 201 132  46; # P0 y
+ 96  66  69  50  52  36  37  24  24  14  32  22  14  42  95  50  72; # P1 x
+210 252 211 243 203 235 193 222 178 205  12  68 154 191 199 104  28; # P1 y
+ 98  64  70  49  54  34  40  21  28  10  22  18  15  62  96  52  64; # P2 x
+248 214 241 213 231 207 218 197 199 184  24  98 170 203 157  72  12; # P2 y
+0x5   0 0x5   0 0x5   0 0x5   0 0x5   0 0x5   0   0   0   0   0   0; # status flags
+]
+=#
+Footprint2D = Float32[  # centered 2D cubic Bezier control points of footprint
+#  1    2    3    4    5    6    7    8    9   10    11   12   13   14  15   16    17  # column numbers
+  26   28    5    6  -11   -9  -25  -22  -37  -33    -6  -32  -38  -26  24   20    10  # P0 x
+  80  118   80  110   73  101   63   88   49   70  -120  -88   -4   48  69    0   -86  # P0 y
+  42   12   15   -4   -2  -18  -17  -30  -30  -40   -22  -32  -40  -12  41   -4    18  # P1 x
+  78  120   79  111   71  103   61   90   46   73  -120  -64   22   59  67  -28  -104  # P1 y
+  44   10   16   -5    0  -20  -14  -33  -26  -44   -32  -36  -39    8  42   -2    10  # P2 x
+ 116   82  109   81   99   75   86   65   67   52  -108  -34   38   71  25  -60  -120  # P2 y
+ 0x5    0  0x5    0  0x5    0  0x5    0  0x5    0   0x5    0    0    0   0    0     0  # status flags
+]
+
 function Base.:*(a::Number, b::Vector{Float32})::Vector{Float32}
  res = copy(b)
  res .*= Float32(a)

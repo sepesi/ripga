@@ -34,6 +34,7 @@ ripga4d.bak.jl
 design.ripga.txt
 ripga3db.jl
 dualtri.jl
+bezier.jl
 [Dd]ebug*/
 bdd/
 obj/
