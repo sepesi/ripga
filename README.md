@@ -20,7 +20,7 @@
   - <a href="#pga-basis-3d">4.3 3D PGA Basis</a>
   - <a href="#pga-basis-4d">4.4 4D PGA Basis</a>
 - <a href="#pga-exp">5. PGA Exponential</a>
-- <a href="#pga-plot">6. PGA Plotting</a>
+- <a href="#plot">6. Plotting</a>
 - <a href="#geo">7. Euclidean Geometry</a>
   - <a href="#geo-1d">7.1 1D Euclidean Geometry</a>
   - <a href="#geo-2d">7.1 2D Euclidean Geometry</a>
@@ -1388,7 +1388,108 @@ $$
 \mathbf{T} = \underbrace{ e^{\frac{\theta_1}{2}\mathbf{e}_{12}} e^{\frac{r_1}{2}\mathbf{e}_{01}} }_{\text{Circle 2}} \underbrace{ e^{\frac{\theta_2}{2}\mathbf{e}_{31}} e^{\frac{r_2}{2}\mathbf{e}_{03}} }_{\text{Circle 1}} \underbrace{\mathbf{e}_{123}}_{\text{origin}}
 $$
 
-# <a id="pga-plot"></a>6. PGA Plotting
+# <a id="plot"></a>6. Plotting
+This section's simple examples demonstrating plotting with Julia and Makie are **using CairoMakie**. In contrast,
+most of this essay's examples demonstrating plotting with Julia and PGA are **using GLMakie** for its GPU-accelerated
+performance.
+
+One of the most basic plotting tasks is plotting a closed polygon (i.e., a line plot that circles back and connects the
+line's end point with the line's start point, as shown in the following code.
+
+```
+using CairoMakie
+
+f = Figure();          # initialize the Figure (the trailing ; avoids display of blank Figure)
+Axis(f[1,1])           # specify the display should have only one row and one column of plots
+points = Point2f[(0,0),(2,0),(3,1),(1,1)]
+poly(                  # poly() is for plotting closed polygons
+   points,             # define the coordinates of the points in the closed polygon
+   color=:red,         # specify the fill color of the closed polygon
+   strokecolor=:black, # specify the border color
+   strokewidth=1)      # specify the border width
+```
+An alternative approach to specifying the coordinates of points in a closed polygon is possible with Makie: instead of
+defining a vector of Point2f[], define a vector of Float32[] as shown in the following REPL.
+
+```
+julia> points = Point2f[(0,0),(2,0),(3,1),(1,1)]
+4-element Vector{Point{2, Float32}}:
+ [0.0, 0.0]
+ [2.0, 0.0]
+ [3.0, 1.0]
+ [1.0, 1.0]
+
+julia> pts = Float32[0f0 2f0 3f0 1f0;0f0 0f0 1f0 1f0] # alternative approach
+2×4 Matrix{Float32}:
+ 0.0  2.0  3.0  1.0
+ 0.0  0.0  1.0  1.0
+```
+This alternative approach to specifying the coordinates of a closed polygon is more aligned with this essay's general approach
+to storing vectors as a Matrix{Float32}, even though the two approaches specify the same coordinates.
+
+```
+using CairoMakie
+
+f = Figure();          # initialize the Figure (the trailing ; avoids display of blank Figure)
+Axis(f[1,1])           # specify the display should have only one row and one column of plots
+pts = Float32[0f0 2f0 3f0 1f0;0f0 0f0 1f0 1f0]
+poly(                  # poly() is for plotting closed polygons
+   pts,                # define the coordinates of the points in the closed polygon
+   color=:red,         # specify the fill color of the closed polygon
+   strokecolor=:black, # specify the border color
+   strokewidth=1)      # specify the border width
+```
+Instead of having a single coordinate pair in each column of a Matrix{Float32}, there are cases where it is helpful
+to stack several coordinate pairs in each column. For example, a cubic Bezier curve has four control points (i.e.,
+four coordinate pairs) to specify each cubic Bezier segment. With each cubic Bezier segment stored in a single vector,
+the vector can be extended (horizontally) to define many adjacent Bezier curve segments. And that Matrix{Float32} can
+be extended (vertically) by appending another Float32 that specify status flags for the corresponding cubic Bezier
+control points. For example, the outline of a left footprint is specified in the following code. Notice that each set of
+four cubic Bezier segment control points in a vector have only three coordinate pairs (not four). That is because in a
+closed polygon, the end point of one Bezier curve segment is identical to the start point of the next Bezier curve segment
+and therefore the duplicate control point can be avoided. Also note that the appended row of status fields is specified in
+hex even though the values are stored as Float32s. Writing the last row in hex helps to identify it as being different
+than the coordinate pairs stored above it.
+
+```
+# 2D cubic Bezier curves of left footprint
+# NOTES:
+# 1) There is one set of Bezier curve control points per column
+# 2) Appended to the end of each column is a status field of flags:
+#    bit 0: start of a group of columns (e.g., a group of adjacent curves)
+#    bit 1: not currently used
+#    bit 2: the group of columns makes a closed curve (the end connects to the beginning)
+# 3) Each Bezier curve (i.e., each column) has 4 Bezier curve control points:
+#    P0: start point
+#    P1: mid control point
+#    P2: mid control point
+#    P3: end point
+# 4) However, P3 is not stored because the endpoint of one segment is identical to the
+#    start point of the next segment (i.e., Footprint2D[6,k] == Footprint2D[1,k+1] and
+#    Footprint2D[7,k] == Footprint2D[2,k+1]) because the adjacent segments in a group
+#    are connected.
+# 5) Also, because adjacent curves in a group have G1 geometric continuity (i.e., the slope
+#    stays the same across the boundary between two adjacent Bezier curves in a group) which
+#    means that the previous curve's P2 is colinear with the new curve's P0 and P1.
+# 6) If a Bezier curve is not closed, then there needs to be a final column for defining the
+#    curve's endpoint.
+# 7) The first 10 columns in the following matrix specify the Bezier control points of the
+#    outline of the toes, starting with the big toe (columns 1 and 2) and ending with the little
+#    toe (columns 9 and 10).
+# 8) The remaining 7 columns (columns 11 through 17) specify the Bezier control points of the
+#    outline of the sole of the foot.
+Footprint2D = Float32[  # centered 2D cubic Bezier control points of footprint
+#  1    2    3    4    5    6    7    8    9   10    11   12   13   14  15   16    17  # column numbers
+  26   28    5    6  -11   -9  -25  -22  -37  -33    -6  -32  -38  -26  24   20    10  # P0 x
+  80  118   80  110   73  101   63   88   49   70  -120  -88   -4   48  69    0   -86  # P0 y
+  42   12   15   -4   -2  -18  -17  -30  -30  -40   -22  -32  -40  -12  41   -4    18  # P1 x
+  78  120   79  111   71  103   61   90   46   73  -120  -64   22   59  67  -28  -104  # P1 y
+  44   10   16   -5    0  -20  -14  -33  -26  -44   -32  -36  -39    8  42   -2    10  # P2 x
+ 116   82  109   81   99   75   86   65   67   52  -108  -34   38   71  25  -60  -120  # P2 y
+ 0x5    0  0x5    0  0x5    0  0x5    0  0x5    0   0x5    0    0    0   0    0     0  # status flags
+]
+```
+
 (TODO)
 
 # <a id="geo"></a>7. Euclidean Geometry

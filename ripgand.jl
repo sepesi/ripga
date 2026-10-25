@@ -56,6 +56,30 @@ Footprint2D = Float32[  # centered 2D cubic Bezier control points of footprint
  0x5    0  0x5    0  0x5    0  0x5    0  0x5    0   0x5    0    0    0   0    0     0  # status flags
 ]
 
+# bezier3: cubic Bezier curve interpolation
+#
+#
+# examples:
+#   bezier3(P,PC)
+#=
+function bezier3(
+	P::Matrix{Float64},
+	PC::Matrix{Float64})
+	
+	B = [ # Bernstein polynomial coefficients for cubic Bezier curve
+		1 -3  3 -1;
+		0  3 -6  3;
+		0  0  3 -3;
+		0  0  0  1]
+	n = size(P, 2)
+	for i = 1:n
+		t = (i-1) / (n-1)
+		T = [1; t; t^2; t^3]
+		P[:,i] = PC * B * T
+	end
+end
+=#
+
 function Base.:*(a::Number, b::Vector{Float32})::Vector{Float32}
  res = copy(b)
  res .*= Float32(a)
