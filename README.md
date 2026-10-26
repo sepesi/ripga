@@ -1389,12 +1389,12 @@ $$
 $$
 
 # <a id="plot"></a>6. Plotting
-This section's simple examples demonstrating plotting with Julia and Makie are **using CairoMakie**. In contrast,
-most of this essay's examples demonstrating plotting with Julia and PGA are **using GLMakie** for its GPU-accelerated
-performance.
+This section's simple examples demonstrating plotting with Julia and Makie are **using CairoMakie** for its simplicity.
+In contrast, most of this essay's examples demonstrating plotting with Julia and PGA are **using GLMakie** for its
+GPU-accelerated performance.
 
 One of the most basic plotting tasks is plotting a closed polygon (i.e., a line plot that circles back and connects the
-line's end point with the line's start point, as shown in the following code.
+line's end point with the line's start point) as shown in the following code.
 
 ```
 using CairoMakie
@@ -1425,7 +1425,7 @@ julia> pts = Float32[0f0 2f0 3f0 1f0;0f0 0f0 1f0 1f0] # alternative approach
  0.0  0.0  1.0  1.0
 ```
 This alternative approach to specifying the coordinates of a closed polygon is more aligned with this essay's general approach
-to storing vectors as a Matrix{Float32}, even though the two approaches specify the same coordinates.
+to storing vectors as a Matrix{Float32}. Of course, the two approaches specify the same coordinates.
 
 ```
 using CairoMakie
@@ -1439,17 +1439,19 @@ poly(                  # poly() is for plotting closed polygons
    strokecolor=:black, # specify the border color
    strokewidth=1)      # specify the border width
 ```
-Instead of having a single coordinate pair in each column of a Matrix{Float32}, there are cases where it is helpful
+Instead of having a single coordinate pair in each column of a Matrix{Float32}, there are times when it is helpful
 to stack several coordinate pairs in each column. For example, a cubic Bezier curve has four control points (i.e.,
 four coordinate pairs) to specify each cubic Bezier segment. With each cubic Bezier segment stored in a single vector,
 the vector can be extended (horizontally) to define many adjacent Bezier curve segments. And that Matrix{Float32} can
-be extended (vertically) by appending another Float32 that specify status flags for the corresponding cubic Bezier
-control points. For example, the outline of a left footprint is specified in the following code. Notice that each set of
-four cubic Bezier segment control points in a vector have only three coordinate pairs (not four). That is because in a
-closed polygon, the end point of one Bezier curve segment is identical to the start point of the next Bezier curve segment
-and therefore the duplicate control point can be avoided. Also note that the appended row of status fields is specified in
-hex even though the values are stored as Float32s. Writing the last row in hex helps to identify it as being different
-than the coordinate pairs stored above it.
+be extended (vertically) by appending another Float32 to specify status flags for the corresponding cubic Bezier control
+points.
+
+For example, the outline of a left footprint is specified in the following code. Notice that each set of four cubic Bezier
+segment control points in a vector have only three coordinate pairs (not four). That is because in a closed polygon, the
+end point of one Bezier curve segment is identical to the start point of the next Bezier curve segment. Therefore, the
+duplicate control point can be avoided. Also note that the appended row of status fields is specified in hex even though
+the values are stored as Float32s. Writing that last row in hex helps to identify it as being different than the coordinate
+pairs stored above it.
 
 ```
 # 2D cubic Bezier curves of left footprint
