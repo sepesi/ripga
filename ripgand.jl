@@ -12,7 +12,7 @@ using Printf
 # 1) There is one set of Bezier curve control points per column
 # 2) Appended to the end of each column is a status field of flags:
 #    bit 0: start of a group of columns (e.g., a group of adjacent curves)
-#    bit 1: not currently used
+#    bit 1: end point of an open Bezier curve (P0 specifies end point, P1/P2/P3 are not used)
 #    bit 2: the group of columns makes a closed curve (the end connects to the beginning)
 # 3) Each Bezier curve (i.e., each column) has 4 Bezier curve control points:
 #    P0: start point
