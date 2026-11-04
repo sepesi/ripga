@@ -1,12 +1,45 @@
 # ripga
+# ripga: Projective Geometric Algebra for High-Performance Spatial Computing in Julia
+
+> *"As long as Algebra and Geometry were separated, their progress was slow and their use limited; but once these sciences were united, they lent each other mutual support and advanced rapidly together towards perfection."* — **Joseph-Louis Lagrange (1736–1813)**
+
+**What if you never had to debug a $4\times4$ transformation matrix, untangle gimbal lock, or write special-case intersection logic again?**
+
+**ripga** (Reference Implementation of Projective Geometric Algebra)
+- brings the unifying power of **Projective Geometric Algebra (PGA)** to the **Julia** ecosystem,
+- treats points, lines, and planes as first-class algebraic citizens, and
+- unifies rotations, translations, forces, and torques into single operators.
+
+`ripga` lets you write complex 2D, 3D, and 4D kinematics, CAD kernels, and physics engines in a fraction of the code, paired with **Julia's** native speed and **Makie's** GPU-accelerated rendering, `ripga` turns intricate geometric theory into real-time, interactive
+applications.
+
+---
+
+# <a id="tldr"></a>0. Interactive Showcase: PGA in Action
+
+Below are applications built with `ripga` and [Makie](https://docs.makie.org/stable), demonstrating how PGA collapses hundreds of lines of traditional vector/matrix boilerplate into clean, expressive algebra. *(Inspired by Steven De Keninck's
+[ganja.js](https://bivector.net) examples, engineered for native execution in Julia).*
+
+<table>
+  <tr>
+    <td width="50%"><img alt="Inverse Kinematics" title="inverse kinematics" src="./res/ikv.gif" /></td>
+    <td width="50%"><img alt="3D Slicing" title="3D slicing" src="./res/sl.gif" /></td>
+  </tr>
+  <tr>
+    <td><b><a href="https://enkimute.github.io/ganja.js/examples/coffeeshop.html#pga2d_inverse_kinematics">Real-Time Inverse Kinematics</a></b><br/>Effortless robotic joint chain solving using unified PGA motors — no Jacobian matrix headaches required.</td>
+    <td><b><a href="https://enkimute.github.io/ganja.js/examples/coffeeshop.html#pga3d_slicing">3D CAD Mesh Slicing</a></b><br/>Intersecting arbitrary 3D polyhedra with moving planes using a single regressive/outer product operator.</td>
+  </tr>
+  <tr>
+    <td><img alt="SAT Animation" title="SAT animation" src="./res/polyx3.gif" /></td>
+    <td><img alt="Origami Animation" title="origami animation" src="./res/origami.gif" /></td>
+  </tr>
+  <tr>
+    <td><b><a href="https://enkimute.github.io/ganja.js/examples/coffeeshop.html#pga2d_separating_axis">3D Collision Detection (SAT)</a></b><br/>Full 3D Separating Axis Theorem polyhedron collision detection expressed directly through geometric primitives.</td>
+    <td><b><a href="https://enkimute.github.io/ganja.js/examples/coffeeshop.html#pga2d_origami">Procedural 3D Origami Folding</a></b><br/>Complex coupled reflections and rotations around arbitrary crease lines in 3D space using sandwich products (`>>>`).</td>
+  </tr>
+</table>
+
 # Reference Implementation of Projective Geometric Algebra
-
->"As long as Algebra and Geometry were separated, their progress was slow and their use limited;
->but once these sciences were united, they lent each other mutual support and advanced rapidly together
->towards perfection. We owe to Descartes the application of Algebra to Geometry; this has become the
->key to the greatest discoveries in all fields of mathematics." - Joseph-Louis Lagrange (1736–1813)
-
-<details>
 
 <summary><b>Table of Contents</b> (Click to expand)</summary>
 
@@ -29,43 +62,6 @@
 - <a href="#rbd">8. Rigid Body Dynamics</a>
 - <a href="#max-eq">9. Maxwell's Equations</a>
 - <a href="#conc">10. Conclusion</a>
-
-</details>
-
-# <a id="tldr"></a>0. TLDR
-Here's a showcase of animations from simple applications demonstrating [Julia](https://julialang.org),
-[Makie](https://docs.makie.org/stable), and [Projective Geometric Algebra](https://bivector.net) as
-implemented by ripga (i.e., the Reference Implementation of Projective Geometric Algebra). The intent
-of the ripga library and this essay is to increase familiarity with PGA so that more people are
-able to design solutions to intricate geometry problems. The source code of the animations and the
-ripga library, both written in Julia, is in the github repository at https://github.com/sepesi/ripga
-
-<table>
-  <tr>
-    <td><img alt="Image" title="inverse kinematics" src="./res/ikv.gif" /></td>
-    <td><img alt="Image" title="3D slicing" src="./res/sl.gif" /></td>
-  </tr>
-  <tr>
-    <td><b>Figure 0.1. <a href="https://enkimute.github.io/ganja.js/examples/coffeeshop.html#pga2d_inverse_kinematics">inverse kinematics</a> animation</b></td>
-    <td><b>Figure 0.2. <a href="https://enkimute.github.io/ganja.js/examples/coffeeshop.html#pga3d_slicing">3D object slicing</a> animation</b></td>
-  </tr>
-  <tr>
-    <td>Based upon Steven De Keninck's inverse kinematics example application in JavaScript and ported to Julia and Makie.</td>
-    <td>Based upon Steven De Keninck's pga3d_slicing example application in JavaScript and ported to Julia and Makie.</td>
-  </tr>
-  <tr>
-    <td><img alt="Image" title="SAT animation" src="./res/polyx3.gif" /></td>
-    <td><img alt="Image" title="origami animation" src="./res/origami.gif" /></td>
-  </tr>
-  <tr>
-    <td><b>Figure 0.3. <a href="https://enkimute.github.io/ganja.js/examples/coffeeshop.html#pga2d_separating_axis">Separating Axis Theorem (SAT)</a> animation</b></td>
-    <td><b>Figure 0.4. <a href="https://enkimute.github.io/ganja.js/examples/coffeeshop.html#pga2d_origami">origami</a> animation</b></td>
-  </tr>
-  <tr>
-    <td>3D version of Separating Axis Theorem (SAT) implemented in Julia and Makie.</td>
-    <td>Based upon Steven De Keninck's origami example application in JavaScript and ported to Julia and Makie.</td>
-  </tr>
-</table>
 
 # <a id="why-pga"></a>1. Why Projective Geometric Algebra?
 For intricate geometry problems, there are several compelling reasons for using Projective Geometric Algebra:

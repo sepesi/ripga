@@ -34,6 +34,51 @@ e10 = -e01
 e02 = -e20
 e21 = -e12
 
+#=
+# bezlerp : Bezier Linear Interpolation
+#
+# arguments:
+#  BCP: Bezier Control Point matrix
+#  nT: number of sampling periods in each Bezier curve segment
+#
+# return value:
+#  MultiPolygon as a vector of vectors, where each internal vector is a closed polygon
+#
+function bezlerp(BCP::Matrix{Float32},nT::Int16)
+  # allocate time samples
+  
+  # determine split points between closed Bezier curves
+
+  # initialize empty stack for vector of vectors (where each internal vector is Point2f)
+  MP = Vector{Vector{Point2f}}()
+  
+  # for each closed Bezier curve
+  
+end
+
+# bezier3: cubic Bezier curve interpolation
+#
+#
+# examples:
+#   bezier3(P,PC)
+function bezier3(
+	P::Matrix{Float64},
+	PC::Matrix{Float64})
+	
+	B = [ # Bernstein polynomial coefficients for cubic Bezier curve
+		1 -3  3 -1;
+		0  3 -6  3;
+		0  0  3 -3;
+		0  0  0  1]
+	n = size(P, 2)
+	for i = 1:n
+		t = (i-1) / (n-1)
+		T = [1; t; t^2; t^3]
+		P[:,i] = PC * B * T
+	end
+end
+=#
+
 # geometric product
 function Base.:*(a::Vector{Float32},b::Vector{Float32})::Vector{Float32}
  res = similar(a)
