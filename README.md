@@ -10,7 +10,7 @@
 - treats points, lines, and planes as first-class algebraic citizens, and
 - unifies rotations, translations, forces, and torques into single operators.
 
-`ripga` lets you write complex 2D, 3D, and 4D kinematics, CAD kernels, and physics engines in a fraction of the code, paired with **Julia's** native speed and **Makie's** GPU-accelerated rendering, `ripga` turns intricate geometric theory into real-time, interactive
+`ripga` lets you write complex 2D, 3D, and 4D kinematics, CAD kernels, and physics engines in a fraction of the code, paired with **Julia's** native speed and **Makie's** GPU-accelerated rendering, `ripga` turns intricate geometric theory into easily maintained
 applications.
 
 ---
@@ -41,7 +41,7 @@ Below are applications built with `ripga` and [Makie](https://docs.makie.org/sta
 
 # Reference Implementation of Projective Geometric Algebra
 
-<summary><b>Table of Contents</b> (Click to expand)</summary>
+<summary><b>Table of Contents</b></summary>
 
 - <a href="#tldr">0. TLDR</a>
 - <a href="#why-pga">1. Why Projective Geometric Algebra?</a>
