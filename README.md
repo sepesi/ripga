@@ -83,7 +83,7 @@ While [bivector.net](https://bivector.net) offers PGA reference implementations 
 
 1. **Solving the Two-Language Problem:** Prototype geometric algorithms interactively in the REPL and execute them at C/C++ speeds with GPU-accelerated [GLMakie](https://docs.makie.org/stable/) visualizations.
 2. **First-Class Unicode & Metaprogramming:** Write code using standard ASCII operators (`a ^ b`, `a & b`, `a >>> b`) or use the `@ga` string macro to write literal textbook math syntax ($a \wedge b$, $a \vee b$, $a \cdot b$).
-3. **Zero-Boilerplate Multivector Ergonomics:** Instead of wrapping arrays in heavy custom structs, `ripga` overloads vector operators directly onto native Julia `Float32` arrays (`Matrix{Float32}` / `Vector{Float32}`).
+3. **Zero-Boilerplate Multivector Ergonomics:** Instead of wrapping arrays in heavy custom structs, `ripga` overloads vector operators directly onto native Julia `Float32` arrays (`Matrix{Float32}` and `Vector{Float32}`).
 
 | Math Syntax | PGA Operation | PGA Programming Syntax | What It Does in Your App |
 | :--- | :--- | :--- | :--- |
