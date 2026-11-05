@@ -15,7 +15,7 @@ applications.
 
 ---
 
-# <a id="tldr"></a>0. Interactive Showcase: PGA in Action
+# <a id="tldr"></a>0. Showcase: PGA in Action
 
 Below are applications built with `ripga` and [Makie](https://docs.makie.org/stable), demonstrating how PGA collapses hundreds of lines of traditional vector/matrix boilerplate into clean, expressive algebra. *(Inspired by Steven De Keninck's
 [ganja.js](https://bivector.net) examples, engineered for native execution in Julia).*
@@ -43,27 +43,26 @@ Below are applications built with `ripga` and [Makie](https://docs.makie.org/sta
 
 <summary><b>Table of Contents</b></summary>
 
-- <a href="#tldr">0. TLDR</a>
-- <a href="#why-pga">1. Why Build Applications with PGA?</a>
-- <a href="#why-julia">2. Why Julia?</a>
-- <a href="#hang-of-pga">3. Getting the Hang of PGA</a>
-- <a href="#pga-basis">4. PGA Basis</a>
-  - <a href="#pga-basis-1d">4.1 1D PGA Basis</a>
-  - <a href="#pga-basis-2d">4.2 2D PGA Basis</a>
-  - <a href="#pga-basis-3d">4.3 3D PGA Basis</a>
-  - <a href="#pga-basis-4d">4.4 4D PGA Basis</a>
-- <a href="#pga-exp">5. PGA Exponential</a>
-- <a href="#plot">6. Plotting</a>
-- <a href="#geo">7. Euclidean Geometry</a>
-  - <a href="#geo-1d">7.1 1D Euclidean Geometry</a>
-  - <a href="#geo-2d">7.1 2D Euclidean Geometry</a>
-  - <a href="#geo-3d">7.1 3D Euclidean Geometry</a>
-  - <a href="#geo-4d">7.1 4D Euclidean Geometry</a>
-- <a href="#rbd">8. Rigid Body Dynamics</a>
-- <a href="#max-eq">9. Maxwell's Equations</a>
-- <a href="#conc">10. Conclusion</a>
+- <a href="#tldr">0. Showcase: PGA in Action</a>
+- <a href="#why-pga">1. Why Build Applications with PGA and Julia?</a>
+- <a href="#hang-of-pga">2. Getting the Hang of PGA</a>
+- <a href="#pga-basis">3. PGA Basis</a>
+  - <a href="#pga-basis-1d">3.1 1D PGA Basis</a>
+  - <a href="#pga-basis-2d">3.2 2D PGA Basis</a>
+  - <a href="#pga-basis-3d">3.3 3D PGA Basis</a>
+  - <a href="#pga-basis-4d">3.4 4D PGA Basis</a>
+- <a href="#pga-exp">4. PGA Exponential</a>
+- <a href="#plot">5. Plotting</a>
+- <a href="#geo">6. Euclidean Geometry</a>
+  - <a href="#geo-1d">6.1 1D Euclidean Geometry</a>
+  - <a href="#geo-2d">6.1 2D Euclidean Geometry</a>
+  - <a href="#geo-3d">6.1 3D Euclidean Geometry</a>
+  - <a href="#geo-4d">6.1 4D Euclidean Geometry</a>
+- <a href="#rbd">7. Rigid Body Dynamics</a>
+- <a href="#max-eq">8. Maxwell's Equations</a>
+- <a href="#conc">9. Conclusion</a>
 
-# <a id="why-pga"></a>1. Why Build Applications with PGA?
+# <a id="why-pga"></a>1. Why Build Applications with PGA and Julia?
 
 For decades, 3D graphics, robotics, and physics engines have relied on a patchwork of 19th-century math: 3D vectors for positions, $4\times4$ homogeneous matrices for translations, quaternions for rotations, and Plücker coordinates for lines. 
 
@@ -80,118 +79,34 @@ For decades, 3D graphics, robotics, and physics engines have relied on a patchwo
 ### Proven in Mission-Critical Engineering
 More concise math directly translates to **faster R&D cycles, fewer edge-case bugs, and drastically lower technical debt.** In [this industry keynote](https://www.youtube.com/watch?v=_3WPLawT-H0), Dr. Todd Ell, Senior Technical Fellow at **Collins Aerospace** (one of the world's largest aerospace suppliers, employing 16,700+ engineers), details why he is training aerospace engineers to replace traditional linear algebra with Geometric Algebra for mission-critical design and development.
 
-# <a id="why-julia"></a>2. Why Julia?
-There are quite a few advantages in using Julia to implement Projective Geometric Algebra applications:
-* advanced capabilities in vector operations (and vector operations play a central role in PGA),
-* metaprogramming capabilities,
-* program execution speed,
-* plotting capabilities,
-* REPL (Read Execute Print Loop), and
-* developer community.
+While [bivector.net](https://bivector.net) offers PGA reference implementations for C++, Rust, Python, and JS, **Julia was practically born for Geometric Algebra.** `ripga` leverages Julia's unique strengths to create an unmatched prototyping and production environment:
 
-## 2.1 Advanced Capabilities in Vector Operations
-Although [bivector.net](https://bivector.net) has reference implementations of PGA in several programming languages
-(e.g., JavaScript, C++, C#, Python, Rust), it does not currently list a Julia reference implementation. Also, Julia is
-necessarily missing from the book _[Geometric Algebra for Computer Science](https://www.amazon.com/s?k=geometric+algebra+for+computer+science&crid=2W6JCKEWE1CTO)_
-given that the Julia language was created two years after the book's publication. To get a Julia implementation of PGA,
-I ported bivector.net's C++ reference implementation of PGA to Julia. The github repository is at https://github.com/sepesi/ripga
+1. **Solving the Two-Language Problem:** Prototype geometric algorithms interactively in the REPL and execute them at C/C++ speeds with GPU-accelerated [GLMakie](https://docs.makie.org/stable/) visualizations.
+2. **First-Class Unicode & Metaprogramming:** Write code using standard ASCII operators (`a ^ b`, `a & b`, `a >>> b`) or use the `@ga` string macro to write literal textbook math syntax ($a \wedge b$, $a \vee b$, $a \cdot b$).
+3. **Zero-Boilerplate Multivector Ergonomics:** Instead of wrapping arrays in heavy custom structs, `ripga` overloads vector operators directly onto native Julia `Float32` arrays (`Matrix{Float32}` / `Vector{Float32}`).
 
-To avoid confusion, ripga uses exactly the same [vector operator symbols](https://www.youtube.com/watch?v=2DgxeizE3E8&t=105s)
-as the vector operators in the programming syntax of the original bivector.net reference implementation as shown in the table
-below. The strikethrough of the dual operator math syntax entry denotes that the math syntax of the dual opertor is not currently
-implemented due to a design decision valuing improved code simplicity over the minor inconvenience of having to use programming
-syntax for the dual operator. The dual operator had the most complex conversion from math syntax to programming syntax because the
-dual operator in math syntax is the only postfix (i.e., a\*) operator. All other operators in the following vector operator symbol
-table are either prefix operators (e.g., !a) or infix operators (e.g., a ^ b) which are compatible with the prefix and infix operator
-capabilities of Julia's  built-in [AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree) parser.
+| Math Syntax | PGA Operation | `ripga` Code Syntax | What It Does in Your App |
+| :--- | :--- | :--- | :--- |
+| $ab$ | Geometric Product | `a * b` | Composes reflections and rigid-body motors |
+| $a \wedge b$ | Outer Product (Wedge) | `a ^ b` | **Meet:** Intersects planes into lines, or lines into points |
+| $a \vee b$ | Regressive Product (Vee) | `a & b` | **Join:** Spans points into lines, or lines into planes |
+| $a \cdot b$ | Inner Product (Dot) | `a \| b` | Computes angles, distances, and orthogonal projections |
+| $a^*$ | Dual | `!a` | Switches between plane-based and point-based representations |
+| $ab\tilde{a}$ | Sandwich Product | `a >>> b` | Applies any rotation, translation, or reflection `a` to object `b` |
 
-| Math Syntax | Vector Operator Symbol Name | Programming Syntax |
-| :--- | :--- | :--- |
-| $`ab`$ | Geometric Product | `a * b` |
-| $`a \wedge b`$ | Outer Product (Wedge) | `a ^ b` |
-| $`a \vee b`$ | Regressive Product (Vee) | `a & b` |
-| $`a \cdot b`$ | Inner Product (Dot) | `a` \| `b` |
-| ~~`a*`~~ | Dual | `a!` |
-| $`ab\tilde{a}`$ | Sandwich Product | `a >>> b` |
+> [!TIP]
+> **Design Philosophy on Operator Overloading ("Type Squatting"):**
+> Julia's style guide generally discourages overloading base operators on standard `Vector` types ("type piracy") to avoid breaking external packages. However, standard Julia does not define bitwise/logical infix operators like `&`, `|`, or `>>>` on `Vector{Float32}`—they don't even compile in base Julia. By claiming these unused operator slots ("type squatting"), `ripga` achieves zero-wrapper performance and seamless compatibility with Makie and linear algebra buffers. *(If you'd like to explore a custom-struct fork for strict package isolation, PRs and comparisons are warmly welcomed!)*
 
-It should be noted that the general consensus from the Julia community is that my approach to overloading the
-vector operators in ripga is "type piracy". The community suggested that I overload custom types instead of base
-types in order to comply with the "avoid type piracy" rule in [Julia's style guide](https://docs.julialang.org/en/v1/manual/style-guide/).
-Their concerns are that my approach of overloading base types might
-* crash Julia,
-* introduce incompatibilities that are hard to predict and diagnose,
-* change the behavior of unrelated code unexpectedly, and
-* make the code difficult to read.
-
-However, I've been using ripga and its overloading of base types for several years and have not experienced any
-of the Julia community's concerns. In my opinion, I think overloading the base types actually makes the code easier
-to read. Of course, if someone dislikes my "type piracy" enough to fork the ripga repository and overload custom
-types instead of base types, I'd love to see it and compare the two approaches. To me, the community's "type piracy"
-label seems like an exaggeration because "piracy" implies stealing but my overloading of base types occurs only
-when the arguments are vectors and those vector operations don't even compile without the base type overloading.
-So, given that the vector operations are currently unused, perhaps a better name for my particular violation of
-Julia's style guide would be "type squatting" instead of "type piracy"??
-
-## 2.2 Metaprogramming Capabilities
-Julia's extensive metaprogramming capabilities offer a convenient conversion from PGA "math syntax" to PGA "programming 
-syntax". For example, referring to the above Vector Operator Symbol table, the geometric product operator in math
-syntax [Unicode](https://en.wikipedia.org/wiki/Unicode) is '\thinspace' which takes less space than '*' (the geometric
-product operator in programming syntax). Similarly,
-* the wedge operator (outer product) in math syntax Unicode is '\wedge',
-* the vee operator (regressive product) in math syntax Unicode is '\vee', and
-* the dot operator (inner product) in math syntax Unicode is '\cdot'.
-
-The string macro called ga (short for Geometric Algebra and coded in ripgand.jl) translates the math syntax back to
-the programming syntax. Typically, I prefer the programming syntax because it is easier to type. However, the math
-syntax is easier to read. Therefore, for a section of code with a lot of PGA vector operators that are hard to read,
-the ga macro can be helpful.
-
-## 2.3 Program Execution Speed
-As mentioned in the official _[Introduction to Julia](https://julialang.org): A Fresh Approach to Numerical Computing_,
-the authors (i.e., the four people who started the Julia programming language) mention a long standing belief among many
-practitioners of numerical computing: one must prototype in one language for development speed but then rewrite in another
-language for execution speed. One of the Julia design goals was to solve this two-language problem by making Julia both
-fast for prototyping and execution.
-
-## 2.4 Plotting Capabilities
-According to the official [introduction to Makie](https://docs.makie.org/stable/),
-> "Makie is a data visualization ecosystem for the Julia programming language, with high performance and extensibility.
-> It is available for Windows, Mac and Linux."
-
-The Makie backend package is GLMakie which is based upon OpenGL and is surprisingly fast.
-
-## 2.5 REPL (Read Execute Print Loop)
-In the [tools section](https://bivector.net/tools.html?p=3&q=0&r=1) of bivector.net, there is a PGA expression evaluator
-for exploring PGA expressions. After including the ripga files, Julia's REPL can similarly explore PGA expressions. However,
-in addition to evaluating PGA expressions, Julia's REPL (after including ripgand.jl and ripga1d.jl, ripga2d.jl, ripga3d.jl,
-or ripga4d.jl) can do several things that the bivector.net PGA expression evaluator cannot. Specifically, Julia's REPL helps
-by being capable of
-* assigning PGA expressions to variables,
-* calling functions, and
-* displaying inline comments.
-
-## 2.6 Developer Community
-In the conclusion of _[Julia: A Fresh Approach to Numerical Computing](https://julialang.org/assets/research/julia-fresh-approach-BEKS.pdf)_,
-the authors write
-> "We built Julia to meet our needs for numerical computing, and it turns out that many others wanted exactly the same thing. 
-> At the time of writing, not a day goes by when we don't learn that someone new has picked up Julia at universities and
-> companies around the world, in fields as diverse as engineering, mathematics, physical and social sciences, finance, biotech,
-> and many others. More than just a language, Julia has become a place for programmers, physical scientists, social scientists,
-> computational scientists, mathematicians, and others to pool their collective knowledge in the form of online discussions and code."
-
-The significant overlap of the many fields interested in Julia and the many fields interested in geometric algebras (e.g., Projective 
-Geometric Algebra, spacetime geometric algebra, conformal geometric algebra) suggests that the Julia community and the Geometric Algebra
-community would benefit from each other.
-
-# <a id="hang-of-pga"></a>3. Getting the Hang of PGA
+# <a id="hang-of-pga"></a>2. Getting the Hang of PGA
 There are three perspectives that contribute to understanding PGA:
 
-## 3.1 History
+## 2.1 History
 Reading a description of the historical contributions to the development of PGA by individual mathematicians builds confidence in the
 underlying concepts. I particularly like [Slehar's historical description of Clifford algebra](https://slehar.wordpress.com/2014/03/18/clifford-algebra-a-visual-introduction/)
 followed by [Slehar's explanation of how Clifford algebra extends to Projective Geometry](https://slehar.wordpress.com/2014/06/26/geometric-algebra-projective-geometry/).
 
-## 3.2 Nomenclature
+## 2.2 Nomenclature
 In PGA, simple geometric objects (e.g., points, lines, planes) are written as PGA expressions. Those geometric objects are manipulated
 (e.g., translated or rotated) by performing PGA operations (e.g., geometric product or outer product) on them. PGA expressions are
 [linear combinations](https://en.wikipedia.org/wiki/Linear_combination) of PGA basis vectors. There is one PGA basis vector for each
@@ -225,7 +140,7 @@ Those $2^{n+1}$ PGA basis elements are distributed across n+2 grades (i.e., grad
 * 4 grade-3 (i.e., e021, e013, e032, e123), and
 * 1 grade-4 (i.e., e0123).
 
-## 3.3 Geometric Interpretation
+## 2.3 Geometric Interpretation
 Recalling that the three subscripts of the metric signature $\mathbb{R}\_{positive,negative,zero}$ specify how many PGA basis vectors square to +1,
 -1, and 0, respectively, you may have noticed that the metric signature for PGA in an n-dimensional Euclidean space (i.e., $\mathbb{R}^\*\_{n,0,1}$)
 has an asterisk. The asterisk specifies the geometric interpretation of the PGA basis:
@@ -248,10 +163,10 @@ In contrast, in 3D point-based PGA,
 
 (More on the geometric interpretations in the next section.)
 
-# <a id="pga-basis"></a>4. PGA Basis
+# <a id="pga-basis"></a>3. PGA Basis
 The ripga library is capable of switching back and forth between the bases for 1D PGA, 2D PGA, 3D PGA, and 4D PGA.
 
-## <a id="pga-basis-1d"></a>4.1 1D PGA Basis
+## <a id="pga-basis-1d"></a>3.1 1D PGA Basis
 To prepare Julia's REPL for 1D PGA, include the files ripgand.jl and ripga1d.jl. To confirm the initialization, print out the basis.
 ```
 julia> include("ripgand.jl"); # utility functions for all available dimensions
@@ -278,7 +193,7 @@ In 1D PGA, there are a total of four (i.e., $2^{1+1}$) PGA basis elements:
 * 2 grade-1 (i,e., e0, e1), and
 * 1 grade-2 (i.e., e01).
 
-### 4.1.1 Calculating 1D PGA Dual
+### 3.1.1 Calculating 1D PGA Dual
 Because the concept of duality is at the core of the geometric interpretation of PGA, becoming familiar with the two steps
 to calculate the dual of the basis can be helpful. The two steps are
 1. extend the grade of each PGA basis element to the grade of the pseudoscalar,
@@ -359,7 +274,7 @@ Then, for a given row of the table (i.e., a given PGA basis element), sum the to
 counts in columns 3 and 4). If that sum is odd (i.e., the contraction axiom was applied an odd number of times), prepend a
 negative sign to the entry in column 2 (the reverse(basis)). The new column 2 is the 1D PGA dual.
 
-### 4.1.2 Calculating 1D PGA Reverse
+### 3.1.2 Calculating 1D PGA Reverse
 Similar to the PGA dual (!), which is central to the geometric interpretation of PGA basis elements, the PGA reverse (\~),
 which is central to the PGA sandwich operation (e.g., T*P0*~T or equivalently T>>>P0 translates point P0 with translation motor
 T). Like the PGA dual (!), the PGA reverse (\~) also is computed in two steps:
@@ -403,7 +318,7 @@ bottom order of any column vector. As an aside, Julia's reverse() function acts 
 reverse() function is applied to a Matrix{Float32} with an additional argument specifying that the reversing needs to be done along
 the row dimension (e.g., reverse([e0 e1],dims=2) == [e1 e0]). 
 
-### 4.1.3 Example of 1D PGA Point Translation
+### 3.1.3 Example of 1D PGA Point Translation
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
 rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
 In 1D, a translation is two reflections across two points, as shown in the following REPL session where 
@@ -466,10 +381,10 @@ for the cause of the failure, the squared norm of P0 was preserved through the s
 trivial sense because the squared norm of P0 collapsed to zero (i.e., e00 = 0) and the squared norm of PX also
 collapsed to zero (i.e., PX = 36e0 and PX\*PX = 0).
 
-### 4.1.4 Derivation of 1D PGA Point
+### 3.1.4 Derivation of 1D PGA Point
 (TODO)
 
-## <a id="pga-basis-2d"></a>4.2 2D PGA Basis
+## <a id="pga-basis-2d"></a>3.2 2D PGA Basis
 To prepare Julia's REPL for 2D PGA, include the files ripgand.jl and ripga2d.jl. To confirm the initialization, print out the basis.
 ```
 julia> include("ripgand.jl"); # utility functions for all available dimensions
@@ -505,7 +420,7 @@ In 2D PGA, there are a total of eight (i.e., $2^{2+1}$) PGA basis elements:
 * 3 grade-2 (i.e., e01, e20, e12), and
 * 1 grade-3 (i.e., e012).
 
-### 4.2.1 Calculating 2D PGA Dual
+### 3.2.1 Calculating 2D PGA Dual
 Because the concept of duality is at the core of the geometric interpretation of PGA, becoming familiar with the two steps
 to calculate the dual of the basis can be helpful. The two steps are
 1. extend the grade of each PGA basis element to the grade of the pseudoscalar,
@@ -618,7 +533,7 @@ Then, for a given row of the table (i.e., a given PGA basis element), sum the to
 counts in columns 3, 4, and 5. If that sum is odd (i.e., the contraction axiom was applied an odd number of times), prepend a
 negative sign to the entry in column 2 (the reverse(basis)). The new column 2 is the 2D PGA dual.
 
-### 4.2.2 Calculating 2D PGA Reverse
+### 3.2.2 Calculating 2D PGA Reverse
 Similar to the PGA dual (!), which is central to the geometric interpretation of PGA basis elements, the PGA reverse (\~),
 which is central to the PGA sandwich operation (e.g., T*P0*~T or equivalently T>>>P0 translates point P0 with translation motor
 T). Like the PGA dual (!), the PGA reverse (\~) also is computed in two steps:
@@ -662,7 +577,7 @@ julia> M = [1 0 0 0;2 1 0 0;3 2 1 0]
 ```
 (For details on how PGA reverse differs from Julia's built-in reverse() function, see Section 4.1.2.)
 
-### 4.2.3 Example of 2D PGA Point Translation
+### 3.2.3 Example of 2D PGA Point Translation
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
 rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
 In 2D, a translation is two reflections across parallel lines and a rotation is two reflections across intersecting lines,
@@ -731,10 +646,10 @@ julia> T = L2*L1; # attempt to calculate point-based Translation motor
 julia> toStr(T) # not in form of dual number (missing scalar term), so translation will fail
 "5e01"
 ```
-### 4.2.4 Derivative of 2D PGA Point
+### 3.2.4 Derivative of 2D PGA Point
 (TODO)
 
-## <a id="pga-basis-3d"></a>4.3 3D PGA Basis
+## <a id="pga-basis-3d"></a>3.3 3D PGA Basis
 To prepare Julia's REPL for 3D PGA, include the files ripgand.jl and ripga3d.jl. To confirm the initialization, print out the basis.
 ```
 julia> include("ripgand.jl"); # utility functions for all available dimensions
@@ -787,7 +702,7 @@ In 3D PGA, there are a total of 16 (i.e., $2^{3+1}$) PGA basis elements:
 * 4 grade-3 (i.e., e021, e013, e032, e123), and
 * 1 grade-4 (i.e., e0123).
 
-### 4.3.1 Calculating 3D PGA Dual
+### 3.3.1 Calculating 3D PGA Dual
 Because the concept of duality is at the core of the geometric interpretation of PGA, becoming familiar with the two steps
 to calculate the dual of the basis can be helpful. The two steps are
 1. extend the grade of each PGA basis element to the grade of the pseudoscalar,
@@ -947,7 +862,7 @@ Then, for a given row of the table (i.e., a given PGA basis element), sum the to
 counts in columns 3, 4, 5, and 6. If that sum is odd (i.e., the contraction axiom was applied an odd number of times), prepend a
 negative sign to the entry in column 2 (the reverse(basis)). The new column 2 is the 2D PGA dual.
 
-### 4.3.2 Calculating 3D PGA Reverse
+### 3.3.2 Calculating 3D PGA Reverse
 Similar to the PGA dual (!), which is central to the geometric interpretation of PGA basis elements, the PGA reverse (\~),
 which is central to the PGA sandwich operation (e.g., T*P0*~T or equivalently T>>>P0 translates point P0 with translation motor
 T). Like the PGA dual (!), the PGA reverse (\~) also is computed in two steps:
@@ -1000,7 +915,7 @@ julia> M = [1 0 0 0 0; 2 1 0 0 0; 3 2 1 0 0; 4 3 2 1 0]
 ```
 (For details on how PGA reverse differs from Julia's built-in reverse() function, see Section 4.1.2.)
 
-### 4.3.3 Example of 3D PGA Point Translation
+### 3.3.3 Example of 3D PGA Point Translation
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
 rigid body transformation is composed of reflections across hyperplanes (i.e., points in 1D, lines in 2D, planes in 3D).
 In 3D, a translation is two reflections across parallel planes and a rotation is two reflections across intersecting planes,
@@ -1029,10 +944,10 @@ julia> toCoord(P2)
  0.0
  0.0
 ```
-### 4.3.4 Derivative of 3D PGA Point
+### 3.3.4 Derivative of 3D PGA Point
 (TODO)
 
-## <a id="pga-basis-4d">4.4 4D PGA Basis
+## <a id="pga-basis-4d">3.4 4D PGA Basis
 To prepare Julia's REPL for 4D PGA, include the files ripgand.jl and ripga4d.jl. To confirm the initialization, print out the basis.
 Note that the 4D PGA basis is long enough for Julia's default REPL output to abbreviate the middle section of the basis.
 
@@ -1130,7 +1045,7 @@ In 4D PGA, there are a total of 32 (i.e., $2^{4+1}$) PGA basis elements:
 *  5 grade-4 (i.e., e0123, e0124, e0134, e0234, e1234), and
 *  1 grade-5 (i.e., e01234).
 
-### 4.4.1 Calculating 4D PGA Dual
+### 3.4.1 Calculating 4D PGA Dual
 Because the concept of duality is at the core of the geometric interpretation of PGA, becoming familiar with the two steps
 to calculate the dual of the basis can be helpful. The two steps are
 1. extend the grade of each PGA basis element to the grade of the pseudoscalar,
@@ -1270,7 +1185,7 @@ Then, for a given row of the table (i.e., a given PGA basis element), sum the to
 counts in columns 3, 4, 5, 6, and 7. If that sum is odd (i.e., the contraction axiom was applied an odd number of times), prepend a
 negative sign to the entry in column 2 (the reverse(basis)). The new column 2 is the 4D PGA dual.
 
-### 4.4.2 Calculating 4D PGA Reverse
+### 3.4.2 Calculating 4D PGA Reverse
 Similar to the PGA dual (!), which is central to the geometric interpretation of PGA basis elements, the PGA reverse (\~),
 which is central to the PGA sandwich operation (e.g., T*P0*~T or equivalently T>>>P0 translates point P0 with translation motor
 T). Like the PGA dual (!), the PGA reverse (\~) also is computed in two steps:
@@ -1347,13 +1262,13 @@ julia> M = [1 0 0 0 0 0; 2 1 0 0 0 0; 3 2 1 0 0 0; 4 3 2 1 0 0; 5 4 3 2 1 0]
 ```
 (For details on how PGA reverse differs from Julia's built-in reverse() function, see Section 4.1.2.)
 
-### 4.4.3 Example of 4D PGA Point Translation
+### 3.4.3 Example of 4D PGA Point Translation
 (TODO)
 
-### 4.4.4 Derivation of 4D PGA Point
+### 3.4.4 Derivation of 4D PGA Point
 (TODO)
 
-# <a id="pga-exp"></a>5. PGA Exponential
+# <a id="pga-exp"></a>4. PGA Exponential
 (TODO)
 
 At the risk of being too ee-sy (pun intended), the letter e is used in several ways:
@@ -1367,7 +1282,7 @@ $$
 \mathbf{T} = \underbrace{ e^{\frac{\theta_1}{2}\mathbf{e}_{12}} e^{\frac{r_1}{2}\mathbf{e}_{01}} }_{\text{Circle 2}} \underbrace{ e^{\frac{\theta_2}{2}\mathbf{e}_{31}} e^{\frac{r_2}{2}\mathbf{e}_{03}} }_{\text{Circle 1}} \underbrace{\mathbf{e}_{123}}_{\text{origin}}
 $$
 
-# <a id="plot"></a>6. Plotting
+# <a id="plot"></a>5. Plotting
 This section's simple examples demonstrating plotting with Julia and Makie are **using CairoMakie** for its simplicity.
 In contrast, most of this essay's examples demonstrating plotting with Julia and PGA are **using GLMakie** for its
 GPU-accelerated performance.
@@ -1473,26 +1388,26 @@ Footprint2D = Float32[  # centered 2D cubic Bezier control points of footprint
 
 (TODO)
 
-# <a id="geo"></a>7. Euclidean Geometry
+# <a id="geo"></a>6. Euclidean Geometry
 (TODO)
 
-## <a id="geo-1d"></a>7.1 1D Euclidean Geometry
+## <a id="geo-1d"></a>6.1 1D Euclidean Geometry
 (TODO)
 
-## <a id="geo-2d"></a>7.2 2D Euclidean Geometry
+## <a id="geo-2d"></a>6.2 2D Euclidean Geometry
 (TODO)
 
-## <a id="geo-3d"></a>7.3 1D Euclidean Geometry
+## <a id="geo-3d"></a>6.3 1D Euclidean Geometry
 (TODO)
 
-## <a id="geo-4d"></a>7.4 4D Euclidean Geometry
+## <a id="geo-4d"></a>6.4 4D Euclidean Geometry
 (TODO)
 
-# <a id="rbd"></a>8. Rigid Body Dynamics
+# <a id="rbd"></a>7. Rigid Body Dynamics
 (TODO)
 
-# <a id="max-eq"></a>9. Maxwell's Equations
+# <a id="max-eq"></a>8. Maxwell's Equations
 (TODO)
 
-# <a id="conc"></a>10. Conclusion
+# <a id="conc"></a>9. Conclusion
 (TODO)
