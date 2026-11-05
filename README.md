@@ -85,7 +85,7 @@ While [bivector.net](https://bivector.net) offers PGA reference implementations 
 2. **First-Class Unicode & Metaprogramming:** Write code using standard ASCII operators (`a ^ b`, `a & b`, `a >>> b`) or use the `@ga` string macro to write literal textbook math syntax ($a \wedge b$, $a \vee b$, $a \cdot b$).
 3. **Zero-Boilerplate Multivector Ergonomics:** Instead of wrapping arrays in heavy custom structs, `ripga` overloads vector operators directly onto native Julia `Float32` arrays (`Matrix{Float32}` / `Vector{Float32}`).
 
-| Math Syntax | PGA Operation | `ripga` Code Syntax | What It Does in Your App |
+| Math Syntax | PGA Operation | PGA Programming Syntax | What It Does in Your App |
 | :--- | :--- | :--- | :--- |
 | $ab$ | Geometric Product | `a * b` | Composes reflections and rigid-body motors |
 | $a \wedge b$ | Outer Product (Wedge) | `a ^ b` | **Meet:** Intersects planes into lines, or lines into points |
