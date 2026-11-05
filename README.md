@@ -44,7 +44,7 @@ Below are applications built with `ripga` and [Makie](https://docs.makie.org/sta
 <summary><b>Table of Contents</b></summary>
 
 - <a href="#tldr">0. TLDR</a>
-- <a href="#why-pga">1. Why Projective Geometric Algebra?</a>
+- <a href="#why-pga">1. Why Build Applications with PGA?</a>
 - <a href="#why-julia">2. Why Julia?</a>
 - <a href="#hang-of-pga">3. Getting the Hang of PGA</a>
 - <a href="#pga-basis">4. PGA Basis</a>
@@ -63,39 +63,22 @@ Below are applications built with `ripga` and [Makie](https://docs.makie.org/sta
 - <a href="#max-eq">9. Maxwell's Equations</a>
 - <a href="#conc">10. Conclusion</a>
 
-# <a id="why-pga"></a>1. Why Projective Geometric Algebra?
-For intricate geometry problems, there are several compelling reasons for using Projective Geometric Algebra:
-* PGA unifies many concepts (e.g., translations and rotations), making them easier to implement,
-* PGA has geometric objects (e.g., points, lines, planes), making them easier to mentally manipulate than matrices of coordinates, and
-* PGA belongs to the family of [Cayley-Klein](https://en.wikipedia.org/wiki/Cayley%E2%80%93Klein_metric)
-  geometries, unifying Euclidean geometry (with applications in computer graphics and simulating the
-  dynamic motion of objects), elliptic geometry (with applications in cosmology and cartography),
-  and hyperbolic geometry (with applications in spatial indexing data structures and relativistic spacetime
-  modeling).
+# <a id="why-pga"></a>1. Why Build Applications with PGA?
 
-## 1.1 Unify Concepts
-In Projective Geometric Algebra,
-* translation and rotation are the same thing,
-* force and torque are the same thing, and
-* Maxwell's four equations can be written as one equation.
+For decades, 3D graphics, robotics, and physics engines have relied on a patchwork of 19th-century math: 3D vectors for positions, $4\times4$ homogeneous matrices for translations, quaternions for rotations, and Plücker coordinates for lines. 
 
-More concise implementations in software result in faster development, fewer bugs, and less technical debt. 
-For example, [this video](https://www.youtube.com/watch?v=_3WPLawT-H0) shows Dr. Todd Ell, senior technical
-fellow at Collins Aerospace (with 68,000 employees including 16,700 engineers, the world's largest supplier
-of aerospace components) describing how he is pushing to train the highly regulated Collins Aerospace engineers
-to use geometric algebra as a design and development tool, in many cases instead of the traditional linear
-algebra tools.
+**Projective Geometric Algebra ($\mathbb{R}^*_{n,0,1}$) replaces that entire fragmented toolkit with a single, unified algebra.**
 
-## 1.2 Geometric Objects
-Projective Geometric Algebra embeds coordinates in geometric objects, which are easier to debug than matrices
-of coordinates. That abstraction is especially helpful when solving complex geometry problems.
+| Application Challenge | Traditional Linear Algebra | PGA |
+| :--- | :--- | :--- |
+| **Primitives** | Only vectors exist; lines and planes require ad-hoc structs and parametric equations. | **Points, lines, and planes** are native algebraic variables. |
+| **Intersections (Meet & Join)** | Dozens of lines of conditional trigonometry and edge-case checks (e.g., parallel lines). | **One operator (`^` or `&`)** computes intersections and spans across all dimensions, naturally handling points at infinity. |
+| **Rigid Body Motion** | Separate math for $3\times3$ rotations, quaternions, and $4\times1$ translation offsets. | **Universal Motors:** Rotations and translations are unified. Everything moves via the sandwich product: `M >>> X`. |
+| **Physics & Dynamics** | Linear force ($F$) and angular torque ($\tau$) are tracked and integrated separately. | **Forques & Momenta:** Force and torque unify into a single bivector; linear and angular velocity unify into a single twist. |
+| **Curvature & Space** | Locked into flat Euclidean assumptions; requires total rewrites for spherical/hyperbolic space. | **Metric Agnostic:** Switch seamlessly between Euclidean ($\mathbb{R}_{3,0,1}$), Elliptic ($\mathbb{R}_{4,0,0}$), and Hyperbolic ($\mathbb{R}_{3,1,0}$) spaces. |
 
-## 1.3 Unify Geometries
-The metric signature (i.e., $\mathbb{R}\_{positive,negative,zero}$, where the three subscripts denote how many
-basis vectors square to +1, -1, and 0, respectively) denotes the geometry's dimensions and spatial curvature.
-For example, the metric signatures $\mathbb{R}\_{2,0,1}$ and $\mathbb{R}\_{3,0,1}$ denote 2D and 3D
-Euclidean spaces. However, switching the signature to $\mathbb{R}\_{4,0,0}$ denotes an elliptic space and
-$\mathbb{R}_{3,1,0}$ denotes a hyperbolic space.
+### Proven in Mission-Critical Engineering
+More concise math directly translates to **faster R&D cycles, fewer edge-case bugs, and drastically lower technical debt.** In [this industry keynote](https://www.youtube.com/watch?v=_3WPLawT-H0), Dr. Todd Ell, Senior Technical Fellow at **Collins Aerospace** (one of the world's largest aerospace suppliers, employing 16,700+ engineers), details why he is training aerospace engineers to replace traditional linear algebra with Geometric Algebra for mission-critical design and development.
 
 # <a id="why-julia"></a>2. Why Julia?
 There are quite a few advantages in using Julia to implement Projective Geometric Algebra applications:
