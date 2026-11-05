@@ -39,7 +39,7 @@ Below are applications built with `ripga` and [Makie](https://docs.makie.org/sta
   </tr>
 </table>
 
-# Reference Implementation of Projective Geometric Algebra
+# ripga (Reference Implementation of Projective Geometric Algebra)
 
 <summary><b>Table of Contents</b></summary>
 
