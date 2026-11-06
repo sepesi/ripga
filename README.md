@@ -55,9 +55,9 @@ Below are applications built with `ripga` and [Makie](https://docs.makie.org/sta
 - <a href="#plot">5. Plotting</a>
 - <a href="#geo">6. Euclidean Geometry</a>
   - <a href="#geo-1d">6.1 1D Euclidean Geometry</a>
-  - <a href="#geo-2d">6.1 2D Euclidean Geometry</a>
-  - <a href="#geo-3d">6.1 3D Euclidean Geometry</a>
-  - <a href="#geo-4d">6.1 4D Euclidean Geometry</a>
+  - <a href="#geo-2d">6.2 2D Euclidean Geometry</a>
+  - <a href="#geo-3d">6.3 3D Euclidean Geometry</a>
+  - <a href="#geo-4d">6.4 4D Euclidean Geometry</a>
 - <a href="#rbd">7. Rigid Body Dynamics</a>
 - <a href="#max-eq">8. Maxwell's Equations</a>
 - <a href="#conc">9. Conclusion</a>
@@ -332,7 +332,7 @@ julia> P1 = point(1); # Euclidean point x=1
 
 julia> P2 = point(6); # Euclidean point x=6
 
-julia> T = P2*P1; # compose the two reflection TranslatitoStr(T)
+julia> T = P2*P1; # compose the two reflection Translation (T)
 
 julia> toStr(T) # check Translation motor
 "1 - 5e01"
@@ -346,7 +346,7 @@ julia> toCoord(PX) # resulting translated coordinate (shifted P0 twice distance 
  10.0
 ```
 Taking a closer look, the reason that the translation motor in the above REPL session works is because the sandwich
-operation is an [orthogonal transformation](https://en.wikipedia.org/wiki/Orthogonal_transformtion) (i.e., the squared
+operation is an [orthogonal transformation](https://en.wikipedia.org/wiki/Orthogonal_transformation) (i.e., the squared
 norm of the 1D PGA object is preserved through translation T). Concretely, the squared norm of P0 is e11 = 1 and so is
 the squared norm of T*P0*~T = 1 because T*P0*~T = (1-5e01)e12(1+5e01) = e12 + 10e20 and (e12 + 10e20)*e12 + 10e20) = 1.
 In other words, the squared norm of the 1D PGA point P0 is preserved through the sandwich operation.
@@ -614,7 +614,7 @@ julia> toStr(P2) # resulting dual PGA point (xe20+ye01+e12) => Euclidean point (
 "10e20 + e12"
 ```
 Taking a closer look, the reason that the above translation motor works is because the sandwich
-operation is an [orthogonal transformation](https://en.wikipedia.org/wiki/Orthogonal_transformtion) (i.e., the squared
+operation is an [orthogonal transformation](https://en.wikipedia.org/wiki/Orthogonal_transformation) (i.e., the squared
 norm of the 2D PGA object is preserved through translation T). Concretely, the squared norm of P is e1212 = -1 and so is
 the squared norm of T*P0*~T = -1 because T*P*~T = (1 - 5e01)e12(1 - 5e10) = e12 - 5 e1210 - 5e02 + 25e0210 = e12 and
 (T*P*~T)*(T*P*~T) = e1212 = -1. In other words, the squared norm of the 2D PGA point P is preserved through the sandwich
@@ -1397,7 +1397,7 @@ Footprint2D = Float32[  # centered 2D cubic Bezier control points of footprint
 ## <a id="geo-2d"></a>6.2 2D Euclidean Geometry
 (TODO)
 
-## <a id="geo-3d"></a>6.3 1D Euclidean Geometry
+## <a id="geo-3d"></a>6.3 3D Euclidean Geometry
 (TODO)
 
 ## <a id="geo-4d"></a>6.4 4D Euclidean Geometry
