@@ -662,7 +662,7 @@ julia> T = L2*L1; # attempt to calculate point-based Translation motor
 julia> toStr(T) # not in form of dual number (missing scalar term), so translation will fail
 "5e01"
 ```
-### 3.2.4 Derivative of 2D PGA Point
+### 3.2.4 Derivation of 2D PGA Point
 (TODO)
 
 ## <a id="pga-basis-3d"></a>3.3 3D PGA Basis
@@ -718,14 +718,17 @@ In 3D PGA, there are a total of 16 (i.e., $2^{3+1}$) PGA basis elements:
 * 4 grade-3 (i.e., e021, e013, e032, e123), and
 * 1 grade-4 (i.e., e0123).
 
-### 3.3.1 Calculating 3D PGA Dual
+### 3.3.1 Calculating 3D PGA Dual (PGA Masterclass ... click `Details` to expand/collapse)
+
+<details>
+
 Because the concept of duality is at the core of the geometric interpretation of PGA, becoming familiar with the two steps
 to calculate the dual of the basis can be helpful. The two steps are
-1. extend the grade of each PGA basis element to the grade of the pseudoscalar,
+1. extend the grade of each PGA basis element to the grade of the pseudoscalar, and
 2. repeatedly apply the contraction axiom (i.e., eij = -eji) to adjust the index ordering in each extended PGA basis element
-   to match the index ordering in the pseudoscalar,
+   to match the index ordering in the pseudoscalar.
    
-although those two steps can be accomplished in several different ways.
+However, those two steps can be accomplished with several different approaches.
 
 The first of the three approaches is conceptually the easiest because it uses the geometric product to expand the grade of each
 PGA basis element (step 1) and that same geometric product automatically corrects the index order of each expanded PGA basis
@@ -736,10 +739,6 @@ Note that in this first approach, a short cut is to put all the PGA basis elemen
 that the geometric product can be called just once (with geoprodset()) instead of on each of the 16 PGA basis elements. Also,
 instead of listing the names of each of the 16 PGA basis elements within a matrix, a Julia comprehension constructs that matrix
 (i.e., [Float32(i == j) for i in 1:17, j in 1:16] == [eu e0 e1 e2 e3 e01 e02 e03 e12 e31 e23 e021 e013 e032 e123 e0123]).
-
-<details>
-
-<summary>Click to expand/collapse the REPL output</summary>
 
 ```julia
 julia> I = [Float32(i == j) for i in 1:size(basis,1)+1, j in 1:size(basis,1)] # Identity matrix
@@ -819,7 +818,6 @@ julia> [basis[:,1] S.*reverse(basis[:,1])]
  "e123"   "-e0"
  "e0123"  "1"
 ```
-</details>
 
 The second approach to calculating the dual of the PGA basis is perhaps the quickest because it is performed by a single
 call to the utility function basis_dual(basis[:,1]). Looking at the code, basis_dual() does not use the geometric product
@@ -878,7 +876,12 @@ Then, for a given row of the table (i.e., a given PGA basis element), sum the to
 counts in columns 3, 4, 5, and 6. If that sum is odd (i.e., the contraction axiom was applied an odd number of times), prepend a
 negative sign to the entry in column 2 (the reverse(basis)). The new column 2 is the 2D PGA dual.
 
-### 3.3.2 Calculating 3D PGA Reverse
+</details>
+
+### 3.3.2 Calculating 3D PGA Reverse (PGA Masterclass ... click `Details` to expand/collapse)
+
+<details>
+
 Similar to the PGA dual (!), which is central to the geometric interpretation of PGA basis elements, the PGA reverse (\~),
 which is central to the PGA sandwich operation (e.g., T*P0*~T or equivalently T>>>P0 translates point P0 with translation motor
 T). Like the PGA dual (!), the PGA reverse (\~) also is computed in two steps:
@@ -886,7 +889,7 @@ T). Like the PGA dual (!), the PGA reverse (\~) also is computed in two steps:
 2. repeatedly apply the contraction axiom (i.e., eij = -eji) to restore the original (i.e., unreversed) index ordering
    in each PGA basis element.
 
-As with the PGA dual (!), there are different ways to calculate the PGA reverse (\~).
+As with the PGA dual (!), there are different approaches to calculate the PGA reverse (\~).
 
 The quickest approach to calculating the PGA reverse (\~) is to call the utility function basis_reverse(basis[:,1]).
 ```
@@ -929,7 +932,9 @@ julia> M = [1 0 0 0 0; 2 1 0 0 0; 3 2 1 0 0; 4 3 2 1 0]
  3  2  1  0  0
  4  3  2  1  0
 ```
-(For details on how PGA reverse differs from Julia's built-in reverse() function, see Section 4.1.2.)
+(For details on how PGA reverse differs from Julia's built-in reverse() function, see Section 3.1.2.)
+
+</details>
 
 ### 3.3.3 Example of 3D PGA Point Translation
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
@@ -960,7 +965,7 @@ julia> toCoord(P2)
  0.0
  0.0
 ```
-### 3.3.4 Derivative of 3D PGA Point
+### 3.3.4 Derivation of 3D PGA Point
 (TODO)
 
 ## <a id="pga-basis-4d">3.4 4D PGA Basis
