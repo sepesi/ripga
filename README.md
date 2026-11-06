@@ -968,7 +968,7 @@ julia> toCoord(P2)
 ### 3.3.4 Derivation of 3D PGA Point
 (TODO)
 
-## <a id="pga-basis-4d">3.4 4D PGA Basis
+## 3.4 4D PGA Basis
 To prepare Julia's REPL for 4D PGA, include the files ripgand.jl and ripga4d.jl. To confirm the initialization, print out the basis.
 Note that the 4D PGA basis is long enough for Julia's default REPL output to abbreviate the middle section of the basis.
 
