@@ -79,6 +79,7 @@ For decades, 3D graphics, robotics, and physics engines have relied on a patchwo
 ### Proven in Mission-Critical Engineering
 More concise math directly translates to **faster R&D cycles, fewer edge-case bugs, and drastically lower technical debt.** In [this industry keynote](https://www.youtube.com/watch?v=_3WPLawT-H0), Dr. Todd Ell, Senior Technical Fellow at **Collins Aerospace** (one of the world's largest aerospace suppliers, employing 16,700+ engineers), details why he is training aerospace engineers to replace traditional linear algebra with Geometric Algebra for mission-critical design and development.
 
+### Advantages of Building PGA Applications in Julia
 While [bivector.net](https://bivector.net) offers PGA reference implementations for C++, Rust, Python, and JS, **Julia was practically born for Geometric Algebra.** `ripga` leverages Julia's unique strengths to create an unmatched prototyping and production environment:
 
 1. **Solving the Two-Language Problem:** Prototype geometric algorithms interactively in the REPL and execute them at C/C++ speeds with GPU-accelerated [GLMakie](https://docs.makie.org/stable/) visualizations.
