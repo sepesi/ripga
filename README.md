@@ -46,12 +46,12 @@ Below are applications built with `ripga` and [Makie](https://docs.makie.org/sta
 - <a href="#tldr">0. Showcase: PGA in Action</a>
 - <a href="#why-pga">1. Why Build Applications with PGA and Julia?</a>
 - <a href="#hang-of-pga">2. Getting the Hang of PGA</a>
-- <a href="#pga-basis">3. PGA Basis</a>
-  - <a href="#pga-basis-1d">3.1 1D PGA Basis</a>
-  - <a href="#pga-basis-2d">3.2 2D PGA Basis</a>
-  - <a href="#pga-basis-3d">3.3 3D PGA Basis</a>
-  - <a href="#pga-basis-4d">3.4 4D PGA Basis</a>
-- <a href="#pga-exp">4. PGA Exponential</a>
+- <a href="pga-basis">3. PGA Basis</a>
+  - <a href="pga-basis-1d">3.1 1D PGA Basis</a>
+  - <a href="pga-basis-2d">3.2 2D PGA Basis</a>
+  - <a href="pga-basis-3d">3.3 3D PGA Basis</a>
+  - <a href="pga-basis-4d">3.4 4D PGA Basis</a>
+- <a href="pga-exp">4. Continuous Motion & PGA Exponential</a>
 - <a href="#plot">5. Plotting</a>
 - <a href="#geo">6. Euclidean Geometry</a>
   - <a href="#geo-1d">6.1 1D Euclidean Geometry</a>
@@ -1289,7 +1289,7 @@ julia> M = [1 0 0 0 0 0; 2 1 0 0 0 0; 3 2 1 0 0 0; 4 3 2 1 0 0; 5 4 3 2 1 0]
 ### 3.4.4 Derivation of 4D PGA Point
 (TODO)
 
-# <a id="pga-exp"></a>4. PGA Exponential
+# <a id="pga-exp"></a>4. Continuous Motion & PGA Exponential
 (TODO)
 
 At the risk of being too ee-sy (pun intended), the letter e is used in several ways:
