@@ -194,7 +194,7 @@ In 1D PGA, there are a total of four (i.e., $2^{1+1}$) PGA basis elements:
 * 2 grade-1 (i,e., e0, e1), and
 * 1 grade-2 (i.e., e01).
 
-### 3.1.1 Calculating 1D PGA Dual (PGA Masterclass, Click to expand)
+### 3.1.1 Calculating 1D PGA Dual (PGA Masterclass ... click `Details` to expand/collapse)
 
 <details>
 
@@ -280,7 +280,7 @@ negative sign to the entry in column 2 (the reverse(basis)). The new column 2 is
 
 </details>
 
-### 3.1.2 Calculating 1D PGA Reverse (PGA Masterclass, Click to expand)
+### 3.1.2 Calculating 1D PGA Reverse (PGA Masterclass ... click `Details` to expand/collapse)
 
 <details>
 
