@@ -194,14 +194,17 @@ In 1D PGA, there are a total of four (i.e., $2^{1+1}$) PGA basis elements:
 * 2 grade-1 (i,e., e0, e1), and
 * 1 grade-2 (i.e., e01).
 
-### 3.1.1 Calculating 1D PGA Dual
+### 3.1.1 Calculating 1D PGA Dual (PGA Masterclass, Click to expand)
+
+<details>
+
 Because the concept of duality is at the core of the geometric interpretation of PGA, becoming familiar with the two steps
 to calculate the dual of the basis can be helpful. The two steps are
-1. extend the grade of each PGA basis element to the grade of the pseudoscalar,
+1. extend the grade of each PGA basis element to the grade of the pseudoscalar, and
 2. repeatedly apply the contraction axiom (i.e., eij = -eji) to adjust the index ordering in each extended PGA basis element
-   to match the index ordering in the pseudoscalar,
+   to match the index ordering in the pseudoscalar.
 
-although those two steps can be accomplished in several different ways.
+However, those two steps can be accomplished with several different approaches.
 
 The first of the three approaches is conceptually the easiest because it uses the geometric product to expand the grade of each
 PGA basis element (step 1) and that same geometric product automatically corrects the index order of each expanded PGA basis
@@ -275,7 +278,12 @@ Then, for a given row of the table (i.e., a given PGA basis element), sum the to
 counts in columns 3 and 4). If that sum is odd (i.e., the contraction axiom was applied an odd number of times), prepend a
 negative sign to the entry in column 2 (the reverse(basis)). The new column 2 is the 1D PGA dual.
 
-### 3.1.2 Calculating 1D PGA Reverse
+</details>
+
+### 3.1.2 Calculating 1D PGA Reverse (PGA Masterclass, Click to expand)
+
+<details>
+
 Similar to the PGA dual (!), which is central to the geometric interpretation of PGA basis elements, the PGA reverse (\~),
 which is central to the PGA sandwich operation (e.g., T*P0*~T or equivalently T>>>P0 translates point P0 with translation motor
 T). Like the PGA dual (!), the PGA reverse (\~) also is computed in two steps:
@@ -318,6 +326,8 @@ adding a sign change if the required number of applications are required. In con
 bottom order of any column vector. As an aside, Julia's reverse() function acts more like the PGA reverse ($\sim$) when Julia's
 reverse() function is applied to a Matrix{Float32} with an additional argument specifying that the reversing needs to be done along
 the row dimension (e.g., reverse([e0 e1],dims=2) == [e1 e0]). 
+
+</details>
 
 ### 3.1.3 Example of 1D PGA Point Translation
 According to the [Cartan–Dieudonné theorem](https://en.wikipedia.org/wiki/Cartan%E2%80%93Dieudonn%C3%A9_theorem), every
