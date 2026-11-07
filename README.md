@@ -43,24 +43,22 @@ Below are applications built with `ripga` and [Makie](https://docs.makie.org/sta
 
 <summary><b>Table of Contents</b></summary>
 
-- <a href="#tldr">0. Showcase: PGA in Action</a>
-- <a href="#why-pga">1. Why Build Applications with PGA and Julia?</a>
-- <a href="#hang-of-pga">2. Getting the Hang of PGA</a>
-- <a href="#pga-basis">3. PGA Basis</a>
-  - <a href="#pga-basis-1d">3.1 1D PGA Basis</a>
-  - <a href="#pga-basis-2d">3.2 2D PGA Basis</a>
-  - <a href="#pga-basis-3d">3.3 3D PGA Basis</a>
-  - <a href="#pga-basis-4d">3.4 4D PGA Basis</a>
-- <a href="#pga-exp">4. Continuous Motion & PGA Exponential</a>
-- <a href="#plot">5. Plotting</a>
-- <a href="#geo">6. Euclidean Geometry</a>
-  - <a href="#geo-1d">6.1 1D Euclidean Geometry</a>
-  - <a href="#geo-2d">6.2 2D Euclidean Geometry</a>
-  - <a href="#geo-3d">6.3 3D Euclidean Geometry</a>
-  - <a href="#geo-4d">6.4 4D Euclidean Geometry</a>
-- <a href="#rbd">7. Rigid Body Dynamics</a>
-- <a href="#max-eq">8. Maxwell's Equations</a>
-- <a href="#conc">9. Conclusion</a>
+- <a href="#tldr"></a>0. Showcase: PGA in Action
+- <a href="#why-pga"></a>1. Why Build Applications with PGA and Julia?
+- <a href="#hang-of-pga"></a>2. Getting the Hang of PGA
+- <a href="#pga-basis"></a>3. PGA Basis
+  - <a href="#pga-basis-1d"></a>3.1 1D PGA Basis
+  - <a href="#pga-basis-2d"></a>3.2 2D PGA Basis
+  - <a href="#pga-basis-3d"></a>3.3 3D PGA Basis
+  - <a href="#pga-basis-4d"></a>3.4 4D PGA Basis
+- <a href="#pga-exp"></a>4. Continuous Motion & The PGA Exponential
+- <a href="#plot"></a>5. Plotting
+- <a href="#apps"></a>6. Application Horizons
+  - <a href="#apps-rbd"></a>6.1 Next-Gen Rigid Body Dynamics
+  - <a href="#apps-cad"></a>6.2 PGA CAD Modeling
+  - <a href="#apps-max-eq"></a>6.3 Electrodynamics & Maxwell's Equations
+- <a href="#conc"></a>7. Conclusion: Join the Geometric Revolution
+- <a href="#start"></a>8. Getting Started
 
 # <a id="why-pga"></a>1. Why Build Applications with PGA and Julia?
 
@@ -1282,18 +1280,14 @@ julia> M = [1 0 0 0 0 0; 2 1 0 0 0 0; 3 2 1 0 0 0; 4 3 2 1 0 0; 5 4 3 2 1 0]
 ### 3.4.4 Derivation of 4D PGA Point
 (TODO)
 
-# <a id="pga-exp"></a>4. Continuous Motion & PGA Exponential
-(TODO)
+# 4. Continuous Motion & The PGA Exponential
 
-At the risk of being too ee-sy (pun intended), the letter e is used in several ways:
-* the name of the exponential function is e (e.g., e(10,X)),
-* the first letter of each of the names of the hypercomplex vectors in the basis is e (e.g., e12), and
-* the floating point format of numbers specified in scientific notation uses the letter e (e.g., 1e10).
+In `ripga`, generating smooth, continuous animations and procedural trajectories is as simple as exponentiating a bivector. Because PGA unifies translation and rotation, the exponential map $e^B$ turns any bivector line $B$ into a continuous screw motion (a **Motor**).
 
-An exponential function can demonstrate PGA's unification of translation and rotation.
+For example, complex coupled orbital/epicyclic trajectories are expressed in a single closed-form equation:
 
 $$
-\mathbf{T} = \underbrace{ e^{\frac{\theta_1}{2}\mathbf{e}_{12}} e^{\frac{r_1}{2}\mathbf{e}_{01}} }_{\text{Circle 2}} \underbrace{ e^{\frac{\theta_2}{2}\mathbf{e}_{31}} e^{\frac{r_2}{2}\mathbf{e}_{03}} }_{\text{Circle 1}} \underbrace{\mathbf{e}_{123}}_{\text{origin}}
+\mathbf{T} = \underbrace{ e^{\frac{\theta_1}{2}\mathbf{e}_{12}} e^{\frac{r_1}{2}\mathbf{e}_{01}} }_{\text{Secondary Orbit}} \underbrace{ e^{\frac{\theta_2}{2}\mathbf{e}_{31}} e^{\frac{r_2}{2}\mathbf{e}_{03}} }_{\text{Primary Orbit}} \underbrace{\mathbf{e}_{123}}_{\text{Origin}}
 $$
 
 # <a id="plot"></a>5. Plotting
@@ -1402,26 +1396,50 @@ Footprint2D = Float32[  # centered 2D cubic Bezier control points of footprint
 
 (TODO)
 
-# <a id="geo"></a>6. Euclidean Geometry
-(TODO)
 
-## <a id="geo-1d"></a>6.1 1D Euclidean Geometry
-(TODO)
+# <a id="apps"></a>6. Application Horizons
+PGA unlocks highly impactful innovations in a variety of domains. This section briefly describes a few of them.
 
-## <a id="geo-2d"></a>6.2 2D Euclidean Geometry
-(TODO)
+## <a id="apps-rbd"></a>6.1 Next-Gen Rigid Body Dynamics
+Traditional physics engines split Newton's laws into linear equations ($F = ma$) and rotational Euler equations ($\tau = I\alpha + \omega \times I\omega$). 
 
-## <a id="geo-3d"></a>6.3 3D Euclidean Geometry
-(TODO)
+With `ripga`, **Rigid Body Dynamics collapses into a single unified equation of motion.** Velocities become *twists* (bivectors), momenta and forces become *wrenches/forques* (dual bivectors), and a single Runge-Kutta integrator steps both position and orientation simultaneously across time. *(Full Julia physics engine examples coming soon).*
 
-## <a id="geo-4d"></a>6.4 4D Euclidean Geometry
-(TODO)
+## <a id="apps-cad"></a>6.2 PGA CAD Modeling
+From the perspective of an application developer who carefully tracks all design changes with a version control application such as git, there are at least five fundamental problems with tracking [CAD](https://en.wikipedia.org/wiki/Comjputer-aided_design) changes made in today's CAD applications:
+1. **The Opaque Binary Blob (Lack of Semantic Diffs).** Native CAD files (e.g., SolidWorks, Fusion360, NX) are highly compressed, proprietary binary blobs. A Git diff just tells you the binary changed, offering zero insight into **what** was altered.
+2. **The Topological Naming Problem.** In parametric CAD, geometry is generated sequentially in a "feature tree." The CAD kernel assigns interal IDs to geometric primitives (e.g., faces, edges, and vertices) based on their generation order. A change to any feature renames all the subsequent primitives in the feature tree tree, causing problems with branching and rebasing in git.
+3. **Merging is Mathematically Intractable.** Because of the naming changes, there is no known algorithm to reliably merges two divergent CAD models into a single valid model.
+4. **Forced Serialization (Pessimistic File Locking).** Because automatic merging is mathematically intractible, the mechanical engineering industry currently relies on PDM (Product Data Management) systems (e.g., SVN-style "Check-In/Check-Out" model), which means that everyone needs to be blocked until all files are checked in again.
+5. **Parameter and Constraint Entanglement.** Parametric CAD models are basically massive global state machines. A seemingly isolated change in one branch can cause failures in unrelated parts of the assembly, which won't currently be caught without a manual visual inspection.
 
-# <a id="rbd"></a>7. Rigid Body Dynamics
-(TODO)
+There have been attempts to avoid those fundamental problems. However,
+1. While parametric CAD applications usually offer text-based CAD exports (e.g., STEP, IGES, or STL), diffing them is useless because the semantic meaning of a change is lost entirely when a single change triggers a rewrite of thousands of lines of floating point vertex coordinates and B-rep (Boundary Representation) definitions.
+2. While programmatic CAD (i.e., "Code-CAD") works for specific niches (e.g., custom mechanical keyboards and PCB enclosures), they do work for complex designs (e.g., a consumer drone, or an automobile transmission) due to falling short in three areas:
+  2.1 **Assembly Kinematics**. While tools like Build123d support the simulation of simple joints, simulating complex, multi-axis motion requires parametric CAD tools (e.g., SolidWorks, NX).
+  2.2 **The 2D Drawing Bottleneck**. The global manufacturing supply chain still relies heavily on 2D pDF engineering drawings, which Code-CAD tools are still notoriously weak at generating.
+  2.3 **Performance Latency**. The time it takes to compile Python script into a boundary representation (B-rep) model causes a frustratingly slow designer feedback loop.
 
-# <a id="max-eq"></a>8. Maxwell's Equations
-(TODO)
+Therefore, the version control of complex CAD models remains an open problem. However, PGA and Makie appear to finally offer an approach to the CAD version control problem that quickly displays models AND enables git's considerable semantic diff capabilities.
 
-# <a id="conc"></a>9. Conclusion
-(TODO)
+## <a id="apps-max-eq"></a>6.3 Electrodynamics & Maxwell's Equations
+Vector calculus splits electromagnetism into four separate partial differential equations (Gauss's laws, Faraday's law, and Ampère's law). In Geometric Algebra, the electric field $\mathbf{E}$ and magnetic field $\mathbf{B}$ unite into a single Faraday bivector field $F$, collapsing **all four of Maxwell's equations into one**:
+
+$$\nabla F = J$$
+
+# <a id="conc"></a>7. Conclusion: Join the Geometric Revolution
+Whether you are building a custom 3D game engine, designing robotic kinematic chains, writing a parametric CAD slicer, or exploring relativistic physics, **Projective Geometric Algebra gives you a cleaner, faster, and more intuitive mental model.**
+
+# <a id="conc"></a>8. Getting Started
+Clone the repository and launch Julia in the project directory:
+```julia
+include("ripgand.jl") # Load core n-dimensional PGA operators and macros
+include("ripga3d.jl") # Initialize the 3D PGA basis (or ripga1d / ripga2d / ripga4d)
+
+# Intersect two planes (e1 and e2) to form the z-axis line, and rotate a point around it!
+L = e1 ^ e2
+R = e(pi/4, L)
+P = point(1, 0, 0)
+P_rotated = R >>> P
+toCoord(P_rotated)
+```
