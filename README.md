@@ -1280,17 +1280,11 @@ julia> M = [1 0 0 0 0 0; 2 1 0 0 0 0; 3 2 1 0 0 0; 4 3 2 1 0 0; 5 4 3 2 1 0]
 ### 3.4.4 Derivation of 4D PGA Point
 (TODO)
 
-# <a id="pga-exp">4. Continuous Motion & The PGA Exponential</a>
+# <a id="pga-exp"></a>4. Continuous Motion & The PGA Exponential
 
 In `ripga`, generating smooth, continuous animations and procedural trajectories is as simple as exponentiating a bivector. Because PGA unifies translation and rotation, the exponential map $e^B$ turns any bivector line $B$ into a continuous screw motion (a **Motor**).
 
-For example, complex coupled orbital/epicyclic trajectories are expressed in a single closed-form equation:
-
-$$
-\mathbf{T} = \underbrace{ e^{\frac{\theta_1}{2}\mathbf{e}_{12}} e^{\frac{r_1}{2}\mathbf{e}_{01}} }_{\text{Secondary Orbit}} \underbrace{ e^{\frac{\theta_2}{2}\mathbf{e}_{31}} e^{\frac{r_2}{2}\mathbf{e}_{03}} }_{\text{Primary Orbit}} \underbrace{\mathbf{e}_{123}}_{\text{Origin}}
-$$
-
-# <a id="plot">5. Plotting</a>
+# <a id="plot"></a>5. Plotting
 This section's simple examples demonstrating plotting with Julia and Makie are **using CairoMakie** for its simplicity.
 In contrast, most of this essay's examples demonstrating plotting with Julia and PGA are **using GLMakie** for its
 GPU-accelerated performance.
