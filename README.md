@@ -1424,7 +1424,7 @@ $$\nabla F = J$$
 # <a id="conc"></a>7. Conclusion: Join the Geometric Revolution
 Whether you are building a custom 3D game engine, designing robotic kinematic chains, writing a parametric CAD slicer, or exploring relativistic physics, **Projective Geometric Algebra gives you a cleaner, faster, and more intuitive mental model.**
 
-# <a id="conc"></a>8. Getting Started
+# <a id="start"></a>8. Getting Started
 Clone the repository and launch Julia in the project directory:
 ```julia
 include("ripgand.jl") # Load core n-dimensional PGA operators and macros
