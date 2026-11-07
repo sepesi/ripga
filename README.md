@@ -60,7 +60,7 @@ Below are applications built with `ripga` and [Makie](https://docs.makie.org/sta
 - <a href="#conc">7. Conclusion: Join the Geometric Revolution</a>
 - <a href="#start">8. Getting Started</a>
 
-# <a id="why-pga">1. Why Build Applications with PGA and Julia?</a>
+# <a id="why-pga"></a>1. Why Build Applications with PGA and Julia?
 
 For decades, 3D graphics, robotics, and physics engines have relied on a patchwork of 19th-century math: 3D vectors for positions, $4\times4$ homogeneous matrices for translations, quaternions for rotations, and Plücker coordinates for lines. 
 
@@ -97,7 +97,7 @@ While [bivector.net](https://bivector.net) offers PGA reference implementations 
 > **Design Philosophy on Operator Overloading ("Type Squatting"):**
 > Julia's style guide generally discourages overloading base operators on standard `Vector` types ("type piracy") to avoid breaking external packages. However, standard Julia does not define bitwise/logical infix operators like `&`, `|`, or `>>>` on `Vector{Float32}`—they don't even compile in base Julia. By claiming these unused operator slots ("type squatting"), `ripga` achieves zero-wrapper performance and seamless compatibility with Makie and linear algebra buffers. *(If you'd like to explore a custom-struct fork for strict package isolation, PRs and comparisons are warmly welcomed!)*
 
-# <a id="hang-of-pga">2. Getting the Hang of PGA</a>
+# <a id="hang-of-pga"></a>2. Getting the Hang of PGA
 There are three perspectives that contribute to understanding PGA:
 
 ## 2.1 History
@@ -162,10 +162,10 @@ In contrast, in 3D point-based PGA,
 
 (More on the geometric interpretations in the next section.)
 
-# <a id="pga-basis">3. PGA Basis</a>
+# <a id="pga-basis"></a>3. PGA Basis
 The ripga library is capable of switching back and forth between the bases for 1D PGA, 2D PGA, 3D PGA, and 4D PGA.
 
-## <a id="pga-basis-1d">3.1 1D PGA Basis</a>
+## <a id="pga-basis-1d"></a>3.1 1D PGA Basis
 To prepare Julia's REPL for 1D PGA, include the files ripgand.jl and ripga1d.jl. To confirm the initialization, print out the basis.
 ```
 julia> include("ripgand.jl"); # utility functions for all available dimensions
@@ -393,7 +393,7 @@ collapsed to zero (i.e., PX = 36e0 and PX\*PX = 0).
 ### 3.1.4 Derivation of 1D PGA Point
 (TODO)
 
-## <a id="pga-basis-2d">3.2 2D PGA Basis</a>
+## <a id="pga-basis-2d"></a>3.2 2D PGA Basis
 To prepare Julia's REPL for 2D PGA, include the files ripgand.jl and ripga2d.jl. To confirm the initialization, print out the basis.
 ```
 julia> include("ripgand.jl"); # utility functions for all available dimensions
@@ -663,7 +663,7 @@ julia> toStr(T) # not in form of dual number (missing scalar term), so translati
 ### 3.2.4 Derivation of 2D PGA Point
 (TODO)
 
-## <a id="pga-basis-3d">3.3 3D PGA Basis</a>
+## <a id="pga-basis-3d"></a>3.3 3D PGA Basis
 To prepare Julia's REPL for 3D PGA, include the files ripgand.jl and ripga3d.jl. To confirm the initialization, print out the basis.
 ```
 julia> include("ripgand.jl"); # utility functions for all available dimensions
@@ -966,7 +966,7 @@ julia> toCoord(P2)
 ### 3.3.4 Derivation of 3D PGA Point
 (TODO)
 
-## <a id="pga-basis-4d">3.4 4D PGA Basis</a>
+## <a id="pga-basis-4d"></a>3.4 4D PGA Basis
 To prepare Julia's REPL for 4D PGA, include the files ripgand.jl and ripga4d.jl. To confirm the initialization, print out the basis.
 Note that the 4D PGA basis is long enough for Julia's default REPL output to abbreviate the middle section of the basis.
 
@@ -1391,15 +1391,15 @@ Footprint2D = Float32[  # centered 2D cubic Bezier control points of footprint
 (TODO)
 
 
-# <a id="apps">6. Application Horizons</a>
+# <a id="apps"></a>6. Application Horizons
 PGA unlocks the possibility of highly impactful innovations in a variety of domains. This section briefly describes a few of those possible innovations.
 
-## <a id="apps-rbd">6.1 Next-Gen Rigid Body Dynamics</a>
+## <a id="apps-rbd"></a>6.1 Next-Gen Rigid Body Dynamics
 Traditional physics engines split Newton's laws into linear equations ($F = ma$) and rotational Euler equations ($\tau = I\alpha + \omega \times I\omega$). 
 
 With `ripga`, **Rigid Body Dynamics collapses into a single unified equation of motion.** Velocities become *twists* (bivectors), momenta and forces become *wrenches/forques* (dual bivectors), and a single Runge-Kutta integrator steps both position and orientation simultaneously across time. *(Full Julia physics engine examples coming soon).*
 
-## <a id="apps-cad">6.2 PGA CAD Modeling</a>
+## <a id="apps-cad"></a>6.2 PGA CAD Modeling
 From the perspective of an application developer who carefully tracks all design changes with a version control application such as git, there are at least five fundamental problems with tracking [CAD](https://en.wikipedia.org/wiki/Comjputer-aided_design) changes made in today's CAD applications:
 1. **The Opaque Binary Blob (Lack of Semantic Diffs).** Native CAD files (e.g., SolidWorks, Fusion360, NX) are highly compressed, proprietary binary blobs. A Git diff just tells you the binary changed, offering zero insight into **what** was altered.
 2. **The Topological Naming Problem.** In parametric CAD, geometry is generated sequentially in a "feature tree." The CAD kernel assigns interal IDs to geometric primitives (e.g., faces, edges, and vertices) based on their generation order. A change to any feature renames all the subsequent primitives in the feature tree tree, causing problems with branching and rebasing in git.
@@ -1416,15 +1416,15 @@ There have been attempts to avoid those fundamental problems. However,
 
 Therefore, the version control of complex CAD models remains an open problem. However, PGA and Makie appear to finally offer an approach to the CAD version control problem that quickly displays models AND enables git's considerable semantic diff capabilities because complex models can be expressed with simple text.
 
-## <a id="apps-max-eq">6.3 Electrodynamics & Maxwell's Equations</a>
+## <a id="apps-max-eq"></a>6.3 Electrodynamics & Maxwell's Equations
 Vector calculus splits electromagnetism into four separate partial differential equations (Gauss's laws, Faraday's law, and Ampère's law). In Geometric Algebra, the electric field $\mathbf{E}$ and magnetic field $\mathbf{B}$ unite into a single Faraday bivector field $F$, collapsing **all four of Maxwell's equations into one**:
 
 $$\nabla F = J$$
 
-# <a id="conc">7. Conclusion: Join the Geometric Revolution</a>
+# <a id="conc"></a>7. Conclusion: Join the Geometric Revolution
 Whether you are building a custom 3D game engine, designing robotic kinematic chains, writing a parametric CAD slicer, or exploring relativistic physics, **Projective Geometric Algebra gives you a cleaner, faster, and more intuitive mental model.**
 
-# <a id="conc">8. Getting Started</a>
+# <a id="conc"></a>8. Getting Started
 Clone the repository and launch Julia in the project directory:
 ```julia
 include("ripgand.jl") # Load core n-dimensional PGA operators and macros
