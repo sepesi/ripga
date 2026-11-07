@@ -43,24 +43,24 @@ Below are applications built with `ripga` and [Makie](https://docs.makie.org/sta
 
 <summary><b>Table of Contents</b></summary>
 
-- <a href="#tldr"></a>0. Showcase: PGA in Action
-- <a href="#why-pga"></a>1. Why Build Applications with PGA and Julia?
-- <a href="#hang-of-pga"></a>2. Getting the Hang of PGA
-- <a href="#pga-basis"></a>3. PGA Basis
-  - <a href="#pga-basis-1d"></a>3.1 1D PGA Basis
-  - <a href="#pga-basis-2d"></a>3.2 2D PGA Basis
-  - <a href="#pga-basis-3d"></a>3.3 3D PGA Basis
-  - <a href="#pga-basis-4d"></a>3.4 4D PGA Basis
-- <a href="#pga-exp"></a>4. Continuous Motion & The PGA Exponential
-- <a href="#plot"></a>5. Plotting
-- <a href="#apps"></a>6. Application Horizons
-  - <a href="#apps-rbd"></a>6.1 Next-Gen Rigid Body Dynamics
-  - <a href="#apps-cad"></a>6.2 PGA CAD Modeling
-  - <a href="#apps-max-eq"></a>6.3 Electrodynamics & Maxwell's Equations
-- <a href="#conc"></a>7. Conclusion: Join the Geometric Revolution
-- <a href="#start"></a>8. Getting Started
+- <a href="#tldr">0. Showcase: PGA in Action</a>
+- <a href="#why-pga">1. Why Build Applications with PGA and Julia?</a>
+- <a href="#hang-of-pga">2. Getting the Hang of PGA</a>
+- <a href="#pga-basis">3. PGA Basis</a>
+  - <a href="#pga-basis-1d">3.1 1D PGA Basis</a>
+  - <a href="#pga-basis-2d">3.2 2D PGA Basis</a>
+  - <a href="#pga-basis-3d">3.3 3D PGA Basis</a>
+  - <a href="#pga-basis-4d">3.4 4D PGA Basis</a>
+- <a href="#pga-exp">4. Continuous Motion & The PGA Exponential</a>
+- <a href="#plot">5. Plotting</a>
+- <a href="#apps">6. Application Horizons</a>
+  - <a href="#apps-rbd">6.1 Next-Gen Rigid Body Dynamics</a>
+  - <a href="#apps-cad">6.2 PGA CAD Modeling</a>
+  - <a href="#apps-max-eq">6.3 Electrodynamics & Maxwell's Equations</a>
+- <a href="#conc">7. Conclusion: Join the Geometric Revolution</a>
+- <a href="#start">8. Getting Started</a>
 
-# <a id="why-pga"></a>1. Why Build Applications with PGA and Julia?
+# <a id="why-pga">1. Why Build Applications with PGA and Julia?</a>
 
 For decades, 3D graphics, robotics, and physics engines have relied on a patchwork of 19th-century math: 3D vectors for positions, $4\times4$ homogeneous matrices for translations, quaternions for rotations, and Plücker coordinates for lines. 
 
@@ -97,7 +97,7 @@ While [bivector.net](https://bivector.net) offers PGA reference implementations 
 > **Design Philosophy on Operator Overloading ("Type Squatting"):**
 > Julia's style guide generally discourages overloading base operators on standard `Vector` types ("type piracy") to avoid breaking external packages. However, standard Julia does not define bitwise/logical infix operators like `&`, `|`, or `>>>` on `Vector{Float32}`—they don't even compile in base Julia. By claiming these unused operator slots ("type squatting"), `ripga` achieves zero-wrapper performance and seamless compatibility with Makie and linear algebra buffers. *(If you'd like to explore a custom-struct fork for strict package isolation, PRs and comparisons are warmly welcomed!)*
 
-# <a id="hang-of-pga"></a>2. Getting the Hang of PGA
+# <a id="hang-of-pga">2. Getting the Hang of PGA</a>
 There are three perspectives that contribute to understanding PGA:
 
 ## 2.1 History
@@ -162,10 +162,10 @@ In contrast, in 3D point-based PGA,
 
 (More on the geometric interpretations in the next section.)
 
-# <a id="pga-basis"></a>3. PGA Basis
+# <a id="pga-basis">3. PGA Basis</a>
 The ripga library is capable of switching back and forth between the bases for 1D PGA, 2D PGA, 3D PGA, and 4D PGA.
 
-## <a id="pga-basis-1d"></a>3.1 1D PGA Basis
+## <a id="pga-basis-1d">3.1 1D PGA Basis</a>
 To prepare Julia's REPL for 1D PGA, include the files ripgand.jl and ripga1d.jl. To confirm the initialization, print out the basis.
 ```
 julia> include("ripgand.jl"); # utility functions for all available dimensions
@@ -393,7 +393,7 @@ collapsed to zero (i.e., PX = 36e0 and PX\*PX = 0).
 ### 3.1.4 Derivation of 1D PGA Point
 (TODO)
 
-## <a id="pga-basis-2d"></a>3.2 2D PGA Basis
+## <a id="pga-basis-2d">3.2 2D PGA Basis</a>
 To prepare Julia's REPL for 2D PGA, include the files ripgand.jl and ripga2d.jl. To confirm the initialization, print out the basis.
 ```
 julia> include("ripgand.jl"); # utility functions for all available dimensions
@@ -663,7 +663,7 @@ julia> toStr(T) # not in form of dual number (missing scalar term), so translati
 ### 3.2.4 Derivation of 2D PGA Point
 (TODO)
 
-## <a id="pga-basis-3d"></a>3.3 3D PGA Basis
+## <a id="pga-basis-3d">3.3 3D PGA Basis</a>
 To prepare Julia's REPL for 3D PGA, include the files ripgand.jl and ripga3d.jl. To confirm the initialization, print out the basis.
 ```
 julia> include("ripgand.jl"); # utility functions for all available dimensions
@@ -966,7 +966,7 @@ julia> toCoord(P2)
 ### 3.3.4 Derivation of 3D PGA Point
 (TODO)
 
-## 3.4 4D PGA Basis
+## <a id="pga-basis-4d">3.4 4D PGA Basis</a>
 To prepare Julia's REPL for 4D PGA, include the files ripgand.jl and ripga4d.jl. To confirm the initialization, print out the basis.
 Note that the 4D PGA basis is long enough for Julia's default REPL output to abbreviate the middle section of the basis.
 
@@ -1280,7 +1280,7 @@ julia> M = [1 0 0 0 0 0; 2 1 0 0 0 0; 3 2 1 0 0 0; 4 3 2 1 0 0; 5 4 3 2 1 0]
 ### 3.4.4 Derivation of 4D PGA Point
 (TODO)
 
-# 4. Continuous Motion & The PGA Exponential
+# <a id="pga-exp">4. Continuous Motion & The PGA Exponential</a>
 
 In `ripga`, generating smooth, continuous animations and procedural trajectories is as simple as exponentiating a bivector. Because PGA unifies translation and rotation, the exponential map $e^B$ turns any bivector line $B$ into a continuous screw motion (a **Motor**).
 
@@ -1290,7 +1290,7 @@ $$
 \mathbf{T} = \underbrace{ e^{\frac{\theta_1}{2}\mathbf{e}_{12}} e^{\frac{r_1}{2}\mathbf{e}_{01}} }_{\text{Secondary Orbit}} \underbrace{ e^{\frac{\theta_2}{2}\mathbf{e}_{31}} e^{\frac{r_2}{2}\mathbf{e}_{03}} }_{\text{Primary Orbit}} \underbrace{\mathbf{e}_{123}}_{\text{Origin}}
 $$
 
-# <a id="plot"></a>5. Plotting
+# <a id="plot">5. Plotting</a>
 This section's simple examples demonstrating plotting with Julia and Makie are **using CairoMakie** for its simplicity.
 In contrast, most of this essay's examples demonstrating plotting with Julia and PGA are **using GLMakie** for its
 GPU-accelerated performance.
@@ -1397,15 +1397,15 @@ Footprint2D = Float32[  # centered 2D cubic Bezier control points of footprint
 (TODO)
 
 
-# <a id="apps"></a>6. Application Horizons
-PGA unlocks highly impactful innovations in a variety of domains. This section briefly describes a few of them.
+# <a id="apps">6. Application Horizons</a>
+PGA unlocks the possibility of highly impactful innovations in a variety of domains. This section briefly describes a few of those possible innovations.
 
-## <a id="apps-rbd"></a>6.1 Next-Gen Rigid Body Dynamics
+## <a id="apps-rbd">6.1 Next-Gen Rigid Body Dynamics</a>
 Traditional physics engines split Newton's laws into linear equations ($F = ma$) and rotational Euler equations ($\tau = I\alpha + \omega \times I\omega$). 
 
 With `ripga`, **Rigid Body Dynamics collapses into a single unified equation of motion.** Velocities become *twists* (bivectors), momenta and forces become *wrenches/forques* (dual bivectors), and a single Runge-Kutta integrator steps both position and orientation simultaneously across time. *(Full Julia physics engine examples coming soon).*
 
-## <a id="apps-cad"></a>6.2 PGA CAD Modeling
+## <a id="apps-cad">6.2 PGA CAD Modeling</a>
 From the perspective of an application developer who carefully tracks all design changes with a version control application such as git, there are at least five fundamental problems with tracking [CAD](https://en.wikipedia.org/wiki/Comjputer-aided_design) changes made in today's CAD applications:
 1. **The Opaque Binary Blob (Lack of Semantic Diffs).** Native CAD files (e.g., SolidWorks, Fusion360, NX) are highly compressed, proprietary binary blobs. A Git diff just tells you the binary changed, offering zero insight into **what** was altered.
 2. **The Topological Naming Problem.** In parametric CAD, geometry is generated sequentially in a "feature tree." The CAD kernel assigns interal IDs to geometric primitives (e.g., faces, edges, and vertices) based on their generation order. A change to any feature renames all the subsequent primitives in the feature tree tree, causing problems with branching and rebasing in git.
@@ -1420,17 +1420,17 @@ There have been attempts to avoid those fundamental problems. However,
   2.2 **The 2D Drawing Bottleneck**. The global manufacturing supply chain still relies heavily on 2D pDF engineering drawings, which Code-CAD tools are still notoriously weak at generating.
   2.3 **Performance Latency**. The time it takes to compile Python script into a boundary representation (B-rep) model causes a frustratingly slow designer feedback loop.
 
-Therefore, the version control of complex CAD models remains an open problem. However, PGA and Makie appear to finally offer an approach to the CAD version control problem that quickly displays models AND enables git's considerable semantic diff capabilities.
+Therefore, the version control of complex CAD models remains an open problem. However, PGA and Makie appear to finally offer an approach to the CAD version control problem that quickly displays models AND enables git's considerable semantic diff capabilities because complex models can be expressed with simple text.
 
-## <a id="apps-max-eq"></a>6.3 Electrodynamics & Maxwell's Equations
+## <a id="apps-max-eq">6.3 Electrodynamics & Maxwell's Equations</a>
 Vector calculus splits electromagnetism into four separate partial differential equations (Gauss's laws, Faraday's law, and Ampère's law). In Geometric Algebra, the electric field $\mathbf{E}$ and magnetic field $\mathbf{B}$ unite into a single Faraday bivector field $F$, collapsing **all four of Maxwell's equations into one**:
 
 $$\nabla F = J$$
 
-# <a id="conc"></a>7. Conclusion: Join the Geometric Revolution
+# <a id="conc">7. Conclusion: Join the Geometric Revolution</a>
 Whether you are building a custom 3D game engine, designing robotic kinematic chains, writing a parametric CAD slicer, or exploring relativistic physics, **Projective Geometric Algebra gives you a cleaner, faster, and more intuitive mental model.**
 
-# <a id="conc"></a>8. Getting Started
+# <a id="conc">8. Getting Started</a>
 Clone the repository and launch Julia in the project directory:
 ```julia
 include("ripgand.jl") # Load core n-dimensional PGA operators and macros
