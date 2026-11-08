@@ -1410,9 +1410,9 @@ From the perspective of an application developer who carefully tracks all design
 There have been attempts to avoid those fundamental problems. However,
 1. While parametric CAD applications usually offer text-based CAD exports (e.g., STEP, IGES, or STL), diffing them is useless because the semantic meaning of a change is lost entirely when a single change triggers a rewrite of thousands of lines of floating point vertex coordinates and B-rep (Boundary Representation) definitions.
 2. While programmatic CAD (i.e., "Code-CAD") works for specific niches (e.g., custom mechanical keyboards and PCB enclosures), they do work for complex designs (e.g., a consumer drone, or an automobile transmission) due to falling short in three areas:
-  2.1 **Assembly Kinematics**. While tools like Build123d support the simulation of simple joints, simulating complex, multi-axis motion requires parametric CAD tools (e.g., SolidWorks, NX).
-  2.2 **The 2D Drawing Bottleneck**. The global manufacturing supply chain still relies heavily on 2D pDF engineering drawings, which Code-CAD tools are still notoriously weak at generating.
-  2.3 **Performance Latency**. The time it takes to compile Python script into a boundary representation (B-rep) model causes a frustratingly slow designer feedback loop.
+   2.1 **Assembly Kinematics**. While tools like Build123d support the simulation of simple joints, simulating complex, multi-axis motion requires parametric CAD tools (e.g., SolidWorks, NX).
+   2.2 **The 2D Drawing Bottleneck**. The global manufacturing supply chain still relies heavily on 2D pDF engineering drawings, which Code-CAD tools are still notoriously weak at generating.
+   2.3 **Performance Latency**. The time it takes to compile Python script into a boundary representation (B-rep) model causes a frustratingly slow designer feedback loop.
 
 Therefore, the version control of complex CAD models remains an open problem. However, PGA and Makie appear to finally offer an approach to the CAD version control problem that quickly displays models AND enables git's considerable semantic diff capabilities because complex models can be expressed with simple text.
 
