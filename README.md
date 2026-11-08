@@ -1414,7 +1414,7 @@ There have been attempts to avoid those fundamental problems. However,
     2. **The 2D Drawing Bottleneck**. The global manufacturing supply chain still relies heavily on 2D pDF engineering drawings, which Code-CAD tools are still notoriously weak at generating.
     3. **Performance Latency**. The time it takes to compile Python script into a boundary representation (B-rep) model causes a frustratingly slow designer feedback loop.
 
-Therefore, the version control of complex CAD models remains an open problem. However, PGA and Makie appear to finally offer an approach to the CAD version control problem that quickly displays models AND enables git's considerable semantic diff capabilities because complex models can be expressed with simple text.
+Therefore, the version control of complex CAD models remains an open problem. However, PGA and Makie appear to finally offer an approach to the CAD version control problem that quickly displays models **AND** enables git's considerable semantic diff capabilities because complex models can be expressed with simple text.
 
 ## <a id="apps-max-eq"></a>6.3 Electrodynamics & Maxwell's Equations
 Vector calculus splits electromagnetism into four separate partial differential equations (Gauss's laws, Faraday's law, and Ampère's law). In Geometric Algebra, the electric field $\mathbf{E}$ and magnetic field $\mathbf{B}$ unite into a single Faraday bivector field $F$, collapsing **all four of Maxwell's equations into one**:
