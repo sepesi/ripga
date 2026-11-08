@@ -1432,7 +1432,7 @@ include("ripga3d.jl") # Initialize the 3D PGA basis (or ripga1d / ripga2d / ripg
 
 # Intersect two planes (e1 and e2) to form the z-axis line, and rotate a point around it!
 L = e1 ^ e2
-R = e(pi/4, L)
+R = epga(pi/4, L) # PGA Exponential
 P = point(1, 0, 0)
 P_rotated = R >>> P
 toCoord(P_rotated)
