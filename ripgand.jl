@@ -220,11 +220,11 @@ end
 function epga(alpha::Number, B::Vector{Float32})
  s = (B * B)[1]
  if s == 0
-  return 1 + alpha*B
+  return 1 - alpha*B
  elseif s < 0
-  return cos(alpha) + sin(alpha)*B
+  return cos(alpha) - sin(alpha)*B
  else
-  return cosh(alpha) + sinh(alpha)*B
+  return cosh(alpha) - sinh(alpha)*B
  end
 end
 
