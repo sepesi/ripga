@@ -58,7 +58,6 @@ Below are applications built with `ripga` and [Makie](https://docs.makie.org/sta
   - <a href="#apps-cad">6.2 PGA CAD Modeling</a>
   - <a href="#apps-max-eq">6.3 Electrodynamics & Maxwell's Equations</a>
 - <a href="#conc">7. Conclusion: Join the Geometric Revolution</a>
-- <a href="#start">8. Getting Started</a>
 
 # <a id="why-pga"></a>1. Why Build Applications with PGA and Julia?
 
@@ -1424,7 +1423,7 @@ $$\nabla F = J$$
 # <a id="conc"></a>7. Conclusion: Join the Geometric Revolution
 Whether you are building a custom 3D game engine, designing robotic kinematic chains, writing a parametric CAD slicer, or exploring relativistic physics, **Projective Geometric Algebra gives you a cleaner, faster, and more intuitive mental model.**
 
-# <a id="start"></a>8. Getting Started
+**Getting Started**
 Clone the repository and launch Julia in the project directory:
 ```julia
 include("ripgand.jl") # Load core n-dimensional PGA operators and macros
