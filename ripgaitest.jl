@@ -20,7 +20,18 @@ function itest()
    
    # if 2D Euclidean space
    if nD == 2
-      bez2poly(Footprint, 10)
+      VRP = bez2poly(Footprint, 16)
+      nVRP = length(VRP)
+      for iVRP = 1:nVRP
+         P = reshape(VRP[iVRP],:,2)'
+         println("polynomial $iVRP> $P")
+         poly(                  # poly() is for plotting closed polygons
+            P,                  # define the coordinates of the points in the closed polygon
+            color=:red,         # specify the fill color of the closed polygon
+            strokecolor=:black, # specify the border color
+            strokewidth=1)      # specify the border width
+	  end
+	  f
 	  
    # else if 3D Euclidean space
    elseif nD == 3

@@ -230,20 +230,24 @@ function bez2poly(BCP::Matrix{Float32}, nT::Int)
   TSM = Matrix{Float32}([(1 .- TS).^3 (3*TS) .* (1 .- TS).^2 3*TS.^2 .* (1 .- TS) TS.^3]') # TS Matrix
   VRP = Vector{Vector{Float32}}()   # initialize Vector of Rolled Polynomials
   nCoord = (size(BCP,1) & ~1) >> 2  # discount appended status field, divide by # of control points (4)
+  println("TSM: $TSM")
 
   # for each set of closed polynomials in BCP
   nPoly = length(Istart)
   for iPoly = 1:nPoly
-    println("$iPoly> start at $(Istart[iPoly]) with length $(Ilength[iPoly])")
+    println("iPoly $iPoly> start at $(Istart[iPoly]) with length $(Ilength[iPoly])")
     PC = Matrix{Float32}(undef, 0, 2) # initialize Polynomial Coordinates
 
     # for each cubic Bezier curve within the closed polynomial
-	nCol = Ilength[iPoly]
-	for iCol = 1:nCol
+    nCol = Ilength[iPoly]
+    for iCol = 1:nCol
        # linear interpolate between control points of single Bezier curve (i.e., single column)
-	   PC = vcat(PC, bezlerp(
-		  reshape(BCP[1:end-1,iPoly+iCol-1],:,nCoord),
-		  TSM))
+       iBez1 = Istart[iPoly] + iCol - 1
+       BCP1 = reshape(BCP[1:end-1,iBez1],:,nCoord)
+       println("iBez1 $iBez1; iCol $iCol> $BCP1")
+       PC1 = bezlerp(BCP1, TSM)
+       println("Bez curve $iBez1 matrix> $PC1")
+       PC = vcat(PC, PC1)
 	end
 	
 	# roll up PC (Polynomial Coordinates) into a single vector and push it onto VRP
