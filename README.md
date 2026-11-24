@@ -1334,13 +1334,10 @@ poly(                  # poly() is for plotting closed polygons
    strokecolor=:black, # specify the border color
    strokewidth=1)      # specify the border width
 ```
-Instead of having a single coordinate pair in each column of a Matrix{Float32}, there are times when it is helpful
-to stack several coordinate pairs in each column. For example, a cubic Bezier curve has four control points (i.e.,
-four coordinate pairs) to specify each cubic Bezier segment. With each cubic Bezier segment stored in a single vector,
-the vector can be extended (horizontally) to define many adjacent Bezier curve segments. And that Matrix{Float32} can
-be extended (vertically) by appending another Float32 to specify status flags for the corresponding cubic Bezier control
-points.
-
+Instead of having a single coordinate pair in each column of a Matrix{Float32}, stacking several coordinate pairs in
+a single column improves the efficiency of Bezier curve linear interpolation. Concretely, when specifying a Bezier curve,
+the coordinate pairs of all four control points defining a cubic Bezier curve are stacked in a single column of the matrix
+defining a group of Bezier curves.
 ```
 # 2D cubic Bezier curves of left footprint
 # NOTES:
@@ -1372,7 +1369,9 @@ Footprint = Float32[  # centered 2D cubic Bezier control points of footprint (ge
  0x5    0  0x5    0  0x5    0  0x5    0  0x5    0   0x5    0    0    0   0    0     0; # status flags
 ]
 ```
+Makie plots the folloowing scaled version of that Footprint data.
 
+![Footprint image](./res/Footprint.png)
 (TODO)
 
 

@@ -13,25 +13,31 @@ using CairoMakie
 #
 function itest()
    f = Figure();          # initialize the Figure (the trailing ; avoids display of blank Figure)
-   Axis(f[1,1])           # specify the display should have only one row and one column of plots
+   ax = Axis(f[1,1],      # specify the display should have only one row and one column of plots
+      autolimitaspect = 1,# 1:1 is x:y screen length aspect ratio
+	  title = "footprint from Bezier curves")
 
    # determine dimension of Euclidean space (i.e., not including ideal dimension)
    nD = trailing_zeros(size(basis,1)) - 1 # -1 discounts ideal dimension
    
+   # scale down size of Footprint by 200
+   Footprint200 = copy(Footprint)
+   Footprint200[1:end-1,:] ./= 200
+   
    # if 2D Euclidean space
    if nD == 2
-      VRP = bez2poly(Footprint, 16)
+      VRP = bez2poly(Footprint200, 16)
       nVRP = length(VRP)
       for iVRP = 1:nVRP
          P = reshape(VRP[iVRP],:,2)'
-         println("polynomial $iVRP> $P")
-         poly(                  # poly() is for plotting closed polygons
+         # println("polynomial $iVRP> $P")
+         poly!(                 # poly() is for plotting closed polygons
             P,                  # define the coordinates of the points in the closed polygon
-            color=:red,         # specify the fill color of the closed polygon
+            color=:black,       # specify the fill color of the closed polygon
             strokecolor=:black, # specify the border color
             strokewidth=1)      # specify the border width
 	  end
-	  f
+	  save("./res/Footprint.png", f)
 	  
    # else if 3D Euclidean space
    elseif nD == 3
