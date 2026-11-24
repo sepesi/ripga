@@ -1369,7 +1369,7 @@ Footprint = Float32[  # centered 2D cubic Bezier control points of footprint (ge
  0x5    0  0x5    0  0x5    0  0x5    0  0x5    0   0x5    0    0    0   0    0     0; # status flags
 ]
 ```
-Makie plots the folloowing scaled version of that Footprint data.
+Makie plots the following scaled version of that Footprint data.
 
 ![Footprint image](./res/Footprint.png)
 (TODO)
