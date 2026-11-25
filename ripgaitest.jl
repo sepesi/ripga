@@ -12,10 +12,13 @@ using CairoMakie
 # image test
 #
 function itest()
-   f = Figure();          # initialize the Figure (the trailing ; avoids display of blank Figure)
-   ax = Axis(f[1,1],      # specify the display should have only one row and one column of plots
-      autolimitaspect = 1,# 1:1 is x:y screen length aspect ratio
+   fig = Figure(size=(1000,400)); # initialize the Figure (the trailing ; avoids display of blank Figure)
+   ax1 = Axis(fig[1,1],           # specify the display in left column of plots
+      autolimitaspect = 1,        # 1:1 is x:y screen length aspect ratio
 	  title = "footprint from Bezier curves")
+   ax2 = Axis(fig[1,2],           # specify the display in right column of plots
+      autolimitaspect = 1,        # 1:1 is x:y screen length aspect ratio
+	  title = "infinity symbol from Bezier curves")
 
    # determine dimension of Euclidean space (i.e., not including ideal dimension)
    nD = trailing_zeros(size(basis,1)) - 1 # -1 discounts ideal dimension
@@ -31,13 +34,27 @@ function itest()
       for iVRP = 1:nVRP
          P = reshape(VRP[iVRP],:,2)'
          # println("polynomial $iVRP> $P")
-         poly!(                 # poly() is for plotting closed polygons
+         poly!(ax1,             # poly() is for plotting closed polygons
             P,                  # define the coordinates of the points in the closed polygon
             color=:black,       # specify the fill color of the closed polygon
             strokecolor=:black, # specify the border color
             strokewidth=1)      # specify the border width
 	  end
-	  save("./res/Footprint.png", f)
+      
+      VRP = bez2poly(Infinity, 16)
+      nVRP = length(VRP)
+      for iVRP = 1:nVRP
+         P = reshape(VRP[iVRP],:,2)'
+         # println("polynomial $iVRP> $P")
+         poly!(ax2,             # poly() is for plotting closed polygons
+            P,                  # define the coordinates of the points in the closed polygon
+            color=:white,       # specify the fill color of the closed polygon
+            strokecolor=:black, # specify the border color
+            strokewidth=1,      # specify the dotted line outline
+            linestyle = :dot)
+	  end
+        
+	  save("./res/Bezier.png", fig)
 	  
    # else if 3D Euclidean space
    elseif nD == 3

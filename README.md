@@ -1337,7 +1337,8 @@ poly(                  # poly() is for plotting closed polygons
 Instead of having a single coordinate pair in each column of a Matrix{Float32}, stacking several coordinate pairs in
 a single column improves the efficiency of Bezier curve linear interpolation. Concretely, when specifying a Bezier curve,
 the coordinate pairs of all four control points defining a cubic Bezier curve are stacked in a single column of the matrix
-defining a group of Bezier curves.
+defining a group of Bezier curves, as shown in the following data defining the cubic Bezier control points for a Footprint
+and an Infinity symbol.
 ```
 # 2D cubic Bezier curves of left footprint
 # NOTES:
@@ -1368,10 +1369,22 @@ Footprint = Float32[  # centered 2D cubic Bezier control points of footprint (ge
  118   80  110   80  101   73   88   63   70   49   -88   -4   48   69   0  -86  -120; # P3 y
  0x5    0  0x5    0  0x5    0  0x5    0  0x5    0   0x5    0    0    0   0    0     0; # status flags
 ]
+Infinity = Float32[  # centered 2D cubic Bezier control points of infinity symbol
+#  1    2  # column numbers
+   0    0; # P0 x
+   5   -5; # P1 x
+   5   -5; # P2 x
+   0    0; # P3 x
+   0    0; # P0 y
+   2    2; # P1 y
+  -2   -2; # P2 y
+   0    0; # P3 y
+ 0x5    0; # status flags
+]
 ```
-Makie plots the following scaled version of that Footprint data.
+Makie plots the following scaled version of that Footprint data and that Infinity symbol data.
 
-![Footprint image](./res/Footprint.png)
+![Bezier curve images](./res/Bezier.png)
 (TODO)
 
 
